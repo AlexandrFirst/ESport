@@ -1,0 +1,8 @@
+D:\nure\diplom\ESport\Identity\obj\Debug\netcoreapp3.1\Identity.csproj.AssemblyReference.cache
+D:\nure\diplom\ESport\Identity\obj\Debug\netcoreapp3.1\Identity.GeneratedMSBuildEditorConfig.editorconfig
+D:\nure\diplom\ESport\Identity\obj\Debug\netcoreapp3.1\Identity.AssemblyInfoInputs.cache
+D:\nure\diplom\ESport\Identity\obj\Debug\netcoreapp3.1\Identity.AssemblyInfo.cs
+D:\nure\diplom\ESport\Identity\obj\Debug\netcoreapp3.1\Identity.csproj.CoreCompileInputs.cache
+D:\nure\diplom\ESport\Identity\obj\Debug\netcoreapp3.1\Identity.MvcApplicationPartsAssemblyInfo.cache
+D:\nure\diplom\ESport\Identity\obj\Debug\netcoreapp3.1\Identity.RazorAssemblyInfo.cache
+D:\nure\diplom\ESport\Identity\obj\Debug\netcoreapp3.1\Identity.RazorAssemblyInfo.cs
