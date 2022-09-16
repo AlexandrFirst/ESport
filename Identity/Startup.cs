@@ -1,4 +1,6 @@
 using Identity.Helpers;
+using Identity.Test;
+using IdentityServer4.Test;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -31,7 +33,8 @@ namespace Identity
                         .AddDeveloperSigningCredential()
                         .AddInMemoryIdentityResources(IdentityConfig.IdentityResources)
                         .AddInMemoryClients(IdentityConfig.Clients)
-                        .AddInMemoryApiResources(IdentityConfig.ApiResources);
+                        .AddInMemoryApiResources(IdentityConfig.ApiResources)
+                        .AddTestUsers(TestUsers.Users);
 
             services.AddAuthentication();
           
