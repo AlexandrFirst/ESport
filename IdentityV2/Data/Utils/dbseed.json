@@ -1,0 +1,98 @@
+{
+  "Users": [
+    {
+      "name": "English",
+      "surname": "Brown",
+      "email": "jessicasolis@ohmnet.com",
+      "telephoneNumber": "+(380)94-85-08-368",
+      "password": "1234abc",
+      "profileImageUrl": "https://jsonplaceholder.typicode.com/photos/1"
+    },
+    {
+      "name": "Ochoa",
+      "surname": "Spence",
+      "email": "vancebradford@oulu.com",
+      "telephoneNumber": "+(380)98-35-58-245",
+      "password": "1234abc",
+      "profileImageUrl": "https://jsonplaceholder.typicode.com/photos/2"
+    },
+    {
+      "name": "Kent",
+      "surname": "Evans",
+      "email": "jimenezpowell@xplor.com",
+      "telephoneNumber": "+(380)84-75-16-203",
+      "password": "1234abc",
+      "profileImageUrl": "https://jsonplaceholder.typicode.com/photos/3"
+    },
+    {
+      "name": "Stevenson",
+      "surname": "Mckay",
+      "email": "osbornmcguire@ultrasure.com",
+      "telephoneNumber": "+(380)93-24-24-342",
+      "password": "1234abc",
+      "profileImageUrl": "https://jsonplaceholder.typicode.com/photos/4"
+    },
+    {
+      "name": "Ramos",
+      "surname": "Melton",
+      "email": "gloverparker@keeg.com",
+      "telephoneNumber": "+(380)80-04-19-202",
+      "password": "1234abc",
+      "profileImageUrl": "https://jsonplaceholder.typicode.com/photos/5"
+    },
+    {
+      "name": "Morales",
+      "surname": "Webster",
+      "email": "lanamonroe@orbalix.com",
+      "telephoneNumber": "+(380)92-85-72-201",
+      "password": "1234abc",
+      "profileImageUrl": "https://jsonplaceholder.typicode.com/photos/6"
+    },
+    {
+      "name": "Rhodes",
+      "surname": "Clemons",
+      "email": "diannkim@zolar.com",
+      "telephoneNumber": "+(380)88-25-87-287",
+      "password": "1234abc",
+      "profileImageUrl": "https://jsonplaceholder.typicode.com/photos/7"
+    },
+    {
+      "name": "Berry",
+      "surname": "Rasmussen",
+      "email": "deloriscunningham@steelfab.com",
+      "telephoneNumber": "+(380)85-44-38-395",
+      "password": "1234abc",
+      "profileImageUrl": "https://jsonplaceholder.typicode.com/photos/8"
+    },
+    {
+      "name": "Torres",
+      "surname": "Wiley",
+      "email": "rosariohenry@talae.com",
+      "telephoneNumber": "+(380)88-55-05-338",
+      "password": "1234abc",
+      "profileImageUrl": "https://jsonplaceholder.typicode.com/photos/9"
+    },
+    {
+      "name": "Hood",
+      "surname": "Brewer",
+      "email": "hopkinsvargas@codax.com",
+      "telephoneNumber": "+(380)88-15-32-259",
+      "password": "1234abc",
+      "profileImageUrl": "https://jsonplaceholder.typicode.com/photos/10"
+    }
+  ],
+  "Roles": [
+    {
+      "title": "OrgAdmin"
+    },
+    {
+      "title": "LocalAdmin"
+    },
+    {
+      "title": "Teacher"
+    },
+    {
+      "title": "Pupil"
+    }
+  ]
+}
