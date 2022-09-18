@@ -44,12 +44,12 @@ namespace IdentityV2
             })
             .AddScheme<ESportAuthenticationOptions, ESportAuthenticationHandler>("ESport", o => { });
 
-
-            //db user: name=esdb; pass=1q2w3e4r
-
             services.AddDbContext<IdentityDataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("IdentityDb")));
 
+            services.AddAutoMapper(typeof(Startup));
+
             services.AddScoped<IJWTManagerRepository, JWTManagerRepository>();
+
 
         }
 
@@ -86,7 +86,7 @@ namespace IdentityV2
                         return;
                     }
                 }
-
+                
                 if (authAttr != null)
                 {
                     var authService = ctx.RequestServices.GetRequiredService<IAuthorizationService>();
@@ -110,5 +110,7 @@ namespace IdentityV2
                 endpoints.MapControllers();
             });
         }
+
+
     }
 }

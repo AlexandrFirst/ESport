@@ -5,7 +5,7 @@ namespace IdentityV2.Controllers
 {
     public class AccountController : Controller
     {
-        public async Task<IActionResult> Login() 
+        public async Task<IActionResult> Login(string returnUrl) 
         {
             return View();
         }

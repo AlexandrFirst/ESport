@@ -80,19 +80,5 @@
       "password": "1234abc",
       "profileImageUrl": "https://jsonplaceholder.typicode.com/photos/10"
     }
-  ],
-  "Roles": [
-    {
-      "title": "OrgAdmin"
-    },
-    {
-      "title": "LocalAdmin"
-    },
-    {
-      "title": "Teacher"
-    },
-    {
-      "title": "Pupil"
-    }
   ]
 }

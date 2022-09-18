@@ -4,14 +4,16 @@ using IdentityV2.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace IdentityV2.Migrations
 {
     [DbContext(typeof(IdentityDataContext))]
-    partial class IdentityDataContextModelSnapshot : ModelSnapshot
+    [Migration("20220918172353_RoleInitAdded")]
+    partial class RoleInitAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -32,28 +34,6 @@ namespace IdentityV2.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Title = "OrgAdmin"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Title = "LocalAdmin"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Title = "Teacher"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Title = "Pupil"
-                        });
                 });
 
             modelBuilder.Entity("IdentityV2.Data.Domain.User", b =>
