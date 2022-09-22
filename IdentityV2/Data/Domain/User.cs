@@ -16,8 +16,8 @@ namespace IdentityV2.Data.Domain
         public string TelephoneNumber { get; set; }
         public string HashedPassword { get; set; }
         public string ProfileImageUrl { get; set; }
-        public List<UserRoles> UserRoles { get; set; }
-        public List<UserHistory> UserHistory { get; set; }
+        public virtual List<UserRoles> UserRoles { get; set; }
+        public virtual List<UserHistory> UserHistory { get; set; }
 
     }
 }

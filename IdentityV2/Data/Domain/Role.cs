@@ -11,6 +11,6 @@ namespace IdentityV2.Data.Domain
 
         public int Id { get; set; }
         public string Title { get; set; }
-        public List<UserRoles> UserRole { get; set; }
+        public virtual List<UserRoles> UserRole { get; set; }
     }
 }

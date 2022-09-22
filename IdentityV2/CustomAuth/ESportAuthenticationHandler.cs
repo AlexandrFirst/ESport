@@ -108,6 +108,11 @@ namespace IdentityV2.CustomAuth
                 }
             }
 
+            if (!claims.Any()) 
+            {
+                return Task.FromResult(AuthenticateResult.NoResult());
+            }
+
             var claimsIdentity = new ClaimsIdentity(claims,
                         nameof(ESportAuthenticationHandler));
 

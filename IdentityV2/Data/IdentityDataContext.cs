@@ -14,8 +14,14 @@ namespace IdentityV2.Data
         public IdentityDataContext([NotNull] DbContextOptions options) : base(options)
         {
             Database.Migrate();
-            this.ChangeTracker.LazyLoadingEnabled = false;
+           // this.ChangeTracker.LazyLoadingEnabled = false;
         }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
+        {
+            optionsBuilder.UseLazyLoadingProxies();
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UserConfiguration());
