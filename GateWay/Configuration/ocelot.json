@@ -10,7 +10,11 @@
         }
       ],
       "UpstreamPathTemplate": "/weather",
-      "UpstreamHttpMethod": [ "Get" ]
+      "UpstreamHttpMethod": [ "Get" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "ESport",
+        "AllowedScopes": []
+      }
     }
   ],
   "GlobalConfiguration": {

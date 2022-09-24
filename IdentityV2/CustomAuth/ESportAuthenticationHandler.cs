@@ -124,7 +124,7 @@ namespace IdentityV2.CustomAuth
         private Claim[] GetClaimsFromToken(string token)
         {
             Regex regex = new Regex(ESportAuthSchemeConstant.ESportToken);
-           Match match = regex.Match(token);
+            Match match = regex.Match(token);
             if (match.Success)
             {
                 token = match.Groups["token"].Value;

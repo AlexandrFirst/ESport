@@ -1,3 +1,4 @@
+using ESportAuthClient.ESportAuthClient;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -27,17 +28,36 @@ namespace GateWay
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddAuthentication(o =>
+            {
+                o.DefaultAuthenticateScheme = "ESport";
+                o.DefaultChallengeScheme = "ESport";
+            })
+            .AddScheme<ESportClientAuthenticationOptions, ESportClientAuthenticationHandler>("ESport", o => { o.Authority = "http://localhost:5000"; });
+
             services.AddOcelot();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            var configuration = new OcelotPipelineConfiguration
+            {
+                AuthorisationMiddleware = async (context, next) =>
+                {
+
+                    //context.Items
+                    // Logic goes here
+                    await next.Invoke();
+                }
+            };
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseOcelot().Wait();
+            app.UseOcelot(configuration).Wait();
         }
     }
 }

@@ -15,9 +15,15 @@ namespace IdentityV2.Controllers
         public IActionResult Validate([FromQuery]UserValidateNavigation userValidateNavigation) 
         {
             var userClaims = User.Claims;
-
-
             return Ok("Hello world");
+        }
+
+        [Authorize]
+        [HttpGet("oclelot_validate")]
+        public IActionResult OclelotValidate() 
+        {
+            var user = User;
+            return Ok(new { ClaimPrincipal = user });
         }
     }
 }
