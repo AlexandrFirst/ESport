@@ -48,7 +48,7 @@ namespace IdentityV2.Middleware
                 }
             }
 
-            if (authAttr != null)
+            if (authAttr != null && !string.IsNullOrEmpty(authAttr.Policy))
             {
                 var authService = ctx.RequestServices.GetRequiredService<IAuthorizationService>();
                 var result = await authService.AuthorizeAsync(ctx.User, ctx.GetRouteData(), authAttr.Policy);

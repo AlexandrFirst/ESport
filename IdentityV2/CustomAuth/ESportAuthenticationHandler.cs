@@ -136,6 +136,8 @@ namespace IdentityV2.CustomAuth
 
             var tokenHandler = new JwtSecurityTokenHandler();
             var secret = configuration.GetSection("JWT")["Key"];
+            var audience = configuration.GetSection("JWT")["Audience"];
+            var issuer = configuration.GetSection("JWT")["Issuer"];
             var key = Encoding.ASCII.GetBytes(secret);
             tokenHandler.ValidateToken(token, new TokenValidationParameters
             {
@@ -143,7 +145,9 @@ namespace IdentityV2.CustomAuth
                 IssuerSigningKey = new SymmetricSecurityKey(key),
                 ValidateIssuer = true,
                 ValidateAudience = true,
-                ClockSkew = TimeSpan.Zero
+                ClockSkew = TimeSpan.Zero,
+                ValidIssuer = issuer,
+                ValidAudience = audience
             }, out SecurityToken validatedToken);
 
             var jwtToken = (JwtSecurityToken)validatedToken;

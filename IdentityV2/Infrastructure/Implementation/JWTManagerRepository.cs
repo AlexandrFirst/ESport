@@ -46,7 +46,10 @@ namespace IdentityV2.Infrastructure.Implementation
             if (!isPasswordCorrect) { return null; }
 
             var tokenHandler = new JwtSecurityTokenHandler();
+            
             var tokenKey = Encoding.UTF8.GetBytes(iconfiguration["JWT:Key"]);
+            var audience = iconfiguration.GetSection("JWT")["Audience"];
+            var issuer = iconfiguration.GetSection("JWT")["Issuer"];
 
             var userRolesEnumerable = dbUser.UserRoles.Select(x => x.Role.Title);
             string userRoles = "";
@@ -65,7 +68,9 @@ namespace IdentityV2.Infrastructure.Implementation
                     new Claim(UserClaims.Email, dbUser.Email),
                     new Claim(UserClaims.Name, dbUser.Name),
                 }),
-                Expires = DateTime.UtcNow.AddMinutes(10),
+                Expires = DateTime.UtcNow.AddMinutes(360),
+                Audience = audience,
+                Issuer = issuer,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);

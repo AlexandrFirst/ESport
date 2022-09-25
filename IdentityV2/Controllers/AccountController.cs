@@ -26,6 +26,21 @@ namespace IdentityV2.Controllers
             return View(model);
         }
 
+        [HttpPost("ApiLogin")]
+        public async Task<IActionResult> ApiLogin([FromBody] LoginModel loginModel)
+        {
+            var loginDto = new UserLoginDto()
+            {
+                Mail = loginModel.Mail,
+                Password = loginModel.Password
+            };
+
+            var token = await jwtMananager.AuthenticateAsync(loginDto);
+
+            return Ok(token);
+        }
+
+
         [HttpPost("Login")]
         public async Task<IActionResult> Login([FromForm] LoginModel loginModel)
         {

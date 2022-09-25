@@ -14,7 +14,17 @@
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "ESport",
         "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "Role": "Pupil,LocalAdmin"
+      },
+      "AddHeadersToRequest": {
+        "Role": "Claims[Role] > value > |",
+        "Id": "Claims[Id] > value > |",
+        "Name": "Claims[Name] > value > |",
+        "Email": "Claims[Email] > value > |"
       }
+
     }
   ],
   "GlobalConfiguration": {
