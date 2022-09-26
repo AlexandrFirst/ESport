@@ -1,10 +1,10 @@
+import React, { MouseEvent } from 'react'
 import axios from 'axios'
-import React from 'react'
 import { NavLink, useHistory } from 'react-router-dom'
 
 export const Navbar: React.FC = () => {
   const navigate = useHistory()
-  const handleClicck = async (e: any) => {
+  const handleClick = async (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
     const res = await axios.get(
       'http://localhost:5000/account/validate?postBackUrl=http://localhost:3000/about'
@@ -27,7 +27,7 @@ export const Navbar: React.FC = () => {
             <NavLink to="/about">About</NavLink>
           </li>
           <li>
-            <a href="/about" onClick={handleClicck}>
+            <a href="/about" onClick={handleClick}>
               rjkbguirwfgyiwrugfw
             </a>
           </li>
