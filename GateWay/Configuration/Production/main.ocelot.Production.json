@@ -1,0 +1,33 @@
+{
+  "ReRoutes": [
+    {
+      "DownstreamPathTemplate": "/WeatherForecast",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "host.docker.internal",
+          "Port": 7000
+        }
+      ],
+      "UpstreamPathTemplate": "/weather",
+      "UpstreamHttpMethod": [ "Get" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "ESport",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "Role": "Pupil,LocalAdmin"
+      },
+      "AddHeadersToRequest": {
+        "Role": "Claims[Role] > value > |",
+        "Id": "Claims[Id] > value > |",
+        "Name": "Claims[Name] > value > |",
+        "Email": "Claims[Email] > value > |"
+      }
+
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://host.docker.internal:6000"
+  }
+}

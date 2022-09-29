@@ -13,7 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="Configuration\ocelot.json">
+    <Content Update="Configuration\Development\main.ocelot.Development.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Configuration\Production\main.ocelot.Production.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

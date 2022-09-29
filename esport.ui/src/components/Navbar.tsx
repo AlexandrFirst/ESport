@@ -7,10 +7,15 @@ export const Navbar: React.FC = () => {
   const handleClick = async (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault()
     const res = await axios.get(
-      'http://localhost:5000/account/validate?postBackUrl=http://localhost:3000/about'
+      'http://localhost:5000/User/validate?postBackUrl=http://localhost:3000/about'
     )
+
+    console.log(res)
     if (res.status === 200) {
       navigate.push('/about')
+    }
+    if(res.status === 302){
+      console.log(res.headers.location);
     }
   }
   return (

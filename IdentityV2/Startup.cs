@@ -39,6 +39,14 @@ namespace IdentityV2
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddCors(options => options.AddPolicy("ESportCors", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
+
             services.AddControllersWithViews().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
@@ -68,10 +76,14 @@ namespace IdentityV2
             }
 
             app.UseStaticFiles();
+
+            app.UseCors("ESportCors");
+
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
+
             app.UseRedirectMiddleware();
 
             app.UseEndpoints(endpoints =>
