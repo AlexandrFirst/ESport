@@ -29,7 +29,7 @@ namespace ESportAuthClient.ESportAuthClient
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
         {
             using var client = new HttpClient() { BaseAddress = new Uri(Options.Authority) };
-
+            Console.WriteLine(Options.Authority);
             string token = "";
             bool authDataExists = false;
 

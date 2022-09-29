@@ -4,7 +4,7 @@
 
 @using (Html.BeginForm("Login", "Account", FormMethod.Post))
 {
-    @Html.HiddenFor(x => x.ReturnUrl)
+    @Html.HiddenFor(x => x.PostBackUrl)
     <div class="form-outline mb-4">
         @Html.LabelFor(x => x.Mail, htmlAttributes:new {@class="form-label"})
         @Html.TextBoxFor(x => x.Mail)

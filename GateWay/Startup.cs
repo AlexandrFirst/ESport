@@ -38,10 +38,10 @@ namespace GateWay
 
             services.AddAuthentication(o =>
             {
-                o.DefaultAuthenticateScheme = "ESport";
+                o.DefaultAuthenticateScheme = "ESp`ort";
                 o.DefaultChallengeScheme = "ESport";
             })
-            .AddScheme<ESportClientAuthenticationOptions, ESportClientAuthenticationHandler>("ESport", o => { o.Authority = "http://localhost:5000"; });
+            .AddScheme<ESportClientAuthenticationOptions, ESportClientAuthenticationHandler>("ESport", o => { o.Authority = Configuration.GetSection("Security")["Authority"]; });
 
             services.AddOcelot();
         }
@@ -52,15 +52,16 @@ namespace GateWay
             {
                 AuthorisationMiddleware = async (context, next) =>
                 {
-                    if (this.Authorize(context))
-                    {
-                        await next.Invoke();
-                    }
-                    else
-                    {
-                        context.Items.SetError(new UnothorizedError("Error on authorization", OcelotErrorCode.ClaimValueNotAuthorisedError, 403));
-                        return;
-                    }
+                    await next.Invoke();
+                    //if (this.Authorize(context))
+                    //{
+                    //    await next.Invoke();
+                    //}
+                    //else
+                    //{
+                    //    context.Items.SetError(new UnothorizedError("Error on authorization", OcelotErrorCode.ClaimValueNotAuthorisedError, 403));
+                    //    return;
+                    //}
                 }
             };
 

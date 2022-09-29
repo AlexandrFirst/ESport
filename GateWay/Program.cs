@@ -1,3 +1,4 @@
+using GateWay.Extensions;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -27,7 +28,8 @@ namespace GateWay
                             .SetBasePath(hostingContext.HostingEnvironment.ContentRootPath)
                             .AddJsonFile("appsettings.json", true, true)
                             .AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", true, true)
-                            .AddJsonFile(Path.Combine("Configuration", "ocelot.json"))
+                            .AddOcelotconfigFiles($"./Configuration/{hostingContext.HostingEnvironment.EnvironmentName}",
+                                new[] { "main"}, hostingContext.HostingEnvironment)
                             .AddEnvironmentVariables();
                     })
                    .ConfigureWebHostDefaults(webBuilder =>

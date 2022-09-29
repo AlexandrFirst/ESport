@@ -17,45 +17,45 @@ namespace IdentityV2.Extensions
         {
             using (var scope = host.Services.CreateScope())
             {
-                var services = scope.ServiceProvider;
-                var context = services.GetService<IdentityDataContext>();
-                var configurations = services.GetService<IConfiguration>();
-                var hostingEnvironment = services.GetService<IWebHostEnvironment>();
-                var mapper = services.GetService<IMapper>();
+               var services = scope.ServiceProvider;
+               var context = services.GetService<IdentityDataContext>();
+               var configurations = services.GetService<IConfiguration>();
+               var hostingEnvironment = services.GetService<IWebHostEnvironment>();
+               var mapper = services.GetService<IMapper>();
 
-                var isUsersExists = context.Users.Any();
-                if (isUsersExists) { return host; }
+               var isUsersExists = context.Users.Any();
+               if (isUsersExists) { return host; }
 
-                var passwordSecretKey = configurations.GetSection("User")["Key"];
+               var passwordSecretKey = configurations.GetSection("User")["Key"];
 
-                PasswordHelper passwordHelper = new PasswordHelper(passwordSecretKey);
+               PasswordHelper passwordHelper = new PasswordHelper(passwordSecretKey);
 
-                var path = Path.Combine(hostingEnvironment.ContentRootPath, "Data\\Utils\\dbseed.json");
-                var seedUsers = DBSeed.GetSeedUser(path);
-                if (seedUsers != null)
-                {
-                    using (var transaction = context.Database.BeginTransaction())
-                    {
-                        var adminRole = context.Roles.FirstOrDefault(x => x.Title == "OrgAdmin");
-                        if (adminRole != null)
-                        {
-                            foreach (var user in seedUsers)
-                            {
-                                var userToInsert = mapper.Map<User>(user);
-                                userToInsert.HashedPassword = passwordHelper.Hash(user.Password);
+               var path = Path.Combine(hostingEnvironment.ContentRootPath, "Data/Utils/dbseed.json");
+               var seedUsers = DBSeed.GetSeedUser(path);
+               if (seedUsers != null)
+               {
+                   using (var transaction = context.Database.BeginTransaction())
+                   {
+                       var adminRole = context.Roles.FirstOrDefault(x => x.Title == "OrgAdmin");
+                       if (adminRole != null)
+                       {
+                           foreach (var user in seedUsers)
+                           {
+                               var userToInsert = mapper.Map<User>(user);
+                               userToInsert.HashedPassword = passwordHelper.Hash(user.Password);
 
 
-                                var userRole = new UserRoles() { Role = adminRole, User = userToInsert };
-                                context.Users.Add(userToInsert);
+                               var userRole = new UserRoles() { Role = adminRole, User = userToInsert };
+                               context.Users.Add(userToInsert);
 
-                            }
-                            context.SaveChanges();
-                        }
-                        transaction.Commit();
+                           }
+                           context.SaveChanges();
+                       }
+                       transaction.Commit();
 
-                    }
+                   }
 
-                }
+               }
             }
             return host;
         }

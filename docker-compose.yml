@@ -1,0 +1,38 @@
+version: "3.9"
+services:
+  sqldb:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    environment:
+      - SA_PASSWORD=2Secure*Password2
+      - ACCEPT_EULA=Y
+    ports:
+      - "1450:1433"
+  identity:
+    image: diplom_identity
+    depends_on:
+      - sqldb
+    restart: on-failure
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+    ports:
+      - "5000:80"
+  gateway:
+    image: gateway
+    depends_on:
+      - sqldb
+      - identity
+    restart: on-failure
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+    ports:
+      - "6000:80"
+  userflow:
+     image: userflow
+     depends_on:
+      - gateway
+     restart: on-failure
+     environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+     ports:
+      - "7000:80"
+    
