@@ -28,6 +28,6 @@
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:6001"
+    "BaseUrl": "https://localhost:6000"
   }
 }

@@ -83,12 +83,12 @@ namespace IdentityV2.Infrastructure.Implementation
             if (isAuthentificatedClaim != null) 
             {
                 var isAuthentificated = bool.Parse(isAuthentificatedClaim.Value);
-                if (isAuthentificated) 
+                if (!isAuthentificated) 
                 {
-                    return new ESportAuthorizationResult() { Success = true };
+                    return new ESportAuthorizationResult() { Success = false };
                 }
             }
-            return new ESportAuthorizationResult() { Success = false };
+            return new ESportAuthorizationResult() { Success = true };
         }
     }
 }

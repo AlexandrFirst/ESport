@@ -31,7 +31,7 @@ bld/
 [Oo]bj/
 [Ll]og/
 [Ll]ogs/
-
+app/
 # Visual Studio 2015/2017 cache/options directory
 .vs/
 # Uncomment if you have tasks that create the project's static files in wwwroot
@@ -53,7 +53,7 @@ nunit-*.xml
 [Dd]ebugPS/
 [Rr]eleasePS/
 dlldata.c
-
+app/
 # Benchmark Results
 BenchmarkDotNet.Artifacts/
 
