@@ -1,11 +1,26 @@
-import React, { useState } from 'react'
-import { IconButton, useMediaQuery, useTheme } from '@mui/material'
+import React, { PropsWithChildren, useState } from 'react'
+import { IconButton, List, ListItem, ListItemButton, useMediaQuery, useTheme } from '@mui/material'
 
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft'
 
-import { MOBILE_BREACKPOINT, sidebarCompactWidth, sidebarOpenedWidth } from '../../app-constants'
+import AdbIcon from '@mui/icons-material/Adb'
+import AccountBoxIcon from '@mui/icons-material/AccountBox'
 
-export const ESidebar: React.FC = () => {
+import { MOBILE_BREACKPOINT } from '../../app-constants'
+import { ELogo } from '../ELogo/ELogo'
+
+const Menus = [
+  { title: 'Dashboard', icon: <AdbIcon className='mr-3' /> },
+  { title: 'Inbox', icon: <AccountBoxIcon className='mr-3' /> },
+  { title: 'Accounts', icon: <AdbIcon className='mr-3' />, gap: true },
+  { title: 'Schedule ', icon: <AccountBoxIcon className='mr-3' /> },
+  { title: 'Search', icon: <AdbIcon className='mr-3' /> },
+  { title: 'Analytics', icon: <AccountBoxIcon className='mr-3' /> },
+  { title: 'Files ', icon: <AdbIcon className='mr-3' />, gap: true },
+  { title: 'Setting', icon: <AccountBoxIcon className='mr-3' /> },
+]
+
+export const ESidebar: React.FC<PropsWithChildren> = ({ children }) => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down(MOBILE_BREACKPOINT))
 
@@ -16,16 +31,28 @@ export const ESidebar: React.FC = () => {
   }
 
   return (
-    <section className={'flex fixed'}>
-      <div className={`${isSidebarOpened ? 'w-72' : 'w-20'} bg-dark-purple h-screen p-5  pt-8 relative duration-300 bg-primary`}>
-        <IconButton className='bg-primary hover:bg-primaryctrs absolute top-20 -right-3 text-white transition-colors' onClick={handleClickArrow}>
-          <KeyboardDoubleArrowLeftIcon className={`${isSidebarOpened ? 'rotate-180' : ''} transition-transform`} />
+    <section className={'flex'}>
+      <div className={`${isSidebarOpened ? 'w-72 p-5' : 'w-20 p-2.5'} pt-2.5 bg-dark-purple h-screen relative duration-500 bg-primary`}>
+        <IconButton className='bg-primary hover:bg-primaryctrs absolute top-10 -right-3 text-white transition-colors' onClick={handleClickArrow}>
+          <KeyboardDoubleArrowLeftIcon className={`${isSidebarOpened ? '' : 'rotate-180'} transition-transform`} />
         </IconButton>
-        <div className='flex gap-x-4 items-center'>
-          <img src='./src/assets/logo.png' className={`cursor-pointer duration-500 ${isSidebarOpened && 'rotate-[360deg]'}`} />
-          <h1 className={`text-white origin-left font-medium text-xl duration-200 ${!isSidebarOpened && 'scale-0'}`}>Designer</h1>
-        </div>
+        <ELogo className={`cursor-pointer duration-500 mr-5`} showText={isSidebarOpened} />
+        <List className='absolute top-20'>
+          {Menus.map((Menu, index) => (
+            <ListItem
+              key={index}
+              className={`flex justify-start rounded-md p-0 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center transition-all duration-500
+              ${Menu.gap ? 'mt-9' : 'mt-2'} ${index === 0 && 'bg-light-white'} ${isSidebarOpened ? 'w-60' : 'w-16'}`}
+            >
+              <ListItemButton className={`rounded-md ${index === 0 && 'bg-gradient-to-r from-violet-500 to-fuchsia-500'}`}>
+                {Menu.icon}
+                <span className={`${!isSidebarOpened && 'hidden'} origin-left duration-200`}>{Menu.title}</span>
+              </ListItemButton>
+            </ListItem>
+          ))}
+        </List>
       </div>
+      {children}
     </section>
   )
 }

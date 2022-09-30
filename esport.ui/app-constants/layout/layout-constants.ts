@@ -1,4 +1,4 @@
-export const sidebarOpenedWidth = 240
-export const sidebarCompactWidth = 240
+export const sidebarOpenedWidth = 288
+export const sidebarCompactWidth = 80
 
 export const MOBILE_BREACKPOINT = 'md'
