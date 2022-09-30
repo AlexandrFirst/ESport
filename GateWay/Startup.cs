@@ -52,16 +52,15 @@ namespace GateWay
             {
                 AuthorisationMiddleware = async (context, next) =>
                 {
-                    await next.Invoke();
-                    //if (this.Authorize(context))
-                    //{
-                    //    await next.Invoke();
-                    //}
-                    //else
-                    //{
-                    //    context.Items.SetError(new UnothorizedError("Error on authorization", OcelotErrorCode.ClaimValueNotAuthorisedError, 403));
-                    //    return;
-                    //}
+                    if (this.Authorize(context))
+                    {
+                        await next.Invoke();
+                    }
+                    else
+                    {
+                        context.Items.SetError(new UnothorizedError("Error on authorization", OcelotErrorCode.ClaimValueNotAuthorisedError, 403));
+                        return;
+                    }
                 }
             };
 
