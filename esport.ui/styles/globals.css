@@ -2,7 +2,35 @@
 @tailwind components;
 @tailwind utilities;
 
-html,
+@layer base {
+  :root {
+    --color-text-main: 184, 180, 206; /* #b8b4ce */
+    --color-text-subsidiary: 143, 139, 166; /* #8f8ba6 */
+
+    --color-bg-main: 40, 36, 61; /* #28243d */
+    --color-bg-contrast: 49, 45, 75; /* #312d4b */
+    --color-bg-subsidiary: 47, 44, 69; /* #2f2c45 */
+  }
+
+  .theme-light {
+    --color-text-main: 184, 180, 206; /* #b8b4ce */
+    --color-text-subsidiary: 143, 139, 166; /* #8f8ba6 */
+
+    --color-bg-main: 40, 36, 61; /* #28243d */
+    --color-bg-contrast: 49, 45, 75; /* #312d4b */
+    --color-bg-subsidiary: 47, 44, 69; /* #2f2c45 */
+  }
+  .theme-neon {
+    --color-text-main: 184, 180, 206; /* #b8b4ce */
+    --color-text-subsidiary: 143, 139, 166; /* #8f8ba6 */
+
+    --color-bg-main: 40, 36, 61; /* #28243d */
+    --color-bg-contrast: 49, 45, 75; /* #312d4b */
+    --color-bg-subsidiary: 47, 44, 69; /* #2f2c45 */
+  }
+}
+
+/* html,
 body {
   padding: 0;
   margin: 0;
@@ -26,4 +54,12 @@ a {
     color: white;
     background: black;
   }
+} */
+
+.pl-compact {
+  padding-left: 100px;
+}
+
+.pl-full {
+  padding-left: 300px;
 }

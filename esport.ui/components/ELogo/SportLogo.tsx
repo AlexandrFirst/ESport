@@ -11,13 +11,13 @@ interface ELogoProps extends Partial<ImageProps> {
   height?: number
 }
 
-export const ELogo: React.FC<ELogoProps> = ({ showText = false, ...props }) => {
+export const SportLogo: React.FC<ELogoProps> = ({ showText = false, ...props }) => {
   return (
     <div className={`flex `}>
       {/* <Image {...props} src={Logo} alt='E-sport logo' /> */}
       {/* <img src={Logo} alt='' /> */}
       <div className='ml-3'>{Logo}</div>
-      <ETitle className={`${!showText && 'opacity-0 scale-0'} ${showText && 'ml-3'}`}>E-SPORT</ETitle>
+      <ETitle className={`${!showText && 'opacity-0 scale-0'} ${showText && 'ml-3'} text-skin-main`}>E-SPORT</ETitle>
     </div>
   )
 }
