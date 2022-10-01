@@ -7,7 +7,7 @@ import AdbIcon from '@mui/icons-material/Adb'
 import AccountBoxIcon from '@mui/icons-material/AccountBox'
 
 import { MOBILE_BREACKPOINT } from '../../app-constants'
-import { SportLogo } from '../ELogo/SportLogo'
+import { SportLogo } from '../SportLogo/SportLogo'
 
 const Menus = [
   { title: 'Dashboard', icon: <AdbIcon className='mr-3' /> },
