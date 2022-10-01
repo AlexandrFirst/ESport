@@ -20,31 +20,36 @@ const Menus = [
   { title: 'Setting', icon: <AccountBoxIcon className='mr-3' /> },
 ]
 
-export const ESidebar: React.FC<PropsWithChildren> = ({ children }) => {
+interface ESidebarProps extends PropsWithChildren {
+  isSidebarOpened: boolean
+  setIsSidebarOpened: (p: boolean) => void
+}
+
+export const ESidebar: React.FC<ESidebarProps> = ({ isSidebarOpened, setIsSidebarOpened, children }) => {
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down(MOBILE_BREACKPOINT))
 
-  const [isSidebarOpened, setIsSidebarOpened] = useState(true)
+  // const [isSidebarOpened, setIsSidebarOpened] = useState(true)
 
   const handleClickArrow = () => {
-    setIsSidebarOpened(prev => !prev)
+    setIsSidebarOpened(!isSidebarOpened)
   }
 
   return (
     <section className={'flex'}>
-      <div className={`${isSidebarOpened ? 'w-72 p-5' : 'w-20 p-2.5'} pt-2.5 bg-dark-purple h-screen relative duration-500 bg-primary`}>
-        <IconButton className='bg-primary hover:bg-primaryctrs absolute top-10 -right-3 text-white transition-colors' onClick={handleClickArrow}>
+      <div className={`${isSidebarOpened ? 'w-72 p-5' : 'w-20 p-2.5'} fixed pt-2.5 h-screen duration-500 bg-primary border-r border-primaryctrs`}>
+        <IconButton className='bg-primary hover:bg-primaryctrs absolute top-10 -right-5 text-white transition-colors' onClick={handleClickArrow}>
           <KeyboardDoubleArrowLeftIcon className={`${isSidebarOpened ? '' : 'rotate-180'} transition-transform`} />
         </IconButton>
         <ELogo className={`cursor-pointer duration-500 mr-5`} showText={isSidebarOpened} />
-        <List className='absolute top-20'>
+        <List className={`absolute top-20 ${isSidebarOpened ? 'w-10/12' : 'w-4/6'}`}>
           {Menus.map((Menu, index) => (
             <ListItem
               key={index}
               className={`flex justify-start rounded-md p-0 cursor-pointer hover:bg-light-white text-gray-300 text-sm items-center transition-all duration-500
-              ${Menu.gap ? 'mt-9' : 'mt-2'} ${index === 0 && 'bg-light-white'} ${isSidebarOpened ? 'w-60' : 'w-16'}`}
+              ${Menu.gap ? 'mt-9' : 'mt-2'} ${index === 0 && 'bg-light-white'} `}
             >
-              <ListItemButton className={`rounded-md ${index === 0 && 'bg-gradient-to-r from-violet-500 to-fuchsia-500'}`}>
+              <ListItemButton className={`rounded-md w-full ${index === 0 && 'bg-gradient-to-r from-violet-500 to-fuchsia-500'}`}>
                 {Menu.icon}
                 <span className={`${!isSidebarOpened && 'hidden'} origin-left duration-200`}>{Menu.title}</span>
               </ListItemButton>

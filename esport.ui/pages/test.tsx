@@ -5,21 +5,23 @@ import { EHeader } from '../components/EHeader/EHeader'
 import { ESidebar } from '../components/ESidebar/ESidebar'
 // import { ESidebarOld } from '../components/ESidebar/ESidebar-old'
 
-import { sidebarOpenedWidth } from '../app-constants'
+import { sidebarCompactWidth, sidebarOpenedWidth } from '../app-constants'
 
 const Test: NextPage = () => {
-  const [openSidebar, setOpenSidebar] = useState(true)
+  // const [openSidebar, setOpenSidebar] = useState(true)
+  const [isSidebarOpened, setIsSidebarOpened] = useState(true)
 
-  const handleToggleSidebar = () => {
-    setOpenSidebar(prev => !prev)
-  }
+  // const handleToggleSidebar = () => {
+  //   setOpenSidebar(prev => !prev)
+  // }
+  const paddingLeft = isSidebarOpened ? `pl-[${sidebarOpenedWidth}px]` : `pl-[${sidebarCompactWidth}px]`
 
   return (
     <>
-      <ESidebar>
-        <main>
+      <ESidebar isSidebarOpened={isSidebarOpened} setIsSidebarOpened={setIsSidebarOpened}>
+        <main className={`bg-primary w-[100vw] h-[2000vh] ${paddingLeft}`}>
           {/* <EHeader open={openSidebar} onMenuClick={handleToggleSidebar} /> */}
-          <h1>OGihreoughroughoruewklgoiwhguoewhguewhguewhguewghuewohoewhgourwhguierg</h1>
+          <h1 className='text-white px-5'>Some content</h1>
         </main>
       </ESidebar>
     </>
