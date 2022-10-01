@@ -8,6 +8,6 @@
         public string TelephoneNumber { get; set; }
         public string Password { get; set; }
         public string RepeatPassword { get; set; }
-        public string ReturnUrl { get; set; }
+        public string PostBackUrl { get; set; }
     }
 }

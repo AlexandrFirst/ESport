@@ -21,9 +21,9 @@ namespace IdentityV2.Controllers
         }
 
         [HttpGet("Login")]
-        public async Task<IActionResult> Login([FromQuery]string postBackUrl) 
+        public IActionResult Login([FromQuery]string postBackUrl) 
         {
-            if (string.IsNullOrEmpty(postBackUrl)) postBackUrl = "https://localhost:3000";
+            if (string.IsNullOrEmpty(postBackUrl)) postBackUrl = "https://localhost:3000"; //TODO: set landing page
 
             var model = new LoginModel() { PostBackUrl = postBackUrl };
             return View(model);
@@ -39,6 +39,10 @@ namespace IdentityV2.Controllers
             };
 
             var token = await jwtMananager.AuthenticateAsync(loginDto);
+            Response.Cookies.Append("ESportCookie", token.Token, new Microsoft.AspNetCore.Http.CookieOptions()
+            {
+                HttpOnly = true
+            });
 
             return Ok(token);
         }
@@ -54,7 +58,14 @@ namespace IdentityV2.Controllers
             };
 
             var token = await jwtMananager.AuthenticateAsync(loginDto);
-            Response.Cookies.Append("ESportCookie", token.Token);
+            if (token == null) 
+            {
+                return Redirect(nameof(Login));
+            }
+            Response.Cookies.Append("ESportCookie", token.Token, new Microsoft.AspNetCore.Http.CookieOptions() 
+            {
+                HttpOnly = true
+            });
 
 
             byte[] decodedBytes = Convert.FromBase64String(loginModel.PostBackUrl);
@@ -65,18 +76,12 @@ namespace IdentityV2.Controllers
 
 
         [HttpGet]
-        public async Task<IActionResult> Register(string returnUrl)
+        public IActionResult Register([FromQuery]string postBackUrl)
         {
-            var model = new RegisterModel() { ReturnUrl = returnUrl };
-            return View(model);
-        }
+            if (string.IsNullOrEmpty(postBackUrl)) postBackUrl = "https://localhost:3000"; //TODO: set landing page            
+            var model = new RegisterModel() { PostBackUrl = postBackUrl };
 
-        [HttpGet]
-        public async Task<IActionResult> Register() 
-        {
-            var model = new RegisterModel() { ReturnUrl = "google.com" };
             return View(model);
-            return View();
         }
 
         [HttpPost]

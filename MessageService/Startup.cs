@@ -1,3 +1,7 @@
+using Email.Net;
+using Email.Net.EDP.SendGrid;
+using Email.Net.EDP.Smtp;
+using MessageService.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -25,6 +29,28 @@ namespace MessageService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddOptions<RabbitMqOptions>().Bind(Configuration.GetSection("RabbitMq"));
+
+            services.AddScoped<IEmailService, EmailService>();
+
+            services.AddEmailNet(options =>
+            {
+                options.DefaultFrom = new System.Net.Mail.MailAddress("ato31ato@gmail.com");
+                options.DefaultEmailDeliveryProvider = SmtpEmailDeliveryProvider.Name;
+            }).UseSmtp(config =>
+            {
+                config.SmtpOptions = new SmtpOptions()
+                {
+                    Host = "localhost",
+                    EnableSsl = false,
+                    DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = true
+                };
+            }).UseSendGrid(config =>
+            {
+                config.ApiKey = Configuration.GetSection("SendGrid")["Key"];
+            }); ;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,8 +62,6 @@ namespace MessageService
             }
 
             app.UseRouting();
-
-            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
