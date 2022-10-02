@@ -1,5 +1,6 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
+import { StyledEngineProvider } from '@mui/material'
 
 // import resolveConfig from 'tailwindcss/resolveConfig'
 // import tailwindConfigModule from '../tailwind.config.js'
@@ -17,7 +18,11 @@ import type { AppProps } from 'next/app'
 // })
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+  return (
+    <StyledEngineProvider injectFirst>
+      <Component {...pageProps} />
+    </StyledEngineProvider>
+  )
 }
 
 export default MyApp

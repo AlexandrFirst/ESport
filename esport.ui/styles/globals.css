@@ -10,6 +10,9 @@
     --color-bg-main: 40, 36, 61; /* #28243d */
     --color-bg-contrast: 49, 45, 75; /* #312d4b */
     --color-bg-subsidiary: 47, 44, 69; /* #2f2c45 */
+
+    --color-gradient-main-from: 142, 92, 246; /* #8e5cf6 */
+    --color-gradient-main-to: 216, 70, 239; /* #d846ef */
   }
 
   .theme-light {

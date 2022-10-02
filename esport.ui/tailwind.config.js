@@ -133,11 +133,12 @@ module.exports = {
           subsidiary: withOpacity('--color-bg-subsidiary'),
         },
       },
-      // gradientColorStops: {
-      //   skin: {
-      //     // hue: withOpacity('--color-fill'),
-      //   },
-      // },
+      gradientColorStops: {
+        skin: {
+          'main-from': withOpacity('--color-gradient-main-from'),
+          'main-to': withOpacity('--color-gradient-main-to'),
+        },
+      },
       colors: {
         'text-main': withOpacity('--color-text-main'),
         'text-subsidiary': withOpacity('--color-text-subsidiary'),
