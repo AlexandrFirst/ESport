@@ -7,7 +7,7 @@ import IconButton from '@mui/material/IconButton'
 import Typography from '@mui/material/Typography'
 
 import MenuIcon from '@mui/icons-material/Menu'
-import { sidebarOpenedWidth, MOBILE_BREACKPOINT } from '../../app-constants'
+import { sidebarOpenedWidth, MOBILE_BREACKPOINT } from '../../constants'
 import { useMediaQuery } from '@mui/material'
 
 interface AppBarProps {

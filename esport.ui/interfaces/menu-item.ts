@@ -5,4 +5,5 @@ export interface IMenuItem {
   icon?: ReactNode
   items?: IMenuItem[]
   link?: string
+  gap?: boolean
 }

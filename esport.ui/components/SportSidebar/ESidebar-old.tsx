@@ -21,7 +21,7 @@ import { useMediaQuery } from '@mui/material'
 
 import EMobileSidebar from './EMobileSidebar'
 
-import { drawerWidth, MOBILE_BREACKPOINT } from '../../app-constants'
+import { drawerWidth, MOBILE_BREACKPOINT } from '../../constants'
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,

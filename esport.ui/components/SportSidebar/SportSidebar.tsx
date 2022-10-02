@@ -1,53 +1,17 @@
-import React, { PropsWithChildren, useState } from 'react'
-import { IconButton, List, ListItem, ListItemButton, useMediaQuery, useTheme } from '@mui/material'
+import React, { PropsWithChildren } from 'react'
+import { useRouter } from 'next/router'
 
+import { IconButton, List, ListItem, useMediaQuery, useTheme } from '@mui/material'
 import KeyboardDoubleArrowLeftIcon from '@mui/icons-material/KeyboardDoubleArrowLeft'
 
-import AdbIcon from '@mui/icons-material/Adb'
-import AccountBoxIcon from '@mui/icons-material/AccountBox'
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
-
-import { MOBILE_BREACKPOINT } from '../../app-constants'
+import { MOBILE_BREACKPOINT } from '@constants/layout'
+import { IMenuItem } from '@interfaces/menu-item'
 import { SportLogo } from '@components/SportLogo/SportLogo'
+import { SportScrollable } from '@components/SportScrollable/SportScrollable'
+
 import { CollapsableMenuItem } from './CollapsableMenuItem/CollapsableMenuItem'
 import { SimpleMenuItem } from './SimpleMenuItem/SimpleMenuItem'
-import { SportScrollable } from '@components/SportScrollable/SportScrollable'
-import { IMenuItem } from '@interfaces/menu-item'
-
-const menus = [
-  { title: 'Dashboard', icon: <AdbIcon className='mr-3' /> },
-  { title: 'Inbox', icon: <AccountBoxIcon className='mr-3' /> },
-  {
-    title: 'Accounts',
-    icon: <AdbIcon className='mr-3' />,
-    gap: true,
-    items: [
-      { title: 'Dashboard', icon: <AdbIcon className='mr-3' /> },
-      { title: 'Inbox', icon: <AccountBoxIcon className='mr-3' /> },
-    ],
-  },
-  { title: 'Schedule ', icon: <AccountBoxIcon className='mr-3' /> },
-  {
-    title: 'Search',
-    icon: <AdbIcon className='mr-3' />,
-    items: [
-      { title: 'Dashboard', icon: <AdbIcon className='mr-3' /> },
-      { title: 'Inbox', icon: <AccountBoxIcon className='mr-3' /> },
-    ],
-  },
-  { title: 'Analytics', icon: <AccountBoxIcon className='mr-3' /> },
-  { title: 'Files ', icon: <AdbIcon className='mr-3' />, gap: true },
-  { title: 'Setting', icon: <AccountBoxIcon className='mr-3' /> },
-  { title: 'Analytics', icon: <AccountBoxIcon className='mr-3' /> },
-  { title: 'Files ', icon: <AdbIcon className='mr-3' />, gap: true },
-  { title: 'Setting', icon: <AccountBoxIcon className='mr-3' /> },
-  { title: 'Analytics', icon: <AccountBoxIcon className='mr-3' /> },
-  { title: 'Files ', icon: <AdbIcon className='mr-3' />, gap: true },
-  { title: 'Setting', icon: <AccountBoxIcon className='mr-3' /> },
-  { title: 'Analytics', icon: <AccountBoxIcon className='mr-3' /> },
-  { title: 'Files ', icon: <AdbIcon className='mr-3' />, gap: true },
-  { title: 'Setting', icon: <AccountBoxIcon className='mr-3' /> },
-]
+import { useMenu } from './useMenu'
 
 interface ESidebarProps extends PropsWithChildren {
   isSidebarOpened: boolean
@@ -58,12 +22,15 @@ export const SportSidebar: React.FC<ESidebarProps> = ({ isSidebarOpened, setIsSi
   const theme = useTheme()
   const isMobile = useMediaQuery(theme.breakpoints.down(MOBILE_BREACKPOINT))
 
+  const { pathname, push } = useRouter()
+  const { menu } = useMenu()
+
   const handleClickArrow = () => {
     setIsSidebarOpened(!isSidebarOpened)
   }
 
-  const handleClick = (item: IMenuItem) => {
-    console.log('===item===', item)
+  const handleClick = ({ link }: IMenuItem) => {
+    push(link ?? '')
   }
 
   return (
@@ -74,16 +41,16 @@ export const SportSidebar: React.FC<ESidebarProps> = ({ isSidebarOpened, setIsSi
       <SportLogo className={`cursor-pointer duration-500 mr-5`} showText={isSidebarOpened} />
       <List className={`absolute top-20 ${isSidebarOpened ? 'w-10/12' : 'w-4/6'}`}>
         <SportScrollable>
-          {menus.map((menu, index) => (
+          {menu.map((menu, index) => (
             <ListItem
               key={index}
               className={`flex justify-start flex-col rounded-md p-0 cursor-pointer hover:bg-light-white text-skin-main text-sm transition-all duration-500 items-start
               ${menu.gap ? 'mt-9' : 'mt-2'} ${index === 0 && 'bg-light-white'} `}
             >
               {menu.items ? (
-                <CollapsableMenuItem item={menu} isSidebarOpened={isSidebarOpened} onSubItemClick={handleClick} />
+                <CollapsableMenuItem item={menu} isSidebarOpened={isSidebarOpened} onSubItemClick={handleClick} currentPathname={pathname} />
               ) : (
-                <SimpleMenuItem item={menu} isSidebarOpened={isSidebarOpened} onItemClick={handleClick} />
+                <SimpleMenuItem item={menu} isSidebarOpened={isSidebarOpened} onItemClick={handleClick} currentPathname={pathname} />
               )}
             </ListItem>
           ))}
