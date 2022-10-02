@@ -41,19 +41,21 @@ export const SportSidebar: React.FC<ESidebarProps> = ({ isSidebarOpened, setIsSi
       <SportLogo className={`cursor-pointer duration-500 mr-5`} showText={isSidebarOpened} />
       <List className={`absolute top-20 ${isSidebarOpened ? 'w-10/12' : 'w-4/6'}`}>
         <SportScrollable>
-          {menu.map((menu, index) => (
-            <ListItem
-              key={index}
-              className={`flex justify-start flex-col rounded-md p-0 cursor-pointer hover:bg-light-white text-skin-main text-sm transition-all duration-500 items-start
+          <nav>
+            {menu.map((menu, index) => (
+              <ListItem
+                key={index}
+                className={`flex justify-start flex-col rounded-md p-0 cursor-pointer hover:bg-light-white text-skin-main text-sm transition-all duration-500 items-start
               ${menu.gap ? 'mt-9' : 'mt-2'} ${index === 0 && 'bg-light-white'} `}
-            >
-              {menu.items ? (
-                <CollapsableMenuItem item={menu} isSidebarOpened={isSidebarOpened} onSubItemClick={handleClick} currentPathname={pathname} />
-              ) : (
-                <SimpleMenuItem item={menu} isSidebarOpened={isSidebarOpened} onItemClick={handleClick} currentPathname={pathname} />
-              )}
-            </ListItem>
-          ))}
+              >
+                {menu.items ? (
+                  <CollapsableMenuItem item={menu} isSidebarOpened={isSidebarOpened} onSubItemClick={handleClick} currentPathname={pathname} />
+                ) : (
+                  <SimpleMenuItem item={menu} isSidebarOpened={isSidebarOpened} onItemClick={handleClick} currentPathname={pathname} />
+                )}
+              </ListItem>
+            ))}
+          </nav>
         </SportScrollable>
       </List>
     </div>
