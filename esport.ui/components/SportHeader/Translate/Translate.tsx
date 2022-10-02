@@ -29,7 +29,7 @@ export const Translate: React.FC<TranslateProps> = ({ className }) => {
       </SportIconButton>
       <Menu id='language-menu' anchorEl={anchorEl} open={open} onClose={handleClose} classes={{ paper: `bg-skin-contrast`, list: `text-skin-main` }}>
         {languages.map(lang => (
-          <MenuItem key={lang} onClick={handleClose} className={`${lang === 'English' && 'bg-skin-main'}`}>
+          <MenuItem key={lang} onClick={handleClose} className={`${lang === 'English' && 'bg-skin-main hover:bg-skin-main'}`}>
             {lang}
           </MenuItem>
         ))}

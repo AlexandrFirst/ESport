@@ -1,8 +1,10 @@
 import React from 'react'
 import cn from 'classnames'
 
-import { Translate } from './Translate/Translate'
 import { List, ListItem } from '@mui/material'
+
+import { Translate } from './Translate/Translate'
+import { ThemeSwitcher } from './ThemeSwitcher/ThemeSwitcher'
 
 interface SportHeaderProps {
   className?: string
@@ -18,6 +20,10 @@ export const SportHeader: React.FC<SportHeaderProps> = ({ className }) => {
         <List className='flex'>
           <ListItem className='p-0 mr-6'>
             <Translate />
+          </ListItem>
+
+          <ListItem className='p-0 mr-6'>
+            <ThemeSwitcher />
           </ListItem>
         </List>
       </nav>
