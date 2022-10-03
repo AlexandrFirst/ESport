@@ -1,5 +1,6 @@
 ﻿using IdentityV2.Dto.User;
 using IdentityV2.Infrastructure.Core;
+using IdentityV2.Infrastructure.Implementation;
 using IdentityV2.Models.AccountModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -13,11 +14,11 @@ namespace IdentityV2.Controllers
     [Route("[controller]")]
     public class AccountController : Controller
     {
-        private readonly IJWTManagerRepository jwtMananager;
+        private readonly IAccountService accountService;
 
-        public AccountController(IJWTManagerRepository jwtMananager)
+        public AccountController(IAccountService accountService)
         {
-            this.jwtMananager = jwtMananager;
+            this.accountService = accountService;
         }
 
         [HttpGet("Login")]
@@ -38,7 +39,7 @@ namespace IdentityV2.Controllers
                 Password = loginModel.Password
             };
 
-            var token = await jwtMananager.AuthenticateAsync(loginDto);
+            var token = await accountService.Login(loginDto);
             Response.Cookies.Append("ESportCookie", token.Token, new Microsoft.AspNetCore.Http.CookieOptions()
             {
                 HttpOnly = true
@@ -57,7 +58,7 @@ namespace IdentityV2.Controllers
                 Password = loginModel.Password
             };
 
-            var token = await jwtMananager.AuthenticateAsync(loginDto);
+            var token = await accountService.Login(loginDto);
             if (token == null) 
             {
                 return Redirect(nameof(Login));
