@@ -13,9 +13,10 @@ import { useMedia } from '@hooks/useMedia'
 interface MainLayoutProps extends PropsWithChildren {}
 
 export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
-  const [isSidebarOpened, setIsSidebarOpened] = useState(true)
   const { isTablet } = useMedia()
   const { currentTheme } = useAppThemeContext()
+
+  const [isSidebarOpened, setIsSidebarOpened] = useState(true)
 
   const paddingClasses = cn({ ['pl-compact']: !isSidebarOpened, ['pl-full']: isSidebarOpened })
   const layoutClassName = cn(`bg-skin-main transition-all duration-500`, styles.width100, isTablet ? 'pl-layout-tablet' : paddingClasses)
