@@ -7,10 +7,8 @@ import { MainLayout } from '@features/MainLayout/MainLayout'
 const Test: NextPage = () => {
   return (
     <MainLayout>
-      <h1 className={`text-skin-main px-5`}>Some content</h1>
-      <SportButton variant='outlined' color='primary'>
-        Click
-      </SportButton>
+      <h1 className='text-skin-main px-5'>Some content</h1>
+      <SportButton>Click</SportButton>
     </MainLayout>
   )
 }

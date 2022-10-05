@@ -131,6 +131,9 @@ module.exports = {
           main: withOpacity('--color-bg-main'),
           contrast: withOpacity('--color-bg-contrast'),
           subsidiary: withOpacity('--color-bg-subsidiary'),
+
+          primary: withOpacity('--color-primary-main'),
+          'primary-hover': withOpacity('--color-primary-main-hover'),
         },
       },
       gradientColorStops: {
@@ -145,6 +148,9 @@ module.exports = {
         'bg-main': withOpacity('--color-bg-main'),
         'bg-contrast': withOpacity('--color-bg-contrast'),
         'bg-subsidiary': withOpacity('--color-bg-subsidiary'),
+
+        primary: withOpacity('--color-primary-main'),
+        'primary-hover': withOpacity('--color-primary-main-hover'),
       },
       transitionDuration: {
         DEFAULT: '300ms',

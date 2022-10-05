@@ -28,18 +28,14 @@ export const ThemeSwitcher: React.FC = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
 
-  const handleShowMenu = (event: MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget)
-  }
-
   const handleSetTheme = (theme: AppTheme) => {
     setCurrentTheme(theme)
     setAnchorEl(null)
   }
 
-  const handleClose = () => {
-    setAnchorEl(null)
-  }
+  const handleShowMenu = (event: MouseEvent<HTMLButtonElement>) => setAnchorEl(event.currentTarget)
+
+  const handleClose = () => setAnchorEl(null)
 
   return (
     <>
@@ -51,7 +47,7 @@ export const ThemeSwitcher: React.FC = () => {
           <MenuItem
             key={themeItem.title}
             onClick={() => handleSetTheme(themeItem.className)}
-            className={`${themeItem.className === currentTheme && 'bg-skin-main hover:bg-skin-main'}`}
+            className={`${themeItem.className === currentTheme && 'bg-skin-main hover:bg-skin-main text-skin-main '}`}
           >
             {themeItem.title}
           </MenuItem>
