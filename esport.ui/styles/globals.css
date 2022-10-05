@@ -27,6 +27,7 @@
     --color-bg-subsidiary: 47, 44, 69; /* #2f2c45 */
 
     --color-primary-main: 142, 92, 246; /* #8e5cf6 */
+    --color-primary-main-hover: 139, 82, 242; /* #8b52f2 */
   }
 
   .theme-neon {
@@ -37,6 +38,7 @@
     --color-bg-contrast: 49, 45, 75; /* #312d4b */
     --color-bg-subsidiary: 47, 44, 69; /* #2f2c45 */
 
+    --color-primary-main: 142, 92, 246; /* #8e5cf6 */
     --color-primary-main-hover: 139, 82, 242; /* #8b52f2 */
   }
 }
