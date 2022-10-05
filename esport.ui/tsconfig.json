@@ -17,9 +17,11 @@
     "baseUrl": ".",
     "paths": {
       "@components/*": ["components/*"],
-      "@layouts/*": ["layouts/*"],
+      "@features/*": ["features/*"],
       "@interfaces/*": ["interfaces/*"],
       "@constants/*": ["constants/*"],
+      "@hooks/*": ["hooks/*"],
+      "@enums/*": ["enums/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

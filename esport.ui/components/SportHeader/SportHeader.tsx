@@ -1,30 +1,39 @@
 import React from 'react'
 import cn from 'classnames'
 
-import { List, ListItem } from '@mui/material'
+import { List } from '@mui/material'
+
+import { HeaderListItem } from './ListItem/ListItem'
 
 import { Translate } from './Translate/Translate'
 import { ThemeSwitcher } from './ThemeSwitcher/ThemeSwitcher'
+import { Notifications } from './Notifications/Notifications'
+import { User } from './User/User'
 
 interface SportHeaderProps {
   className?: string
 }
 
 export const SportHeader: React.FC<SportHeaderProps> = ({ className }) => {
-  // const theme = useTheme()
-  // const isMobile = useMediaQuery(theme.breakpoints.down(MOBILE_BREACKPOINT))
-
   return (
     <header className={cn('bg-skin-main fixed h-[64px]', className)}>
       <nav className='float-right'>
         <List className='flex'>
-          <ListItem className='p-0 mr-6'>
+          <HeaderListItem>
             <Translate />
-          </ListItem>
+          </HeaderListItem>
 
-          <ListItem className='p-0 mr-6'>
+          <HeaderListItem>
             <ThemeSwitcher />
-          </ListItem>
+          </HeaderListItem>
+
+          <HeaderListItem>
+            <Notifications />
+          </HeaderListItem>
+
+          <HeaderListItem>
+            <User />
+          </HeaderListItem>
         </List>
       </nav>
     </header>
