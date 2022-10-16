@@ -115,7 +115,7 @@ function withOpacity(variableName) {
 // }
 
 module.exports = {
-  content: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
+  content: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}', './features/**/*.{js,ts,jsx,tsx}'],
   darkMode: 'class', // or 'media' or 'class' or false
   theme: {
     extend: {
@@ -123,6 +123,7 @@ module.exports = {
         skin: {
           main: withOpacity('--color-text-main'),
           subsidiary: withOpacity('--color-text-subsidiary'),
+          error: withOpacity('--color-error-main'),
           // contrast: withOpacity(),
         },
       },
@@ -148,6 +149,7 @@ module.exports = {
         'bg-main': withOpacity('--color-bg-main'),
         'bg-contrast': withOpacity('--color-bg-contrast'),
         'bg-subsidiary': withOpacity('--color-bg-subsidiary'),
+        error: withOpacity('--color-error-main'),
 
         primary: withOpacity('--color-primary-main'),
         'primary-hover': withOpacity('--color-primary-main-hover'),

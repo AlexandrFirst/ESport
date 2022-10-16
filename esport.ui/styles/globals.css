@@ -16,6 +16,8 @@
 
     --color-primary-main: 142, 92, 246; /* #8e5cf6 */
     --color-primary-main-hover: 139, 82, 242; /* #8b52f2 */
+
+    --color-error-main: 255, 51, 51; /* #ff3333 */
   }
 
   .theme-light {
@@ -28,6 +30,8 @@
 
     --color-primary-main: 142, 92, 246; /* #8e5cf6 */
     --color-primary-main-hover: 139, 82, 242; /* #8b52f2 */
+
+    --color-error-main: 255, 51, 51; /* #ff3333 */
   }
 
   .theme-neon {
@@ -40,6 +44,8 @@
 
     --color-primary-main: 142, 92, 246; /* #8e5cf6 */
     --color-primary-main-hover: 139, 82, 242; /* #8b52f2 */
+
+    --color-error-main: 255, 51, 51; /* #ff3333 */
   }
 }
 
