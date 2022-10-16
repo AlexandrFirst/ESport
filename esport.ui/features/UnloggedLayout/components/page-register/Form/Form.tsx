@@ -11,7 +11,7 @@ import { useMedia } from '@hooks/useMedia'
 
 import { RegisterSteps } from '@features/UnloggedLayout/enums'
 import { IRegisterForm } from '@features/UnloggedLayout/interfaces'
-import { routes } from '@features/routes'
+import { routes } from 'routes'
 
 import { SportForm } from '@components/SportForm/SportForm'
 import { SportButton } from '@components/SportButton/SportButton'

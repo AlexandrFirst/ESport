@@ -7,7 +7,7 @@ import { Grid } from '@mui/material'
 import { useMedia } from '@hooks/useMedia'
 
 import { ILoginForm } from '@features/UnloggedLayout/interfaces'
-import { routes } from '@features/routes'
+import { routes } from 'routes'
 
 import { SportInput } from '@components/SportInput/SportInput'
 import { SportForm } from '@components/SportForm/SportForm'
