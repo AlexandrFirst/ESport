@@ -17,7 +17,7 @@ const Test: NextPage = () => {
   return (
     <MainLayout>
       <h1 className='text-skin-main px-5'>Some content</h1>
-      <SportButton onClick={handleClick}>Click</SportButton>
+      <SportButton onClick={handleClick}>Toggle loading</SportButton>
     </MainLayout>
   )
 }
