@@ -1,3 +1,9 @@
-.left {
-  width: 75%;
+.bgGirl {
+  background: url('../../../../public/unloggedin-backgound.jpg') no-repeat 50% / cover;
+  /* max-width: 100vw; */
+}
+
+.bgBoy {
+  background: url('../../../../public/unloggedin-backgound-1.jpg') no-repeat 50% / cover;
+  /* max-width: 100vw; */
 }

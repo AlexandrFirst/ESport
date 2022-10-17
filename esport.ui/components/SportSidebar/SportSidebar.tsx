@@ -11,9 +11,9 @@ interface SportSidebarProps extends PropsWithChildren {
 }
 
 export const SportSidebar: React.FC<SportSidebarProps> = ({ isSidebarOpened, setIsSidebarOpened }) => {
-  const { isTablet } = useMedia()
+  const { isMobile } = useMedia()
 
-  return isTablet ? (
+  return isMobile ? (
     <MobileSportSidebar isSidebarOpened={isSidebarOpened} setIsSidebarOpened={setIsSidebarOpened} />
   ) : (
     <LargeScreenSidebar isSidebarOpened={isSidebarOpened} setIsSidebarOpened={setIsSidebarOpened} />

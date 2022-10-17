@@ -7,7 +7,7 @@ interface MainProps {
 
 export const Main: React.FC<MainProps> = ({ leftComponent, rightComponent }) => {
   return (
-    <main className='w-screen flex bg-skin-main h-full min-h-screen'>
+    <main className=' flex bg-skin-main h-full min-h-screen'>
       {leftComponent}
       {rightComponent}
     </main>

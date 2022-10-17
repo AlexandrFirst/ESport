@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react'
+import React, { memo, PropsWithChildren } from 'react'
 import styles from './Right.module.css'
 
 import cn from 'classnames'
@@ -13,7 +13,7 @@ interface RightProps extends PropsWithChildren {
   subtitle: string
 }
 
-export const Right: React.FC<RightProps> = ({ title, subtitle, children }) => {
+export const Right: React.FC<RightProps> = memo(({ title, subtitle, children }) => {
   const { isMobile, isTablet } = useMedia()
   return (
     <section className={cn('text-skin-main bg-skin-contrast p-20', { ['w-9/12']: isTablet, ['w-full px-10 py-16']: isMobile })}>
@@ -22,4 +22,4 @@ export const Right: React.FC<RightProps> = ({ title, subtitle, children }) => {
       {children}
     </section>
   )
-}
+})

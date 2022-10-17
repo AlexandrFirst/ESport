@@ -21,6 +21,8 @@
       "@interfaces/*": ["interfaces/*"],
       "@constants/*": ["constants/*"],
       "@hooks/*": ["hooks/*"],
+      "@storage/*": ["storage/*"],
+      "@shared/*": ["shared/*"],
       "@enums/*": ["enums/*"]
     }
   },

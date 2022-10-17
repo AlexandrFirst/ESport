@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { memo } from 'react'
 import styles from './Left.module.css'
 
 import cn from 'classnames'
 import { useMedia } from '@hooks/useMedia'
 
-export const Left: React.FC = () => {
+export const Left: React.FC = memo(() => {
   const { isMobile } = useMedia()
-  return <section className={cn('w-9/12 text-skin-main', { ['hidden']: isMobile })}>LEFT</section>
-}
+  const bgRand = Math.random() > 0.49 ? styles.bgGirl : styles.bgBoy
+
+  return <section className={cn('w-8/12 text-skin-main', bgRand, { ['hidden']: isMobile })} />
+})

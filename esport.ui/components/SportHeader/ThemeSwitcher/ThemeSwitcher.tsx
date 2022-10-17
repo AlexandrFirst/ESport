@@ -5,7 +5,7 @@ import ColorLensIcon from '@mui/icons-material/ColorLens'
 
 import { AppTheme } from '@enums/app-theme'
 import { SportIconButton } from '@components/SportIconButton/SportIconButton'
-import { useAppThemeContext } from '@features/AppThemeProvider/useAppThemeContext'
+import { useAppThemeContext } from '@shared/AppThemeProvider/useAppThemeContext'
 
 const themes = [
   {

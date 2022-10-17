@@ -36,8 +36,8 @@ export const Form: React.FC<FormProps> = ({ methods, currStep, setCurrStep }) =>
   const { isMobile } = useMedia()
   const { registration } = useRegister()
 
-  const isLastStep = currStep === RegisterSteps.AdditioanalInfo
   const isFirstStep = currStep === RegisterSteps.MainInfo
+  const isLastStep = currStep === RegisterSteps.AdditioanalInfo
 
   const handleNext = () => {
     const newStep = currStep + 1

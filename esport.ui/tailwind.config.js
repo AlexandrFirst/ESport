@@ -157,6 +157,10 @@ module.exports = {
       transitionDuration: {
         DEFAULT: '300ms',
       },
+      backgroundImage: {
+        'unloggedin-layout-1': "url('/public/unloggedin-backgound.jpg')",
+        'unloggedin-layout-2': "url('/public/unloggedin-backgound-1.jpg')",
+      },
     },
   },
   variants: {
