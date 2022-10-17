@@ -124,6 +124,8 @@ module.exports = {
           main: withOpacity('--color-text-main'),
           subsidiary: withOpacity('--color-text-subsidiary'),
           error: withOpacity('--color-error-main'),
+          primary: withOpacity('--color-primary-main'),
+          'primary-hover': withOpacity('--color-primary-main-hover'),
           // contrast: withOpacity(),
         },
       },

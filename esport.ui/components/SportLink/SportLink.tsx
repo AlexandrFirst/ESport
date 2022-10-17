@@ -2,7 +2,7 @@ import React, { MouseEvent } from 'react'
 import Link from 'next/link'
 
 import cn from 'classnames'
-import { Link as MUILink, LinkProps } from '@mui/material'
+import { ButtonBase, Link as MUILink, LinkProps } from '@mui/material'
 
 interface SportLinkProps extends LinkProps {
   to: string
@@ -21,15 +21,17 @@ export const SportLink: React.FC<SportLinkProps> = ({ className, likeText, to, d
 
   return (
     <Link href={!disabled ? to : ''}>
-      <MUILink
-        {...props}
-        className={cn('text-primary no-underline', className, { ['text-opacity-70 cursor-default']: disabled, ['text-skin-main5']: likeText })}
-        href={to}
-        onClick={handleClickLink}
-      >
-        {children}
-        {/* {getIcon(WpLinkIconsEnum.download)} */}
-      </MUILink>
+      <ButtonBase className='rounded-md'>
+        <MUILink
+          {...props}
+          className={cn('text-primary no-underline', className, { ['text-opacity-70 cursor-default']: disabled, ['text-skin-main5']: likeText })}
+          href={to}
+          onClick={handleClickLink}
+        >
+          {children}
+          {/* {getIcon(WpLinkIconsEnum.download)} */}
+        </MUILink>
+      </ButtonBase>
     </Link>
   )
 }

@@ -9,6 +9,7 @@ import { SportSidebar } from '@components/SportSidebar/SportSidebar'
 import { SportHeader } from '@components/SportHeader/SportHeader'
 
 import { useMedia } from '@hooks/useMedia'
+import { TopPageLoader } from '@shared/TopPageLoader/TopPageLoader'
 
 interface MainLayoutProps extends PropsWithChildren {}
 
@@ -24,6 +25,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({ children }) => {
   return (
     <main className={cn('h-screen flex flex-row justify-start', currentTheme)}>
       <SportHeader className={layoutClassName} />
+      <TopPageLoader />
       <SportSidebar isSidebarOpened={isSidebarOpened} setIsSidebarOpened={setIsSidebarOpened} />
       <section className={cn(layoutClassName, styles.ptHeader)}>{children}</section>
     </main>
