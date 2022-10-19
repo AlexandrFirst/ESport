@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
+using System;
 using System.Text;
 
 namespace IdentityV2.RMQ
@@ -9,13 +10,18 @@ namespace IdentityV2.RMQ
     public class RabbitMQProducer : IMessageProducer
     {
         private ConnectionFactory _connectionFactory;
+
         private IConnection _connection;
-        private const string QueueName = "emails";
-
+       
         private readonly RabbitMqOptions rabbitMqOptions;
-        private readonly Logger<RabbitMQProducer> _logger;
+       
+        public IModel channel;
 
-        public RabbitMQProducer(IOptions<RabbitMqOptions> rabbitMqOptions, Logger<RabbitMQProducer> _logger)
+        private const string mailExchangename = "mail_exchange";
+        private const string queueName = "emails";
+        private const string routingKey = "mail";
+
+        public RabbitMQProducer(IOptions<RabbitMqOptions> rabbitMqOptions)
         {
             this.rabbitMqOptions = rabbitMqOptions.Value;
 
@@ -27,24 +33,32 @@ namespace IdentityV2.RMQ
                 Port = this.rabbitMqOptions.Port,
                 DispatchConsumersAsync = true
             };
-         
-            this._logger = _logger;            
+
+            
         }
 
         public void SendMessage<T>(T message)
         {
-            _logger.LogInformation("Queue is sending message");
+            if (_connection == null)
+            {
+                _connectionFactory.AutomaticRecoveryEnabled = true;
+                _connectionFactory.NetworkRecoveryInterval = TimeSpan.FromSeconds(10);
+                _connection = _connectionFactory.CreateConnection();
+            }
 
-            _connection = _connectionFactory.CreateConnection();
-            using var channel = _connection.CreateModel();
-            channel.QueueDeclarePassive(QueueName);
-            channel.BasicQos(0, 1, false);
+            if (channel == null) { 
+                channel = _connection.CreateModel();
 
-            channel.QueueDeclare("emails");
+                channel.ExchangeDeclare(mailExchangename, ExchangeType.Direct);
+                channel.QueueDeclarePassive(queueName);
+                channel.QueueBind(queueName, mailExchangename, routingKey, null);
 
+
+                channel.BasicQos(0, 1, false);
+            }
             var json = JsonConvert.SerializeObject(message);
             var body = Encoding.UTF8.GetBytes(json);
-            channel.BasicPublish(exchange: "", routingKey: "emails", body: body);
+            channel.BasicPublish(exchange: mailExchangename, routingKey: routingKey, body: body);
         }
     }
 }

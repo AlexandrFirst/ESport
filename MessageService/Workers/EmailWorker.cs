@@ -46,8 +46,6 @@ namespace MessageService.Workers
             };
             _connection = _connectionFactory.CreateConnection();
             _channel = _connection.CreateModel();
-            _channel.QueueDeclarePassive(QueueName);
-            _channel.BasicQos(0, 1, false);
 
             _logger.LogInformation($"Queue [{QueueName}] is waiting for messages.");
 

@@ -67,7 +67,7 @@ namespace IdentityV2
 
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddSingleton<IMessageProducer, RabbitMQProducer>();
+            services.AddScoped<IMessageProducer, RabbitMQProducer>();
 
             services.AddScoped<IJWTManagerRepository, JWTManagerRepository>();
             services.AddScoped<IAccountService, AccountService>();

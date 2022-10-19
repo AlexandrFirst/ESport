@@ -79,16 +79,17 @@ namespace IdentityV2.Controllers
         [HttpGet]
         public IActionResult Register([FromQuery]string postBackUrl)
         {
-            if (string.IsNullOrEmpty(postBackUrl)) postBackUrl = "https://localhost:3000"; //TODO: set landing page            
+            if (string.IsNullOrEmpty(postBackUrl)) postBackUrl = "https://localhost:3000";            
             var model = new RegisterModel() { PostBackUrl = postBackUrl };
 
             return View(model);
         }
 
-        [HttpPost]
+        [HttpPost("Register")]
         public async Task<IActionResult> Register([FromBody] RegisterModel registerModel)
         {
-            return View();
+            var registrationResult = await accountService.Register(registerModel);
+            return Ok(registrationResult);
         }
     }
 }

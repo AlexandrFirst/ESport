@@ -17,8 +17,6 @@ namespace IdentityV2.Dto.User
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Telephone is required")]
-        [RegularExpression("^(?:\\+38)?(?:\\(044\\)[ .-]?[0-9]{3}[ .-]?[0-9]{2}[ .-]?[0-9]{2}|044[ .-]?[0-9]{3}[ .-]?[0-9]{2}[ .-]?[0-9]{2}|044[0-9]{7})$", 
-            ErrorMessage = "Telephone is required and must be properly formatted.")]
         public string TelephoneNumber { get; set; }
         public string ProfileImageUrl { get; set; }
     }
