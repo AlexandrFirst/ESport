@@ -3,6 +3,7 @@ import { UseFormRegister } from 'react-hook-form'
 
 import { RegisterSteps } from '@features/UnloggedLayout/enums'
 import { IRegisterForm } from '@features/UnloggedLayout/interfaces'
+
 import { RegisterInput } from '../RegisterInput/RegisterInput'
 
 interface SecondStepProps {

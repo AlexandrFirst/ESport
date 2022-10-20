@@ -5,7 +5,7 @@ import { IRegisterForm } from '@features/UnloggedLayout/interfaces'
 import { RegisterSteps } from '@features/UnloggedLayout/enums'
 
 import { Left } from '../Left/Left'
-import { Main } from '../Main/Main'
+import { Main } from '../Main'
 import { Right } from '../Right/Right'
 
 import { Form } from './Form/Form'
