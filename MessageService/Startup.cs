@@ -2,6 +2,7 @@ using Email.Net;
 using Email.Net.EDP.SendGrid;
 using Email.Net.EDP.Smtp;
 using MessageService.Models;
+using MessageService.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -32,7 +33,7 @@ namespace MessageService
 
             services.AddOptions<RabbitMqOptions>().Bind(Configuration.GetSection("RabbitMq"));
 
-            services.AddScoped<IEmailService, EmailService>();
+            services.AddScoped<IEmailSenderService, EmailSenderService>();
 
             services.AddEmailNet(options =>
             {
@@ -42,7 +43,7 @@ namespace MessageService
             {
                 config.SmtpOptions = new SmtpOptions()
                 {
-                    Host = "localhost",
+                    Host = Configuration.GetSection("SMTPOptions")["Host"],
                     EnableSsl = false,
                     DeliveryMethod = System.Net.Mail.SmtpDeliveryMethod.Network,
                     UseDefaultCredentials = true

@@ -5,6 +5,6 @@ namespace MessageService.Services
 {
     public interface IEmailSenderService
     {
-        Task<int> SendMessages(SendMessageRequest sendMessageRequest);
+        Task<int> SendMessagesAsync(SendMessageRequest sendMessageRequest);
     }
 }

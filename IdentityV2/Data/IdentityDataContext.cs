@@ -11,10 +11,11 @@ namespace IdentityV2.Data
         public virtual DbSet<User> Users { get; set; }
         public virtual DbSet<UserHistory> UserHistory { get; set; }
         public virtual DbSet<UserRoles> UserRoles { get; set; }
+        public virtual DbSet<PendingUser> PendingUser { get; set; }
+
         public IdentityDataContext([NotNull] DbContextOptions options) : base(options)
         {
             Database.Migrate();
-           // this.ChangeTracker.LazyLoadingEnabled = false;
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
@@ -27,6 +28,7 @@ namespace IdentityV2.Data
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new UserRoleConfiguration());
             modelBuilder.ApplyConfiguration(new RoleConfiguration());
+            modelBuilder.ApplyConfiguration(new PendingUserConfiguration());
         }
     }
 }

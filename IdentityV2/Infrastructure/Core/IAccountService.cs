@@ -9,5 +9,6 @@ namespace IdentityV2.Infrastructure.Implementation
     {
         public Task<Tokens> Login(UserLoginDto userLoginDto);
         public Task<RegisterResultModel> Register(RegisterModel registerModel);
+        public Task<bool> ConfirmRegistration(string token);
     }
 }

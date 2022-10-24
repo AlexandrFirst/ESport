@@ -8,7 +8,10 @@ using IdentityV2.Models;
 using IdentityV2.Models.AccountModels;
 using IdentityV2.RMQ;
 using IdentityV2.Utils;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -22,20 +25,43 @@ namespace IdentityV2.Infrastructure.Core
         private readonly IJWTManagerRepository jwtMananager;
         private readonly IMapper mapper;
         private readonly IMessageProducer messageProducer;
+        private readonly IHttpContextAccessor httpContextAccessor;
         private readonly string passwordSecretKey;
 
         public AccountService(IdentityDataContext dataContext, 
             IJWTManagerRepository jwtMananager,
             IConfiguration configuration,
             IMapper mapper,
-            IMessageProducer messageProducer)
+            IMessageProducer messageProducer,
+            IHttpContextAccessor httpContextAccessor)
         {
             this.dataContext = dataContext;
             this.jwtMananager = jwtMananager;
             this.mapper = mapper;
             this.messageProducer = messageProducer;
+            this.httpContextAccessor = httpContextAccessor;
             passwordSecretKey = configuration.GetSection("User")["Key"];
 
+        }
+
+        public async Task<bool> ConfirmRegistration(string token)
+        {
+            var pendingUser = await dataContext.PendingUser.FirstOrDefaultAsync(x => x.PendingToken.Equals(Guid.Parse(token)));
+            if (pendingUser == null)
+                return false;
+
+            if (DateTime.Now > pendingUser.PendingDateEnd) 
+            {
+                dataContext.Remove(pendingUser);
+                return false;
+            }
+
+            var user = pendingUser.User;
+            user.IsPending = false;
+            dataContext.Remove(pendingUser);
+            await dataContext.SaveChangesAsync();
+
+            return true;
         }
 
         public async Task<Tokens> Login(UserLoginDto userLoginDto)
@@ -58,7 +84,7 @@ namespace IdentityV2.Infrastructure.Core
                 Password = registerModel.Password,
                 ConfirmPassword = registerModel.ConfirmPassword,
                 Surname = registerModel.Surname,
-                TelephoneNumber = registerModel.TelephoneNumber
+                TelephoneNumber = registerModel.TelephoneNumber,
             };
 
             ICollection<ValidationResult> validationResults = null;
@@ -67,14 +93,24 @@ namespace IdentityV2.Infrastructure.Core
             {
 
                 var userToInsert = mapper.Map<User>(creatUserDto);
+                userToInsert.IsPending = true;
+                userToInsert.PendingUser = new PendingUser()
+                {
+                    PendingToken = System.Guid.NewGuid(),
+                    PendingDateEnd = DateTime.Now.AddHours(4)
+                };
                 userToInsert.HashedPassword = passwordHelper.Hash(creatUserDto.Password);
                 userToInsert.UserRoles.Add(new UserRoles() { Role = basicRole });
 
                 dataContext.Users.Add(userToInsert);
 
+                messageProducer.SendMessage(new 
+                {
+                    token = userToInsert.PendingUser.PendingToken.ToString(),
+                    mail = userToInsert.Email,
+                    template = "<p>To confirm account enter code {0}</p>"
+                });
                 await dataContext.SaveChangesAsync();
-
-                messageProducer.SendMessage(new { token = "abcdefgh" });
 
                 return new RegisterResultModel { IsSuccess = true };
             }

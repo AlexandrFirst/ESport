@@ -31,6 +31,7 @@ namespace IdentityV2.RMQ
                 UserName = this.rabbitMqOptions.User,
                 Password = this.rabbitMqOptions.Password,
                 Port = this.rabbitMqOptions.Port,
+                RequestedHeartbeat = new TimeSpan(60),
                 DispatchConsumersAsync = true
             };
 
@@ -50,7 +51,7 @@ namespace IdentityV2.RMQ
                 channel = _connection.CreateModel();
 
                 channel.ExchangeDeclare(mailExchangename, ExchangeType.Direct);
-                channel.QueueDeclarePassive(queueName);
+                channel.QueueDeclare(queueName, true, false, true);
                 channel.QueueBind(queueName, mailExchangename, routingKey, null);
 
 

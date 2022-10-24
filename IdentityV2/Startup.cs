@@ -54,12 +54,20 @@ namespace IdentityV2
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
+            services.AddSwaggerGen(c => c.SwaggerDoc("v1",new Microsoft.OpenApi.Models.OpenApiInfo() 
+            {
+                Version = "v1",
+                Title = "Auth API",
+                Description = "EScore Identity microservice"
+            } ));
+
             services.AddAuthentication(o =>
             {
                 o.DefaultAuthenticateScheme = ESportAuthSchemeConstant.ESportAuthScheme;
                 o.DefaultChallengeScheme = ESportAuthSchemeConstant.ESportAuthScheme;
             })
             .AddScheme<ESportAuthenticationOptions, ESportAuthenticationHandler>("ESport", o => { });
+            services.AddHttpContextAccessor();
 
             services.AddDbContext<IdentityDataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("IdentityDb")));
 
@@ -67,7 +75,7 @@ namespace IdentityV2
 
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddScoped<IMessageProducer, RabbitMQProducer>();
+            services.AddSingleton<IMessageProducer, RabbitMQProducer>();
 
             services.AddScoped<IJWTManagerRepository, JWTManagerRepository>();
             services.AddScoped<IAccountService, AccountService>();
@@ -81,9 +89,16 @@ namespace IdentityV2
                 app.UseDeveloperExceptionPage();
             }
 
+
             app.UseStaticFiles();
 
             app.UseCors("ESportCors");
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => 
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Auth API");
+            });
 
             app.UseRouting();
 

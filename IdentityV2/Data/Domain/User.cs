@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace IdentityV2.Data.Domain
 {
@@ -16,6 +17,8 @@ namespace IdentityV2.Data.Domain
         public string TelephoneNumber { get; set; }
         public string HashedPassword { get; set; }
         public string ProfileImageUrl { get; set; }
+        public bool IsPending { get; set; }
+        public virtual PendingUser PendingUser { get; set; }
         public virtual List<UserRoles> UserRoles { get; set; }
         public virtual List<UserHistory> UserHistory { get; set; }
 
