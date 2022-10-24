@@ -2,10 +2,12 @@
 using IdentityV2.Infrastructure.Core;
 using IdentityV2.Infrastructure.Implementation;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Primitives;
 using System;
 using System.Linq;
@@ -19,10 +21,12 @@ namespace IdentityV2.Middleware
     public class ESportRedirectMiddleware
     {
         private readonly RequestDelegate _next;
+        private readonly IWebHostEnvironment webHostEnvironment;
 
-        public ESportRedirectMiddleware(RequestDelegate next)
+        public ESportRedirectMiddleware(RequestDelegate next, IWebHostEnvironment webHostEnvironment)
         {
             _next = next;
+            this.webHostEnvironment = webHostEnvironment;
         }
 
         public async Task InvokeAsync(HttpContext ctx)
@@ -44,14 +48,16 @@ namespace IdentityV2.Middleware
 
                     var postbackUrl = success ? Convert.ToBase64String(Encoding.UTF8.GetBytes(postbackUrlStringValues.First())) : "";
 
-                    var path = $"http://localhost:5000/Account/login?postBackUrl=" + postbackUrl;
-
-                    //ctx.Response.Redirect(path);
-                    //var response = new HttpResponseMessage(HttpStatusCode.Redirect);
-                    //response.Headers.Location = new Uri("https://insight.xxx.com");
-
-                    ctx.Response.Headers.Add("Location", path);
-                    ctx.Response.StatusCode = 302;
+                    if (webHostEnvironment.IsDevelopment())
+                    {
+                        var path = $"http://localhost:5000/Account/login?postBackUrl=" + postbackUrl;
+                        ctx.Response.Redirect(path);
+                    }
+                    else 
+                    {
+                        var path = $"http://host.docker.internal:5000/Account/login?postBackUrl=" + postbackUrl;
+                        ctx.Response.Redirect(path);
+                    }
                     return;
                 }
             }

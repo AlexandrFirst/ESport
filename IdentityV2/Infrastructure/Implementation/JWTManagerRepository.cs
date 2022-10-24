@@ -34,7 +34,7 @@ namespace IdentityV2.Infrastructure.Implementation
             var passwordHelper = new PasswordHelper(secretKey);
 
 
-            var dbUser = await context.Users.FirstOrDefaultAsync(x => x.Email == userLogin.Mail);
+            var dbUser = await context.Users.FirstOrDefaultAsync(x => x.Email == userLogin.Mail && x.IsPending == false);
             bool isPasswordCorrect = false;
             if (dbUser != null) 
             {

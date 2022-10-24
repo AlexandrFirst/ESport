@@ -4,6 +4,7 @@ using IdentityV2.Data;
 using IdentityV2.Infrastructure.Core;
 using IdentityV2.Infrastructure.Implementation;
 using IdentityV2.Middleware;
+using IdentityV2.RMQ;
 using IdentityV2.Utils;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -53,18 +54,31 @@ namespace IdentityV2
             services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
+            services.AddSwaggerGen(c => c.SwaggerDoc("v1",new Microsoft.OpenApi.Models.OpenApiInfo() 
+            {
+                Version = "v1",
+                Title = "Auth API",
+                Description = "EScore Identity microservice"
+            } ));
+
             services.AddAuthentication(o =>
             {
                 o.DefaultAuthenticateScheme = ESportAuthSchemeConstant.ESportAuthScheme;
                 o.DefaultChallengeScheme = ESportAuthSchemeConstant.ESportAuthScheme;
             })
             .AddScheme<ESportAuthenticationOptions, ESportAuthenticationHandler>("ESport", o => { });
+            services.AddHttpContextAccessor();
 
             services.AddDbContext<IdentityDataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("IdentityDb")));
 
+            services.AddOptions<RabbitMqOptions>().Bind(Configuration.GetSection("RabbitMq"));
+
             services.AddAutoMapper(typeof(Startup));
 
+            services.AddSingleton<IMessageProducer, RabbitMQProducer>();
+
             services.AddScoped<IJWTManagerRepository, JWTManagerRepository>();
+            services.AddScoped<IAccountService, AccountService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -75,9 +89,16 @@ namespace IdentityV2
                 app.UseDeveloperExceptionPage();
             }
 
+
             app.UseStaticFiles();
 
             app.UseCors("ESportCors");
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => 
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Auth API");
+            });
 
             app.UseRouting();
 
