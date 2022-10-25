@@ -1,26 +1,30 @@
 /** @type {import('tailwindcss').Config} */
 
-const hexToRgb = hex => {
-  let strHex = hex
-  if (hex[0] === '#') {
-    strHex = hex.substring(1, hex.length)
+const hexToRgb = (hex) => {
+  let strHex = hex;
+  if (hex[0] === "#") {
+    strHex = hex.substring(1, hex.length);
   }
-  var aRgbHex = strHex.match(/.{1,2}/g)
+  var aRgbHex = strHex.match(/.{1,2}/g);
   if (!aRgbHex) {
-    return null
+    return null;
   }
-  return [parseInt(aRgbHex[0], 16), parseInt(aRgbHex[1], 16), parseInt(aRgbHex[2], 16)].join(', ')
-}
+  return [
+    parseInt(aRgbHex[0], 16),
+    parseInt(aRgbHex[1], 16),
+    parseInt(aRgbHex[2], 16),
+  ].join(", ");
+};
 
 function withOpacity(variableName) {
   return ({ opacityValue }) => {
     if (opacityValue !== undefined) {
       // return `rgba(${(hexToRgb(hex), opacityValue)})`
-      return `rgba(var(${variableName}), ${opacityValue})`
+      return `rgba(var(${variableName}), ${opacityValue})`;
     }
     // return `rgb(${hexToRgb(hex)})`
-    return `rgb(var(${variableName}))`
-  }
+    return `rgb(var(${variableName}))`;
+  };
 }
 
 // module.exports = {
@@ -115,53 +119,58 @@ function withOpacity(variableName) {
 // }
 
 module.exports = {
-  content: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}', './features/**/*.{js,ts,jsx,tsx}'],
-  darkMode: 'class', // or 'media' or 'class' or false
+  content: [
+    "./pages/**/*.{js,ts,jsx,tsx}",
+    "./components/**/*.{js,ts,jsx,tsx}",
+    "./features/**/*.{js,ts,jsx,tsx}",
+    "./shared/**/*.{js,ts,jsx,tsx}",
+  ],
+  darkMode: "class", // or 'media' or 'class' or false
   theme: {
     extend: {
       textColor: {
         skin: {
-          main: withOpacity('--color-text-main'),
-          subsidiary: withOpacity('--color-text-subsidiary'),
-          error: withOpacity('--color-error-main'),
-          primary: withOpacity('--color-primary-main'),
-          'primary-hover': withOpacity('--color-primary-main-hover'),
+          main: withOpacity("--color-text-main"),
+          subsidiary: withOpacity("--color-text-subsidiary"),
+          error: withOpacity("--color-error-main"),
+          primary: withOpacity("--color-primary-main"),
+          "primary-hover": withOpacity("--color-primary-main-hover"),
           // contrast: withOpacity(),
         },
       },
       backgroundColor: {
         skin: {
-          main: withOpacity('--color-bg-main'),
-          contrast: withOpacity('--color-bg-contrast'),
-          subsidiary: withOpacity('--color-bg-subsidiary'),
+          main: withOpacity("--color-bg-main"),
+          contrast: withOpacity("--color-bg-contrast"),
+          subsidiary: withOpacity("--color-bg-subsidiary"),
 
-          primary: withOpacity('--color-primary-main'),
-          'primary-hover': withOpacity('--color-primary-main-hover'),
+          primary: withOpacity("--color-primary-main"),
+          "primary-hover": withOpacity("--color-primary-main-hover"),
         },
       },
       gradientColorStops: {
         skin: {
-          'main-from': withOpacity('--color-gradient-main-from'),
-          'main-to': withOpacity('--color-gradient-main-to'),
+          "main-from": withOpacity("--color-gradient-main-from"),
+          "main-to": withOpacity("--color-gradient-main-to"),
         },
       },
       colors: {
-        'text-main': withOpacity('--color-text-main'),
-        'text-subsidiary': withOpacity('--color-text-subsidiary'),
-        'bg-main': withOpacity('--color-bg-main'),
-        'bg-contrast': withOpacity('--color-bg-contrast'),
-        'bg-subsidiary': withOpacity('--color-bg-subsidiary'),
-        error: withOpacity('--color-error-main'),
+        "text-main": withOpacity("--color-text-main"),
+        "text-subsidiary": withOpacity("--color-text-subsidiary"),
+        "bg-main": withOpacity("--color-bg-main"),
+        "bg-contrast": withOpacity("--color-bg-contrast"),
+        "bg-subsidiary": withOpacity("--color-bg-subsidiary"),
+        error: withOpacity("--color-error-main"),
 
-        primary: withOpacity('--color-primary-main'),
-        'primary-hover': withOpacity('--color-primary-main-hover'),
+        primary: withOpacity("--color-primary-main"),
+        "primary-hover": withOpacity("--color-primary-main-hover"),
       },
       transitionDuration: {
-        DEFAULT: '300ms',
+        DEFAULT: "300ms",
       },
       backgroundImage: {
-        'unloggedin-layout-1': "url('/public/unloggedin-backgound.jpg')",
-        'unloggedin-layout-2': "url('/public/unloggedin-backgound-1.jpg')",
+        "unloggedin-layout-1": "url('/public/unloggedin-backgound.jpg')",
+        "unloggedin-layout-2": "url('/public/unloggedin-backgound-1.jpg')",
       },
     },
   },
@@ -169,4 +178,4 @@ module.exports = {
     extend: {},
   },
   plugins: [],
-}
+};

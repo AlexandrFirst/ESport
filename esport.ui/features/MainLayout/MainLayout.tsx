@@ -5,22 +5,18 @@ import styles from "./mainLayout.module.css";
 
 import cn from "classnames";
 
+import { useMedia } from "@hooks/useMedia";
+import { TopPageLoader } from "@shared/TopPageLoader/TopPageLoader";
+import { SportHead, SportHeadProps } from "@shared/SportHead/SportHead";
 import { useAppThemeContext } from "@shared/AppThemeProvider/useAppThemeContext";
 
 import { SportSidebar } from "@components/SportSidebar/SportSidebar";
 import { SportHeader } from "@components/SportHeader/SportHeader";
 
-import { useMedia } from "@hooks/useMedia";
-import { TopPageLoader } from "@shared/TopPageLoader/TopPageLoader";
-
-interface MainLayoutProps extends PropsWithChildren {
-  title?: string;
-  keywords?: string;
-}
+type MainLayoutProps = PropsWithChildren & SportHeadProps & {};
 
 export const MainLayout: React.FC<MainLayoutProps> = ({
-  title,
-  keywords,
+  headProps,
   children,
 }) => {
   const { isMobile } = useMedia();
@@ -40,14 +36,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
 
   return (
     <>
-      <Head>
-        <title>{title ?? "E - Sport"}</title>
-        <meta
-          name="keywords"
-          content={`e-sport sport organization ${keywords}`.trim()}
-        />
-      </Head>
-
+      <SportHead {...headProps} />
       <main
         className={cn("h-screen flex flex-row justify-start", currentTheme)}
       >

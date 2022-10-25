@@ -7,5 +7,14 @@ import { selectLoadingIndicator } from '@storage/slices/loadingIndicator'
 
 export const TopPageLoader: React.FC = () => {
   const { isLoading } = useAppSelector(selectLoadingIndicator)
-  return <>{isLoading && <LinearProgress className='fixed w-full z-10 bg-skin-subsidiary text-skin-primary' color='inherit' />}</>
+  return (
+    <>
+      {isLoading && (
+        <LinearProgress
+          className="fixed w-full z-10 bg-skin-subsidiary text-skin-primary"
+          color="inherit"
+        />
+      )}
+    </>
+  );
 }

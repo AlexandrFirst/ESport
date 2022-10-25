@@ -4,18 +4,27 @@ import type { AppProps } from 'next/app'
 import { StyledEngineProvider } from '@mui/material'
 
 import { AppThemeProvider } from '@shared/AppThemeProvider/AppThemeProvider'
-import { StorageProvider } from '@shared/StorageProvider/StorageProvider'
+import { wrapper } from '@storage/store'
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <StyledEngineProvider injectFirst>
-      <StorageProvider>
-        <AppThemeProvider>
-          <Component {...pageProps} />
-        </AppThemeProvider>
-      </StorageProvider>
+      <AppThemeProvider>
+        <Component {...pageProps} />
+      </AppThemeProvider>
     </StyledEngineProvider>
   )
 }
 
-export default MyApp
+MyApp.getInitialProps = wrapper.getInitialAppProps(store => async ({ ctx, Component }) => {
+  //Implement auth logic here
+  return {
+    pageProps: {
+      ...(Component.getInitialProps ? await Component.getInitialProps({ ...ctx, store }) : {}),
+      // Some custom thing for all pages
+      pathname: ctx.pathname,
+    },
+  }
+})
+
+export default wrapper.withRedux(MyApp)

@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 import { IUser } from '@interfaces/app-user'
 import { RootState } from '@storage/store'
+import { HYDRATE } from 'next-redux-wrapper'
 
 const mocked_User: IUser = { name: 'John', lastName: 'Doe', role: 'Admin' }
 
@@ -27,6 +28,9 @@ const user = createSlice({
       state.isAuth = false
       state.user = null
     },
+  },
+  extraReducers: {
+    [HYDRATE]: (state, action) => {},
   },
 })
 

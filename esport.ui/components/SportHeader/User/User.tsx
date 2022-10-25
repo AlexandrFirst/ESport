@@ -1,44 +1,44 @@
-import React, { MouseEvent, useState } from 'react'
+import React, { MouseEvent, useState } from "react";
 
-import { Avatar, Grid, Menu, MenuItem } from '@mui/material'
-import LogoutIcon from '@mui/icons-material/Logout'
+import { Avatar, Grid, Menu, MenuItem } from "@mui/material";
+import LogoutIcon from "@mui/icons-material/Logout";
 
-import { SportIconButton } from '@components/SportIconButton/SportIconButton'
+import { SportIconButton } from "@components/SportIconButton/SportIconButton";
 
-import { SERVER_DELAY } from '@constants/server'
+import { SERVER_DELAY } from "@constants/server";
 
-import { useAppDispatch, useAppSelector } from '@storage/hooks/useStore'
-import { logOut, selectUser } from '@storage/slices/user'
-import { hideLoading, showLoading } from '@storage/slices/loadingIndicator'
+import { useAppDispatch, useAppSelector } from "@storage/hooks/useStore";
+import { logOut, selectUser } from "@storage/slices/user";
+import { hideLoading, showLoading } from "@storage/slices/loadingIndicator";
 
-import { getDisplayName, validateStr } from 'utils'
+import { getDisplayName, validateStr } from "utils";
 
-import { SelectedItem } from '../Text/SelectedItem'
-import { RegularItem } from '../Text/RegularItem'
+import { SelectedItem } from "../Text/SelectedItem";
+import { RegularItem } from "../Text/RegularItem";
 
 interface UserProps {}
 
 export const User: React.FC<UserProps> = () => {
-  const { user } = useAppSelector(selectUser)
-  const dispatch = useAppDispatch()
+  const { user } = useAppSelector(selectUser);
+  const dispatch = useAppDispatch();
 
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-  const open = Boolean(anchorEl)
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
 
   const handleOpenMenu = (event: MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget)
-  }
+    setAnchorEl(event.currentTarget);
+  };
   const handleClose = () => {
-    setAnchorEl(null)
-  }
+    setAnchorEl(null);
+  };
 
   const handleLogout = () => {
-    dispatch(showLoading())
+    dispatch(showLoading());
     setTimeout(() => {
-      dispatch(hideLoading())
-      dispatch(logOut())
-    }, SERVER_DELAY)
-  }
+      dispatch(hideLoading());
+      dispatch(logOut());
+    }, SERVER_DELAY);
+  };
 
   return (
     <>
@@ -46,31 +46,34 @@ export const User: React.FC<UserProps> = () => {
         <Avatar />
       </SportIconButton>
       <Menu
-        id='user-menu'
+        id="user-menu"
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
-        classes={{ paper: `bg-skin-contrast`, list: `text-skin-main min-w-[180px]` }}
+        classes={{
+          paper: `bg-skin-contrast`,
+          list: `text-skin-main min-w-[180px]`,
+        }}
         PaperProps={{ elevation: 8 }}
       >
         <MenuItem>
-          <Grid item className='pr-4'>
+          <Grid item className="pr-4">
             <Avatar />
           </Grid>
-          <Grid container direction='column'>
+          <Grid container direction="column">
             <SelectedItem>{getDisplayName(user)}</SelectedItem>
             <RegularItem>{validateStr(user?.role)}</RegularItem>
           </Grid>
         </MenuItem>
-        <MenuItem className='mt-5' onClick={handleLogout}>
-          <Grid item className='pr-4'>
+        <MenuItem className="mt-5" onClick={handleLogout}>
+          <Grid item className="pr-4">
             <LogoutIcon />
           </Grid>
-          <Grid container direction='column'>
+          <Grid container direction="column">
             <SelectedItem>Logout</SelectedItem>
           </Grid>
         </MenuItem>
       </Menu>
     </>
-  )
-}
+  );
+};

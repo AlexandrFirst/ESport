@@ -1,29 +1,38 @@
-import React, { useState } from 'react'
-import { useForm } from 'react-hook-form'
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 
-import { IRegisterForm } from '@features/UnloggedLayout/interfaces'
-import { RegisterSteps } from '@features/UnloggedLayout/enums'
+import { IRegisterForm } from "@features/UnloggedLayout/interfaces";
+import { RegisterSteps } from "@features/UnloggedLayout/enums";
+import { registerHead } from "@features/UnloggedLayout/components/page-register/useRegister";
 
-import { Left } from '../Left/Left'
-import { Main } from '../Main'
-import { Right } from '../Right/Right'
+import { Left } from "../Left/Left";
+import { Main } from "../Main";
+import { Right } from "../Right/Right";
 
-import { Form } from './Form/Form'
-import { RegisterStepper } from './Stepper/Stepper'
+import { Form } from "./Form/Form";
+import { RegisterStepper } from "./Stepper/Stepper";
 
 export const Register: React.FC = () => {
-  const methods = useForm<IRegisterForm>()
-  const [currStep, setCurrStep] = useState(RegisterSteps.MainInfo)
+  const methods = useForm<IRegisterForm>();
+  const [currStep, setCurrStep] = useState(RegisterSteps.MainInfo);
 
   return (
     <Main
+      headProps={registerHead}
       leftComponent={<Left />}
       rightComponent={
-        <Right title='Adventure starts here 🚀' subtitle='Please sign-in to your account and start the adventure'>
+        <Right
+          title="Adventure starts here 🚀"
+          subtitle="Please sign-in to your account and start the adventure"
+        >
           <RegisterStepper currStep={currStep} />
-          <Form methods={methods} currStep={currStep} setCurrStep={setCurrStep} />
+          <Form
+            methods={methods}
+            currStep={currStep}
+            setCurrStep={setCurrStep}
+          />
         </Right>
       }
     />
-  )
-}
+  );
+};

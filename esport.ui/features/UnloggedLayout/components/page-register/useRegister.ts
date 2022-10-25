@@ -1,22 +1,27 @@
-import { useRouter } from 'next/router'
+import { useRouter } from "next/router";
 
-import { IRegisterForm } from '@features/UnloggedLayout/interfaces'
+import { IRegisterForm } from "@features/UnloggedLayout/interfaces";
+import { SportHeadComponentProps } from "@features/../../../../shared/SportHead/SportHead";
 
-import { useAppDispatch } from '@storage/hooks/useStore'
-import { logIn } from '@storage/slices/user'
+import { useAppDispatch } from "@storage/hooks/useStore";
+import { logIn } from "@storage/slices/user";
 
-import { routes } from 'routes'
+import { routes } from "routes";
+
+export const registerHead: SportHeadComponentProps = {
+  title: "E-Sport | Create your account",
+};
 
 export const useRegister = () => {
-  const dispatch = useAppDispatch()
-  const router = useRouter()
+  const dispatch = useAppDispatch();
+  const router = useRouter();
 
   const registration = (data: IRegisterForm) => {
-    console.log('===data===', data)
+    console.log("===data===", data);
 
-    dispatch(logIn())
-    router.push(routes.Test)
-  }
+    dispatch(logIn());
+    router.push(routes.Test);
+  };
 
-  return { registration }
-}
+  return { registration };
+};
