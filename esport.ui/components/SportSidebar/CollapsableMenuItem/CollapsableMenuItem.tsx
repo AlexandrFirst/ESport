@@ -1,8 +1,8 @@
-import React, {useState} from "react";
-import {List, ListItem, ListItemButton} from "@mui/material";
+import React, { useState } from "react";
+import { List, ListItem, ListItemButton } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
-import {IMenuItem} from "@interfaces/menu-item";
+import { IMenuItem } from "@interfaces/menu-item";
 import Link from "next/link";
 
 interface ICollapsableMenuItem extends IMenuItem {
@@ -17,11 +17,11 @@ interface CollapsableMenuItemProps {
 }
 
 export const CollapsableMenuItem: React.FC<CollapsableMenuItemProps> = ({
-                                                                          item,
-                                                                          isSidebarOpened,
-                                                                          currentPathname,
-                                                                          onSubItemClick,
-                                                                        }) => {
+  item,
+  isSidebarOpened,
+  currentPathname,
+  onSubItemClick,
+}) => {
   const [submenuOpen, setSubmenuOpen] = useState(false);
 
   const handleSubItemClick = (subMenu: IMenuItem) => {
@@ -29,7 +29,7 @@ export const CollapsableMenuItem: React.FC<CollapsableMenuItemProps> = ({
   };
 
   const selected = item.items?.some(
-      ({link}) => link && link === currentPathname
+    ({ link }) => link && link === currentPathname
   );
   const selectedClassName = "bg-skin-contrast";
 
@@ -76,9 +76,7 @@ export const CollapsableMenuItem: React.FC<CollapsableMenuItemProps> = ({
                 }`}
                 onClick={() => handleSubItemClick(subMenu)}
               >
-                <Link href={subMenu.link ?? ""}>
-                  <a>{subMenu.title}</a>
-                </Link>
+                <Link href={subMenu.link ?? ""}>{subMenu.title}</Link>
               </ListItemButton>
             </ListItem>
           );

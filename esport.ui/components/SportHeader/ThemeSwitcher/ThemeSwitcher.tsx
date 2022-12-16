@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 
 import { useTheme } from "next-themes";
+
 import LightModeIcon from "@mui/icons-material/LightMode";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
+
 import { SportIconButton } from "@components/SportIconButton/SportIconButton";
 
 export const ThemeSwitcher: React.FC = () => {

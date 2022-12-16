@@ -125,7 +125,7 @@ module.exports = {
     "./features/**/*.{js,ts,jsx,tsx}",
     "./shared/**/*.{js,ts,jsx,tsx}",
   ],
-  darkMode: "class", // or 'media' or 'class' or false
+  darkMode: ["class", ":global(.dark)"], // or 'media' or 'class' or false
   theme: {
     extend: {
       textColor: {
