@@ -7,10 +7,20 @@ services:
       - ACCEPT_EULA=Y
     ports:
       - "1450:1433"
+  rabbit:
+    image: rabbitmq:3-management
+    environment:
+    - RABBITMQ_DEFAULT_USER=user
+    - RABBITMQ_DEFAULT_PASS=pass
+    restart: on-failure
+    ports:
+    - "15672:15672"
+    - "5672:5672"
   identity:
     image: diplom_identity
     depends_on:
       - sqldb
+      - rabbit
     restart: on-failure
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
@@ -19,7 +29,6 @@ services:
   gateway:
     image: gateway
     depends_on:
-      - sqldb
       - identity
     restart: on-failure
     environment:
@@ -35,4 +44,12 @@ services:
       - ASPNETCORE_ENVIRONMENT=Production
      ports:
       - "7000:80"
-    
+  message:
+      image: messageservice
+      depends_on:
+       - rabbit
+      restart: on-failure
+      environment:
+       - ASPNETCORE_ENVIRONMENT=Production
+      ports:
+       - "8000:80"
