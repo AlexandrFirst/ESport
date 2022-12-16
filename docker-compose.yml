@@ -43,13 +43,19 @@ services:
      environment:
       - ASPNETCORE_ENVIRONMENT=Production
      ports:
-      - "7000:80"
+       - "7000:80"
   message:
-      image: messageservice
-      depends_on:
-       - rabbit
-      restart: on-failure
-      environment:
-       - ASPNETCORE_ENVIRONMENT=Production
-      ports:
-       - "8000:80"
+    image: messageservice
+    depends_on:
+      - rabbit
+    restart: on-failure
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+    ports:
+      - "8000:80"
+  web:
+    image: esport-web
+    container_name: esport-web
+    restart: always
+    ports:
+      - "3000:3000"
