@@ -1,8 +1,8 @@
-import React, { useState } from "react";
-import { List, ListItem, ListItemButton } from "@mui/material";
+import React, {useState} from "react";
+import {List, ListItem, ListItemButton} from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 
-import { IMenuItem } from "@interfaces/menu-item";
+import {IMenuItem} from "@interfaces/menu-item";
 import Link from "next/link";
 
 interface ICollapsableMenuItem extends IMenuItem {
@@ -10,21 +10,26 @@ interface ICollapsableMenuItem extends IMenuItem {
 }
 
 interface CollapsableMenuItemProps {
-  item: ICollapsableMenuItem
-  isSidebarOpened: boolean
-  onSubItemClick?: (subMenu: IMenuItem) => void
-  currentPathname?: string
+  item: ICollapsableMenuItem;
+  isSidebarOpened: boolean;
+  onSubItemClick?: (subMenu: IMenuItem) => void;
+  currentPathname?: string;
 }
 
-export const CollapsableMenuItem: React.FC<CollapsableMenuItemProps> = ({ item, isSidebarOpened, currentPathname, onSubItemClick }) => {
-  const [submenuOpen, setSubmenuOpen] = useState(false)
+export const CollapsableMenuItem: React.FC<CollapsableMenuItemProps> = ({
+                                                                          item,
+                                                                          isSidebarOpened,
+                                                                          currentPathname,
+                                                                          onSubItemClick,
+                                                                        }) => {
+  const [submenuOpen, setSubmenuOpen] = useState(false);
 
   const handleSubItemClick = (subMenu: IMenuItem) => {
-    onSubItemClick && onSubItemClick(subMenu)
-  }
+    onSubItemClick && onSubItemClick(subMenu);
+  };
 
   const selected = item.items?.some(
-    ({ link }) => link && link === currentPathname
+      ({link}) => link && link === currentPathname
   );
   const selectedClassName = "bg-skin-contrast";
 
@@ -81,4 +86,4 @@ export const CollapsableMenuItem: React.FC<CollapsableMenuItemProps> = ({ item, 
       </List>
     </>
   );
-}
+};

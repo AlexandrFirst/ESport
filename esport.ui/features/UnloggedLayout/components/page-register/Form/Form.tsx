@@ -2,27 +2,27 @@ import React from "react";
 import styles from "./Form.module.css";
 
 import cn from "classnames";
-import { UseFormReturn } from "react-hook-form";
+import {UseFormReturn} from "react-hook-form";
 
-import { Grid } from "@mui/material";
+import {Grid} from "@mui/material";
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 
-import { useMedia } from "@hooks/useMedia";
+import {useMedia} from "@hooks/useMedia";
 
-import { RegisterSteps } from "@features/UnloggedLayout/enums";
-import { IRegisterForm } from "@features/UnloggedLayout/interfaces";
-import { routes } from "routes";
+import {RegisterSteps} from "@features/UnloggedLayout/enums";
+import {IRegisterForm} from "@features/UnloggedLayout/interfaces";
+import {routes} from "routes";
 
-import { SportForm } from "@components/SportForm/SportForm";
-import { SportButton } from "@components/SportButton/SportButton";
-import { SportIconButton } from "@components/SportIconButton/SportIconButton";
-import { SportLink } from "@components/SportLink/SportLink";
+import {SportForm} from "@components/SportForm/SportForm";
+import {SportButton} from "@components/SportButton/SportButton";
+import {SportIconButton} from "@components/SportIconButton/SportIconButton";
+import {SportLink} from "@components/SportLink/SportLink";
 
-import { Dividers } from "../../Dividers/Dividers";
+import {Dividers} from "../../Dividers/Dividers";
 
-import { useRegister } from "../useRegister";
-import { FirstStep } from "../FirstStep/FirstStep";
-import { SecondStep } from "../SecondStep/SecondStep";
+import {useRegister} from "../useRegister";
+import {FirstStep} from "../FirstStep/FirstStep";
+import {SecondStep} from "../SecondStep/SecondStep";
 
 interface FormProps {
   methods: UseFormReturn<IRegisterForm>;
@@ -30,11 +30,15 @@ interface FormProps {
   setCurrStep: (newStep: RegisterSteps) => void;
 }
 
-export const Form: React.FC<FormProps> = ({ methods, currStep, setCurrStep }) => {
-  const { handleSubmit, register } = methods;
+export const Form: React.FC<FormProps> = ({
+                                            methods,
+                                            currStep,
+                                            setCurrStep,
+                                          }) => {
+  const {handleSubmit, register} = methods;
 
-  const { isMobile } = useMedia();
-  const { registration } = useRegister();
+  const {isMobile} = useMedia();
+  const {registration} = useRegister();
 
   const isFirstStep = currStep === RegisterSteps.MainInfo;
   const isLastStep = currStep === RegisterSteps.AdditioanalInfo;

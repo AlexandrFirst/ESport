@@ -8,8 +8,8 @@ import {AppTheme} from "@enums/app-theme";
 // const tailwindConfig: any = resolveConfig(tailwindConfigModule)
 
 interface IThemeContext {
-  currentTheme: AppTheme
-  setCurrentTheme: (newTheme: AppTheme) => void
+  currentTheme: AppTheme;
+  setCurrentTheme: (newTheme: AppTheme) => void;
 }
 
 export const AppThemeContext = createContext<IThemeContext>({
