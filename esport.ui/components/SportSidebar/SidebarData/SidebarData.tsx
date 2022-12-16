@@ -37,24 +37,24 @@ export const SidebarData: React.FC<SidebarDataProps> = ({
       >
         <SportScrollable>
           <nav>
-            {menu.map((menu, index) => (
+            {menu.map((sMenu, index) => (
               <ListItem
-                key={menu.title}
+                key={sMenu.title}
                 className={`flex justify-start flex-col rounded-md p-0 cursor-pointer hover:bg-light-white text-skin-main text-sm transition-all duration-500 items-start
-              ${menu.gap ? "mt-9" : "mt-2"} ${
+              ${sMenu.gap ? "mt-9" : "mt-2"} ${
                   index === 0 && "bg-light-white"
                 } `}
               >
-                {menu.items ? (
+                {sMenu.items ? (
                   <CollapsableMenuItem
-                    item={menu}
+                    item={sMenu}
                     isSidebarOpened={isSidebarOpened}
                     onSubItemClick={handleClick}
                     currentPathname={pathname}
                   />
                 ) : (
                   <SimpleMenuItem
-                    item={menu}
+                    item={sMenu}
                     isSidebarOpened={isSidebarOpened}
                     onItemClick={handleClick}
                     currentPathname={pathname}

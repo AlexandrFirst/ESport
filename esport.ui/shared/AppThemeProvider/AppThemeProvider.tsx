@@ -1,5 +1,5 @@
-import { useState, createContext, PropsWithChildren } from 'react'
-import { AppTheme } from '@enums/app-theme'
+import {createContext, FC, PropsWithChildren, useState} from "react";
+import {AppTheme} from "@enums/app-theme";
 // import { createTheme, ThemeProvider } from '@mui/material'
 // import resolveConfig from 'tailwindcss/resolveConfig'
 // import tailwindConfigModule from '../../tailwind.config.js'
@@ -15,10 +15,10 @@ interface IThemeContext {
 export const AppThemeContext = createContext<IThemeContext>({
   currentTheme: AppTheme.Main,
   setCurrentTheme: () => {},
-})
+});
 
-export const AppThemeProvider: React.FC<PropsWithChildren> = ({ children }) => {
-  const [currentTheme, setCurrentTheme] = useState(AppTheme.Main)
+export const AppThemeProvider: FC<PropsWithChildren> = ({ children }) => {
+  const [currentTheme, setCurrentTheme] = useState(AppTheme.Main);
   //TODO: insert logic of theme update and saving
 
   // const theme = createTheme({
@@ -35,5 +35,5 @@ export const AppThemeProvider: React.FC<PropsWithChildren> = ({ children }) => {
       {children}
       {/* </ThemeProvider> */}
     </AppThemeContext.Provider>
-  )
-}
+  );
+};

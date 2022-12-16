@@ -1,0 +1,15 @@
+.input_label {
+    @apply text-skin-main focus:text-skin-main
+}
+
+.input {
+    @apply text-skin-main rounded-lg
+}
+
+.root fieldset {
+    @apply border-primary
+}
+
+.focus fieldset {
+    @apply !border-primary-hover;
+}
