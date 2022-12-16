@@ -1,5 +1,3 @@
-import Head from "next/head";
-
 import React, { PropsWithChildren, useState } from "react";
 import styles from "./mainLayout.module.css";
 
@@ -8,7 +6,6 @@ import cn from "classnames";
 import { useMedia } from "@hooks/useMedia";
 import { TopPageLoader } from "@shared/TopPageLoader/TopPageLoader";
 import { SportHead, SportHeadProps } from "@shared/SportHead/SportHead";
-import { useAppThemeContext } from "@shared/AppThemeProvider/useAppThemeContext";
 
 import { SportSidebar } from "@components/SportSidebar/SportSidebar";
 import { SportHeader } from "@components/SportHeader/SportHeader";
@@ -20,7 +17,6 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
   children,
 }) => {
   const { isMobile } = useMedia();
-  const { currentTheme } = useAppThemeContext();
 
   const [isSidebarOpened, setIsSidebarOpened] = useState(false);
 
@@ -37,9 +33,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
   return (
     <>
       <SportHead {...headProps} />
-      <main
-        className={cn("h-screen flex flex-row justify-start", currentTheme)}
-      >
+      <main className={styles.main}>
         <SportHeader className={layoutClassName} />
         <TopPageLoader />
         <SportSidebar

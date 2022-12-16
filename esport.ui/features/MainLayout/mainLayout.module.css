@@ -5,3 +5,7 @@
 .ptHeader {
   padding-top: 80px;
 }
+
+.main {
+  @apply h-screen flex flex-row justify-start
+}
