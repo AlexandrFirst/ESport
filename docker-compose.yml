@@ -83,6 +83,9 @@ services:
   web:
     image: esport-web
     container_name: esport-web
+    build:
+      context: ./esport.ui
+      dockerfile: ./Dockerfile
     restart: always
     ports:
       - '3000:3000'
