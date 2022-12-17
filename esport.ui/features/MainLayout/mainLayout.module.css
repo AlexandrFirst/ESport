@@ -6,6 +6,10 @@
   padding-top: 80px;
 }
 
+.layout {
+  @apply bg-skin-main transition-all duration-500 dark:bg-darkSkin-main
+}
+
 .main {
   @apply h-screen flex flex-row justify-start
 }

@@ -1,9 +1,10 @@
 import React from "react";
-
-import { IconButton } from "@mui/material";
+import styles from "./largeScreenSidebar.module.css";
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 
 import { SidebarData } from "../SidebarData/SidebarData";
+import cn from "classnames";
+import { SportIconButton } from "@components/SportIconButton/SportIconButton";
 
 interface LargeScreenSidebarProps {
   isSidebarOpened: boolean;
@@ -20,20 +21,18 @@ export const LargeScreenSidebar: React.FC<LargeScreenSidebarProps> = ({
 
   return (
     <div
-      className={`${
-        isSidebarOpened ? "w-72 p-5" : "w-20 p-2.5"
-      } fixed pt-2.5 h-screen duration-500 bg-skin-main `}
+      className={cn(styles.wrapper, {
+        [styles.opened]: isSidebarOpened,
+        [styles.closed]: !isSidebarOpened,
+      })}
     >
-      <IconButton
-        className="bg-skin-main hover:bg-skin-contrast absolute top-10 -right-2 text-skin-main transition-colors"
-        onClick={handleClickArrow}
-      >
+      <SportIconButton className={styles.iconBtn} onClick={handleClickArrow}>
         <KeyboardDoubleArrowLeftIcon
           className={`${
             isSidebarOpened ? "" : "rotate-180"
           } transition-transform`}
         />
-      </IconButton>
+      </SportIconButton>
       <SidebarData isSidebarOpened={isSidebarOpened} />
     </div>
   );

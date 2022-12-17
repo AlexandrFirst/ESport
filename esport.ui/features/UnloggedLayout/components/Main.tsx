@@ -1,8 +1,7 @@
-import Head from "next/head";
 import React, { ReactNode } from "react";
 
-import { TopPageLoader } from "@shared/TopPageLoader/TopPageLoader";
-import { SportHead, SportHeadProps } from "@shared/SportHead/SportHead";
+import { TopPageLoader } from "@features/TopPageLoader/TopPageLoader";
+import { SportHead, SportHeadProps } from "@features/SportHead/SportHead";
 
 interface MainProps extends SportHeadProps {
   leftComponent: ReactNode;

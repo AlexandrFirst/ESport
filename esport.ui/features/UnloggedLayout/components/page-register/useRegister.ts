@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 
 import { IRegisterForm } from "@features/UnloggedLayout/interfaces";
-import { SportHeadComponentProps } from "@shared/SportHead/SportHead";
+import { SportHeadComponentProps } from "@features/SportHead/SportHead";
 
 import { useAppDispatch } from "@storage/hooks/useStore";
 import { logIn } from "@storage/slices/user";

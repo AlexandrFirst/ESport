@@ -1,4 +1,6 @@
 import React, { MouseEvent } from "react";
+import styles from "./sportLink.module.css";
+
 import Link from "next/link";
 
 import cn from "classnames";
@@ -32,9 +34,9 @@ export const SportLink: React.FC<SportLinkProps> = ({
       <ButtonBase className="rounded-md">
         <MUILink
           {...props}
-          className={cn("text-primary no-underline", className, {
-            ["text-opacity-70 cursor-default"]: disabled,
-            ["text-skin-main5"]: likeText,
+          className={cn(styles.link, className, {
+            [styles.disabled]: disabled,
+            [styles.like_text]: likeText,
           })}
           href={to}
           onClick={handleClickLink}

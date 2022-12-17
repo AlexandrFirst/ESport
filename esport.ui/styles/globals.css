@@ -6,6 +6,7 @@
   :root {
     --color-text-main: 184, 180, 206; /* #b8b4ce */
     --color-text-subsidiary: 143, 139, 166; /* #8f8ba6 */
+    --color-text-accent: 142, 92, 246; /* #28243d */
 
     --color-bg-main: 40, 36, 61; /* #28243d */
     --color-bg-contrast: 49, 45, 75; /* #312d4b */
@@ -18,34 +19,14 @@
     --color-primary-main-hover: 139, 82, 242; /* #8b52f2 */
 
     --color-error-main: 255, 51, 51; /* #ff3333 */
-  }
 
-  .theme-light {
-    --color-text-main: 255, 255, 255; /* #fff */
-    --color-text-subsidiary: 143, 139, 166; /* #8f8ba6 */
+    /*  dark theme - WIP (will be in the future - now it is light) */
+    --color-dark-text-main: 19, 27, 45;
+    --color-dark-text-subsidiary: 100, 116, 139;
+    --color-dark-text-accent: 14, 165, 233;
 
-    --color-bg-main: 40, 36, 61; /* #28243d */
-    --color-bg-contrast: 49, 45, 75; /* #312d4b */
-    --color-bg-subsidiary: 47, 44, 69; /* #2f2c45 */
-
-    --color-primary-main: 142, 92, 246; /* #8e5cf6 */
-    --color-primary-main-hover: 139, 82, 242; /* #8b52f2 */
-
-    --color-error-main: 255, 51, 51; /* #ff3333 */
-  }
-
-  .theme-neon {
-    --color-text-main: 184, 180, 206; /* #b8b4ce */
-    --color-text-subsidiary: 143, 139, 166; /* #8f8ba6 */
-
-    --color-bg-main: 40, 36, 61; /* #28243d */
-    --color-bg-contrast: 49, 45, 75; /* #312d4b */
-    --color-bg-subsidiary: 47, 44, 69; /* #2f2c45 */
-
-    --color-primary-main: 142, 92, 246; /* #8e5cf6 */
-    --color-primary-main-hover: 139, 82, 242; /* #8b52f2 */
-
-    --color-error-main: 255, 51, 51; /* #ff3333 */
+    --color-dark-bg-main: 241, 241, 253;
+    --color-dark-primary-main-hover: 220, 233, 254;
   }
 }
 

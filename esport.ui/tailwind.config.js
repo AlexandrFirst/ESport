@@ -132,10 +132,16 @@ module.exports = {
         skin: {
           main: withOpacity("--color-text-main"),
           subsidiary: withOpacity("--color-text-subsidiary"),
+          accent: withOpacity("--color-text-accent"),
           error: withOpacity("--color-error-main"),
           primary: withOpacity("--color-primary-main"),
           "primary-hover": withOpacity("--color-primary-main-hover"),
           // contrast: withOpacity(),
+        },
+        darkSkin: {
+          main: withOpacity("--color-dark-text-main"),
+          subsidiary: withOpacity("--color-dark-text-subsidiary"),
+          accent: withOpacity("--color-dark-text-accent"),
         },
       },
       backgroundColor: {
@@ -146,6 +152,10 @@ module.exports = {
 
           primary: withOpacity("--color-primary-main"),
           "primary-hover": withOpacity("--color-primary-main-hover"),
+        },
+        darkSkin: {
+          main: withOpacity("--color-dark-bg-main"),
+          "primary-hover": withOpacity("--color-dark-primary-main-hover"),
         },
       },
       gradientColorStops: {

@@ -1,0 +1,15 @@
+.list_item {
+    @apply rounded-md w-full hover:bg-skin-subsidiary dark:hover:bg-darkSkin-primary-hover dark:text-darkSkin-main
+}
+
+.selected {
+    @apply bg-skin-contrast dark:bg-darkSkin-primary-hover
+}
+
+.link {
+    @apply origin-left duration-200 text-skin-main dark:text-darkSkin-main font-semibold
+}
+
+.not_visible {
+    @apply hidden
+}

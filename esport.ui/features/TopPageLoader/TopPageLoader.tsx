@@ -1,9 +1,9 @@
-import React from 'react'
+import React from "react";
 
-import { LinearProgress } from '@mui/material'
+import { LinearProgress } from "@mui/material";
 
-import { useAppSelector } from '@storage/hooks/useStore'
-import { selectLoadingIndicator } from '@storage/slices/loadingIndicator'
+import { useAppSelector } from "@storage/hooks/useStore";
+import { selectLoadingIndicator } from "@storage/slices/loadingIndicator";
 
 export const TopPageLoader: React.FC = () => {
   const { isLoading } = useAppSelector(selectLoadingIndicator)

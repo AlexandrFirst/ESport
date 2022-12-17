@@ -1,0 +1,3 @@
+.icon_btn {
+  @apply text-skin-main hover:bg-skin-contrast transition-all dark:text-darkSkin-subsidiary dark:hover:bg-darkSkin-primary-hover dark:hover:text-darkSkin-main;
+}
