@@ -11,7 +11,9 @@ interface ThemeSwitcherProps {
   className?: string;
 }
 
-export const SportThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ className }) => {
+export const SportThemeSwitcher: React.FC<ThemeSwitcherProps> = ({
+  className,
+}) => {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
