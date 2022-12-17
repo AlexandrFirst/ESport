@@ -7,7 +7,11 @@ import Brightness4Icon from "@mui/icons-material/Brightness4";
 
 import { SportIconButton } from "@components/SportIconButton/SportIconButton";
 
-export const ThemeSwitcher: React.FC = () => {
+interface ThemeSwitcherProps {
+  className?: string;
+}
+
+export const SportThemeSwitcher: React.FC<ThemeSwitcherProps> = ({ className }) => {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
 
@@ -21,7 +25,7 @@ export const ThemeSwitcher: React.FC = () => {
   if (!mounted) return null;
 
   return (
-    <SportIconButton onClick={handleChangeTheme}>
+    <SportIconButton onClick={handleChangeTheme} className={className}>
       {theme === "light" ? <LightModeIcon /> : <Brightness4Icon />}
     </SportIconButton>
   );

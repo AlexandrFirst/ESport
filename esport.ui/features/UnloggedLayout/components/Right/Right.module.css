@@ -1,7 +1,23 @@
-.right {
-  width: 25%;
+.section {
+  @apply text-skin-main bg-skin-contrast p-20 dark:bg-darkSkin-main
+}
+
+.tablet {
+  @apply w-9/12
+}
+
+.mobile {
+  @apply w-full px-10 py-16
 }
 
 .title {
-  margin: 0 auto;
+  @apply w-fit dark:text-darkSkin-main
+}
+
+.subtitle {
+  @apply pt-5 pb-12 dark:text-darkSkin-subsidiary
+}
+
+.theme_switcher {
+  @apply absolute right-1.5 top-1.5;
 }
