@@ -1,21 +1,5 @@
 /** @type {import('tailwindcss').Config} */
 
-const hexToRgb = (hex) => {
-  let strHex = hex;
-  if (hex[0] === "#") {
-    strHex = hex.substring(1, hex.length);
-  }
-  var aRgbHex = strHex.match(/.{1,2}/g);
-  if (!aRgbHex) {
-    return null;
-  }
-  return [
-    parseInt(aRgbHex[0], 16),
-    parseInt(aRgbHex[1], 16),
-    parseInt(aRgbHex[2], 16),
-  ].join(", ");
-};
-
 function withOpacity(variableName) {
   return ({ opacityValue }) => {
     if (opacityValue !== undefined) {
@@ -26,97 +10,6 @@ function withOpacity(variableName) {
     return `rgb(var(${variableName}))`;
   };
 }
-
-// module.exports = {
-//   content: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
-//   theme: {
-//     extend: {
-// textColor: {
-//   skin: {
-//     base: withOpacity('--color-text-base'),
-//     muted: withOpacity('--color-text-muted'),
-//     inverted: withOpacity('--color-text-inverted'),
-//   },
-// },
-// backgroundColor: {
-//   skin: {
-//     fill: withOpacity('--color-fill'),
-//     'fill-contrast': withOpacity('--color-fill-contrast'),
-//     'button-accent': withOpacity('--color-button-accent'),
-//     'button-accent-hover': withOpacity('--color-button-accent-hover'),
-//     'button-muted': withOpacity('--color-button-muted'),
-//   },
-// },
-// gradientColorStops: {
-//   skin: {
-//     hue: withOpacity('--color-fill'),
-//   },
-// },
-// colors: {
-//   primary: '#28243d',
-//   primaryctrs: '#2f2c45',
-// },
-// transitionDuration: {
-//   DEFAULT: '300ms',
-// },
-//     },
-//   },
-//   plugins: [],
-// }
-
-// const theme = {
-//   primary: {
-//     light: '#EAEDF6',
-//     main: '#28243d',
-//     dark: '#28245d',
-//     accent: '#0f30ab',
-//     'contrast-text': '#ffffff',
-//   },
-//   secondary: {
-//     light: '#EAEDF6',
-//     main: '#28243d',
-//     dark: '#28245d',
-//     accent: '#0f30ab',
-//     'contrast-text': '#ffffff',
-//   },
-//   error: {
-//     light: '#EAEDF6',
-//     main: '#28243d',
-//     dark: '#28245d',
-//     accent: '#0f30ab',
-//     'contrast-text': '#ffffff',
-//   },
-//   warning: {
-//     light: '#EAEDF6',
-//     main: '#28243d',
-//     dark: '#28245d',
-//     accent: '#0f30ab',
-//     'contrast-text': '#ffffff',
-//   },
-//   info: {
-//     light: '#EAEDF6',
-//     main: '#28243d',
-//     dark: '#28245d',
-//     accent: '#0f30ab',
-//     'contrast-text': '#ffffff',
-//   },
-//   success: {
-//     light: '#EAEDF6',
-//     main: '#28243d',
-//     dark: '#28245d',
-//     accent: '#0f30ab',
-//     'contrast-text': '#ffffff',
-//   },
-//   text: {
-//     primary: '',
-//     secondary: '',
-//     disabled: '',
-//   },
-//   background: {
-//     paper: '',
-//     default: '',
-//   },
-// }
 
 module.exports = {
   content: [
@@ -142,6 +35,7 @@ module.exports = {
           main: withOpacity("--color-dark-text-main"),
           subsidiary: withOpacity("--color-dark-text-subsidiary"),
           accent: withOpacity("--color-dark-text-accent"),
+          secondary: withOpacity("--color-dark-text-secondary"),
         },
       },
       backgroundColor: {
@@ -155,6 +49,7 @@ module.exports = {
         },
         darkSkin: {
           main: withOpacity("--color-dark-bg-main"),
+          accent: withOpacity("--color-dark-bg-accent"),
           "primary-hover": withOpacity("--color-dark-primary-main-hover"),
         },
       },

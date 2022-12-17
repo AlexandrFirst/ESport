@@ -24,8 +24,10 @@
     --color-dark-text-main: 19, 27, 45;
     --color-dark-text-subsidiary: 100, 116, 139;
     --color-dark-text-accent: 14, 165, 233;
+    --color-dark-text-secondary: 79, 70, 229;
 
     --color-dark-bg-main: 241, 241, 253;
+    --color-dark-bg-accent: 79, 70, 229;
     --color-dark-primary-main-hover: 220, 233, 254;
   }
 }

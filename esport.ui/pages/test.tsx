@@ -22,7 +22,13 @@ const Test: NextPage = () => {
   return (
     <MainLayout>
       <h1 className="text-skin-main px-5">Some content</h1>
+      <SportButton variant={"outlined"} onClick={handleClick}>
+        Toggle loading
+      </SportButton>
       <SportButton onClick={handleClick}>Toggle loading</SportButton>
+      <SportButton variant={"text"} onClick={handleClick}>
+        Toggle loading
+      </SportButton>
     </MainLayout>
   );
 };

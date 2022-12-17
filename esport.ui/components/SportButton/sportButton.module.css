@@ -1,11 +1,11 @@
 .contained {
-    @apply bg-skin-primary hover:bg-skin-primary-hover dark:bg-gray-900 dark:text-blue-100
+    @apply bg-skin-primary hover:bg-skin-primary-hover dark:bg-darkSkin-accent
 }
 
 .outlined {
-    @apply border-primary text-primary hover:border-primary-hover
+    @apply border-primary text-primary hover:border-primary-hover dark:border-primary dark:text-darkSkin-secondary
 }
 
 .text {
-    @apply text-primary
+    @apply text-primary dark:text-darkSkin-secondary
 }
