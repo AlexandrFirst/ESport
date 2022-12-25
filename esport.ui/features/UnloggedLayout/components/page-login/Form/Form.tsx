@@ -1,8 +1,10 @@
 import React from "react";
+import styles from "./form.module.css";
+
 import { UseFormReturn } from "react-hook-form";
 import cn from "classnames";
 
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 
 import { useMedia } from "@hooks/useMedia";
 
@@ -45,13 +47,15 @@ export const Form: React.FC<FormProps> = ({ methods }) => {
         className="my-3"
         placeholder="Password"
       />
-      <SportLink className="float-right" to={routes.Register}>
+      <SportLink className={"float-right"} to={routes.Register}>
         Forgot password?
       </SportLink>
       <SportButton className="w-full my-5" onClick={handleSubmit(login)}>
         Login
       </SportButton>
-      New on our platform?{" "}
+      <Typography component={"span"} className={styles.text}>
+        New on our platform?{" "}
+      </Typography>
       <SportLink to={routes.Register}>Create an account</SportLink>
       <Grid
         container
@@ -60,7 +64,12 @@ export const Form: React.FC<FormProps> = ({ methods }) => {
         className="mt-6"
       >
         <Dividers>
-          <p className="px-3">or</p>
+          <Typography
+            component={"span"}
+            className={cn(styles.text, styles.divider)}
+          >
+            or
+          </Typography>
         </Dividers>
       </Grid>
     </SportForm>

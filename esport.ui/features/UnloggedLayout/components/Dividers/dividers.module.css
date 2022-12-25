@@ -1,0 +1,3 @@
+.divider {
+    @apply border-text-main dark:border-text-subsidiary w-1/3 mt-1
+}

@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import { SportButton } from "@components/SportButton/SportButton";
 import { SportLink } from "@components/SportLink/SportLink";
 import { MainLayout } from "@features/MainLayout/MainLayout";
@@ -15,17 +15,20 @@ const Home: NextPage = () => {
       </Head>
 
       <MainLayout>
-        <Typography variant={"h1"}>H1</Typography>
-        <Typography variant={"h2"}>H2</Typography>
-        <Typography variant={"h3"}>H3</Typography>
-        <Typography variant={"h4"}>H4</Typography>
-        <Typography variant={"h5"}>H5</Typography>
-        <Typography variant={"h6"}>H6</Typography>
-        <Typography variant={"body1"}>Body1</Typography>
-        <Typography variant={"body2"}>Body2</Typography>
-        <Typography variant={"subtitle1"}>Subtitle1</Typography>
-        <Typography variant={"subtitle2"}>Subtitle2</Typography>
-        <Typography variant={"overline"}>Overline</Typography>
+        <h1>H1</h1>
+        <h2>H2</h2>
+        <h3>H3</h3>
+        <h4>H4</h4>
+        <h5>H5</h5>
+        <h6>H6</h6>
+        <p>
+          <span>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. A
+            accusamus corporis, cum dolore excepturi illum iure labore
+            laudantium nesciunt, nisi non numquam odio perferendis porro quidem,
+            reiciendis rerum sed vero.
+          </span>
+        </p>
         <Grid>
           <SportButton>Contained</SportButton>
           <SportButton variant={"outlined"}>Outlined</SportButton>

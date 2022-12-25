@@ -1,0 +1,7 @@
+.text {
+    @apply dark:text-darkSkin-subsidiary
+}
+
+.divider {
+    @apply px-3
+}

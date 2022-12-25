@@ -1,5 +1,5 @@
 .section {
-  @apply text-skin-main bg-skin-contrast p-20 dark:bg-darkSkin-main
+  @apply text-skin-main bg-skin-contrast p-20 dark:bg-darkSkin-main w-4/12 flex flex-col items-center
 }
 
 .tablet {

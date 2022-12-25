@@ -2,9 +2,15 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 
 import { wrapper } from "@storage/store";
+import { Nunito_Sans } from "@next/font/google";
 
 import { Providers } from "@features/Providers/Providers";
 import { useEffect, useState } from "react";
+
+const font = Nunito_Sans({
+  subsets: ["latin", "cyrillic"],
+  weight: ["300", "600", "700", "900"],
+});
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [showChild, setShowChild] = useState(false);
@@ -21,7 +27,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   }
   return (
     <Providers>
-      <Component {...pageProps} />
+      <main className={font.className}>
+        <Component {...pageProps} />
+      </main>
     </Providers>
   );
 }

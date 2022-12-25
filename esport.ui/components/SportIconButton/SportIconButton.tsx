@@ -17,7 +17,7 @@ export const SportIconButton: React.FC<SportIconButtonProps> = ({
       {...props}
       disabled={disabled}
       className={cn(styles.icon_btn, className, {
-        ["cursor-default"]: disabled,
+        [styles.disabled]: disabled,
       })}
     >
       {children}

@@ -1,9 +1,9 @@
 .list_item {
-    @apply rounded-md w-full hover:bg-skin-subsidiary dark:hover:bg-darkSkin-primary-hover dark:text-darkSkin-main
+    @apply rounded-md w-full hover:bg-skin-subsidiary dark:hover:bg-darkSkin-subsidiary dark:text-darkSkin-main
 }
 
 .selected {
-    @apply bg-skin-contrast dark:bg-darkSkin-primary-hover
+    @apply bg-skin-subsidiary dark:bg-darkSkin-subsidiary
 }
 
 .link {
