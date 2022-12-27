@@ -19,7 +19,7 @@
     "noFallthroughCasesInSwitch": false,
     "paths": {
       "@configs/*": [
-        "configs/*"
+        "src/configs/*"
       ]
     }
   }
