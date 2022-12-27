@@ -23,4 +23,9 @@
   background: rgba(211, 211, 211, 0.4);
   /* visibility: visible; */
 }
+
 /* } */
+
+.scroll {
+  @apply overflow-y-auto overflow-x-hidden
+}

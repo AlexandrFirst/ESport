@@ -1,15 +1,15 @@
-import React, { PropsWithChildren } from 'react'
-import { FormProvider, UseFormReturn } from 'react-hook-form'
+import React, { PropsWithChildren } from "react";
+import { FormProvider, UseFormReturn } from "react-hook-form";
 
-interface SportFormProps<TData> extends PropsWithChildren {
-  methods: UseFormReturn<TData>
-  className?: string
+interface SportFormProps extends PropsWithChildren {
+  methods: UseFormReturn<any>;
+  className?: string;
 }
 
-export function SportForm<TData>({ methods, className, children }: SportFormProps<TData>) {
+export function SportForm({ methods, className, children }: SportFormProps) {
   return (
     <FormProvider {...methods}>
       <form className={className}>{children}</form>
     </FormProvider>
-  )
+  );
 }

@@ -1,9 +1,14 @@
-import React, { PropsWithChildren } from 'react'
+import React, { PropsWithChildren } from "react";
+import styles from "./sportTitle.module.css";
+import cn from "classnames";
 
 interface SportTitleProps extends PropsWithChildren {
-  className?: string
+  className?: string;
 }
 
-export const SportTitle: React.FC<SportTitleProps> = ({ className, children = 'E-SPORT' }) => {
-  return <h1 className={`text-white origin-left font-medium text-base duration-200 w-fit ${className}`}>{children}</h1>
-}
+export const SportTitle: React.FC<SportTitleProps> = ({
+  className,
+  children = "E-SPORT",
+}) => {
+  return <h1 className={cn(styles.title, className)}>{children}</h1>;
+};

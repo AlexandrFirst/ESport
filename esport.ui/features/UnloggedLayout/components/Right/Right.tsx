@@ -1,25 +1,35 @@
-import React, { memo, PropsWithChildren } from 'react'
-import styles from './Right.module.css'
+import React, { memo, PropsWithChildren } from "react";
+import styles from "./Right.module.css";
 
-import cn from 'classnames'
+import cn from "classnames";
 
-import { useMedia } from '@hooks/useMedia'
+import { useMedia } from "@hooks/useMedia";
 
-import { Title } from '../Title/Title'
-import { Subtitle } from '../Subtitle/Subtitle'
+import { SportThemeSwitcher } from "@features/SportThemeSwitcher/SportThemeSwitcher";
+
+import { Title } from "../Title/Title";
+import { Subtitle } from "../Subtitle/Subtitle";
 
 interface RightProps extends PropsWithChildren {
-  title: string
-  subtitle: string
+  title: string;
+  subtitle: string;
 }
 
-export const Right: React.FC<RightProps> = memo(({ title, subtitle, children }) => {
-  const { isMobile, isTablet } = useMedia()
-  return (
-    <section className={cn('text-skin-main bg-skin-contrast p-20', { ['w-9/12']: isTablet, ['w-full px-10 py-16']: isMobile })}>
-      <Title className={cn('w-fit')}>{title}</Title>
-      <Subtitle className='pt-5 pb-12'>{subtitle}</Subtitle>
-      {children}
-    </section>
-  )
-})
+export const Right: React.FC<RightProps> = memo(
+  ({ title, subtitle, children }) => {
+    const { isMobile, isTablet } = useMedia();
+    return (
+      <section
+        className={cn(styles.section, {
+          [styles.tablet]: isTablet,
+          [styles.mobile]: isMobile,
+        })}
+      >
+        <Title className={styles.title}>{title}</Title>
+        <Subtitle className={styles.subtitle}>{subtitle}</Subtitle>
+        <SportThemeSwitcher className={styles.theme_switcher} />
+        {children}
+      </section>
+    );
+  }
+);

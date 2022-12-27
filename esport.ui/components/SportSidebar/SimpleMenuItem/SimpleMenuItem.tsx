@@ -1,30 +1,43 @@
-import React from 'react'
-import { ListItemButton } from '@mui/material'
+import React from "react";
+import styles from "./simpleMenuItem.module.css";
 
-import { IMenuItem } from '@interfaces/menu-item'
-import Link from 'next/link'
+import { ListItemButton } from "@mui/material";
+
+import { IMenuItem } from "@interfaces/menu-item";
+import Link from "next/link";
+import cn from "classnames";
 
 interface SimpleMenuItemProps {
-  item: IMenuItem
-  isSidebarOpened: boolean
-  onItemClick?: (item: IMenuItem) => void
-  currentPathname?: string
+  item: IMenuItem;
+  isSidebarOpened: boolean;
+  onItemClick?: (item: IMenuItem) => void;
+  currentPathname?: string;
 }
 
-export const SimpleMenuItem: React.FC<SimpleMenuItemProps> = ({ item, isSidebarOpened, currentPathname, onItemClick }) => {
+export const SimpleMenuItem: React.FC<SimpleMenuItemProps> = ({
+  item,
+  isSidebarOpened,
+  currentPathname,
+  onItemClick,
+}) => {
   const handleItemClick = (item: IMenuItem) => {
-    onItemClick && onItemClick(item)
-  }
+    onItemClick && onItemClick(item);
+  };
 
-  const selected = item.link && currentPathname === item.link
-  const selectedClassName = 'bg-skin-contrast'
+  const selected = item.link && currentPathname === item.link;
 
   return (
-    <ListItemButton className={`rounded-md w-full hover:bg-skin-subsidiary ${selected && selectedClassName}`} onClick={() => handleItemClick(item)}>
+    <ListItemButton
+      className={cn(styles.list_item, { [styles.selected]: selected })}
+      onClick={() => handleItemClick(item)}
+    >
       {item.icon}
-      <Link href={item.link ?? ''} className={`${!isSidebarOpened && 'hidden'} origin-left duration-200 text-skin-main`}>
-        <a>{item.title}</a>
+      <Link
+        href={item.link ?? ""}
+        className={cn(styles.link, { [styles.not_visible]: !isSidebarOpened })}
+      >
+        {item.title}
       </Link>
     </ListItemButton>
-  )
-}
+  );
+};

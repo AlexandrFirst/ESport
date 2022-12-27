@@ -19,6 +19,7 @@ export const SportHead: React.FC<SportHeadComponentProps> = ({
         name="keywords"
         content={`e-sport sport organization ${keywords ?? ""}`.trim()}
       />
+      <meta name="viewport" content="initial-scale=1, width=device-width" />
     </Head>
   );
 };

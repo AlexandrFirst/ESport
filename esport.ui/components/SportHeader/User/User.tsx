@@ -15,6 +15,7 @@ import { getDisplayName, validateStr } from "utils";
 
 import { SelectedItem } from "../Text/SelectedItem";
 import { RegularItem } from "../Text/RegularItem";
+import { SportAvatar } from "@components/SportAvatar/SportAvatar";
 
 interface UserProps {}
 
@@ -58,7 +59,7 @@ export const User: React.FC<UserProps> = () => {
       >
         <MenuItem>
           <Grid item className="pr-4">
-            <Avatar />
+            <SportAvatar name={"John"} />
           </Grid>
           <Grid container direction="column">
             <SelectedItem>{getDisplayName(user)}</SelectedItem>

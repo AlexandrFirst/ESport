@@ -1,3 +1,11 @@
 .form {
   margin: 0 auto;
 }
+
+.text {
+  @apply text-skin-main dark:text-darkSkin-main
+}
+
+.dividers {
+  @apply px-3
+}

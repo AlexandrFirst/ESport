@@ -1,55 +1,91 @@
-version: "3.9"
+version: '3.9'
 services:
   sqldb:
     image: mcr.microsoft.com/mssql/server:2019-latest
     environment:
       - SA_PASSWORD=2Secure*Password2
       - ACCEPT_EULA=Y
+    healthcheck:
+      test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-Usa", "-P2Secure*Password2", "-Q", "select 1"]
+      interval: 2s
+      retries: 20
     ports:
-      - "1450:1433"
+      - '1450:1433'
+    volumes:
+      - "./db_volume/_data:/var/opt/mssql/data"
+      - "./db_volume/_log:/var/opt/mssql/log"
+      - "./db_volume/_log:/var/opt/mssql/secrets"
   rabbit:
     image: rabbitmq:3-management
     environment:
-    - RABBITMQ_DEFAULT_USER=user
-    - RABBITMQ_DEFAULT_PASS=pass
+      - RABBITMQ_DEFAULT_USER=user
+      - RABBITMQ_DEFAULT_PASS=pass
     restart: on-failure
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 30s
+      retries: 3
     ports:
-    - "15672:15672"
-    - "5672:5672"
+      - '15672:15672'
+      - '5672:5672'
   identity:
     image: diplom_identity
+    build:
+      context: ./IdentityV2
+      dockerfile: ./Dockerfile
     depends_on:
-      - sqldb
-      - rabbit
+      sqldb:
+        condition: service_healthy
+      rabbit:
+        condition: service_healthy
     restart: on-failure
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
     ports:
-      - "5000:80"
+      - '5000:80'
   gateway:
     image: gateway
+    build:
+      context: .
+      dockerfile: Dockerfile
     depends_on:
       - identity
     restart: on-failure
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
     ports:
-      - "6000:80"
+      - '6000:80'
   userflow:
-     image: userflow
-     depends_on:
+    image: userflow
+    build:
+      context: ./UserWorkFlow
+      dockerfile: ./Dockerfile
+    depends_on:
       - gateway
-     restart: on-failure
-     environment:
+    restart: on-failure
+    environment:
       - ASPNETCORE_ENVIRONMENT=Production
-     ports:
-      - "7000:80"
+    ports:
+      - '7000:80'
   message:
-      image: messageservice
-      depends_on:
-       - rabbit
-      restart: on-failure
-      environment:
-       - ASPNETCORE_ENVIRONMENT=Production
-      ports:
-       - "8000:80"
+    image: messageservice
+    build:
+      context: ./MessageService
+      dockerfile: ./Dockerfile
+    depends_on:
+      rabbit:
+        condition: service_healthy
+    restart: on-failure
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+    ports:
+      - '8000:80'
+  web:
+    image: esport-web
+    container_name: esport-web
+    build:
+      context: ./esport.ui
+      dockerfile: ./Dockerfile
+    restart: always
+    ports:
+      - '3000:3000'

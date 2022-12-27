@@ -1,48 +1,77 @@
-import React from 'react'
-import { UseFormReturn } from 'react-hook-form'
-import cn from 'classnames'
+import React from "react";
+import styles from "./form.module.css";
 
-import { Grid } from '@mui/material'
+import { UseFormReturn } from "react-hook-form";
+import cn from "classnames";
 
-import { useMedia } from '@hooks/useMedia'
+import { Grid, Typography } from "@mui/material";
 
-import { ILoginForm } from '@features/UnloggedLayout/interfaces'
-import { routes } from 'routes'
+import { useMedia } from "@hooks/useMedia";
 
-import { SportInput } from '@components/SportInput/SportInput'
-import { SportForm } from '@components/SportForm/SportForm'
-import { SportButton } from '@components/SportButton/SportButton'
-import { SportLink } from '@components/SportLink/SportLink'
-import { SportPasswordInput } from '@components/SportPasswordInput/SportPasswordInput'
+import { ILoginForm } from "@features/UnloggedLayout/interfaces";
+import { routes } from "routes";
 
-import { Dividers } from '../../Dividers/Dividers'
-import { useLogin } from '../useLogin'
+import { SportInput } from "@components/SportInput/SportInput";
+import { SportForm } from "@components/SportForm/SportForm";
+import { SportButton } from "@components/SportButton/SportButton";
+import { SportLink } from "@components/SportLink/SportLink";
+import { SportPasswordInput } from "@components/SportPasswordInput/SportPasswordInput";
+
+import { Dividers } from "../../Dividers/Dividers";
+import { useLogin } from "../useLogin";
 
 interface FormProps {
-  methods: UseFormReturn<ILoginForm>
+  methods: UseFormReturn<ILoginForm>;
 }
 
 export const Form: React.FC<FormProps> = ({ methods }) => {
-  const { handleSubmit, register } = methods
-  const { isMobile } = useMedia()
-  const { login } = useLogin()
+  const { handleSubmit, register } = methods;
+  const { isMobile } = useMedia();
+  const { login } = useLogin();
 
   return (
-    <SportForm methods={methods} className={cn('text-center', { ['w-full']: isMobile, ['w-80']: !isMobile })}>
-      <SportInput {...register('email')} className='my-3' label='E-mail' />
-      <SportPasswordInput {...register('password')} className='my-3' placeholder='Password' />
-      <SportLink className='float-right' to={routes.Register}>
+    <SportForm
+      methods={methods}
+      className={cn("text-center", {
+        ["w-full"]: isMobile,
+        ["w-80"]: !isMobile,
+      })}
+    >
+      <SportInput
+        {...register("email")}
+        className="my-3"
+        placeholder="E-mail"
+      />
+      <SportPasswordInput
+        {...register("password")}
+        className="my-3"
+        placeholder="Password"
+      />
+      <SportLink className={"float-right"} to={routes.Register}>
         Forgot password?
       </SportLink>
-      <SportButton className='w-full my-5' onClick={handleSubmit(login)}>
+      <SportButton className="w-full my-5" onClick={handleSubmit(login)}>
         Login
       </SportButton>
-      New on our platform? <SportLink to={routes.Register}>Create an account</SportLink>
-      <Grid container alignItems='center' justifyContent='center' className='mt-6'>
+      <Typography component={"span"} className={styles.text}>
+        New on our platform?{" "}
+      </Typography>
+      <SportLink to={routes.Register}>Create an account</SportLink>
+      <Grid
+        container
+        alignItems="center"
+        justifyContent="center"
+        className="mt-6"
+      >
         <Dividers>
-          <p className='px-3'>or</p>
+          <Typography
+            component={"span"}
+            className={cn(styles.text, styles.divider)}
+          >
+            or
+          </Typography>
         </Dividers>
       </Grid>
     </SportForm>
-  )
-}
+  );
+};

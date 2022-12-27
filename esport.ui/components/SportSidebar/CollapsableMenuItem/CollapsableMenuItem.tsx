@@ -1,56 +1,93 @@
-import React, { useState } from 'react'
-import { List, ListItem, ListItemButton } from '@mui/material'
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
+import React, { useState } from "react";
+import styles from "./collapsableMenuItem.module.css";
 
-import { IMenuItem } from '@interfaces/menu-item'
-import Link from 'next/link'
+import { List, ListItem, ListItemButton } from "@mui/material";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+
+import { IMenuItem } from "@interfaces/menu-item";
+import Link from "next/link";
+import cn from "classnames";
 
 interface ICollapsableMenuItem extends IMenuItem {
-  items: IMenuItem[]
+  items?: IMenuItem[];
 }
 
 interface CollapsableMenuItemProps {
-  item: ICollapsableMenuItem
-  isSidebarOpened: boolean
-  onSubItemClick?: (subMenu: IMenuItem) => void
-  currentPathname?: string
+  item: ICollapsableMenuItem;
+  isSidebarOpened: boolean;
+  onSubItemClick?: (subMenu: IMenuItem) => void;
+  currentPathname?: string;
 }
 
-export const CollapsableMenuItem: React.FC<CollapsableMenuItemProps> = ({ item, isSidebarOpened, currentPathname, onSubItemClick }) => {
-  const [submenuOpen, setSubmenuOpen] = useState(false)
+export const CollapsableMenuItem: React.FC<CollapsableMenuItemProps> = ({
+  item,
+  isSidebarOpened,
+  currentPathname,
+  onSubItemClick,
+}) => {
+  const [submenuOpen, setSubmenuOpen] = useState(false);
 
   const handleSubItemClick = (subMenu: IMenuItem) => {
-    onSubItemClick && onSubItemClick(subMenu)
-  }
+    onSubItemClick && onSubItemClick(subMenu);
+  };
 
-  const selected = item.items.some(({ link }) => link && link === currentPathname)
-  const selectedClassName = 'bg-skin-contrast'
+  const selected = item.items?.some(
+    ({ link }) => link && link === currentPathname
+  );
 
   return (
     <>
-      <ListItemButton className={`rounded-md w-full hover:bg-skin-subsidiary  ${selected && !isSidebarOpened && selectedClassName}`} onClick={() => setSubmenuOpen(prev => !prev)}>
+      <ListItemButton
+        className={cn(styles.list_item, {
+          [styles.selected]: selected && !isSidebarOpened,
+        })}
+        onClick={() => setSubmenuOpen((prev) => !prev)}
+      >
         {item.icon}
-        <span className={`${!isSidebarOpened && 'hidden'} origin-left duration-200 text-skin-main`}>{item.title}</span>
-        <KeyboardArrowDownIcon className={`ml-auto ${!isSidebarOpened && 'scale-0'} transition-all ${submenuOpen && 'rotate-180'}`} />
+        <span
+          className={cn(styles.title, {
+            [styles.not_visible]: !isSidebarOpened,
+          })}
+        >
+          {item.title}
+        </span>
+        <KeyboardArrowDownIcon
+          className={cn(styles.arrow_icon, {
+            [styles.not_visible_icon]: !isSidebarOpened,
+            [styles.icon_submenu_opened]: submenuOpen,
+          })}
+        />
       </ListItemButton>
-      <List className={`ml-11 w-full ${!submenuOpen || !isSidebarOpened ? 'h-0 p-0' : 'h-fit'} transition-all`}>
-        {item.items.map(subMenu => {
-          const selected = subMenu.link && subMenu.link === currentPathname
+      <List
+        className={cn(styles.inner_list, {
+          [styles.inner_list_not_opened]: !submenuOpen || !isSidebarOpened,
+          [styles.inner_list_opened]: submenuOpen && isSidebarOpened,
+        })}
+      >
+        {item.items?.map((subMenu) => {
+          const selected = subMenu.link && subMenu.link === currentPathname;
           return (
-            <ListItem className={`border-l-2 p-0 pb-2 border-text-main w-9/12 ${!submenuOpen || !isSidebarOpened ? 'opacity-0' : 'opacity-1'}`}>
+            <ListItem
+              key={subMenu.link}
+              className={cn(styles.inner_list_item, {
+                [styles.inner_list_item_not_opened]:
+                  !submenuOpen || !isSidebarOpened,
+                [styles.inner_list_item_opened]: submenuOpen && isSidebarOpened,
+              })}
+            >
               <ListItemButton
                 key={subMenu.title}
-                className={`hover:bg-skin-subsidiary transition-all rounded-md w-full ${selected && selectedClassName}`}
+                className={cn(styles.inner_list_item_button, {
+                  [styles.selected]: selected,
+                })}
                 onClick={() => handleSubItemClick(subMenu)}
               >
-                <Link href={subMenu.link ?? ''}>
-                  <a>{subMenu.title}</a>
-                </Link>
+                <Link href={subMenu.link ?? ""}>{subMenu.title}</Link>
               </ListItemButton>
             </ListItem>
-          )
+          );
         })}
       </List>
     </>
-  )
-}
+  );
+};
