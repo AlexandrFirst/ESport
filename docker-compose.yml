@@ -28,6 +28,17 @@ services:
     ports:
       - '15672:15672'
       - '5672:5672'
+  mongo:
+    image: mongo:4.4.4
+    container_name: mongo
+    restart: always
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    ports:
+      - '27017:27017'
+    volumes:
+      - ./mongo-data-4.4:/data/db
   identity:
     image: diplom_identity
     build:
@@ -89,3 +100,19 @@ services:
     restart: always
     ports:
       - '3000:3000'
+  competitions:
+    container_name: esport-competitions
+    build:
+      context: ./esport.competitions
+      target: development
+      dockerfile: ./Dockerfile
+    restart: always
+    volumes:
+      - /usr/src/app/node_modules
+      - ./esport.competitions:/usr/src/app
+    command: npm run start
+    env_file:
+      - ./esport.competitions/.env
+    depends_on:
+      - rabbit
+      - mongo
