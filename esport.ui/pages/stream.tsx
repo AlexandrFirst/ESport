@@ -1,15 +1,18 @@
 import { NextPage } from "next";
 
-import './../angularFiles/main'
-import './../angularFiles/polyfills'
-import './../angularFiles/runtime'
-
+declare global {
+    namespace JSX {
+        interface IntrinsicElements {
+            'angular-component-m': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
+        }
+    }
+}
 
 const StreamPage: NextPage = () => {
     return (
         <>
             <div>
-                {<angular-component  /> as any}
+                <angular-component-m></angular-component-m>
             </div>
         </>
     )

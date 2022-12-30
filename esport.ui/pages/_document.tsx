@@ -32,6 +32,7 @@ class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
+          <script src="app.js"></script>
         </body>
       </Html>
     );

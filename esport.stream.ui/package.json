@@ -6,7 +6,12 @@
     "start": "ng serve",
     "build": "ng build --output-hashing=none",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "build:app": "ng build --output-hashing=none",
+    "build:web-component": "npm run build:app && rm -rf dist && npm run build:web-component:compile && npm run build:web-component:concat && npm run build:web-component-folder",
+    "build:web-component:compile": "ng build --output-hashing=none --main='C:/Users/OldNeer/OneDrive/Документы/nure/diplom/ESport/esport.stream.ui/src/app/compile.ts'",
+    "build:web-component:concat": "cat dist/runtime.js dist/main.js > dist/app.js",
+    "build:web-component-folder": "cp dist/app.js ./demo-component && cp -r src/assets/ ./demo-component/assets/"
   },
   "private": true,
   "dependencies": {

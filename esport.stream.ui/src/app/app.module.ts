@@ -12,12 +12,12 @@ import { createCustomElement } from '@angular/elements';
     BrowserModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  entryComponents: [AppComponent]
 })
 export class AppModule implements DoBootstrap{
   constructor(private injector: Injector) {
     const webComponent = createCustomElement(AppComponent, {injector: this.injector});
-    customElements.define('angular-component', webComponent);
+    customElements.define('angular-component-m', webComponent);
   }
 
   ngDoBootstrap(appRef: ApplicationRef): void {
