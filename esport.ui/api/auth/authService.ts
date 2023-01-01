@@ -21,6 +21,11 @@ export interface ILoginRequest {
   remmemberMe?: boolean;
 }
 
+export interface ILoginResponse {
+  refreshToken?: string;
+  token: string;
+}
+
 class AuthService {
   identityApi = axios.create({
     baseURL: process.env.NEXT_PUBLIC_LOGIN_API_URL ?? "",
@@ -30,12 +35,12 @@ class AuthService {
     return this.identityApi.post("/register", registerRequest);
   }
 
-  login(loginRequest: ILoginRequest): Promise<string> {
-    console.log(
-      "===process.env.NEXT_PUBLIC_LOGIN_API_URL===",
-      process.env.NEXT_PUBLIC_LOGIN_API_URL
-    );
+  login(loginRequest: ILoginRequest): Promise<ILoginResponse> {
     return this.identityApi.post("/apiLogin", loginRequest);
+  }
+
+  confirm(token: string): Promise<void> {
+    return this.identityApi.get(`/confirm/${token}`);
   }
 }
 
