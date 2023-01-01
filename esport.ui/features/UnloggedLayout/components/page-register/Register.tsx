@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 
 import { IRegisterForm } from "@features/UnloggedLayout/interfaces";
 import { RegisterSteps } from "@features/UnloggedLayout/enums";
-import { registerHead } from "@features/UnloggedLayout/components/page-register/useRegister";
 
 import { Left } from "../Left/Left";
 import { Main } from "../Main";
@@ -11,6 +10,11 @@ import { Right } from "../Right/Right";
 
 import { Form } from "./Form/Form";
 import { RegisterStepper } from "./Stepper/Stepper";
+import { SportHeadComponentProps } from "@features/SportHead/SportHead";
+
+const registerHead: SportHeadComponentProps = {
+  title: "E-Sport | Create your account",
+};
 
 export const Register: React.FC = () => {
   const methods = useForm<IRegisterForm>();

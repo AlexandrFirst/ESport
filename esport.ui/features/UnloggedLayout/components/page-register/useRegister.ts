@@ -1,27 +1,33 @@
-import { useRouter } from "next/router";
-
 import { IRegisterForm } from "@features/UnloggedLayout/interfaces";
-import { SportHeadComponentProps } from "@features/SportHead/SportHead";
 
-import { useAppDispatch } from "@storage/hooks/useStore";
+import { authService } from "@api/auth/authService";
+
 import { logIn } from "@storage/slices/user";
-
-import { routes } from "routes";
-
-export const registerHead: SportHeadComponentProps = {
-  title: "E-Sport | Create your account",
-};
+import { useAppDispatch } from "@storage/hooks/useStore";
+import { useLoader } from "@hooks/useLoader";
 
 export const useRegister = () => {
   const dispatch = useAppDispatch();
-  const router = useRouter();
+  const { showLoader, hideLoader } = useLoader();
 
-  const registration = (data: IRegisterForm) => {
-    console.log("===data===", data);
-
-    dispatch(logIn());
-    router.push(routes.Test);
+  return async (data: IRegisterForm) => {
+    try {
+      showLoader();
+      const { isSuccess } = await authService.register({
+        email: data.email,
+        password: data.password,
+        confirmPassword: data.confirmPassword,
+        name: data.firstName,
+        surname: data.lastName,
+        telephoneNumber: data.telephoneNumber,
+      });
+      if (isSuccess) {
+        dispatch(logIn());
+      }
+    } catch (e) {
+      //TODO: handle error
+    } finally {
+      hideLoader();
+    }
   };
-
-  return { registration };
 };
