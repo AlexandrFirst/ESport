@@ -13,7 +13,7 @@ import { Form } from "./Form/Form";
 import { useValidation } from "./useValidation";
 
 export const Login: React.FC = () => {
-  const { validationSchema } = useValidation();
+  const validationSchema = useValidation();
 
   const methods = useForm<ILoginForm>({
     resolver: yupResolver(validationSchema),
