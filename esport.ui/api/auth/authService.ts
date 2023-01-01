@@ -23,7 +23,7 @@ export interface ILoginRequest {
 
 class AuthService {
   identityApi = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_IDENTITY_API_URL ?? "",
+    baseURL: process.env.NEXT_PUBLIC_LOGIN_API_URL ?? "",
   });
 
   register(registerRequest: IRegisterRequest): Promise<IRegisterResponse> {
@@ -31,6 +31,10 @@ class AuthService {
   }
 
   login(loginRequest: ILoginRequest): Promise<string> {
+    console.log(
+      "===process.env.NEXT_PUBLIC_LOGIN_API_URL===",
+      process.env.NEXT_PUBLIC_LOGIN_API_URL
+    );
     return this.identityApi.post("/apiLogin", loginRequest);
   }
 }

@@ -29,6 +29,11 @@ export const Form: React.FC<FormProps> = ({ methods }) => {
   const { isMobile } = useMedia();
   const login = useLogin();
 
+  const test = handleSubmit(
+    (data) => console.log("===data===", data),
+    (err) => console.log("===err===", err)
+  );
+
   return (
     <SportForm
       methods={methods}
