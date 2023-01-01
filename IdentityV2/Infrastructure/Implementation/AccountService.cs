@@ -108,7 +108,7 @@ namespace IdentityV2.Infrastructure.Core
                 {
                     token = userToInsert.PendingUser.PendingToken.ToString(),
                     mail = userToInsert.Email,
-                    template = "<p>To confirm account enter code {0}</p>"
+                    template = "<p>Click to confirm your account <a href='http://localhost:3000/user/confirm/{0}'>Confirm</a></p>"
                 });
                 await dataContext.SaveChangesAsync();
 
