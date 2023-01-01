@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserWorkFlow", "UserWorkFlo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ESportAuthClient", "ESportAuthClient\ESportAuthClient.csproj", "{E3AE1D4B-96F5-4E48-B861-FED7466E33EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MessageService", "MessageService\MessageService.csproj", "{00403DBF-55CF-45B8-AD90-DF2965F916C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessageService", "MessageService\MessageService.csproj", "{00403DBF-55CF-45B8-AD90-DF2965F916C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StreamingService", "StreamingService\StreamingService.csproj", "{BDDA1503-DDD4-409C-AD21-086CC996417D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{00403DBF-55CF-45B8-AD90-DF2965F916C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{00403DBF-55CF-45B8-AD90-DF2965F916C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{00403DBF-55CF-45B8-AD90-DF2965F916C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BDDA1503-DDD4-409C-AD21-086CC996417D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BDDA1503-DDD4-409C-AD21-086CC996417D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BDDA1503-DDD4-409C-AD21-086CC996417D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BDDA1503-DDD4-409C-AD21-086CC996417D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

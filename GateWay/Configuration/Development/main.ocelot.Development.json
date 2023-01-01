@@ -24,10 +24,6 @@
         "Name": "Claims[Name] > value > |",
         "Email": "Claims[Email] > value > |"
       }
-
     }
-  ],
-  "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:6000"
-  }
+  ]
 }

@@ -1,4 +1,5 @@
 using ESportAuthClient.ESportAuthClient;
+using FluentValidation.Internal;
 using GateWay.Errors;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Ocelot.Authorisation;
 using Ocelot.Configuration;
 using Ocelot.DependencyInjection;
@@ -19,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace GateWay
@@ -38,7 +41,7 @@ namespace GateWay
 
             services.AddAuthentication(o =>
             {
-                o.DefaultAuthenticateScheme = "ESp`ort";
+                o.DefaultAuthenticateScheme = "ESport";
                 o.DefaultChallengeScheme = "ESport";
             })
             .AddScheme<ESportClientAuthenticationOptions, ESportClientAuthenticationHandler>("ESport", o => { o.Authority = Configuration.GetSection("Security")["Authority"]; });
@@ -54,7 +57,22 @@ namespace GateWay
                 {
                     if (this.Authorize(context))
                     {
-                        await next.Invoke();
+                        try
+                        {
+                            await next.Invoke();
+                        }
+                        catch (Exception ex) 
+                        {
+                            context.Response.StatusCode = 500;
+
+                            var messageError = new
+                            {
+                                Message = ex.Message
+                            };
+
+                            await context.Response.BodyWriter.WriteAsync(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(messageError)));
+                            return;
+                        }
                     }
                     else
                     {
@@ -69,6 +87,7 @@ namespace GateWay
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseWebSockets();
             app.UseOcelot(configuration).Wait();
         }
 

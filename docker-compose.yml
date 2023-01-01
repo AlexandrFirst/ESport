@@ -54,7 +54,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
     ports:
-      - '6000:80'
+      - '5001:80'
   userflow:
     image: userflow
     build:
@@ -66,7 +66,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
     ports:
-      - '7000:80'
+      - '5002:80'
   message:
     image: messageservice
     build:
@@ -79,7 +79,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
     ports:
-      - '8000:80'
+      - '5003:80'
   web:
     image: esport-web
     container_name: esport-web
