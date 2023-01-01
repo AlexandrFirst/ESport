@@ -27,7 +27,7 @@ interface FormProps {
 export const Form: React.FC<FormProps> = ({ methods }) => {
   const { handleSubmit, register } = methods;
   const { isMobile } = useMedia();
-  const { login } = useLogin();
+  const login = useLogin();
 
   return (
     <SportForm
@@ -37,11 +37,7 @@ export const Form: React.FC<FormProps> = ({ methods }) => {
         ["w-80"]: !isMobile,
       })}
     >
-      <SportInput
-        {...register("email")}
-        className="my-3"
-        placeholder="E-mail"
-      />
+      <SportInput {...register("mail")} className="my-3" placeholder="E-mail" />
       <SportPasswordInput
         {...register("password")}
         className="my-3"
