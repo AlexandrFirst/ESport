@@ -29,8 +29,6 @@ namespace StreamingService.Services
             if (streamProviderExists) {
                 throw new Exception("The stream for this event is already exists");
             }
-
-
         }
 
         // start new stream (organiser)

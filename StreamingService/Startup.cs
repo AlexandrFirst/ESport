@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using StreamingService.DL;
+using StreamingService.Models.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,6 +30,8 @@ namespace StreamingService
             services.AddControllers();
 
             services.AddDbContext<StreamDataContext>(options => options.UseSqlServer(Configuration.GetSection("ConnectionString")["StreamDb"]));
+
+            services.AddOptions<KurrentoOptions>().Bind(Configuration.GetSection("KurentoData"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
