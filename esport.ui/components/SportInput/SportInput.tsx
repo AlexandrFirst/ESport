@@ -13,7 +13,7 @@ export type SportInputProps = TextFieldProps & {
   errors?: Record<string, Message>;
 };
 
-export const SportInput = forwardRef<HTMLInputElement, SportInputProps>(
+export const SportInput = forwardRef<HTMLDivElement, SportInputProps>(
   function SportInput(
     {
       name,
