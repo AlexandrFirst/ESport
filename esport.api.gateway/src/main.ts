@@ -1,5 +1,5 @@
 import { NestFactory } from '@nestjs/core';
-import { ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 
 import { AppModule } from './app.module';
 import * as process from 'process';
@@ -11,7 +11,7 @@ async function bootstrap() {
   // app.enableCors();
 
   const port = process.env.PORT || 3001;
-  await app.listen(port, () => 'API started at port ' + port);
+  await app.listen(port, () => Logger.log('API started at port ' + port));
 }
 
 bootstrap();

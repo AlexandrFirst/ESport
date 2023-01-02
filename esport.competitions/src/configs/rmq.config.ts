@@ -20,5 +20,5 @@ const getRmqFactory = async (
   ],
   queueName: configService.get('AMQP_QUEUE') ?? '',
   prefetchCount: parseInt(configService.get('AMQP_PREFETCH_COUNT')) ?? 32,
-  serviceName: 'eSportKit-account',
+  serviceName: 'eSport-competitions',
 });
