@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { ValidationPipe } from '@nestjs/common';
 
 import { AppModule } from './app.module';
+import * as process from 'process';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -9,7 +10,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   // app.enableCors();
 
-  const port = 3001;
+  const port = process.env.PORT || 3001;
   await app.listen(port, () => 'API started at port ' + port);
 }
 
