@@ -1,5 +1,4 @@
-import { ICompetition } from '../../../../esport.contracts-ts/src/interfaces/competition/competition.interface';
-import { ICategory } from '../../../../esport.contracts-ts/src/interfaces/competition/category.interface';
+import { ICategory, ICompetition } from '@esport-lib/competitions';
 
 export class CompetitionEntity implements ICompetition {
   _id?: string;

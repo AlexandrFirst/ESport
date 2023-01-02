@@ -10,8 +10,7 @@
     "target": "ES2015",
     "alwaysStrict": false,
     "declarationMap": false,
-    "inlineSourceMap": false,
-    "emitDeclarationOnly": true
+    "inlineSourceMap": false
   },
   "include": [
     "src"

@@ -1,8 +1,7 @@
 import { Document } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
-import { ICompatitor } from '../../../../esport.contracts-ts/src/interfaces/competition/compatitor.interface';
-import { CompatitorType } from 'src/enums/compatitorType.enum';
+import { CompatitorType, ICompatitor } from '@esport-lib/competitions';
 
 @Schema()
 export class Competitor extends Document implements ICompatitor {
