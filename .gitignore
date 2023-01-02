@@ -54,7 +54,7 @@ nunit-*.xml
 [Rr]eleasePS/
 dlldata.c
 db_volume/
-mongo-data-4.4
+mongo-data*
 # Benchmark Results
 BenchmarkDotNet.Artifacts/
 

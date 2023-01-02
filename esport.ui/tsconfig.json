@@ -39,6 +39,9 @@
       ],
       "@pageComponents/*": [
         "pageComponents/*"
+      ],
+      "@api/*": [
+        "api/*"
       ]
     }
   },

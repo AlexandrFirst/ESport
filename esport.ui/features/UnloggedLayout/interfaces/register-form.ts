@@ -1,7 +1,9 @@
 export interface IRegisterForm {
-  firstName: string
-  lastName: string
-  email: string
-
-  level: string
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+  telephoneNumber: string;
+  // level: string;
 }
