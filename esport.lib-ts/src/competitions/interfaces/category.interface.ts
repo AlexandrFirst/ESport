@@ -1,7 +1,7 @@
-import { ICompatitor } from "./compatitor.interface";
+import { IFight } from "./fight.interface";
 
 export interface ICategory {
   _id?: string;
   title: string;
-  competitors: ICompatitor[];
+  fights: IFight[];
 }

@@ -132,3 +132,5 @@ services:
       - ./esport.api.gateway/.env
     depends_on:
       - rabbit
+    ports:
+      - '3001:3001'

@@ -1,6 +1,6 @@
-import { CompatitorType } from "../enums/compatitorType.enum";
+import { CompatitorType } from "../enums";
 
-export interface ICompatitor {
+export interface ICompetitor {
   _id?: string;
   displayName: string;
   weight?: number;
