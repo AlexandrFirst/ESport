@@ -6,10 +6,10 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 3001
+          "Port": 6050
         }
       ],
-      "UpstreamPathTemplate": "/api/v1/hello",
+      "UpstreamPathTemplate": "/hello",
       "UpstreamHttpMethod": [
         "Get"
       ]
