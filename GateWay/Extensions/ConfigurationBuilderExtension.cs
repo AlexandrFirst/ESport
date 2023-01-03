@@ -18,7 +18,7 @@ namespace GateWay.Extensions
 
             var files = new DirectoryInfo(folder)
                 .EnumerateFiles()
-                .Where(fi => fi.Name.Contains($"ocelot.{env.EnvironmentName}.json") && appNames.Any(e => fi.Name.Contains(e)))
+                .Where(fi => fi.Name.Contains($"ocelot.{env.EnvironmentName}.json") && appNames.Any(e => fi.Name.Contains(e)) || fi.Name.Equals(globalConfigFile))
                 .ToList();
 
             var fileConfiguration = new FileConfiguration();
