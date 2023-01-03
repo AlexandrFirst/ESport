@@ -40,7 +40,7 @@ class AuthService {
   }
 
   confirm(token: string): Promise<void> {
-    return this.identityApi.get(`/confirm/${token}`);
+    return this.identityApi.get(`/confirm?token=${token}`);
   }
 }
 
