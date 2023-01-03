@@ -1,17 +1,17 @@
 import { Document } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
-import { ICategory, ICompatitor } from 'esport-lib-ts/lib/competitions';
+import { ICategory, IFight } from 'esport-lib-ts/lib/competitions';
 
-import { CompetitorSchema } from './compatitor.model';
+import { FightSchema } from './fight.model';
 
 @Schema()
 export class Category extends Document implements ICategory {
   @Prop({ required: true })
   title: string;
 
-  @Prop({ required: true, type: [CompetitorSchema], _id: false })
-  competitors: ICompatitor[];
+  @Prop({ required: true, type: FightSchema, _id: false })
+  fights: IFight[];
 }
 
 export const CategorySchema = SchemaFactory.createForClass(Category);
