@@ -5,9 +5,10 @@ import { Competition, CompetitionSchema } from './models/competition.model';
 
 import { CompetitionService } from './competition.service';
 import { CompetitionQueries } from './competition.queries';
+import { CompetitionCommands } from './competition.commands';
 
 @Module({
-  controllers: [CompetitionQueries],
+  controllers: [CompetitionQueries, CompetitionCommands],
   imports: [
     MongooseModule.forFeature([
       { name: Competition.name, schema: CompetitionSchema },

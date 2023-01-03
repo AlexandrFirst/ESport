@@ -10,7 +10,7 @@ export class Category extends Document implements ICategory {
   @Prop({ required: true })
   title: string;
 
-  @Prop({ required: true, type: FightSchema, _id: false })
+  @Prop({ required: true, type: [FightSchema], _id: false })
   fights: IFight[];
 }
 

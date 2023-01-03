@@ -13,8 +13,14 @@ export class CompetitionRepository {
     private readonly competitionModel: Model<Competition>,
   ) {}
 
-  async createCompetition(c: CompetitionEntity) {
+  async create(c: CompetitionEntity) {
     const newComp = new this.competitionModel(c);
     return newComp.save();
+  }
+
+  async update({ _id, ...rest }: CompetitionEntity) {
+    return this.competitionModel
+      .updateOne({ _id }, { $set: { ...rest } })
+      .exec();
   }
 }
