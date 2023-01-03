@@ -1,7 +1,7 @@
 import { Document } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
-import { ICategory, ICompatitor } from '@esport-lib/competitions';
+import { ICategory, ICompatitor } from 'esport-lib-ts/lib/competitions';
 
 import { CompetitorSchema } from './compatitor.model';
 

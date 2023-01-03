@@ -15,12 +15,6 @@
     "strictNullChecks": false,
     "noImplicitAny": false,
     "strictBindCallApply": false,
-    "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false,
-    "paths": {
-      "@esport-lib/*": [
-        "../esport.lib-ts/lib/*"
-      ]
-    }
+    "forceConsistentCasingInFileNames": false
   }
 }

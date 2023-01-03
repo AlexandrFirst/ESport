@@ -20,9 +20,6 @@
     "paths": {
       "@configs/*": [
         "src/configs/*"
-      ],
-      "@esport-lib/*": [
-        "../esport.lib-ts/lib/*"
       ]
     }
   }

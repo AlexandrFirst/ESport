@@ -1,7 +1,7 @@
 import {Controller, Get} from '@nestjs/common';
 import {RMQService} from 'nestjs-rmq';
 
-import {CompetitionsPublicInfo} from '@esport-lib/competitions';
+import {CompetitionsPublicInfo} from 'esport-lib-ts/lib/competitions';
 
 // @Controller('competitions')
 @Controller()

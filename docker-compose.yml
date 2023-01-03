@@ -116,3 +116,19 @@ services:
     depends_on:
       - rabbit
       - mongo
+      - api-gateway
+  api-gateway:
+    container_name: esport-api-gateway
+    build:
+      context: ./esport.api.gateway
+      target: development
+      dockerfile: ./Dockerfile
+    restart: always
+    volumes:
+      - /usr/src/app/node_modules
+      - ./esport.api.gateway:/usr/src/app
+    command: npm run start
+    env_file:
+      - ./esport.api.gateway/.env
+    depends_on:
+      - rabbit

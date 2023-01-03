@@ -2,7 +2,7 @@ import { Document } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 import { CategorySchema } from './category.model';
-import { ICategory, ICompetition } from '@esport-lib/competitions';
+import { ICategory, ICompetition } from 'esport-lib-ts/lib/competitions';
 
 @Schema()
 export class Competition extends Document implements ICompetition {

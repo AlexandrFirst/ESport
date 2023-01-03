@@ -1,7 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { RMQRoute, RMQValidate } from 'nestjs-rmq';
 
-import { CompetitionsPublicInfo } from '@esport-lib/competitions';
+import { CompetitionsPublicInfo } from 'esport-lib-ts/lib/competitions';
 
 @Controller()
 export class CompetitionQueries {
