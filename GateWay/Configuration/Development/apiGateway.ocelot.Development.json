@@ -1,15 +1,15 @@
 ﻿{
   "ReRoutes": [
     {
-      "DownstreamPathTemplate": "/api/v1/hello",
+      "DownstreamPathTemplate": "/api/v1/all",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 6050
+          "Port": 3001
         }
       ],
-      "UpstreamPathTemplate": "/hello",
+      "UpstreamPathTemplate": "/api/competitions/all",
       "UpstreamHttpMethod": [
         "Get"
       ]
