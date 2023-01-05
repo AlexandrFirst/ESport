@@ -1,7 +1,7 @@
 ﻿{
   "ReRoutes": [
     {
-      "DownstreamPathTemplate": "/api/v1/all",
+      "DownstreamPathTemplate": "/api/v1/competitions/all",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -10,7 +10,9 @@
         }
       ],
       "UpstreamPathTemplate": "/api/competitions/all",
-      "UpstreamHttpMethod": [ "Get" ]
+      "UpstreamHttpMethod": [
+        "Get"
+      ]
     }
   ]
 }

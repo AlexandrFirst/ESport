@@ -8,18 +8,16 @@ export namespace CompetitionsCreateCompetition {
     @IsString()
     title: string;
 
-    @IsString()
-    dateStartStr: string; //must be in date format
-
-    @IsOptional()
-    @IsString()
-    dateEndStr?: string; //must be in date format
-
     @IsNumber()
     organizationId: number;
 
     @IsOptional()
     categories?: ICompetition["categories"];
+
+    dateStart: Date | string;
+
+    @IsOptional()
+    dateEnd?: Date | string;
   }
 
   export class Response {
