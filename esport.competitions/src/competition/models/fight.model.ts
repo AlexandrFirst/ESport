@@ -1,3 +1,5 @@
+import { Document } from 'mongoose';
+
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ICompetitor, IFight } from 'esport-lib-ts/lib/competitions';
 

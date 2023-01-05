@@ -5,12 +5,14 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
+          "Host": "host.docker.internal",
           "Port": 3001
         }
       ],
       "UpstreamPathTemplate": "/api/competitions/all",
-      "UpstreamHttpMethod": [ "Get" ]
+      "UpstreamHttpMethod": [
+        "Get"
+      ]
     }
   ]
 }

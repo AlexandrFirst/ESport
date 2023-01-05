@@ -9,7 +9,12 @@ import { CompetitionModule } from './competition/competition.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: !process.env.NODE_ENV
+        ? '.env'
+        : `.env.${process.env.NODE_ENV}`,
+    }),
     RMQModule.forRootAsync(getRmqConfig()),
     MongooseModule.forRootAsync(getMongoConfig()),
     CompetitionModule,

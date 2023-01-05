@@ -25,9 +25,7 @@ export class CompetitionCommands {
       dateEnd,
       categories: categories ?? [],
     });
-
-    return {
-      _id: '',
-    };
+    const res = await this.competitionRepository.create(newComp);
+    return { _id: res._id };
   }
 }
