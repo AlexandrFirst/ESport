@@ -195,8 +195,7 @@ namespace StreamingService.Services
         {
             if (isStreamRecording == false) 
             {
-                return false;
-                //throw new Exception("Recording is not started");
+                throw new Exception("Recording is not started");
             }
 
             if (!checkAccessRules(userId)) { return false; }

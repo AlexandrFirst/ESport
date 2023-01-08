@@ -16,7 +16,7 @@ namespace StreamingService.Services
         private readonly IServiceProvider serviceProvider;
         
         private ConcurrentDictionary<int, StreamProvider> streamProviders = new ConcurrentDictionary<int, StreamProvider>(); //{eventId -> stream}
-        private ConcurrentDictionary<Guid, List<string>> userIdStreams= new ConcurrentDictionary<Guid, List<string>>(); //{eventId -> list of connectionsId}
+        private ConcurrentDictionary<Guid, List<string>> userIdStreams= new ConcurrentDictionary<Guid, List<string>>(); //{streamId -> list of connectionsId}
         private ConcurrentDictionary<string, int> connectionUserId  = new ConcurrentDictionary<string, int>(); //{connectionId -> userId}
 
         public StreamRepositry(IServiceProvider serviceProvider)
@@ -24,7 +24,7 @@ namespace StreamingService.Services
             this.serviceProvider = serviceProvider;
         }
 
-        public Guid GetEventIdByConnectionId(string connectionId) 
+        public Guid GetStreamIdByConnectionId(string connectionId) 
         {
             var eventIdConnection = userIdStreams.FirstOrDefault(x => x.Value.Any(p => p.Equals(connectionId)));
             if (eventIdConnection.Equals(default(KeyValuePair<Guid, List<string>>)))

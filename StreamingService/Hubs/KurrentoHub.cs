@@ -170,7 +170,7 @@ namespace StreamingService.Hubs
         public override async Task OnDisconnectedAsync(Exception exception)
         {
             var connectionId = Context.ConnectionId;
-            var eventId = streamRepositry.GetEventIdByConnectionId(connectionId);
+            var eventId = streamRepositry.GetStreamIdByConnectionId(connectionId);
             var userId = streamRepositry.GetUserIdByConnectionId(connectionId);
             
             
