@@ -20,7 +20,7 @@ export const useMenu = () => {
         {
           title: "Index",
           icon: <AccountBoxIcon className="mr-3" />,
-          link: "/competition,
+          link: "/competition",
         },
         {
           title: "Accounant",
