@@ -2,29 +2,28 @@ import { Body, Controller, Get, HttpCode, HttpStatus, Post } from "@nestjs/commo
 import { RMQService } from "nestjs-rmq";
 
 import { CompetitionCreate } from "esport-lib-ts/lib/competition";
-import { CreateCompetitionDto } from"../../dto/competitions/create-competition.dto"';
-import { res } from"src/utility"';
+import { CreateCompetitionDto } from "../../dto/competitions/create-competition.dto";
+import { res } from "src/utility";
 
-@Controller("competitions")
+@Controller('competitions')
 export class CompetitionsController {
-  constructor(private readonly rmqService: RMQService) {
-  }
+  constructor(private readonly rmqService: RMQService) {}
 
-  @Get("all")
+  @Get('all')
   async getAll() {
     return res(() =>
       this.rmqService.send<any, any>(
-        "competitions.competition.get-all-competitions.query",
-        {}
-      )
+        'competitions.competition.get-all-competitions.query',
+        {},
+      ),
     );
   }
 
   @HttpCode(HttpStatus.CREATED)
-  @Post("create")
+  @Post('create')
   async createCompetition(
     @Body()
-      { categories, ...rest }: CreateCompetitionDto
+    { categories, ...rest }: CreateCompetitionDto,
   ) {
     return res(() =>
       this.rmqService.send<
@@ -33,8 +32,8 @@ export class CompetitionsController {
         CompetitionCreate.Response
       >(CompetitionCreate.topic, {
         ...rest,
-        categories: categories ?? []
-      })
+        categories: categories ?? [,
+      },
     );
   }
 }

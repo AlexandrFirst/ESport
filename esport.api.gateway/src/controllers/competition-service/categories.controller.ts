@@ -30,10 +30,10 @@ export class CategoriesController {
     body: any,
   ) {
     return res(() =>
-      this.rmqService.sen"competitions.category.update-category.command"d', {
+      this.rmqService.send('co"competitions.category.update-category.command"
         id,
-        ...boy,
-      }),
+        ...body,
+     }),
     );
   }
 }
