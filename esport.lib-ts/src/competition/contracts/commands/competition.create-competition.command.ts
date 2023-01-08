@@ -1,8 +1,8 @@
 import { ICompetition } from "../../interfaces";
 import { IsNumber, IsOptional, IsString } from "class-validator";
 
-export namespace CompetitionsCreateCompetition {
-  export const topic = "competitions.create-competition.command";
+export namespace CompetitionCreate {
+  export const topic = "competition.create-competition.command";
 
   export class Request {
     @IsString()

@@ -1,1 +1,3 @@
-export * from "./competitions";
+export * from "./common";
+
+export * from "./competition";

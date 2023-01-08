@@ -6,7 +6,7 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   await app.init();
-  Logger.log('Competitions microservice is running');
+  Logger.debug('Competitions microservice is running');
 }
 
 bootstrap();

@@ -1,4 +1,4 @@
-import { ICategory, ICompetition } from 'esport-lib-ts/lib/competitions';
+import { ICategory, ICompetition, IDominEvent } from 'esport-lib-ts/lib';
 
 export class CompetitionEntity implements ICompetition {
   _id?: string;
@@ -7,6 +7,7 @@ export class CompetitionEntity implements ICompetition {
   dateEnd?: Date;
   organizationId: number;
   title: string;
+  events: IDominEvent[] = [];
 
   constructor(c: ICompetition) {
     this._id = c._id;
@@ -15,5 +16,11 @@ export class CompetitionEntity implements ICompetition {
     this.dateEnd = c.dateEnd;
     this.organizationId = c.organizationId;
     this.title = c.title;
+  }
+
+  public setCategoties(categories: ICategory[]) {
+    this.categories = categories;
+    // this.events.push()
+    return this;
   }
 }
