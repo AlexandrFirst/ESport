@@ -17,9 +17,9 @@ export class CompetitionCommands {
       ...req,
       dateStart: new Date(req.dateStart),
       dateEnd: req.dateEnd ? new Date(req.dateEnd) : undefined,
-      categories: req.categories ?? [],
+      categories: [],
     });
-    return { _id: id };
+    return { id };
   }
 
   // @RMQValidate()

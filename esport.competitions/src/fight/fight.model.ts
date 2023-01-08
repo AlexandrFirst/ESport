@@ -1,10 +1,10 @@
 import mongoose, { Document } from 'mongoose';
-
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { ICompetitor, IFight } from 'esport-lib-ts/lib/competition';
+
+import { Type } from 'class-transformer';
+import { ICompetitor, IFight } from 'esport-lib-ts/lib';
 
 import { Competitor } from '../competition/models/competitor.model';
-import { Type } from 'class-transformer';
 
 @Schema()
 export class Fight extends Document implements IFight {

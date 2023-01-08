@@ -1,1 +1,1 @@
-export * from "./competition.public-info.query";
+export * from "./competition.get-all-competitions.query";

@@ -1,5 +1,5 @@
 import { IsArray, IsOptional, IsString } from 'class-validator';
-import { IFight } from 'esport-lib-ts/lib/competition';
+import { IFight } from 'esport-lib-ts/lib';
 
 export namespace CategoryCreate {
   export const topic = 'competitions.category.create-category.command';

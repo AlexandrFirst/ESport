@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 
 import { CategoryRepository } from './category.repository';
 import { CategoryEntity } from './category.entity';
-import { ICategory } from 'esport-lib-ts/lib/competition';
+import { ICategory } from 'esport-lib-ts/lib';
 
 @Injectable()
 export class CategoryService {

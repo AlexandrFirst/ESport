@@ -1,7 +1,7 @@
 import { Document } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
-import { CompatitorType, ICompetitor } from 'esport-lib-ts/lib/competition';
+import { CompatitorType, ICompetitor } from 'esport-lib-ts/lib';
 
 @Schema()
 export class Competitor extends Document implements ICompetitor {

@@ -1,9 +1,10 @@
 import { Controller } from '@nestjs/common';
 import { RMQRoute, RMQValidate } from 'nestjs-rmq';
 
-import { CategoryCreate } from './TEMP/category.create-category.command';
-import { CategoryUpdate } from './TEMP/category.update-category.command';
+import { CategoryCreate, CategoryUpdate } from 'esport-lib-ts/lib';
 
+// import { CategoryCreate } from './TEMP/category.create-category.command';
+// import { CategoryUpdate } from './TEMP/category.update-category.command';
 import { CategoryService } from './category.service';
 
 @Controller()

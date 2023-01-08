@@ -1,4 +1,4 @@
-import { ICompetition } from 'esport-lib-ts/lib/competition';
+import { ICompetition } from 'esport-lib-ts/lib';
 
 export class UpdateCategoryRequest {
   id: string;

@@ -14,6 +14,6 @@ export namespace CategoryCreate {
   }
 
   export class Response {
-    id?: string;
+    id: string;
   }
 }

@@ -25,7 +25,7 @@
     "@nestjs/core": "^9.0.0",
     "@nestjs/mongoose": "^9.2.1",
     "@nestjs/platform-express": "^9.0.0",
-    "esport-lib-ts": "0.0.5",
+    "esport-lib-ts": "0.0.6",
     "mongoose": "^6.8.1",
     "nestjs-rmq": "^2.8.0",
     "reflect-metadata": "^0.1.13",

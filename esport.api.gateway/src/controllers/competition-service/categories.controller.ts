@@ -10,8 +10,9 @@ import {
 
 import { RMQService } from 'nestjs-rmq';
 
-import { ICategory } from 'esport-lib-ts/lib/competition';
-import { res } from '../../utility';
+import { ICategory } from 'esport-lib-ts/lib';
+
+import { res } from 'src/utility';
 
 @Controller('competitions/categories')
 export class CategoriesController {
