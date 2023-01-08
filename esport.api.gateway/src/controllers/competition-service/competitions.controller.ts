@@ -1,9 +1,16 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Post } from "@nestjs/common";
-import { RMQService } from "nestjs-rmq";
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  HttpStatus,
+  Post,
+} from '@nestjs/common';
+import { RMQService } from 'nestjs-rmq';
 
-import { CompetitionCreate } from "esport-lib-ts/lib/competition";
-import { CreateCompetitionDto } from "../../dto/competitions/create-competition.dto";
-import { res } from "src/utility";
+import { CompetitionCreate } from 'esport-lib-ts/lib/competition';
+import { CreateCompetitionDto } from '../../dto/competitions/create-competition.dto';
+import { res } from 'src/utility';
 
 @Controller('competitions')
 export class CompetitionsController {
@@ -32,8 +39,8 @@ export class CompetitionsController {
         CompetitionCreate.Response
       >(CompetitionCreate.topic, {
         ...rest,
-        categories: categories ?? [,
-      },
+        categories: categories ?? [],
+      }),
     );
   }
 }
