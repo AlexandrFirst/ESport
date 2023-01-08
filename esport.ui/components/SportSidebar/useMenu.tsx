@@ -8,19 +8,19 @@ export const useMenu = () => {
   const menu: IMenuItem[] = [
     { title: "Test", icon: <AdbIcon className="mr-3" />, link: "/test" },
     {
-      title: "E-Sport Calculator",
+      title: "Calculator",
       icon: <AccountBoxIcon className="mr-3" />,
       link: "/calculator",
     },
     {
-      title: "Analytics",
+      title: "Competitions",
       icon: <AdbIcon className="mr-3" />,
       gap: true,
       items: [
         {
-          title: "Dashboard",
+          title: "Index",
           icon: <AccountBoxIcon className="mr-3" />,
-          link: "/test",
+          link: "/competition,
         },
         {
           title: "Accounant",

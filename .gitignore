@@ -454,3 +454,5 @@ $RECYCLE.BIN/
 !.vscode/launch.json
 !.vscode/extensions.json
 /GateWay/ocelot.json
+
+.fleet

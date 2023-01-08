@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "declaration": true,
+    "outDir": "lib",
+    "strict": true,
+    "sourceMap": true,
+    "experimentalDecorators": true,
+    "strictPropertyInitialization": false,
+    "target": "ES2015",
+    "alwaysStrict": false,
+    "declarationMap": false,
+    "inlineSourceMap": false
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/__tests__/*"
+  ]
+}
