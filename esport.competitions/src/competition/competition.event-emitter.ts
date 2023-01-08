@@ -10,6 +10,7 @@ export class CompetitionEventEmitter {
   async handle(competition: CompetitionEntity) {
     for (const { data, topic } of competition.events) {
       await this.rmqService.notify(topic, data);
+      // await this.rmqService.;
     }
   }
 }

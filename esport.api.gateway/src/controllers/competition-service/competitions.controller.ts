@@ -8,12 +8,11 @@ import {
 } from '@nestjs/common';
 import { RMQService } from 'nestjs-rmq';
 
-import { CompetitionCreate } from 'esport-lib-ts/lib';
+import { CompetitionCreate, CompetitionsGetAll } from 'esport-lib-ts/lib';
 
 import { res } from 'src/utility';
 
 import { CreateCompetitionDto } from '../../dto/competitions/create-competition.dto';
-import { CompetitionsGetAll } from 'esport-lib-ts/lib/competitions/contracts/commands/competition.get-all-competitions';
 
 @Controller('competitions')
 export class CompetitionsController {
