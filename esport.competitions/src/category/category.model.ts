@@ -4,7 +4,7 @@ import { Type } from 'class-transformer';
 
 import { ICategory, IFight } from 'esport-lib-ts/lib/competition';
 
-import { Fight } from '../competition/models/fight.model';
+import { Fight } from '../fight/fight.model';
 
 @Schema()
 export class Category extends Document implements ICategory {

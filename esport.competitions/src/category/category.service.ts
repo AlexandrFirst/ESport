@@ -19,7 +19,7 @@ export class CategoryService {
       throw new Error('Category not found');
     }
     await this.updateCategory(
-      new CategoryEntity(cat).updateCategory({
+      new CategoryEntity(cat).updateCategoryData({
         title,
         fights,
       }),

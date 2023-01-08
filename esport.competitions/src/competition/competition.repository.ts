@@ -1,12 +1,14 @@
 import { Injectable } from '@nestjs/common';
 
-import { Model } from 'mongoose';
+import { FilterQuery, Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
+
+import { ICompetition } from 'esport-lib-ts/lib';
+
+import { EntityRepository } from '../database/entity.repository';
 
 import { Competition } from './competition.model';
 import { CompetitionEntity } from './competition.entity';
-import { EntityRepository } from '../database/entity.repository';
-import { ICompetition } from 'esport-lib-ts/lib';
 
 @Injectable()
 export class CompetitionRepository extends EntityRepository<Competition> {
@@ -20,6 +22,16 @@ export class CompetitionRepository extends EntityRepository<Competition> {
   async update({ _id, ...rest }: CompetitionEntity) {
     return this.competitionModel
       .updateOne({ _id }, { $set: { ...rest } })
+      .exec();
+  }
+
+  async findWithPopulate(
+    entityFilterQuery: FilterQuery<Competition>,
+    projection?: Record<string, ICompetition>,
+  ) {
+    return this.competitionModel
+      .find(entityFilterQuery, projection)
+      .populate('categories')
       .exec();
   }
 

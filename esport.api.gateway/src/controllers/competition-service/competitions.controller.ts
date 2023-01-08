@@ -1,42 +1,40 @@
-import {
-  Body,
-  Controller,
-  HttpCode,
-  HttpException,
-  HttpStatus,
-  Logger,
-  Post,
-} from '@nestjs/common';
-import { RMQService } from 'nestjs-rmq';
+import { Body, Controller, Get, HttpCode, HttpStatus, Post } from "@nestjs/common";
+import { RMQService } from "nestjs-rmq";
 
-import { CompetitionCreate } from 'esport-lib-ts/lib/competition';
-import { CreateCompetitionDto } from '../../dto/competitions/create-competition.dto';
+import { CompetitionCreate } from "esport-lib-ts/lib/competition";
+import { CreateCompetitionDto } from"../../dto/competitions/create-competition.dto"';
+import { res } from"src/utility"';
 
-@Controller('competitions')
+@Controller("competitions")
 export class CompetitionsController {
-  constructor(private readonly rmqService: RMQService) {}
+  constructor(private readonly rmqService: RMQService) {
+  }
+
+  @Get("all")
+  async getAll() {
+    return res(() =>
+      this.rmqService.send<any, any>(
+        "competitions.competition.get-all-competitions.query",
+        {}
+      )
+    );
+  }
 
   @HttpCode(HttpStatus.CREATED)
-  @Post('/create')
+  @Post("create")
   async createCompetition(
     @Body()
-    { dateEnd, dateStart, categories, ...rest }: CreateCompetitionDto,
+      { categories, ...rest }: CreateCompetitionDto
   ) {
-    try {
-      const dateStartFormatted = new Date(dateStart);
-      const dateEndFomtatted = dateEnd ? new Date(dateEnd) : undefined;
-      return await this.rmqService.send<
-        CompetitionCreate.Request,
+    return res(() =>
+      this.rmqService.send<
+        //TODO: fix CompetitionCreate.Request category type to string[]
+        any,
         CompetitionCreate.Response
       >(CompetitionCreate.topic, {
         ...rest,
-        dateStart: dateStartFormatted,
-        dateEnd: dateEndFomtatted,
-        categories: categories ?? [],
-      });
-    } catch (error) {
-      Logger.error(error);
-      throw new HttpException(error, error.code ?? 500);
-    }
+        categories: categories ?? []
+      })
+    );
   }
 }

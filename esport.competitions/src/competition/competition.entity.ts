@@ -23,4 +23,9 @@ export class CompetitionEntity implements ICompetition {
     // this.events.push()
     return this;
   }
+
+  public addEvent(event: IDominEvent) {
+    this.events.push(event);
+    return this;
+  }
 }

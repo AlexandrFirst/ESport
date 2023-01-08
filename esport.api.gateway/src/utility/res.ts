@@ -10,6 +10,6 @@ export async function res<TRes>(cb: () => Promise<TRes>) {
       Logger.error('', error.host);
     }
     Logger.error(error);
-    throw new HttpException(error?.message, error.code ?? 500);
+    throw new HttpException(error?.message, error?.code ?? 500);
   }
 }

@@ -23,7 +23,6 @@ export class Competition extends Document implements ICompetition {
   @Prop({
     required: true,
     type: [{ type: mongoose.Schema.Types.ObjectId, ref: Category.name }],
-    _id: false,
   })
   @Type(() => Category)
   categories: ICategory[];

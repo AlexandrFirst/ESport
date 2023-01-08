@@ -2,7 +2,7 @@ import { IsArray, IsOptional, IsString } from 'class-validator';
 import { IFight } from 'esport-lib-ts/lib/competition';
 
 export namespace CategoryUpdate {
-  export const topic = 'category.update-category.command';
+  export const topic = 'competitions.category.update-category.command';
 
   export class Request {
     @IsString()

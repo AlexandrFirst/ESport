@@ -1,17 +1,9 @@
-import {
-  Body,
-  Controller,
-  HttpCode,
-  HttpStatus,
-  Param,
-  Patch,
-  Post,
-} from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Param, Patch, Post } from "@nestjs/common";
 
-import { RMQService } from 'nestjs-rmq';
+import { RMQService } from "nestjs-rmq";
 
-import { ICategory } from 'esport-lib-ts/lib/competition';
-import { res } from '../../utility';
+import { ICategory } from "esport-lib-ts/lib/competition";
+import { res } from "../../utility";
 
 @Controller('competitions/categories')
 export class CategoriesController {
@@ -24,7 +16,10 @@ export class CategoriesController {
     category: ICategory,
   ) {
     return res(() =>
-      this.rmqService.send('category.create-category.command', category),
+      this.rmqService.send(
+        'competitions.category.create-category.command',
+        category,
+      ),
     );
   }
 
@@ -35,9 +30,9 @@ export class CategoriesController {
     body: any,
   ) {
     return res(() =>
-      this.rmqService.send('category.update-category.command', {
+      this.rmqService.sen"competitions.category.update-category.command"d', {
         id,
-        ...body,
+        ...boy,
       }),
     );
   }

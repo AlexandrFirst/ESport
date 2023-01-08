@@ -13,7 +13,7 @@ export class CategoryEntity implements ICategory {
     this.fights = c.fights;
   }
 
-  updateCategory({ title, fights }: ICategory) {
+  updateCategoryData({ title, fights }: ICategory) {
     title && this.setTitle(title);
     fights && this.setFights(fights);
     return this;

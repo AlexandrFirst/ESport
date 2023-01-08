@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { CompetitionRepository } from './competition.repository';
 import { CompetitionEntity } from './competition.entity';
 import { ICompetition } from 'esport-lib-ts/lib';
-import { UpdateCategoryRequest } from './TEMP/competitions/dto/updateCategory';
 import { CompetitionEventEmitter } from './competition.event-emitter';
+import { CompetitionCreated } from './TEMP/competition.competition-created.event';
 
 @Injectable()
 export class CompetitionService {
@@ -12,16 +12,21 @@ export class CompetitionService {
     private readonly eventEmitter: CompetitionEventEmitter,
   ) {}
 
-  async createCompetition(comp: ICompetition) {
-    return this.competitionRepository.create(new CompetitionEntity(comp));
+  async getAll() {
+    return this.competitionRepository.findWithPopulate({});
   }
 
-  async updateCategory({ id, categories }: UpdateCategoryRequest) {
-    const comp = await this.competitionRepository.findOne({ _id: id });
-    if (!comp) {
-      throw new Error('Competition not found');
-    }
-    return new CompetitionEntity(comp).setCategoties(categories);
+  async createCompetition(c: ICompetition) {
+    const comp = await this.competitionRepository.create(
+      new CompetitionEntity(c),
+    );
+    const data = { id: comp._id };
+    const newCompetition = new CompetitionEntity(comp).addEvent({
+      topic: CompetitionCreated.topic,
+      data,
+    });
+    await this.updateCompetition(newCompetition);
+    return data;
   }
 
   private async updateCompetition(comp: CompetitionEntity) {

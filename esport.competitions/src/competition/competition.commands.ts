@@ -13,13 +13,13 @@ export class CompetitionCommands {
   async createCompetition(
     req: CompetitionCreate.Request,
   ): Promise<CompetitionCreate.Response> {
-    const { _id } = await this.competitionService.createCompetition({
+    const { id } = await this.competitionService.createCompetition({
       ...req,
       dateStart: new Date(req.dateStart),
       dateEnd: req.dateEnd ? new Date(req.dateEnd) : undefined,
       categories: req.categories ?? [],
     });
-    return { _id };
+    return { _id: id };
   }
 
   // @RMQValidate()

@@ -7,6 +7,7 @@ import { getRmqConfig } from '@configs/rmq.config';
 import { getMongoConfig } from '@configs/mongo.config';
 import { CompetitionModule } from './competition/competition.module';
 import { CategoryModule } from './category/category.module';
+import { FightModule } from './fight/fight.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { CategoryModule } from './category/category.module';
     MongooseModule.forRootAsync(getMongoConfig()),
     CompetitionModule,
     CategoryModule,
+    FightModule,
   ],
   controllers: [],
   providers: [],

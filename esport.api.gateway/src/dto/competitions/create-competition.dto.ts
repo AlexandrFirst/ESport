@@ -1,5 +1,4 @@
 import { IsNumber, IsOptional, IsString } from 'class-validator';
-import { ICompetition } from 'esport-lib-ts/lib';
 
 export class CreateCompetitionDto {
   @IsString()
@@ -16,5 +15,5 @@ export class CreateCompetitionDto {
   organizationId: number;
 
   @IsOptional()
-  categories?: ICompetition['categories'];
+  categories?: string[];
 }
