@@ -2,8 +2,6 @@ import { Controller } from '@nestjs/common';
 import { RMQRoute, RMQValidate } from 'nestjs-rmq';
 
 import { CompetitionCreate } from 'esport-lib-ts/lib';
-
-import { UpdateCategoryRequest } from './TEMP/competitions/dto/updateCategory';
 import { CompetitionService } from './competition.service';
 
 @Controller()
@@ -24,9 +22,9 @@ export class CompetitionCommands {
     return { _id };
   }
 
-  @RMQValidate()
-  @RMQRoute('some-topic')
-  async updateCategory({ id, categories }: UpdateCategoryRequest) {
-    return this.competitionService.updateCategory({ id, categories });
-  }
+  // @RMQValidate()
+  // @RMQRoute('some-topic')
+  // async updateCategory({ id, categories }: UpdateCategoryRequest) {
+  //   return this.competitionService.updateCategory({ id, categories });
+  // }
 }

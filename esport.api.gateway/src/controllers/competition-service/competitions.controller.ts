@@ -1,7 +1,6 @@
 import {
   Body,
   Controller,
-  Get,
   HttpCode,
   HttpException,
   HttpStatus,
@@ -10,30 +9,12 @@ import {
 } from '@nestjs/common';
 import { RMQService } from 'nestjs-rmq';
 
-import {
-  CompetitionsCreateCompetition,
-  CompetitionsPublicInfo,
-} from 'esport-lib-ts/lib/competitions';
-import { CreateCompetitionDto } from '../dto/competitions/create-competition.dto';
+import { CompetitionCreate } from 'esport-lib-ts/lib/competition';
+import { CreateCompetitionDto } from '../../dto/competitions/create-competition.dto';
 
 @Controller('competitions')
 export class CompetitionsController {
   constructor(private readonly rmqService: RMQService) {}
-
-  @Get('all')
-  async getAllCompetitions() {
-    try {
-      return await this.rmqService.send<
-        CompetitionsPublicInfo.Request,
-        CompetitionsPublicInfo.Response
-      >(CompetitionsPublicInfo.topic, {
-        id: 'some_id',
-      });
-    } catch (error) {
-      Logger.error(error);
-      throw new HttpException(error, error.code ?? 500);
-    }
-  }
 
   @HttpCode(HttpStatus.CREATED)
   @Post('/create')
@@ -45,9 +26,9 @@ export class CompetitionsController {
       const dateStartFormatted = new Date(dateStart);
       const dateEndFomtatted = dateEnd ? new Date(dateEnd) : undefined;
       return await this.rmqService.send<
-        CompetitionsCreateCompetition.Request,
-        CompetitionsCreateCompetition.Response
-      >(CompetitionsCreateCompetition.topic, {
+        CompetitionCreate.Request,
+        CompetitionCreate.Response
+      >(CompetitionCreate.topic, {
         ...rest,
         dateStart: dateStartFormatted,
         dateEnd: dateEndFomtatted,

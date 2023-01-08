@@ -5,7 +5,8 @@ import { RMQModule } from 'nestjs-rmq';
 
 import { getRMQConfig } from './configs';
 
-import { CompetitionsController } from './controllers/competitions.controller';
+import { CompetitionsController } from './controllers/competition-service/competitions.controller';
+import { CategoriesController } from './controllers/competition-service/categories.controller';
 
 @Module({
   imports: [
@@ -14,7 +15,7 @@ import { CompetitionsController } from './controllers/competitions.controller';
     // JwtModule.registerAsync(getJWTConfig()),
     // PassportModule,
   ],
-  controllers: [CompetitionsController],
+  controllers: [CompetitionsController, CategoriesController],
   providers: [],
 })
 export class AppModule {}
