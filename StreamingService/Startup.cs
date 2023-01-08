@@ -4,10 +4,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using StreamingService.Authentication;
 using StreamingService.DL;
+using StreamingService.Hubs;
 using StreamingService.Models.Options;
+using StreamingService.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,11 +31,29 @@ namespace StreamingService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddAuthentication(o => { 
+                o.DefaultAuthenticateScheme = "EStream"; 
+                o.DefaultChallengeScheme = "EStream"; 
+            }).AddScheme<EStreamAuthOptions, EStreamAuthHandler>("EStream", o => { });
 
-            services.AddDbContext<StreamDataContext>(options => options.UseSqlServer(Configuration.GetSection("ConnectionString")["StreamDb"]));
+            services.AddControllers();
+            services.AddSignalR();
+
+            services.AddDbContext<StreamDataContext>(options => 
+                options.UseSqlServer(Configuration.GetSection("ConnectionString")["StreamDb"]));
 
             services.AddOptions<KurrentoOptions>().Bind(Configuration.GetSection("KurentoData"));
+
+            services.AddCors(options => options.AddPolicy("ESportCors", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
+
+            services.AddTransient<StreamProvider>();
+            services.AddTransient<UploadFileService>();
+            services.AddSingleton<StreamRepositry>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,13 +64,17 @@ namespace StreamingService
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors("ESportCors");
+
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<KurrentoHub>("/kurrento");
             });
         }
     }

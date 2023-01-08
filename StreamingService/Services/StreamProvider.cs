@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 using StreamingService.Models.Responses;
 using StreamingService.Models.Options;
 using Microsoft.Extensions.Options;
+using System.Threading;
 
 namespace StreamingService.Services
 {
@@ -28,7 +29,9 @@ namespace StreamingService.Services
         private List<Viewer> viewers { get; set; }
         private ConcurrentDictionary<string, ConcurrentQueue<Candidate>> candidateQueue { get; set; }
 
+        private CancellationTokenSource cts;
 
+        private bool isStreamRecording = false;
 
         private IHubContext<KurrentoHub, IKurentoHubClient> signalHubInstance
         {
@@ -46,6 +49,7 @@ namespace StreamingService.Services
 
             viewers = new List<Viewer>();
             candidateQueue = new ConcurrentDictionary<string, ConcurrentQueue<Candidate>>();
+            cts = new CancellationTokenSource();
         }
 
         public async Task Stop(string userId)
@@ -62,6 +66,8 @@ namespace StreamingService.Services
                     });
                 }
                 await presenter.MediaPipeline.ReleaseAsync();
+                cts.Cancel();
+                isStreamRecording = false;
                 presenter = null;
                 viewers.Clear();
             }
@@ -110,19 +116,20 @@ namespace StreamingService.Services
 
             kurentoClient = getKurentoClient();
 
-            //Task.Run(async () =>
-            //{
-            //    while (true)
-            //    {
-            //        var response = await kurentoClient.SendAsync("ping", new
-            //        {
-            //            interval = 1000
-            //        });
-            //        var res = response.Result.GetValue("value");
-            //        Console.WriteLine("Result of ping: " + res + " " + DateTime.Now);
-            //        Thread.Sleep(500);
-            //    }
-            //});
+            _ = Task.Run(async () =>
+            {
+                while (true)
+                {
+                    var response = await kurentoClient.SendAsync("ping", new
+                    {
+                        interval = 1000
+                    });
+                    var res = response.Result.GetValue("value");
+                    Console.WriteLine("Result of ping: " + res + " " + DateTime.Now);
+                    Thread.Sleep(500);
+                }
+            }, cts.Token);
+
 
             if (kurentoClient == null)
             {
@@ -152,7 +159,7 @@ namespace StreamingService.Services
             webRtcEndPoint.IceCandidateFound += (IceCandidateFoundEventArgs obj) =>
             {
                 var cadidate = obj.candidate;
-                signalHubInstance.Clients.Client(userId).Send(new ClientMessageBody()
+                signalHubInstance.Clients.Group(userId).Send(new ClientMessageBody()
                 {
                     Id = "iceCandidate",
                     Body = JsonConvert.SerializeObject(cadidate)
@@ -160,19 +167,70 @@ namespace StreamingService.Services
             };
 
             var sdpAnswer = await webRtcEndPoint.ProcessOfferAsync(sdpOffer);
-
-           // RecorderEndpoint recorderEndpoint = await kurentoClient.CreateAsync(new RecorderEndpoint(mediaPipeline, file_uri));
-            //await webRtcEndPoint.ConnectAsync(recorderEndpoint);
-
-            //recorderEndpoint.Recording += (RecordingEventArgs obj) =>
-            //{
-            //    Console.WriteLine(obj.timestamp);
-            //};
-
-            // await recorderEndpoint.RecordAsync();
-
             return new PresenterResponse() { IsSuccess = true, SdpAnswer = sdpAnswer, Endpoint = webRtcEndPoint };
 
+        }
+
+        public async Task<bool> StartRecording(string userId)
+        {
+            if (!checkAccessRules(userId)) { return false; }
+
+            RecorderEndpoint recorderEndpoint = await kurentoClient.CreateAsync(new RecorderEndpoint(presenter.MediaPipeline, kurrentoOptions.WsUri));
+            await presenter.WebRtcEndpoint.ConnectAsync(recorderEndpoint);
+
+            recorderEndpoint.Recording += (RecordingEventArgs obj) =>
+            {
+                logger.LogInformation("Recording started: " + obj.timestamp);
+            };
+
+            presenter.RecorderEndpoint = recorderEndpoint;
+
+            await recorderEndpoint.RecordAsync();
+            isStreamRecording = true;
+
+            return true;
+        }
+
+        public async Task<bool> StopRecording(string userId) 
+        {
+            if (isStreamRecording == false) 
+            {
+                return false;
+                //throw new Exception("Recording is not started");
+            }
+
+            if (!checkAccessRules(userId)) { return false; }
+
+            if (presenter.RecorderEndpoint == null) 
+            {
+                throw new Exception("Presentor doesn't have record endpoint");
+            }
+
+            await presenter.RecorderEndpoint.StopAsync();
+            isStreamRecording = false;
+            return true;
+        }
+
+        private bool checkAccessRules(string userId)
+        {
+            if (kurentoClient == null)
+            {
+                return false;
+                //throw new Exception("No kurrento client is found");
+            }
+
+            if (presenter == null)
+            {
+                return false;
+                //throw new Exception("No presenter is present");
+            }
+
+            if (!presenter.UserId.ToString().Equals(userId))
+            {
+                return false;
+                //throw new Exception("Only presenter can record");
+            }
+            return true;
         }
 
         public async Task<ViewerResponse> StartViewer(string userId, string sdpOffer)
@@ -213,7 +271,7 @@ namespace StreamingService.Services
             webRtcEndPoint.IceCandidateFound += (IceCandidateFoundEventArgs obj) =>
             {
                 var cadidate = obj.candidate;
-                signalHubInstance.Clients.Client(userId).Send(new ClientMessageBody()
+                signalHubInstance.Clients.Group(userId).Send(new ClientMessageBody()
                 {
                     Id = "iceCandidate",
                     Body = JsonConvert.SerializeObject(cadidate)
@@ -231,7 +289,8 @@ namespace StreamingService.Services
             };
 
 
-            webRtcEndPoint.Error += (ErrorEventArgs args) => {
+            webRtcEndPoint.Error += (ErrorEventArgs args) =>
+            {
                 logger.LogError($"Error with client id: {userId} happend; {args.description} {args.errorCode} {args.type}");
             };
 

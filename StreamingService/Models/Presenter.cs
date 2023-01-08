@@ -6,5 +6,6 @@ namespace StreamingService.Models
     {
         public MediaPipeline MediaPipeline { get; set; }
         public WebRtcEndpoint WebRtcEndpoiont { get; set; }
+        public RecorderEndpoint RecorderEndpoint { get; set; }
     }
 }
