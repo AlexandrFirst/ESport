@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
+import { CompetitionCreated, ICompetition } from 'esport-lib-ts/lib';
+
 import { CompetitionRepository } from './competition.repository';
 import { CompetitionEntity } from './competition.entity';
-import { ICompetition } from 'esport-lib-ts/lib';
 import { CompetitionEventEmitter } from './competition.event-emitter';
-import { CompetitionCreated } from './TEMP/competition.competition-created.event';
 
 @Injectable()
 export class CompetitionService {
@@ -17,15 +17,14 @@ export class CompetitionService {
   }
 
   async createCompetition(c: ICompetition) {
-    const comp = await this.competitionRepository.create(
-      new CompetitionEntity(c),
-    );
+    const newCompetition = new CompetitionEntity(c);
+    const comp = await this.competitionRepository.create(newCompetition);
     const data = { id: comp._id };
-    const newCompetition = new CompetitionEntity(comp).addEvent({
+    newCompetition.addEvent({
       topic: CompetitionCreated.topic,
       data,
     });
-    await this.updateCompetition(newCompetition);
+    this.eventEmitter.handle(newCompetition);
     return data;
   }
 
