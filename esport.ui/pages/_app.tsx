@@ -8,7 +8,7 @@ import { Providers } from "@features/Providers/Providers";
 import { useEffect, useState } from "react";
 
 const font = Nunito_Sans({
-  subsets: ["latin", "cyrillic"],
+  subsets: ["latin", "cyrillic-ext", "cyrillic"],
   weight: ["300", "600", "700", "900"],
 });
 

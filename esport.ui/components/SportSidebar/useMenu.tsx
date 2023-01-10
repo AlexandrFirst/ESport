@@ -20,12 +20,12 @@ export const useMenu = () => {
         {
           title: "Index",
           icon: <AccountBoxIcon className="mr-3" />,
-          link: "/competition,
+          link: "/competition",
         },
         {
-          title: "Accounant",
+          title: "Create",
           icon: <AdbIcon className="mr-3" />,
-          link: "/accountant",
+          link: "/competition/create",
         },
         {
           title: "Settings",
