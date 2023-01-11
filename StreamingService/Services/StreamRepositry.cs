@@ -15,7 +15,7 @@ namespace StreamingService.Services
     {
         private readonly IServiceProvider serviceProvider;
         
-        private ConcurrentDictionary<int, StreamProvider> streamProviders = new ConcurrentDictionary<int, StreamProvider>(); //{eventId -> stream}
+        private ConcurrentDictionary<Guid, StreamProvider> streamProviders = new ConcurrentDictionary<Guid, StreamProvider>(); //{eventId -> stream}
         private ConcurrentDictionary<Guid, List<string>> userIdStreams= new ConcurrentDictionary<Guid, List<string>>(); //{streamId -> list of connectionsId}
         private ConcurrentDictionary<string, int> connectionUserId  = new ConcurrentDictionary<string, int>(); //{connectionId -> userId}
 
