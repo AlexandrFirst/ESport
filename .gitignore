@@ -54,6 +54,7 @@ nunit-*.xml
 [Rr]eleasePS/
 dlldata.c
 db_volume/
+mongo-data*
 # Benchmark Results
 BenchmarkDotNet.Artifacts/
 
@@ -452,3 +453,6 @@ $RECYCLE.BIN/
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+/GateWay/ocelot.json
+
+.fleet

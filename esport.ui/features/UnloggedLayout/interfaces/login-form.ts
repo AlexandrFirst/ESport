@@ -1,4 +1,5 @@
 export interface ILoginForm {
-  email: string
-  password: string
+  mail: string;
+  password: string;
+  remmemberMe?: boolean;
 }

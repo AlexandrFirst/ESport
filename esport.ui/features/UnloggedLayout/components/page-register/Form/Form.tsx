@@ -20,9 +20,10 @@ import { SportLink } from "@components/SportLink/SportLink";
 
 import { Dividers } from "../../Dividers/Dividers";
 
-import { useRegister } from "../useRegister";
 import { FirstStep } from "../FirstStep/FirstStep";
 import { SecondStep } from "../SecondStep/SecondStep";
+import { ThirdStep } from "@features/UnloggedLayout/components/page-register/ThirdStep/ThirdStep";
+import { useRegister } from "@features/UnloggedLayout/components/page-register/useRegister";
 
 interface FormProps {
   methods: UseFormReturn<IRegisterForm>;
@@ -38,7 +39,7 @@ export const Form: React.FC<FormProps> = ({
   const { handleSubmit, register } = methods;
 
   const { isMobile } = useMedia();
-  const { registration } = useRegister();
+  const apiRegister = useRegister();
 
   const isFirstStep = currStep === RegisterSteps.MainInfo;
   const isLastStep = currStep === RegisterSteps.AdditioanalInfo;
@@ -63,6 +64,7 @@ export const Form: React.FC<FormProps> = ({
     >
       <FirstStep currStep={currStep} register={register} />
       <SecondStep currStep={currStep} register={register} />
+      <ThirdStep currStep={currStep} register={register} />
       <Grid container justifyContent="space-between">
         <SportIconButton disabled={isFirstStep} onClick={handleBack}>
           <KeyboardDoubleArrowLeftIcon />
@@ -74,7 +76,7 @@ export const Form: React.FC<FormProps> = ({
         ) : (
           <SportButton
             className="w-60 my-3"
-            onClick={handleSubmit(registration)}
+            onClick={handleSubmit(apiRegister)}
           >
             Submit
           </SportButton>
