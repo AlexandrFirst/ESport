@@ -1,4 +1,6 @@
 import { NextPage } from "next";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 declare global {
     namespace JSX {
@@ -9,13 +11,39 @@ declare global {
 }
 
 const StreamPage: NextPage = () => {
+
+    let basePath = 'http://localhost:4200/';
+    const [value, setValue] = useState('');
+
+    const router = useRouter();
+
+    function getIFramePath(_newUrl: string) {
+        const newUrl = _newUrl;
+        const hashPart = newUrl.split('#')[1];
+        console.log('new angular path: ', hashPart);
+        setValue(hashPart);
+    }
+
+    useEffect(() => {
+        window.addEventListener('hashchange', (e: HashChangeEvent) => {
+            getIFramePath(e.newURL);
+        }, false);
+        
+        getIFramePath(router.asPath);
+    }, []);
+
     return (
         <>
             <div>
-                <angular-component-m></angular-component-m>
+                <iframe src={`${basePath}${value}`} style={{
+                    width: '100%',
+                    minHeight: '100vh'
+                }}></iframe>
             </div>
         </>
     )
 }
+
+
 
 export default StreamPage;

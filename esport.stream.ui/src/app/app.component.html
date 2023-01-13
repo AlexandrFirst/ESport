@@ -1,12 +1,8 @@
-<div *ngFor="let item of [0,2,3,4,5,6,7]">
-    <div style="color: red;">llama</div>
-    <div style="color: red;">llama</div>
-    <div style="color: red;">llama</div>
-    <div class="some-class">llama</div>
-    <div style="color: red;">llama</div>
-    <div style="color: red;">llama</div>
-    <div class="some-class">llama</div>
-    <div style="color: red;">llama</div>
-    <div style="color: red;">llama</div>
-    <div style="color: red;">llama</div>
-</div>
+
+<nav>
+    <ul>
+      <li><a routerLink="/streams" routerLinkActive="active" ariaCurrentWhenActive="page">First Component</a></li>
+      <li><a routerLink="/streams/abab" routerLinkActive="active" ariaCurrentWhenActive="page">Second Component</a></li>
+    </ul>
+  </nav>
+<router-outlet></router-outlet>
