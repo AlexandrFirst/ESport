@@ -26,10 +26,16 @@ export interface ILoginResponse {
   token: string;
 }
 
+const headers = {
+  'Sec-Fetch-Site': 'same-origin'
+};
+
 class AuthService {
   identityApi = axios.create({
     baseURL: process.env.NEXT_PUBLIC_LOGIN_API_URL ?? "",
+    withCredentials: true,
   });
+ 
 
   register(registerRequest: IRegisterRequest): Promise<IRegisterResponse> {
     return this.identityApi.post("/register", registerRequest);
