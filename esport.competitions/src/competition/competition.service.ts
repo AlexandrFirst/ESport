@@ -24,7 +24,7 @@ export class CompetitionService {
       topic: CompetitionCreated.topic,
       data,
     });
-    this.eventEmitter.handle(newCompetition);
+    await this.updateCompetition(newCompetition);
     return data;
   }
 
