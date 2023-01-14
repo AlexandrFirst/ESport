@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Routing;
@@ -43,9 +44,10 @@ namespace IdentityV2
 
             services.AddCors(options => options.AddPolicy("ESportCors", builder =>
             {
-                builder.AllowAnyOrigin()
+                builder.WithOrigins("http://localhost:3000")
                        .AllowAnyMethod()
-                       .AllowAnyHeader();
+                       .AllowAnyHeader()
+                       .AllowCredentials();
             }));
 
             services.AddControllersWithViews().AddNewtonsoftJson(options =>
@@ -69,6 +71,12 @@ namespace IdentityV2
             .AddScheme<ESportAuthenticationOptions, ESportAuthenticationHandler>("ESport", o => { });
             services.AddHttpContextAccessor();
 
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
             services.AddDbContext<IdentityDataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("IdentityDb")));
 
             services.AddOptions<RabbitMqOptions>().Bind(Configuration.GetSection("RabbitMq"));
@@ -89,10 +97,10 @@ namespace IdentityV2
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors("ESportCors");
 
             app.UseStaticFiles();
 
-            app.UseCors("ESportCors");
 
             app.UseSwagger();
             app.UseSwaggerUI(c => 
