@@ -6,10 +6,10 @@ export async function res<TRes>(cb: () => Promise<TRes>) {
     return await cb();
   } catch (error) {
     if (error instanceof RMQError) {
-      Logger.error('', error.service);
-      Logger.error('', error.host);
+      Logger.error(error.message, error.service);
+    } else {
+      Logger.error(error);
     }
-    Logger.error(error);
     throw new HttpException(error?.message, error?.code ?? 500);
   }
 }

@@ -29,12 +29,13 @@ services:
       - '15672:15672'
       - '5672:5672'
   mongo:
-    image: mongo:4.4.4
+    image: mongo:6.0.3
     container_name: mongo
     restart: always
     environment:
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=admin
+      - MONGO_INITDB_DATABASE=Esport
     ports:
       - '27017:27017'
     volumes:
@@ -104,7 +105,6 @@ services:
     container_name: esport-competitions
     build:
       context: ./esport.competitions
-      target: development
       dockerfile: ./Dockerfile
     restart: always
     volumes:
@@ -121,7 +121,6 @@ services:
     container_name: esport-api-gateway
     build:
       context: ./esport.api.gateway
-      target: development
       dockerfile: ./Dockerfile
     restart: always
     volumes:

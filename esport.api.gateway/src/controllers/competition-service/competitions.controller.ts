@@ -32,16 +32,13 @@ export class CompetitionsController {
   @Post('create')
   async createCompetition(
     @Body()
-    { categories, ...rest }: CreateCompetitionDto,
+    body: CreateCompetitionDto,
   ) {
     return res(() =>
       this.rmqService.send<
         CompetitionCreate.Request,
         CompetitionCreate.Response
-      >(CompetitionCreate.topic, {
-        ...rest,
-        categories: categories ?? [],
-      }),
+      >(CompetitionCreate.topic, body),
     );
   }
 }

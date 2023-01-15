@@ -10,9 +10,9 @@ export namespace CompetitionCreate {
     @IsNumber()
     organizationId: number;
 
-    @IsArray({ each: true })
+    @IsArray()
     @IsOptional()
-    categories?: string[];
+    categoryIds?: string[];
 
     @IsString()
     dateStart: string;

@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { RMQService } from 'nestjs-rmq';
 
-import { CompetitionEntity } from './competition.entity';
 import { EventEmitter } from '../database/event-emitter';
+import { CategoryEntity } from './category.entity';
 
 @Injectable()
-export class CompetitionEventEmitter extends EventEmitter<CompetitionEntity> {
+export class CategoryEventEmitter extends EventEmitter<CategoryEntity> {
   constructor(protected readonly rmqService: RMQService) {
     super(rmqService);
   }
