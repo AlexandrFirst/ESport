@@ -35,13 +35,23 @@ namespace StreamingService.Controllers
 
             var userId = int.Parse(userIdClaim.Value);
 
+            Guid? imageId = Guid.Empty;
+            if (createStreamEventDto.PreviewImageId == null)
+            {
+                imageId = null;
+            }
+            else 
+            {
+                imageId = Guid.Parse(createStreamEventDto.PreviewImageId);
+            }
+
             var newStream = new EsStream()
             {
                 Description = createStreamEventDto.Description,
                 EndTime = createStreamEventDto.EndTime,
                 EventId = createStreamEventDto.EventId,
                 Name = createStreamEventDto.Name,
-                PreviewImageId = createStreamEventDto.PreviewImageId,
+                PreviewImageId = imageId,
                 OrganiserId = userId,
                 StartTime = createStreamEventDto.StartTime,
             };
@@ -49,7 +59,7 @@ namespace StreamingService.Controllers
             await context.EsStreams.AddAsync(newStream);
             await context.SaveChangesAsync();
 
-            return Ok(new { createdStream = newStream.Id});
+            return Ok(newStream.Id);
         }
 
         [HttpGet("{page}/{size}")]
@@ -60,7 +70,7 @@ namespace StreamingService.Controllers
                 return NotFound(new { Message = "No streams are found" });
             }
 
-            var streamsToReturn = await context.EsStreams.Take(page - 1).Take(size).ToListAsync();
+            var streamsToReturn = await context.EsStreams.Skip(page - 1).Take(size).ToListAsync();
             return Ok(streamsToReturn);
         }
     }

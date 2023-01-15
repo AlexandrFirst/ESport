@@ -37,6 +37,15 @@ namespace GateWay
 
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddCors(options => options.AddPolicy("ESportCors", builder =>
+            {
+                builder.WithOrigins("http://localhost:4200")
+                       .AllowAnyMethod()
+                       .AllowAnyHeader()
+                       .AllowCredentials();
+            }));
+
             services.AddControllers();
 
             services.AddAuthentication(o =>
@@ -86,6 +95,9 @@ namespace GateWay
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors("ESportCors");
+            app.UseAuthentication();
 
             app.UseWebSockets();
             app.UseOcelot(configuration).Wait();

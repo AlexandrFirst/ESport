@@ -44,7 +44,7 @@ namespace IdentityV2
 
             services.AddCors(options => options.AddPolicy("ESportCors", builder =>
             {
-                builder.WithOrigins("http://localhost:3000")
+                builder.WithOrigins("http://localhost:3000", "http://localhost:6005")
                        .AllowAnyMethod()
                        .AllowAnyHeader()
                        .AllowCredentials();

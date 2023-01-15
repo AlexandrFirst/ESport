@@ -1,0 +1,23 @@
+<h2 class="p-3">Add new stream</h2>
+<form class="col-6 p-3" [formGroup]="streamEventForm" (submit)="saveStreamEvent($event)">
+    <input type="text" class="form-control" placeholder="name" formControlName="name">
+    <div class="input-group mt-2">
+        <select2 [data]="streamEventData" (update)="updateStreamEvent($event)" [multiple]="false"
+            [customSearchEnabled]="true" (search)="searchStreamEvent($event)" [placeholder]="'Correspondent event'"
+            [styleMode]="'default'" class="w-100" formControlName="competitionId"></select2>
+    </div>
+    <textarea class="form-control mt-2" style="max-height: 300px;" placeholder="Enter description"
+        formControlName="description"></textarea>
+    <div class="input-group mt-2">
+        <div class="input-group-prepend">
+            <label class="input-group-text">Time of the stream</label>
+        </div>
+        <input [owlDateTimeTrigger]="dt10" [owlDateTime]="dt10" [selectMode]="'range'" class="form-control"
+            formControlName="dateTimeRange">
+        <owl-date-time #dt10></owl-date-time>
+    </div>
+    <div class="d-flex justify-content-end mt-2">
+        <button class="btn btn-danger me-2" type="button">Cancel</button>
+        <button class="btn btn-success" type="submit">Add</button>
+    </div>
+</form>

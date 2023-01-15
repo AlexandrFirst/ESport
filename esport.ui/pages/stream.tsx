@@ -19,7 +19,8 @@ const StreamPage: NextPage = () => {
 
     function getIFramePath(_newUrl: string) {
         const newUrl = _newUrl;
-        const hashPart = newUrl.split('#')[1];
+        let hashPart = newUrl.split('#')[1];
+        if (!hashPart) { hashPart = 'streams' }
         console.log('new angular path: ', hashPart);
         setValue(hashPart);
     }
@@ -28,7 +29,7 @@ const StreamPage: NextPage = () => {
         window.addEventListener('hashchange', (e: HashChangeEvent) => {
             getIFramePath(e.newURL);
         }, false);
-        
+
         getIFramePath(router.asPath);
     }, []);
 

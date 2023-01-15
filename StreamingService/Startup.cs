@@ -46,9 +46,10 @@ namespace StreamingService
 
             services.AddCors(options => options.AddPolicy("ESportCors", builder =>
             {
-                builder.AllowAnyOrigin()
+                builder.WithOrigins("http://localhost:4200")
                        .AllowAnyMethod()
-                       .AllowAnyHeader();
+                       .AllowAnyHeader()
+                       .AllowCredentials();
             }));
 
             services.AddTransient<StreamProvider>();

@@ -3,7 +3,7 @@
   "profiles": {
     "StreamingService": {
       "commandName": "Project",
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "streamWeb",
       "applicationUrl": "http://localhost:5004",
       "environmentVariables": {

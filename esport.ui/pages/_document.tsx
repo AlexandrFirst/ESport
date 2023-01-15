@@ -28,12 +28,10 @@ class MyDocument extends Document {
   render() {
     return (
       <Html>
-        <link rel="stylesheet" type="text/css" href="styles.css" />
         <Head />
         <body>
           <Main />
           <NextScript />
-          <script src="app.js"></script>
         </body>
       </Html>
     );

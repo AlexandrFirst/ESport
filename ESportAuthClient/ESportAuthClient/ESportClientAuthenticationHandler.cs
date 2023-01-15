@@ -34,7 +34,7 @@ namespace ESportAuthClient.ESportAuthClient
             bool authDataExists = false;
 
             var authCookieExists = Request.Cookies.TryGetValue("ESportCookie", out token);
-            if (!authDataExists)
+            if (!authCookieExists)
             {
                 StringValues authTokens = new StringValues();
                 authDataExists = Request.Headers.TryGetValue("Authorization", out authTokens);
@@ -43,9 +43,10 @@ namespace ESportAuthClient.ESportAuthClient
                     token = authTokens.FirstOrDefault();
                 }
             }
-            if (authDataExists) 
+
+            if (authDataExists || authCookieExists) 
             {
-                client.DefaultRequestHeaders.Add("Authorization", token);
+                client.DefaultRequestHeaders.Add("Authorization", "ESport " + token);
             }
 
 
