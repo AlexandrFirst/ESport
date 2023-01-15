@@ -10,7 +10,7 @@ import {
 
 import { RMQService } from 'nestjs-rmq';
 
-import { ICategory } from 'esport-lib-ts/lib';
+import { ICategory } from 'esport-lib-ts/lib/competitions';
 
 import { res } from 'src/utility';
 

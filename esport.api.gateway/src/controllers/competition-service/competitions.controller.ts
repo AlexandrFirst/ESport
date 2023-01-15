@@ -8,7 +8,10 @@ import {
 } from '@nestjs/common';
 import { RMQService } from 'nestjs-rmq';
 
-import { CompetitionCreate, CompetitionsGetAll } from 'esport-lib-ts/lib';
+import {
+  CompetitionCreate,
+  CompetitionsGetAll,
+} from 'esport-lib-ts/lib/competitions';
 
 import { res } from 'src/utility';
 
