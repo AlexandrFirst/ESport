@@ -9,11 +9,12 @@ export namespace CategoryUpdate {
     _id: string;
 
     @IsString()
-    title: string;
+    @IsOptional()
+    title?: string;
 
     @IsArray()
     @IsOptional()
-    fights: Partial<IFight>[];
+    fights?: Partial<IFight>[];
   }
 
   export class Response {

@@ -2,6 +2,7 @@ import {
   CallbackError,
   Document,
   FilterQuery,
+  isObjectIdOrHexString,
   Model,
   ProjectionType,
   QueryOptions,
@@ -23,6 +24,9 @@ export abstract class EntityRepository<T extends Document> {
     _id: string,
     projection?: ProjectionType<T>,
   ): Promise<T | null> {
+    if (!isObjectIdOrHexString(_id)) {
+      throw new Error('Invalid id');
+    }
     return this.entityModel.findOne({ _id }, projection).exec();
   }
 

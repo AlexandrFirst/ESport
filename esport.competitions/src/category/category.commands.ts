@@ -1,12 +1,14 @@
 import { Controller } from '@nestjs/common';
 import { RMQRoute, RMQValidate } from 'nestjs-rmq';
 
-import { CategoryCreate, IFight } from 'esport-lib-ts/lib/competitions';
+import {
+  CategoryCreate,
+  CategoryUpdate,
+  IFight,
+} from 'esport-lib-ts/lib/competitions';
 
 import { CategoryService } from './category.service';
 import { FightService } from '../fight/fight.service';
-
-import { CategoryUpdate } from '../_TEMP/category/commands/category.update-category.command';
 
 @Controller()
 export class CategoryCommands {
@@ -31,27 +33,18 @@ export class CategoryCommands {
     title,
     fights,
   }: CategoryUpdate.Request): Promise<CategoryUpdate.Response> {
+    const cat = await this.categoryService.findById(_id);
+    if (!cat) {
+      throw new Error('Category not found');
+    }
+    let newFights: IFight[] = [];
     if (fights) {
-      await Promise.all(
-        fights.map(async (fight) => {
-          if (fight._id) {
-            await this.fightService.update(fight);
-          } else {
-            await this.fightService.create(fight as IFight);
-          }
-        }),
-      );
+      newFights = await this.fightService.updateOrCreateMany(fights);
     }
     return this.categoryService.update({
       _id,
       title,
-      fights:
-        fights.map((f) => ({
-          ...f,
-          isProcessed: f.isProcessed ?? false,
-          accNumber: f.accNumber ?? 0,
-          competitors: f.competitors ?? [],
-        })) ?? [],
+      fights: fights ? newFights : undefined,
     });
   }
 }

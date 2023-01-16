@@ -10,7 +10,7 @@ import {
 
 import { RMQService } from 'nestjs-rmq';
 
-import { ICategory } from 'esport-lib-ts/lib/competitions';
+import { CategoryUpdate, ICategory } from 'esport-lib-ts/lib/competitions';
 
 import { res } from 'src/utility';
 
@@ -36,12 +36,12 @@ export class CategoriesController {
   async updateCompetition(
     @Param('id') id: string,
     @Body()
-    body: any,
-  ) {
+    body: Omit<CategoryUpdate.Request, '_id'>,
+  ): Promise<CategoryUpdate.Response> {
     return res(() =>
-      this.rmqService.send('competitions.category.update-category.command', {
-        id,
+      this.rmqService.send(CategoryUpdate.topic, {
         ...body,
+        _id: id,
       }),
     );
   }

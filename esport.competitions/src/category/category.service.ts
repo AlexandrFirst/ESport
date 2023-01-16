@@ -18,7 +18,7 @@ export class CategoryService {
   }
 
   async findById(_id: string) {
-    return this.categoryRepository.findOne({ _id });
+    return this.categoryRepository.findById(_id);
   }
 
   async create(c: ICategory) {
@@ -27,7 +27,7 @@ export class CategoryService {
   }
 
   async update({ _id, title, fights }: Partial<ICategory>) {
-    const cat = await this.categoryRepository.findOne({ _id });
+    const cat = await this.categoryRepository.findById(_id);
     if (!cat) {
       throw new Error('Category not found');
     }
