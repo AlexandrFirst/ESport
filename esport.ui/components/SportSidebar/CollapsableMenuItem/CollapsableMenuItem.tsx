@@ -7,6 +7,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import { IMenuItem } from "@interfaces/menu-item";
 import Link from "next/link";
 import cn from "classnames";
+import { useSidebarContext } from "@components/SportSidebar/SidebarContext/SidebarContext";
 
 interface ICollapsableMenuItem extends IMenuItem {
   items?: IMenuItem[];
@@ -14,18 +15,23 @@ interface ICollapsableMenuItem extends IMenuItem {
 
 interface CollapsableMenuItemProps {
   item: ICollapsableMenuItem;
-  isSidebarOpened: boolean;
   onSubItemClick?: (subMenu: IMenuItem) => void;
   currentPathname?: string;
 }
 
 export const CollapsableMenuItem: React.FC<CollapsableMenuItemProps> = ({
   item,
-  isSidebarOpened,
   currentPathname,
   onSubItemClick,
 }) => {
   const [submenuOpen, setSubmenuOpen] = useState(false);
+
+  const { isSidebarOpened, setIsSidebarOpened } = useSidebarContext();
+
+  const handleItemClick = () => {
+    setIsSidebarOpened(true);
+    setSubmenuOpen((prev) => !prev);
+  };
 
   const handleSubItemClick = (subMenu: IMenuItem) => {
     onSubItemClick && onSubItemClick(subMenu);
@@ -39,9 +45,9 @@ export const CollapsableMenuItem: React.FC<CollapsableMenuItemProps> = ({
     <>
       <ListItemButton
         className={cn(styles.list_item, {
-          [styles.selected]: selected && !isSidebarOpened,
+          [styles.selected]: selected && (!isSidebarOpened || !submenuOpen),
         })}
-        onClick={() => setSubmenuOpen((prev) => !prev)}
+        onClick={handleItemClick}
       >
         {item.icon}
         <span

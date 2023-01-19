@@ -11,16 +11,15 @@ import { SportScrollable } from "@components/SportScrollable/SportScrollable";
 import { CollapsableMenuItem } from "../CollapsableMenuItem/CollapsableMenuItem";
 import { SimpleMenuItem } from "../SimpleMenuItem/SimpleMenuItem";
 import { useMenu } from "../useMenu";
+import { useSidebarContext } from "@components/SportSidebar/SidebarContext/SidebarContext";
 
-interface SidebarDataProps {
-  isSidebarOpened: boolean;
-}
+interface SidebarDataProps {}
 
-export const SidebarData: React.FC<SidebarDataProps> = ({
-  isSidebarOpened,
-}) => {
+export const SidebarData: React.FC<SidebarDataProps> = () => {
   const { menu } = useMenu();
   const { pathname, push } = useRouter();
+
+  const { isSidebarOpened } = useSidebarContext();
 
   const handleClick = ({ link }: IMenuItem) => {
     push(link ?? "");
@@ -48,14 +47,12 @@ export const SidebarData: React.FC<SidebarDataProps> = ({
                 {sMenu.items ? (
                   <CollapsableMenuItem
                     item={sMenu}
-                    isSidebarOpened={isSidebarOpened}
                     onSubItemClick={handleClick}
                     currentPathname={pathname}
                   />
                 ) : (
                   <SimpleMenuItem
                     item={sMenu}
-                    isSidebarOpened={isSidebarOpened}
                     onItemClick={handleClick}
                     currentPathname={pathname}
                   />

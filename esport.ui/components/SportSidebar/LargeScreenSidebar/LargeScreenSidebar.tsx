@@ -5,19 +5,14 @@ import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrow
 import { SidebarData } from "../SidebarData/SidebarData";
 import cn from "classnames";
 import { SportIconButton } from "@components/SportIconButton/SportIconButton";
+import { useSidebarContext } from "@components/SportSidebar/SidebarContext/SidebarContext";
 
-interface LargeScreenSidebarProps {
-  isSidebarOpened: boolean;
-  setIsSidebarOpened: (p: boolean) => void;
-}
+interface LargeScreenSidebarProps {}
 
-export const LargeScreenSidebar: React.FC<LargeScreenSidebarProps> = ({
-  isSidebarOpened,
-  setIsSidebarOpened,
-}) => {
-  const handleClickArrow = () => {
-    setIsSidebarOpened(!isSidebarOpened);
-  };
+export const LargeScreenSidebar: React.FC<LargeScreenSidebarProps> = () => {
+  const { isSidebarOpened, setIsSidebarOpened } = useSidebarContext();
+
+  const handleClickArrow = () => setIsSidebarOpened(!isSidebarOpened);
 
   return (
     <div
@@ -33,7 +28,7 @@ export const LargeScreenSidebar: React.FC<LargeScreenSidebarProps> = ({
           } transition-transform`}
         />
       </SportIconButton>
-      <SidebarData isSidebarOpened={isSidebarOpened} />
+      <SidebarData />
     </div>
   );
 };
