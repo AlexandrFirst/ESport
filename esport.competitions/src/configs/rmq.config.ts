@@ -1,5 +1,6 @@
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { IRMQServiceAsyncOptions, IRMQServiceOptions } from 'nestjs-rmq';
+import { Logger } from '@nestjs/common';
 
 export const getRmqConfig = (): IRMQServiceAsyncOptions => ({
   inject: [ConfigService],
@@ -21,4 +22,5 @@ const getRmqFactory = async (
   queueName: configService.get('AMQP_QUEUE') ?? '',
   prefetchCount: parseInt(configService.get('AMQP_PREFETCH_COUNT')) ?? 32,
   serviceName: 'eSport-competitions',
+  logger: Logger,
 });

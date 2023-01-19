@@ -6,20 +6,21 @@ import { ListItemButton } from "@mui/material";
 import { IMenuItem } from "@interfaces/menu-item";
 import Link from "next/link";
 import cn from "classnames";
+import { useSidebarContext } from "@components/SportSidebar/SidebarContext/SidebarContext";
 
 interface SimpleMenuItemProps {
   item: IMenuItem;
-  isSidebarOpened: boolean;
   onItemClick?: (item: IMenuItem) => void;
   currentPathname?: string;
 }
 
 export const SimpleMenuItem: React.FC<SimpleMenuItemProps> = ({
   item,
-  isSidebarOpened,
   currentPathname,
   onItemClick,
 }) => {
+  const { isSidebarOpened } = useSidebarContext();
+
   const handleItemClick = (item: IMenuItem) => {
     onItemClick && onItemClick(item);
   };

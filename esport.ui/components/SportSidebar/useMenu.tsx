@@ -23,9 +23,9 @@ export const useMenu = () => {
           link: "/competition",
         },
         {
-          title: "Accounant",
+          title: "Create",
           icon: <AdbIcon className="mr-3" />,
-          link: "/accountant",
+          link: "/competition/create",
         },
         {
           title: "Settings",

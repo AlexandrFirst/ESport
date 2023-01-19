@@ -1,0 +1,7 @@
+.title {
+    @apply text-4xl font-bold;
+}
+
+.center {
+    @apply text-center;
+}

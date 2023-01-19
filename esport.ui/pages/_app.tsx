@@ -5,28 +5,32 @@ import { wrapper } from "@storage/store";
 import { Nunito_Sans } from "@next/font/google";
 
 import { Providers } from "@features/Providers/Providers";
-import { useEffect, useState } from "react";
 
 const font = Nunito_Sans({
-  subsets: ["latin", "cyrillic"],
+  subsets: ["latin", "cyrillic-ext", "cyrillic"],
   weight: ["300", "600", "700", "900"],
 });
 
-function MyApp({ Component, pageProps }: AppProps) {
-  const [showChild, setShowChild] = useState(false);
-  useEffect(() => {
-    setShowChild(true);
-  }, []);
+function MyApp({ Component, ...rest }: AppProps) {
+  const { store, props } = wrapper.useWrappedStore(rest);
+  const { pageProps } = props;
 
-  if (!showChild) {
-    return null;
-  }
+  // const [showChild, setShowChild] = useState(false);
 
-  if (typeof window === "undefined") {
-    return null;
-  }
+  // useEffect(() => {
+  //   setShowChild(true);
+  // }, []);
+
+  // if (!showChild) {
+  //   return null;
+  // }
+
+  // if (typeof window === "undefined") {
+  //   return null;
+  // }
+
   return (
-    <Providers>
+    <Providers store={store}>
       <main className={font.className}>
         <Component {...pageProps} />
       </main>
@@ -49,5 +53,6 @@ MyApp.getInitialProps = wrapper.getInitialAppProps(
       };
     }
 );
+export default MyApp;
 
-export default wrapper.withRedux(MyApp);
+// export default wrapper.withRedux(MyApp);
