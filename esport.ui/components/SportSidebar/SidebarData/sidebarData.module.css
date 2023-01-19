@@ -1,0 +1,8 @@
+.logo {
+  @apply cursor-pointer duration-500 mr-5
+}
+
+.list {
+  @apply absolute top-20
+}
+

@@ -1,4 +1,4 @@
-import React, { PropsWithChildren, useState } from "react";
+import React, { PropsWithChildren, useEffect } from "react";
 import styles from "./mainLayout.module.css";
 
 import cn from "classnames";
@@ -6,10 +6,14 @@ import cn from "classnames";
 import { useMedia } from "@hooks/useMedia";
 
 import { TopPageLoader } from "@features/TopPageLoader/TopPageLoader";
-import { SportHead, SportHeadProps } from "@features//SportHead/SportHead";
+import { SportHead, SportHeadProps } from "@features/SportHead/SportHead";
 
 import { SportSidebar } from "@components/SportSidebar/SportSidebar";
 import { SportHeader } from "@components/SportHeader/SportHeader";
+
+import { useAppDispatch, useAppSelector } from "@storage/hooks/useStore";
+import { updateSidebarOpened } from "@storage/slices/layout";
+import { useMediaQuery } from "@hooks/useMediaQuery";
 
 type MainLayoutProps = PropsWithChildren & SportHeadProps & {};
 
@@ -17,9 +21,16 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
   headProps,
   children,
 }) => {
-  const { isMobile } = useMedia();
+  const { isMobile, tabletBreakPoint } = useMedia();
+  const dispatch = useAppDispatch();
 
-  const [isSidebarOpened, setIsSidebarOpened] = useState(false);
+  const isLessBreakpoint = useMediaQuery(tabletBreakPoint);
+
+  const isSidebarOpened = useAppSelector(
+    ({ layout }) => layout.isSidebarOpened
+  );
+  const setIsSidebarOpened = (isOpened: boolean) =>
+    dispatch(updateSidebarOpened(isOpened));
 
   const paddingClasses = cn({
     ["pl-compact"]: !isSidebarOpened,
@@ -30,6 +41,10 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
     styles.width100,
     isMobile ? "pl-layout-tablet" : paddingClasses
   );
+
+  useEffect(() => {
+    setIsSidebarOpened(isLessBreakpoint);
+  }, [isLessBreakpoint]);
 
   return (
     <>

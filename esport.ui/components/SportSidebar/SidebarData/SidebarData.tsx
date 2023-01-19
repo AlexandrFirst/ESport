@@ -1,4 +1,6 @@
 import React from "react";
+import styles from "./sidebarData.module.css";
+
 import { useRouter } from "next/router";
 
 import { List, ListItem } from "@mui/material";
@@ -11,16 +13,16 @@ import { SportScrollable } from "@components/SportScrollable/SportScrollable";
 import { CollapsableMenuItem } from "../CollapsableMenuItem/CollapsableMenuItem";
 import { SimpleMenuItem } from "../SimpleMenuItem/SimpleMenuItem";
 import { useMenu } from "../useMenu";
+import { useSidebarContext } from "@components/SportSidebar/SidebarContext/SidebarContext";
+import cn from "classnames";
 
-interface SidebarDataProps {
-  isSidebarOpened: boolean;
-}
+interface SidebarDataProps {}
 
-export const SidebarData: React.FC<SidebarDataProps> = ({
-  isSidebarOpened,
-}) => {
+export const SidebarData: React.FC<SidebarDataProps> = () => {
   const { menu } = useMenu();
   const { pathname, push } = useRouter();
+
+  const { isSidebarOpened } = useSidebarContext();
 
   const handleClick = ({ link }: IMenuItem) => {
     push(link ?? "");
@@ -28,12 +30,12 @@ export const SidebarData: React.FC<SidebarDataProps> = ({
 
   return (
     <>
-      <SportLogo
-        className={`cursor-pointer duration-500 mr-5`}
-        showText={isSidebarOpened}
-      />
+      <SportLogo className={styles.logo} showText={isSidebarOpened} />
       <List
-        className={`absolute top-20 ${isSidebarOpened ? "w-10/12" : "w-4/6"}`}
+        className={cn(styles.list, {
+          ["w-10/12"]: isSidebarOpened,
+          ["w-4/6"]: !isSidebarOpened,
+        })}
       >
         <SportScrollable>
           <nav>
@@ -41,21 +43,19 @@ export const SidebarData: React.FC<SidebarDataProps> = ({
               <ListItem
                 key={sMenu.title}
                 className={`flex justify-start flex-col rounded-md p-0 cursor-pointer hover:bg-light-white text-skin-main text-sm transition-all duration-500 items-start
-              ${sMenu.gap ? "mt-9" : "mt-2"} ${
+                ${sMenu.gap ? "mt-9" : "mt-2"} ${
                   index === 0 && "bg-light-white"
                 } `}
               >
                 {sMenu.items ? (
                   <CollapsableMenuItem
                     item={sMenu}
-                    isSidebarOpened={isSidebarOpened}
                     onSubItemClick={handleClick}
                     currentPathname={pathname}
                   />
                 ) : (
                   <SimpleMenuItem
                     item={sMenu}
-                    isSidebarOpened={isSidebarOpened}
                     onItemClick={handleClick}
                     currentPathname={pathname}
                   />
