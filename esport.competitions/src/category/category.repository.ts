@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
-import { Model } from 'mongoose';
+import { isObjectIdOrHexString, Model, ProjectionType } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 
 import { EntityRepository } from '../database/entity.repository';
@@ -20,6 +20,19 @@ export class CategoryRepository extends EntityRepository<Category> {
     const fightToUpdate = fights?.map((f) => f._id);
     return this.categoryModel
       .updateOne({ _id }, { $set: { ...rest, fights: fightToUpdate } })
+      .exec();
+  }
+
+  async findByIdWithPopulate(
+    _id: string,
+    projection?: ProjectionType<CategoryEntity>,
+  ) {
+    if (!isObjectIdOrHexString(_id)) {
+      throw new Error('Invalid id');
+    }
+    return this.entityModel
+      .findOne({ _id }, projection)
+      .populate('fights')
       .exec();
   }
 }

@@ -21,6 +21,10 @@ export class CategoryService {
     return this.categoryRepository.findById(_id);
   }
 
+  async findByIdWithPopulate(_id: string) {
+    return this.categoryRepository.findByIdWithPopulate(_id);
+  }
+
   async create(c: ICategory) {
     const newCategory = new CategoryEntity(c);
     return this.categoryRepository.create(newCategory);

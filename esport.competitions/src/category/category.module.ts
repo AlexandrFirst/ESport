@@ -8,6 +8,7 @@ import { CategoryService } from './category.service';
 import { Category, CategorySchema } from './category.model';
 import { CategoryRepository } from './category.repository';
 import { CategoryEventEmitter } from './category.event-emitter';
+import { CategoryQueries } from './category.queries';
 
 @Module({
   imports: [
@@ -16,7 +17,7 @@ import { CategoryEventEmitter } from './category.event-emitter';
     ]),
     FightModule,
   ],
-  controllers: [CategoryCommands],
+  controllers: [CategoryQueries, CategoryCommands],
   providers: [CategoryService, CategoryRepository, CategoryEventEmitter],
   exports: [CategoryService],
 })

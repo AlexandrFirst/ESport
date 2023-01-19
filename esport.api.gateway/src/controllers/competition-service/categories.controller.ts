@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Get,
   HttpCode,
   HttpStatus,
   Param,
@@ -17,6 +18,15 @@ import { res } from 'src/utility';
 @Controller('competitions/categories')
 export class CategoriesController {
   constructor(private readonly rmqService: RMQService) {}
+
+  @Get(':id')
+  async getById(@Param('id') _id: string) {
+    return res(() =>
+      this.rmqService.send('competitions.category.get-category-by-id.query', {
+        _id,
+      }),
+    );
+  }
 
   @HttpCode(HttpStatus.CREATED)
   @Post('/create')

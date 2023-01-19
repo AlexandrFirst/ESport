@@ -13,6 +13,20 @@
       "UpstreamHttpMethod": [
         "Get"
       ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/competitions/create",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 3001
+        }
+      ],
+      "UpstreamPathTemplate": "/api/competitions/create",
+      "UpstreamHttpMethod": [
+        "Post"
+      ]
     }
   ]
 }
