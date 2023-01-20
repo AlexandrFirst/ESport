@@ -28,6 +28,7 @@ services:
     ports:
       - '15672:15672'
       - '5672:5672'
+
   mongo:
     image: mongo:4.4.4
     container_name: mongo
@@ -114,13 +115,14 @@ services:
       - ./esport.competitions:/usr/src/app
     command: npm run start
     env_file:
-      - ./esport.competitions/.env
+      - ./esport.competitions/.env.production
     depends_on:
       - rabbit
       - mongo
       - api-gateway
     networks:
       - mongo_bridge_network
+      - rabbit_bridge_network
   api-gateway:
     container_name: esport-api-gateway
     build:

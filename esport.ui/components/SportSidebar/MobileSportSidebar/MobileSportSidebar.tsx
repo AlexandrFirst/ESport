@@ -39,7 +39,7 @@ export const MobileSportSidebar: React.FC<MobileSportSidebarProps> = () => {
           },
         }}
       >
-        <SidebarData isSidebarOpened={isSidebarOpened} />
+        <SidebarData />
       </SwipeableDrawer>
     </>
   );

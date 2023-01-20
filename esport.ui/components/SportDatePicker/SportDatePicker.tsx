@@ -30,7 +30,8 @@ export const SportDatePicker: React.FC<SportDatePickerProps> = ({
             inputFormat="mm/dd/yyyy"
             // renderInput={(params) => <SportInput name={name} {...params} />}
             renderInput={(params) => (
-              <SportInput ref={params.inputRef} name={name} {...params} />
+              <SportInput inputRef={params.inputRef} name={name} {...params} />
+              // <TextField {...params} InputProps={} />
             )}
           />
         )}

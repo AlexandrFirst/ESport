@@ -13,3 +13,7 @@
 .focus fieldset {
     @apply !border-primary-hover;
 }
+
+.input svg {
+    @apply text-skin-main dark:text-darkSkin-main
+}

@@ -22,6 +22,8 @@ export const SportInput = forwardRef<HTMLDivElement, SportInputProps>(
       inputProps,
       fullWidth = true,
       errors,
+      InputProps,
+      inputRef,
       ...props
     },
     ref
@@ -36,7 +38,8 @@ export const SportInput = forwardRef<HTMLDivElement, SportInputProps>(
           <TextField
             {...props}
             {...field}
-            inputRef={ref}
+            inputRef={inputRef}
+            ref={ref}
             // sx={{
             //   "& .MuiOutlinedInput-root:hover": {
             //     "& > fieldset": {
@@ -46,6 +49,7 @@ export const SportInput = forwardRef<HTMLDivElement, SportInputProps>(
             // }}
             InputLabelProps={{ className: styles.input_label }}
             InputProps={{
+              ...InputProps,
               className: styles.input,
               classes: {
                 root: styles.root,
