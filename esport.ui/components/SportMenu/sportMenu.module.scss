@@ -1,0 +1,15 @@
+.paper {
+  @apply bg-skin-contrast dark:bg-darkSkin-main
+}
+
+.text {
+  @apply text-skin-main
+}
+
+.menu_item {
+  @apply bg-skin-main hover:bg-skin-subsidiary dark:bg-darkSkin-main dark:hover:bg-darkSkin-subsidiary text-skin-main dark:text-darkSkin-subsidiary duration-300
+}
+
+.menu_item_selected {
+  @apply bg-skin-subsidiary dark:bg-darkSkin-contrast
+}

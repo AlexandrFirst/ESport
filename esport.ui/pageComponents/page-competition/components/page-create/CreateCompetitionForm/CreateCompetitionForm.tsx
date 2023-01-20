@@ -25,6 +25,7 @@ export const CreateCompetitionForm: React.FC<CreateCompetitionFormProps> = ({
         name={"dateStart"}
         label={"Date start"}
         className={styles.input}
+        minDate={new Date()}
       />
     </SportForm>
   );

@@ -1,4 +1,5 @@
 import React from "react";
+import styles from "./sportDatePicker.module.scss";
 
 import { Controller } from "react-hook-form";
 
@@ -27,11 +28,13 @@ export const SportDatePicker: React.FC<SportDatePickerProps> = ({
           <DesktopDatePicker
             {...props}
             {...field}
-            inputFormat="mm/dd/yyyy"
-            // renderInput={(params) => <SportInput name={name} {...params} />}
+            mask="__.__.____"
+            inputFormat={"dd.MM.yyyy"}
+            PaperProps={{
+              className: styles.calendar,
+            }}
             renderInput={(params) => (
               <SportInput inputRef={params.inputRef} name={name} {...params} />
-              // <TextField {...params} InputProps={} />
             )}
           />
         )}
