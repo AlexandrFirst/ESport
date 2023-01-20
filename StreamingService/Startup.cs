@@ -1,3 +1,4 @@
+using ESportAuthClient.ESportAuthClient;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -31,10 +32,15 @@ namespace StreamingService
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAuthentication(o => { 
-                o.DefaultAuthenticateScheme = "EStream"; 
-                o.DefaultChallengeScheme = "EStream"; 
-            }).AddScheme<EStreamAuthOptions, EStreamAuthHandler>("EStream", o => { });
+            services.AddAuthentication(o =>
+            {
+                o.DefaultAuthenticateScheme = "EStream";
+                o.DefaultChallengeScheme = "EStream";
+            })
+            .AddScheme<EStreamAuthOptions, EStreamAuthHandler>("EStream", o => { })
+            .AddScheme<ESportClientAuthenticationOptions, ESportClientAuthenticationHandler>("WS", o => { 
+                o.Authority = Configuration.GetSection("Security")["Authority"];
+            });
 
             services.AddControllers();
             services.AddSignalR();
@@ -43,7 +49,7 @@ namespace StreamingService
                 options.UseSqlServer(Configuration.GetSection("ConnectionString")["StreamDb"]));
 
             services.AddOptions<KurrentoOptions>().Bind(Configuration.GetSection("KurentoData"));
-
+            
             services.AddCors(options => options.AddPolicy("ESportCors", builder =>
             {
                 builder.WithOrigins("http://localhost:4200")

@@ -12,7 +12,8 @@ export class StreamListComponent implements OnInit {
   
   streams: Stream[] = [];
 
-  constructor(private streamService: StreamService, private router: Router) {     
+  constructor(private streamService: StreamService, 
+    private router: Router) {     
   }
 
   ngOnInit(): void {
@@ -23,6 +24,10 @@ export class StreamListComponent implements OnInit {
 
   public goToAddEditPage(){
     this.router.navigate(['add'])
+  }
+
+  public goToStreamPage(pageId: string){
+    this.router.navigate(['streams', pageId])
   }
 
 }

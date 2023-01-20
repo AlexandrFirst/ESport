@@ -39,7 +39,7 @@ const StreamPage: NextPage = () => {
                 <iframe src={`${basePath}${value}`} style={{
                     width: '100%',
                     minHeight: '100vh'
-                }}></iframe>
+                }} allow="camera *;microphone *"></iframe>
             </div>
         </>
     )

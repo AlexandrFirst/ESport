@@ -1,31 +1,6 @@
 {
   "ReRoutes": [
     {
-      "DownstreamPathTemplate": "/stream",
-      "DownstreamScheme": "ws",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 5004
-        }
-      ],
-      "UpstreamPathTemplate": "/stream",
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE", "OPTIONS" ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "ESport",
-        "AllowedScopes": []
-      },
-      "RouteClaimsRequirement": {
-        "Role": "Pupil,LocalAdmin"
-      },
-      "AddHeadersToRequest": {
-        "Role": "Claims[Role] > value > |",
-        "Id": "Claims[Id] > value > |",
-        "Name": "Claims[Name] > value > |",
-        "Email": "Claims[Email] > value > |"
-      }
-    },
-    {
       "DownstreamPathTemplate": "/Stream/{page}/{size}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
@@ -61,6 +36,31 @@
       ],
       "UpstreamPathTemplate": "/api/streams/create",
       "UpstreamHttpMethod": [ "POST", "OPTIONS" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "ESport",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "Role": "Pupil,LocalAdmin,OrgAdmin"
+      },
+      "AddHeadersToRequest": {
+        "Role": "Claims[Role] > value > |",
+        "Id": "Claims[Id] > value > |",
+        "Name": "Claims[Name] > value > |",
+        "Email": "Claims[Email] > value > |"
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/Stream/user{everything}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5004
+        }
+      ],
+      "UpstreamPathTemplate": "/api/streams/user{everything}",
+      "UpstreamHttpMethod": [ "GET", "OPTIONS" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "ESport",
         "AllowedScopes": []

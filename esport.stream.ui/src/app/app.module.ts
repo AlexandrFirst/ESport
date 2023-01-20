@@ -10,12 +10,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { EditStreamComponent } from './pages/edit-stream/edit-stream.component';
 import { NgxMatDatetimePickerModule, NgxMatTimepickerModule } from '@angular-material-components/datetime-picker';
 import { MatDateRangePicker, MatDatepickerModule } from '@angular/material/datepicker'
-import {MatNativeDateModule} from '@angular/material/core';
-import {MatFormFieldModule} from '@angular/material/form-field'
+import { MatDialogModule, MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog'
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatFormFieldModule } from '@angular/material/form-field'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime-ex';
 import { Select2Module } from 'ng-select2-component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { YesNoComponent } from './components/modals/yes-no/yes-no.component';
 
 
 
@@ -24,7 +26,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     AppComponent,
     StreamComponent,
     StreamListComponent,
-    EditStreamComponent
+    EditStreamComponent,
+    YesNoComponent
   ],
   imports: [
     BrowserModule,
@@ -39,9 +42,12 @@ import { ReactiveFormsModule } from '@angular/forms';
     OwlDateTimeModule,
     OwlNativeDateTimeModule,
     Select2Module,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDialogModule
   ],
-  providers: [],
+  providers: [
+    { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: false } }
+  ],
   entryComponents: [AppComponent],
   bootstrap: [AppComponent]
 })

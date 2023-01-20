@@ -12,6 +12,11 @@ export interface Stream {
     endTime: Date | undefined;
 }
 
+export interface StreamUser {
+    isOrganizer: boolean;
+    isStreamStarted: boolean;
+}
+
 export interface ICreateStreamEvent {
     eventId: string;
     name: string;
@@ -34,5 +39,4 @@ export class CreateStreamEvent extends BaseModel implements ICreateStreamEvent {
         super();
         this.copyData(data)
     }
-
 }

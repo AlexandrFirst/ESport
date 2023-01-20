@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace StreamingService.Hubs
 {
-    [Authorize]
+    [Authorize(AuthenticationSchemes = "WS")]
     public class KurrentoHub : Hub<IKurentoHubClient>
     {
         private readonly StreamRepositry streamRepositry;
@@ -172,9 +172,9 @@ namespace StreamingService.Hubs
             var connectionId = Context.ConnectionId;
             var eventId = streamRepositry.GetStreamIdByConnectionId(connectionId);
             var userId = streamRepositry.GetUserIdByConnectionId(connectionId);
-            
-            
-            if (eventId.Equals(Guid.Empty) || userId == -1) 
+
+
+            if (eventId.Equals(Guid.Empty) || userId == -1)
             {
                 return;
             }
@@ -191,14 +191,14 @@ namespace StreamingService.Hubs
         {
             var userIdClaim = Context.User.Claims.FirstOrDefault(x => x.Type == "Id");
             var connectionId = Context.ConnectionId;
-            
-            if (userIdClaim == null) 
+
+            if (userIdClaim == null)
             {
                 logger.LogError("No userIdClaimn is found; connectionId: " + connectionId);
             }
 
             var userId = userIdClaim.Value;
-            
+
             await Groups.AddToGroupAsync(connectionId, userId.ToString());
 
             logger.LogDebug($"User id: {userId} with connectionId: {connectionId} is connected");

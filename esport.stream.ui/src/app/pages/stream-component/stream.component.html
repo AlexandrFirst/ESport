@@ -1,1 +1,32 @@
-<p>stream-component works!!sdsddsds!</p>
+<div>
+    <h3 *ngIf="isLoading">Retrieving information</h3>
+    <div *ngIf="!isLoading">
+        <div class="d-flex justify-content-center">
+            <video autoplay style="width: 500px; height: 500px; background-color: cornflowerblue;" #video></video>
+            <div class="d-flex flex-column justify-content-evenly ms-4">
+                <div>
+                    <label>Video Sources</label>
+                    <select class="ms-1" [(ngModel)]="videoInput.MediaDeviceId"
+                        (ngModelChange)="videoInputSelected($event)">
+                        <option value="-1">None</option>
+                        <option *ngFor="let x of videoDevices; index as i" value="{{x.MediaDeviceId}}">
+                            {{x.MediaDeviceName}}</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Audio Sources</label>
+                    <select class="ms-1" [(ngModel)]="audioInput.MediaDeviceId"
+                        (ngModelChange)="audioInputSelected($event)">
+                        <option value="-1">None</option>
+                        <option *ngFor="let x of audioDevices; index as i" value="{{x.MediaDeviceId}}">
+                            {{x.MediaDeviceName}}</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center mt-3">
+            <button class="btn btn-primary me-2">Start stream</button>
+            <button class="btn btn-danger ms-2">Stop stream</button>
+        </div>
+    </div>
+</div>

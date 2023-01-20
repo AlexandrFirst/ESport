@@ -25,5 +25,9 @@
     <Folder Include="Utils\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ESportAuthClient\ESportAuthClient.csproj" />
+  </ItemGroup>
+
 
 </Project>

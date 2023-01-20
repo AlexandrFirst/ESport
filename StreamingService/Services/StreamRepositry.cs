@@ -2,10 +2,12 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using StreamingService.DL;
+using StreamingService.DL.Models;
 using StreamingService.Models.Responses;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -43,6 +45,12 @@ namespace StreamingService.Services
             var userIdExists = connectionUserId.TryGetValue(connectionId, out var userId);
             if (userIdExists) { return userId; }
             else return -1;
+        }
+
+        public bool IsStreamStarted(string eventId)
+        {
+            var streamProviderExists = streamProviders.ContainsKey(eventId);
+            return streamProviderExists;
         }
 
         public async Task<PresenterResponse> StartStream(Guid streamId, int organiserId, string sdpOffer) 
