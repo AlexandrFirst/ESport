@@ -3,14 +3,14 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
-# UserAvatar-specific files
+# User-specific files
 *.rsuser
 *.suo
-*.userSlice
+*.user
 *.userosscache
 *.sln.docstates
 
-# UserAvatar-specific files (MonoDevelop/Xamarin Studio)
+# User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
 # Mono auto generated files
@@ -132,7 +132,7 @@ $tf/
 # ReSharper is a .NET coding add-in
 _ReSharper*/
 *.[Rr]e[Ss]harper
-*.DotSettings.userSlice
+*.DotSettings.user
 
 # TeamCity is a build add-in
 _TeamCity*

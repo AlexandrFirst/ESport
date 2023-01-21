@@ -1,6 +1,6 @@
 ﻿using IdentityV2.Data;
 using IdentityV2.Data.Utils;
-using IdentityV2.Dto.UserAvatar;
+using IdentityV2.Dto.User;
 using IdentityV2.Infrastructure.Core;
 using IdentityV2.Models;
 using IdentityV2.Utils;
@@ -29,7 +29,7 @@ namespace IdentityV2.Infrastructure.Implementation
 
         public async Task<Tokens> AuthenticateAsync(UserLoginDto userLogin)
         {
-            var secretKey = iconfiguration.GetSection("UserAvatar")["Key"];
+            var secretKey = iconfiguration.GetSection("User")["Key"];
 
             var passwordHelper = new PasswordHelper(secretKey);
 
@@ -77,9 +77,9 @@ namespace IdentityV2.Infrastructure.Implementation
             return new Tokens { Token = tokenHandler.WriteToken(token) };
         }
 
-        public ESportAuthorizationResult Authorize(ClaimsPrincipal userSlice)
+        public ESportAuthorizationResult Authorize(ClaimsPrincipal user)
         {
-           var isAuthentificatedClaim = userSlice.Claims.FirstOrDefault(x => x.Type == "IsAuthentificated");
+           var isAuthentificatedClaim = user.Claims.FirstOrDefault(x => x.Type == "IsAuthentificated");
             if (isAuthentificatedClaim != null)
             {
                 var isAuthentificated = bool.Parse(isAuthentificatedClaim.Value);

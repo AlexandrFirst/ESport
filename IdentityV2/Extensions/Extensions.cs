@@ -26,7 +26,7 @@ namespace IdentityV2.Extensions
                 var isUsersExists = context.Users.Any();
                 if (isUsersExists) { return host; }
 
-                var passwordSecretKey = configurations.GetSection("UserAvatar")["Key"];
+                var passwordSecretKey = configurations.GetSection("User")["Key"];
 
                 PasswordHelper passwordHelper = new PasswordHelper(passwordSecretKey);
 
@@ -41,11 +41,11 @@ namespace IdentityV2.Extensions
                         {
                             foreach (var userSlice in seedUsers)
                             {
-                                var userToInsert = mapper.Map<UserAvatar>(userSlice);
+                                var userToInsert = mapper.Map<User>(userSlice);
                                 userToInsert.HashedPassword = passwordHelper.Hash(userSlice.Password);
 
 
-                                var userRole = new UserRoles() { Role = adminRole, UserAvatar = userToInsert };
+                                var userRole = new UserRoles() { Role = adminRole, User = userToInsert };
                                 context.UserRoles.Add(userRole);
                                 context.Users.Add(userToInsert);
 

@@ -49,7 +49,7 @@ namespace ESportAuthClient.ESportAuthClient
             }
 
 
-            var authResponse = await client.GetAsync("UserAvatar/oclelot_validate");
+            var authResponse = await client.GetAsync("User/oclelot_validate");
             if (authResponse.IsSuccessStatusCode)
             {
                 var contentStream = await authResponse.Content.ReadAsStreamAsync();

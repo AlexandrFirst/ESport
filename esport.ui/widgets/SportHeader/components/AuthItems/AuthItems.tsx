@@ -1,7 +1,9 @@
 import React from "react";
+
+import { UserAvatar } from "@entities/user";
+
 import { HeaderListItem } from "../ListItem/ListItem";
 import { Notifications } from "../Notifications/Notifications";
-import { UserAvatar } from "../../../../entities/user/components/UserAvatar/UserAvatar";
 
 export const AuthItems: React.FC = () => {
   return (

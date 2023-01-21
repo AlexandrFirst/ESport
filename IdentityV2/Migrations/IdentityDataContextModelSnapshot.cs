@@ -76,7 +76,7 @@ namespace IdentityV2.Migrations
                         });
                 });
 
-            modelBuilder.Entity("IdentityV2.Data.Domain.UserAvatar", b =>
+            modelBuilder.Entity("IdentityV2.Data.Domain.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -156,7 +156,7 @@ namespace IdentityV2.Migrations
 
             modelBuilder.Entity("IdentityV2.Data.Domain.PendingUser", b =>
                 {
-                    b.HasOne("IdentityV2.Data.Domain.UserAvatar", "UserAvatar")
+                    b.HasOne("IdentityV2.Data.Domain.User", "User")
                         .WithOne("PendingUser")
                         .HasForeignKey("IdentityV2.Data.Domain.PendingUser", "UserId")
                         .OnDelete(DeleteBehavior.SetNull)
@@ -165,7 +165,7 @@ namespace IdentityV2.Migrations
 
             modelBuilder.Entity("IdentityV2.Data.Domain.UserHistory", b =>
                 {
-                    b.HasOne("IdentityV2.Data.Domain.UserAvatar", "UserAvatar")
+                    b.HasOne("IdentityV2.Data.Domain.User", "User")
                         .WithMany("UserHistory")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -179,7 +179,7 @@ namespace IdentityV2.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("IdentityV2.Data.Domain.UserAvatar", "UserAvatar")
+                    b.HasOne("IdentityV2.Data.Domain.User", "User")
                         .WithMany("UserRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
