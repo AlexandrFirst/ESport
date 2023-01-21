@@ -1,4 +1,4 @@
-﻿using IdentityV2.Dto.UserAvatar;
+﻿using IdentityV2.Dto.User;
 using IdentityV2.Infrastructure.Core;
 using IdentityV2.Infrastructure.Implementation;
 using IdentityV2.Models.AccountModels;

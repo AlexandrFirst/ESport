@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace IdentityV2.Data.Configuration
 {
-    public class UserConfiguration : IEntityTypeConfiguration<UserAvatar>
+    public class UserConfiguration : IEntityTypeConfiguration<User>
     {
-        public void Configure(EntityTypeBuilder<UserAvatar> builder)
+        public void Configure(EntityTypeBuilder<User> builder)
         {
-            builder.HasMany(u => u.UserHistory).WithOne(h => h.UserAvatar).OnDelete(DeleteBehavior.Cascade);
+            builder.HasMany(u => u.UserHistory).WithOne(h => h.User).OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

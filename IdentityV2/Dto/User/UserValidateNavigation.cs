@@ -1,7 +1,7 @@
 ﻿using IdentityV2.Data.Domain;
 using System.Collections.Generic;
 
-namespace IdentityV2.Dto.UserAvatar
+namespace IdentityV2.Dto.User
 {
     public class UserValidateNavigation
     {

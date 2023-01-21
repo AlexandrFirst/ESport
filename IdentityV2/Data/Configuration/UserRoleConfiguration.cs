@@ -9,7 +9,7 @@ namespace IdentityV2.Data.Configuration
         public void Configure(EntityTypeBuilder<UserRoles> builder)
         {
             builder.HasOne(ur => ur.Role).WithMany(r => r.UserRole).OnDelete(DeleteBehavior.Restrict);
-            builder.HasOne(ur => ur.UserAvatar).WithMany(r => r.UserRoles).OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne(ur => ur.User).WithMany(r => r.UserRoles).OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

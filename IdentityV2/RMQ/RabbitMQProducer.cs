@@ -28,7 +28,7 @@ namespace IdentityV2.RMQ
             _connectionFactory = new ConnectionFactory
             {
                 HostName = this.rabbitMqOptions.Host,
-                UserName = this.rabbitMqOptions.UserAvatar,
+                UserName = this.rabbitMqOptions.User,
                 Password = this.rabbitMqOptions.Password,
                 Port = this.rabbitMqOptions.Port,
                 RequestedHeartbeat = new TimeSpan(60),

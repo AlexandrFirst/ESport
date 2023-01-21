@@ -39,7 +39,7 @@ namespace IdentityV2.Middleware
             if (eSportAuth != null)
             {
                 var authService = ctx.RequestServices.GetRequiredService<IJWTManagerRepository>();
-                var result = authService.Authorize(ctx.UserAvatar);
+                var result = authService.Authorize(ctx.User);
 
                 if (!result.Success)
                 {
@@ -65,7 +65,7 @@ namespace IdentityV2.Middleware
             if (authAttr != null && !string.IsNullOrEmpty(authAttr.Policy))
             {
                 var authService = ctx.RequestServices.GetRequiredService<IAuthorizationService>();
-                var result = await authService.AuthorizeAsync(ctx.UserAvatar, ctx.GetRouteData(), authAttr.Policy);
+                var result = await authService.AuthorizeAsync(ctx.User, ctx.GetRouteData(), authAttr.Policy);
 
                 if (!result.Succeeded)
                 {

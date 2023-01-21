@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace IdentityV2.Data.Domain
 {
-    public class UserAvatar
+    public class User
     {
-        public UserAvatar()
+        public User()
         {
             UserRoles = new List<UserRoles>();
         }

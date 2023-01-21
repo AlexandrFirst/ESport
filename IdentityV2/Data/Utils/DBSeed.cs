@@ -1,4 +1,4 @@
-﻿using IdentityV2.Dto.UserAvatar;
+﻿using IdentityV2.Dto.User;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;

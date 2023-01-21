@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using IdentityV2.Data.Domain;
-using IdentityV2.Dto.UserAvatar;
+using IdentityV2.Dto.User;
 
 namespace IdentityV2.MappingProfiles
 {
@@ -8,7 +8,7 @@ namespace IdentityV2.MappingProfiles
     {
         public UserProfile()
         {
-            CreateMap<CreateUserDto, UserAvatar>().ForSourceMember(x => x.Password, opt => opt.DoNotValidate());
+            CreateMap<CreateUserDto, User>().ForSourceMember(x => x.Password, opt => opt.DoNotValidate());
         }
     }
 }
