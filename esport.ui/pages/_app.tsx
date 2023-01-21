@@ -1,10 +1,11 @@
-import "../styles/globals.css";
-import type { AppProps } from "next/app";
+import "../app/styles/globals.css";
 
-import { wrapper } from "@storage/store";
+import type { AppProps } from "next/app";
 import { Nunito_Sans } from "@next/font/google";
 
-import { Providers } from "@features/Providers/Providers";
+import { wrapper } from "@app/store/store";
+
+import { Providers } from "@app/Providers/Providers";
 
 const font = Nunito_Sans({
   subsets: ["latin", "cyrillic-ext", "cyrillic"],

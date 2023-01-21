@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { NextPage } from "next";
-import { authService } from "@api/auth/authService";
+import { authService } from "../../../entities/user/api/auth/authService";
 import { useRouter } from "next/router";
 
 const Confirm: NextPage = () => {

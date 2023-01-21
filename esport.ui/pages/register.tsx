@@ -1,10 +1,25 @@
-import { NextPage } from 'next'
-import React from 'react'
+import { NextPage } from "next";
+import React from "react";
 
-import { Register } from '@features/UnloggedLayout/components/page-register/Register'
+import { Form, registerHead } from "@page-widgets/page-register";
+
+import { Left, Main, Right } from "@layouts/UnloggedLayout";
 
 const RegisterPage: NextPage = () => {
-  return <Register />
-}
+  return (
+    <Main
+      headProps={registerHead}
+      leftComponent={<Left />}
+      rightComponent={
+        <Right
+          title="Adventure starts here 🚀"
+          subtitle="Please sign-in to your account and start the adventure"
+        >
+          <Form />
+        </Right>
+      }
+    />
+  );
+};
 
-export default RegisterPage
+export default RegisterPage;

@@ -9,7 +9,7 @@ namespace IdentityV2.Data.Configuration
         public void Configure(EntityTypeBuilder<PendingUser> builder)
         {
             builder.HasKey(x => x.PendingToken);
-            builder.HasOne(x => x.User)
+            builder.HasOne(x => x.UserAvatar)
                 .WithOne(u => u.PendingUser)
                 .HasForeignKey<PendingUser>(x => x.UserId)
                 .OnDelete(DeleteBehavior.Cascade);

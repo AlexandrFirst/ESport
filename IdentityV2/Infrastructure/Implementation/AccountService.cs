@@ -2,7 +2,7 @@
 using IdentityV2.Data;
 using IdentityV2.Data.Domain;
 using IdentityV2.Data.Utils;
-using IdentityV2.Dto.User;
+using IdentityV2.Dto.UserAvatar;
 using IdentityV2.Infrastructure.Implementation;
 using IdentityV2.Models;
 using IdentityV2.Models.AccountModels;
@@ -28,7 +28,7 @@ namespace IdentityV2.Infrastructure.Core
         private readonly IHttpContextAccessor httpContextAccessor;
         private readonly string passwordSecretKey;
 
-        public AccountService(IdentityDataContext dataContext, 
+        public AccountService(IdentityDataContext dataContext,
             IJWTManagerRepository jwtMananager,
             IConfiguration configuration,
             IMapper mapper,
@@ -40,7 +40,7 @@ namespace IdentityV2.Infrastructure.Core
             this.mapper = mapper;
             this.messageProducer = messageProducer;
             this.httpContextAccessor = httpContextAccessor;
-            passwordSecretKey = configuration.GetSection("User")["Key"];
+            passwordSecretKey = configuration.GetSection("UserAvatar")["Key"];
 
         }
 
@@ -50,14 +50,14 @@ namespace IdentityV2.Infrastructure.Core
             if (pendingUser == null)
                 return false;
 
-            if (DateTime.Now > pendingUser.PendingDateEnd) 
+            if (DateTime.Now > pendingUser.PendingDateEnd)
             {
                 dataContext.Remove(pendingUser);
                 return false;
             }
 
-            var user = pendingUser.User;
-            user.IsPending = false;
+            var userSlice = pendingUser.UserAvatar;
+            userSlice.IsPending = false;
             dataContext.Remove(pendingUser);
             await dataContext.SaveChangesAsync();
 
@@ -92,7 +92,7 @@ namespace IdentityV2.Infrastructure.Core
             if (isModelValid)
             {
 
-                var userToInsert = mapper.Map<User>(creatUserDto);
+                var userToInsert = mapper.Map<UserAvatar>(creatUserDto);
                 userToInsert.IsPending = true;
                 userToInsert.PendingUser = new PendingUser()
                 {
@@ -104,17 +104,17 @@ namespace IdentityV2.Infrastructure.Core
 
                 dataContext.Users.Add(userToInsert);
 
-                messageProducer.SendMessage(new 
+                messageProducer.SendMessage(new
                 {
                     token = userToInsert.PendingUser.PendingToken.ToString(),
                     mail = userToInsert.Email,
-                    template = "<p>Click to confirm your account <a href='http://localhost:3000/user/confirm/{0}'>Confirm</a></p>"
+                    template = "<p>Click to confirm your account <a href='http://localhost:3000/userSlice/confirm/{0}'>Confirm</a></p>"
                 });
                 await dataContext.SaveChangesAsync();
 
                 return new RegisterResultModel { IsSuccess = true };
             }
-            else 
+            else
             {
                 var errors = validationResults.Select(o => o.ErrorMessage).ToList();
                 return new RegisterResultModel { IsSuccess = false, Error = errors };

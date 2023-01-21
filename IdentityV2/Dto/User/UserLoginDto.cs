@@ -1,4 +1,4 @@
-﻿namespace IdentityV2.Dto.User
+﻿namespace IdentityV2.Dto.UserAvatar
 {
     public class UserLoginDto
     {

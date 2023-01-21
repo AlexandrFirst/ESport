@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import { authService } from "@api/auth/authService";
+import { authService } from "../../../../entities/user/api/auth/authService";
 
 type Data = {
   name: string;

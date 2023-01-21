@@ -43,13 +43,13 @@ namespace ESportAuthClient.ESportAuthClient
                     token = authTokens.FirstOrDefault();
                 }
             }
-            if (authDataExists) 
+            if (authDataExists)
             {
                 client.DefaultRequestHeaders.Add("Authorization", token);
             }
 
 
-            var authResponse = await client.GetAsync("User/oclelot_validate");
+            var authResponse = await client.GetAsync("UserAvatar/oclelot_validate");
             if (authResponse.IsSuccessStatusCode)
             {
                 var contentStream = await authResponse.Content.ReadAsStreamAsync();

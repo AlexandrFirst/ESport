@@ -80,7 +80,7 @@ namespace GateWay
             if (route.RouteClaimsRequirement.Count == 0) return true;
 
             bool auth = false;
-            Claim[] claims = ctx.User.Claims.ToArray<Claim>();
+            Claim[] claims = ctx.UserAvatar.Claims.ToArray<Claim>();
             Dictionary<string, string> required = route.RouteClaimsRequirement;
             var routeRoleInfo = required["Role"];
             var userRoleInfo = claims.FirstOrDefault(x => x.Type == "Role");

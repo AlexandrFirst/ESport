@@ -1,5 +1,5 @@
 ﻿using IdentityV2.CustomAttrubutes;
-using IdentityV2.Dto.User;
+using IdentityV2.Dto.UserAvatar;
 using IdentityV2.Utils;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,22 +16,22 @@ namespace IdentityV2.Controllers
     {
         [HttpGet("validate")]
         [ESportIdentity]
-        public IActionResult Validate([FromQuery]UserValidateNavigation userValidateNavigation) 
+        public IActionResult Validate([FromQuery]UserValidateNavigation userValidateNavigation)
         {
-            var userClaims = User.Claims;
+            var userClaims = UserAvatar.Claims;
             return Ok("Hello world");
         }
 
         [Authorize]
         [HttpGet("oclelot_validate")]
-        public IActionResult OclelotValidate() 
+        public IActionResult OclelotValidate()
         {
-            var user = User;
+            var userSlice = UserAvatar;
 
-            var id = user.Claims.Where(x => x.Type == UserClaims.Id).First();
-            var name = user.Claims.Where(x => x.Type == UserClaims.Name).First();
-            var email = user.Claims.Where(x => x.Type == UserClaims.Email).First();
-            var role = user.Claims.Where(x => x.Type == UserClaims.Role).First();
+            var id = userSlice.Claims.Where(x => x.Type == UserClaims.Id).First();
+            var name = userSlice.Claims.Where(x => x.Type == UserClaims.Name).First();
+            var email = userSlice.Claims.Where(x => x.Type == UserClaims.Email).First();
+            var role = userSlice.Claims.Where(x => x.Type == UserClaims.Role).First();
 
             var userInfo = new Dictionary<string, string>();
             userInfo.Add(UserClaims.Id, id.Value);

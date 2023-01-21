@@ -12,9 +12,9 @@ namespace IdentityV2.RMQ
         private ConnectionFactory _connectionFactory;
 
         private IConnection _connection;
-       
+
         private readonly RabbitMqOptions rabbitMqOptions;
-       
+
         public IModel channel;
 
         private const string mailExchangename = "mail_exchange";
@@ -28,14 +28,14 @@ namespace IdentityV2.RMQ
             _connectionFactory = new ConnectionFactory
             {
                 HostName = this.rabbitMqOptions.Host,
-                UserName = this.rabbitMqOptions.User,
+                UserName = this.rabbitMqOptions.UserAvatar,
                 Password = this.rabbitMqOptions.Password,
                 Port = this.rabbitMqOptions.Port,
                 RequestedHeartbeat = new TimeSpan(60),
                 DispatchConsumersAsync = true
             };
 
-            
+
         }
 
         public void SendMessage<T>(T message)
@@ -47,7 +47,7 @@ namespace IdentityV2.RMQ
                 _connection = _connectionFactory.CreateConnection();
             }
 
-            if (channel == null) { 
+            if (channel == null) {
                 channel = _connection.CreateModel();
 
                 channel.ExchangeDeclare(mailExchangename, ExchangeType.Direct);
