@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 import { IRegisterForm } from "@features/UnloggedLayout/interfaces";
 import { RegisterSteps } from "@features/UnloggedLayout/enums";
@@ -11,7 +13,6 @@ import { SportHeadComponentProps } from "@features/SportHead/SportHead";
 
 import { Form } from "./Form/Form";
 import { useRegisterValidation } from "@features/UnloggedLayout/components/page-register/useRegisterValidation";
-import { yupResolver } from "@hookform/resolvers/yup";
 
 const registerHead: SportHeadComponentProps = {
   title: "E-Sport | Create your account",
