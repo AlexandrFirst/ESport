@@ -1,6 +1,7 @@
 import { Controller } from '@nestjs/common';
 import { RMQRoute } from 'nestjs-rmq';
-import { CompetitionsGetAll } from 'esport-lib-ts/lib';
+
+import { CompetitionsGetAll } from 'esport-lib-ts/lib/competitions';
 
 import { CompetitionService } from './competition.service';
 

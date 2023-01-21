@@ -1,10 +1,16 @@
 import React from "react";
 import { NextPage } from "next";
 
-import { CreateCompetition } from "@pageComponents/page-competition/components/page-create/CreateCompetition";
+import { MainLayout } from "@layouts/MainLayout";
+
+import { CreateCompetitionForm } from "@page-widgets/page-create-competition";
 
 const CompetitionPage: NextPage = () => {
-  return <CreateCompetition />;
+  return (
+    <MainLayout>
+      <CreateCompetitionForm />
+    </MainLayout>
+  );
 };
 
 export default CompetitionPage;

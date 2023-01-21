@@ -1,9 +1,14 @@
 import React from "react";
 import { NextPage } from "next";
-import { Competition } from "@pageComponents/page-competition/Competition";
+
+import { MainLayout } from "../../layouts/MainLayout/MainLayout";
 
 const CompetitionPage: NextPage = () => {
-  return <Competition />;
+  return (
+    <MainLayout>
+      <h1>Implement me</h1>
+    </MainLayout>
+  );
 };
 
 export default CompetitionPage;

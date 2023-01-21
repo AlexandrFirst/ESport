@@ -2,7 +2,7 @@ import mongoose, { Document } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Type } from 'class-transformer';
 
-import { ICategory, ICompetition } from 'esport-lib-ts/lib';
+import { ICategory, ICompetition } from 'esport-lib-ts/lib/competitions';
 
 import { Category } from '../category/category.model';
 

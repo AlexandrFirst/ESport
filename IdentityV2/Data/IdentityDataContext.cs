@@ -8,7 +8,7 @@ namespace IdentityV2.Data
     public class IdentityDataContext : DbContext
     {
         public virtual DbSet<Role> Roles { get; set; }
-        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<UserAvatar> Users { get; set; }
         public virtual DbSet<UserHistory> UserHistory { get; set; }
         public virtual DbSet<UserRoles> UserRoles { get; set; }
         public virtual DbSet<PendingUser> PendingUser { get; set; }
@@ -18,7 +18,7 @@ namespace IdentityV2.Data
             Database.Migrate();
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseLazyLoadingProxies();
         }

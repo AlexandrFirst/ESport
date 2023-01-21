@@ -7,6 +7,7 @@ import { getRMQConfig } from './configs';
 
 import { CompetitionsController } from './controllers/competition-service/competitions.controller';
 import { CategoriesController } from './controllers/competition-service/categories.controller';
+import { FightsController } from './controllers/competition-service/fight.controller';
 
 @Module({
   imports: [
@@ -15,7 +16,7 @@ import { CategoriesController } from './controllers/competition-service/categori
     // JwtModule.registerAsync(getJWTConfig()),
     // PassportModule,
   ],
-  controllers: [CompetitionsController, CategoriesController],
+  controllers: [CompetitionsController, CategoriesController, FightsController],
   providers: [],
 })
 export class AppModule {}

@@ -1,6 +1,6 @@
 ﻿using IdentityV2.Data;
 using IdentityV2.Data.Utils;
-using IdentityV2.Dto.User;
+using IdentityV2.Dto.UserAvatar;
 using IdentityV2.Infrastructure.Core;
 using IdentityV2.Models;
 using IdentityV2.Utils;
@@ -29,14 +29,14 @@ namespace IdentityV2.Infrastructure.Implementation
 
         public async Task<Tokens> AuthenticateAsync(UserLoginDto userLogin)
         {
-            var secretKey = iconfiguration.GetSection("User")["Key"];
+            var secretKey = iconfiguration.GetSection("UserAvatar")["Key"];
 
             var passwordHelper = new PasswordHelper(secretKey);
 
 
             var dbUser = await context.Users.FirstOrDefaultAsync(x => x.Email == userLogin.Mail && x.IsPending == false);
             bool isPasswordCorrect = false;
-            if (dbUser != null) 
+            if (dbUser != null)
             {
                 var dbPassword = dbUser.HashedPassword;
                 var inputPassword = userLogin.Password;
@@ -46,14 +46,14 @@ namespace IdentityV2.Infrastructure.Implementation
             if (!isPasswordCorrect) { return null; }
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            
+
             var tokenKey = Encoding.UTF8.GetBytes(iconfiguration["JWT:Key"]);
             var audience = iconfiguration.GetSection("JWT")["Audience"];
             var issuer = iconfiguration.GetSection("JWT")["Issuer"];
 
             var userRolesEnumerable = dbUser.UserRoles.Select(x => x.Role.Title);
             string userRoles = "";
-            if (userRolesEnumerable.Any()) 
+            if (userRolesEnumerable.Any())
             {
                 userRoles = userRolesEnumerable.Aggregate((acc, s) => string.IsNullOrEmpty(acc) ? s : acc + "," + s);
             }
@@ -77,13 +77,13 @@ namespace IdentityV2.Infrastructure.Implementation
             return new Tokens { Token = tokenHandler.WriteToken(token) };
         }
 
-        public ESportAuthorizationResult Authorize(ClaimsPrincipal user)
+        public ESportAuthorizationResult Authorize(ClaimsPrincipal userSlice)
         {
-           var isAuthentificatedClaim = user.Claims.FirstOrDefault(x => x.Type == "IsAuthentificated");
-            if (isAuthentificatedClaim != null) 
+           var isAuthentificatedClaim = userSlice.Claims.FirstOrDefault(x => x.Type == "IsAuthentificated");
+            if (isAuthentificatedClaim != null)
             {
                 var isAuthentificated = bool.Parse(isAuthentificatedClaim.Value);
-                if (!isAuthentificated) 
+                if (!isAuthentificated)
                 {
                     return new ESportAuthorizationResult() { Success = false };
                 }

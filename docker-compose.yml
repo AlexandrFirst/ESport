@@ -28,17 +28,21 @@ services:
     ports:
       - '15672:15672'
       - '5672:5672'
+
   mongo:
     image: mongo:4.4.4
     container_name: mongo
-    restart: always
+    restart: on-failure
     environment:
+      - MONGO_INITDB_DATABASE=Esport
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=admin
     ports:
       - '27017:27017'
     volumes:
       - ./mongo-data-4.4:/data/db
+    networks:
+      - mongo_bridge_network
   identity:
     image: diplom_identity
     build:
@@ -97,33 +101,34 @@ services:
     build:
       context: ./esport.ui
       dockerfile: ./Dockerfile
-    restart: always
+    restart: on-failure
     ports:
       - '3000:3000'
   competitions:
     container_name: esport-competitions
     build:
       context: ./esport.competitions
-      target: development
       dockerfile: ./Dockerfile
-    restart: always
+    restart: on-failure
     volumes:
       - /usr/src/app/node_modules
       - ./esport.competitions:/usr/src/app
     command: npm run start
     env_file:
-      - ./esport.competitions/.env
+      - ./esport.competitions/.env.production
     depends_on:
       - rabbit
       - mongo
       - api-gateway
+    networks:
+      - mongo_bridge_network
+      - rabbit_bridge_network
   api-gateway:
     container_name: esport-api-gateway
     build:
       context: ./esport.api.gateway
-      target: development
       dockerfile: ./Dockerfile
-    restart: always
+    restart: on-failure
     volumes:
       - /usr/src/app/node_modules
       - ./esport.api.gateway:/usr/src/app
@@ -134,3 +139,8 @@ services:
       - rabbit
     ports:
       - '3001:3001'
+
+
+networks:
+  mongo_bridge_network:
+    driver: bridge

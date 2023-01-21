@@ -36,7 +36,7 @@ namespace IdentityV2.Migrations
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("IdentityV2.Data.Domain.User", b =>
+            modelBuilder.Entity("IdentityV2.Data.Domain.UserAvatar", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -116,7 +116,7 @@ namespace IdentityV2.Migrations
 
             modelBuilder.Entity("IdentityV2.Data.Domain.UserHistory", b =>
                 {
-                    b.HasOne("IdentityV2.Data.Domain.User", "User")
+                    b.HasOne("IdentityV2.Data.Domain.UserAvatar", "UserAvatar")
                         .WithMany("UserHistory")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -129,7 +129,7 @@ namespace IdentityV2.Migrations
                         .HasForeignKey("RolesId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("IdentityV2.Data.Domain.User", "User")
+                    b.HasOne("IdentityV2.Data.Domain.UserAvatar", "UserAvatar")
                         .WithMany("UserRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict);

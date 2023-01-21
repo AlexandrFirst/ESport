@@ -1,9 +1,9 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { Grid } from "@mui/material";
-import { SportButton } from "@components/SportButton/SportButton";
-import { SportLink } from "@components/SportLink/SportLink";
-import { MainLayout } from "@features/MainLayout/MainLayout";
+import { SportButton } from "../shared/ui/SportButton/SportButton";
+import { SportLink } from "../shared/ui/SportLink/SportLink";
+import { MainLayout } from "../layouts/MainLayout/MainLayout";
 
 const Home: NextPage = () => {
   return (

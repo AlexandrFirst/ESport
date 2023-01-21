@@ -26,7 +26,7 @@ namespace UserWorkFlow.Controllers
         [HttpGet]
         public IEnumerable<WeatherForecast> Get()
         {
-            var user = User;
+            var userSlice = UserAvatar;
 
             var rng = new Random();
             return Enumerable.Range(1, 5).Select(index => new WeatherForecast

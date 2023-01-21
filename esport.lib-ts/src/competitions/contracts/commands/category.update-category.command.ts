@@ -6,14 +6,15 @@ export namespace CategoryUpdate {
 
   export class Request {
     @IsString()
-    id: string;
+    _id: string;
 
     @IsString()
-    title: string;
+    @IsOptional()
+    title?: string;
 
     @IsArray()
     @IsOptional()
-    fights: Omit<IFight, "_id" | "winnerId">[];
+    fights?: Partial<IFight>[];
   }
 
   export class Response {
