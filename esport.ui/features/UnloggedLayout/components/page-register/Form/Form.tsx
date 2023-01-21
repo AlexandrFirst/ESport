@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./Form.module.css";
+import styles from "./form.module.scss";
 
 import cn from "classnames";
 import { UseFormReturn } from "react-hook-form";
@@ -11,6 +11,7 @@ import { useMedia } from "@hooks/useMedia";
 
 import { RegisterSteps } from "@features/UnloggedLayout/enums";
 import { IRegisterForm } from "@features/UnloggedLayout/interfaces";
+
 import { routes } from "routes";
 
 import { SportForm } from "@components/SportForm/SportForm";
@@ -18,12 +19,11 @@ import { SportButton } from "@components/SportButton/SportButton";
 import { SportIconButton } from "@components/SportIconButton/SportIconButton";
 import { SportLink } from "@components/SportLink/SportLink";
 
-import { Dividers } from "../../Dividers/Dividers";
-
-import { FirstStep } from "../FirstStep/FirstStep";
-import { SecondStep } from "../SecondStep/SecondStep";
 import { ThirdStep } from "@features/UnloggedLayout/components/page-register/ThirdStep/ThirdStep";
 import { useRegister } from "@features/UnloggedLayout/components/page-register/useRegister";
+import { FirstStep } from "@features/UnloggedLayout/components/page-register/FirstStep/FirstStep";
+import { SecondStep } from "@features/UnloggedLayout/components/page-register/SecondStep/SecondStep";
+import { Dividers } from "@features/UnloggedLayout/components/Dividers/Dividers";
 
 interface FormProps {
   methods: UseFormReturn<IRegisterForm>;
@@ -36,7 +36,7 @@ export const Form: React.FC<FormProps> = ({
   currStep,
   setCurrStep,
 }) => {
-  const { handleSubmit, register } = methods;
+  const { register } = methods;
 
   const { isMobile } = useMedia();
   const apiRegister = useRegister();
@@ -53,6 +53,8 @@ export const Form: React.FC<FormProps> = ({
     const newStep = currStep - 1;
     setCurrStep(newStep);
   };
+
+  const onSubmit = methods.handleSubmit(apiRegister);
 
   return (
     <SportForm
@@ -74,10 +76,7 @@ export const Form: React.FC<FormProps> = ({
             Next
           </SportButton>
         ) : (
-          <SportButton
-            className="w-60 my-3"
-            onClick={handleSubmit(apiRegister)}
-          >
+          <SportButton className="w-60 my-3" onClick={onSubmit}>
             Submit
           </SportButton>
         )}

@@ -33,9 +33,7 @@ export const SportDatePicker: React.FC<SportDatePickerProps> = ({
             PaperProps={{
               className: styles.calendar,
             }}
-            renderInput={(params) => (
-              <SportInput inputRef={params.inputRef} name={name} {...params} />
-            )}
+            renderInput={(params) => <SportInput name={name} {...params} />}
           />
         )}
       />

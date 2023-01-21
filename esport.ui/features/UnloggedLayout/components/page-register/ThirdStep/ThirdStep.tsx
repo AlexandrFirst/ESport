@@ -1,8 +1,8 @@
 import React from "react";
-import { RegisterInput } from "@features/UnloggedLayout/components/page-register/RegisterInput/RegisterInput";
 import { UseFormRegister } from "react-hook-form";
 import { IRegisterForm } from "@features/UnloggedLayout/interfaces";
 import { RegisterSteps } from "@features/UnloggedLayout/enums";
+import { SportInputMask } from "@components/SportInputMask/SportInputMask";
 
 interface ThirdStepProps {
   currStep: RegisterSteps;
@@ -14,11 +14,16 @@ export const ThirdStep: React.FC<ThirdStepProps> = ({ currStep, register }) => {
 
   return (
     <>
-      <RegisterInput
+      <SportInputMask
         {...register("telephoneNumber")}
-        label={"Telephone number"}
-        isHided={isHided}
+        mask={""}
+        maskPlaceholder={"(+380)000-000-000"}
       />
+      {/*<RegisterInput*/}
+      {/*  {...register("telephoneNumber")}*/}
+      {/*  label={"Telephone number"}*/}
+      {/*  isHided={isHided}*/}
+      {/*/>*/}
     </>
   );
 };

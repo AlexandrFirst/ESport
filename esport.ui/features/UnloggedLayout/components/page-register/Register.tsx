@@ -7,17 +7,22 @@ import { RegisterSteps } from "@features/UnloggedLayout/enums";
 import { Left } from "../Left/Left";
 import { Main } from "../Main";
 import { Right } from "../Right/Right";
+import { SportHeadComponentProps } from "@features/SportHead/SportHead";
 
 import { Form } from "./Form/Form";
-import { RegisterStepper } from "./Stepper/Stepper";
-import { SportHeadComponentProps } from "@features/SportHead/SportHead";
+import { useRegisterValidation } from "@features/UnloggedLayout/components/page-register/useRegisterValidation";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 const registerHead: SportHeadComponentProps = {
   title: "E-Sport | Create your account",
 };
 
 export const Register: React.FC = () => {
-  const methods = useForm<IRegisterForm>();
+  const validationSchema = useRegisterValidation();
+  const methods = useForm<IRegisterForm>({
+    resolver: yupResolver(validationSchema),
+  });
+
   const [currStep, setCurrStep] = useState(RegisterSteps.MainInfo);
 
   return (
@@ -29,7 +34,6 @@ export const Register: React.FC = () => {
           title="Adventure starts here 🚀"
           subtitle="Please sign-in to your account and start the adventure"
         >
-          <RegisterStepper currStep={currStep} />
           <Form
             methods={methods}
             currStep={currStep}

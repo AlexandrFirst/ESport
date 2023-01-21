@@ -18,9 +18,7 @@ export const useLogin = () => {
   return async (data: ILoginForm) => {
     try {
       showLoader();
-      console.log("===123===");
-      const token = await authService.login(data);
-      console.log("===token===", token);
+      await authService.login(data);
       router.push(routes.Test);
     } catch (e) {
       //TODO: handle error

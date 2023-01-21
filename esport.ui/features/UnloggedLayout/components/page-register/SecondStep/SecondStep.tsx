@@ -19,16 +19,17 @@ export const SecondStep: React.FC<SecondStepProps> = ({
 
   return (
     <>
-      {/*<RegisterInput {...register('level')} label={'Level'} isHided={isHided} />*/}
       <RegisterInput
         {...register("password")}
         label={"Password"}
         isHided={isHided}
+        type={"password"}
       />
       <RegisterInput
         {...register("confirmPassword")}
         label={"Confirm password"}
         isHided={isHided}
+        type={"password"}
       />
     </>
   );

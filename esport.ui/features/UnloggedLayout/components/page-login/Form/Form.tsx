@@ -1,15 +1,18 @@
 import React from "react";
 import styles from "./form.module.css";
 
+import { useRouter } from "next/router";
 import { UseFormReturn } from "react-hook-form";
 import cn from "classnames";
 
 import { Grid, Typography } from "@mui/material";
 
+import { routes } from "routes";
+
 import { useMedia } from "@hooks/useMedia";
 
 import { ILoginForm } from "@features/UnloggedLayout/interfaces";
-import { routes } from "routes";
+import { Dividers } from "@features/UnloggedLayout/components/Dividers/Dividers";
 
 import { SportInput } from "@components/SportInput/SportInput";
 import { SportForm } from "@components/SportForm/SportForm";
@@ -17,21 +20,26 @@ import { SportButton } from "@components/SportButton/SportButton";
 import { SportLink } from "@components/SportLink/SportLink";
 import { SportPasswordInput } from "@components/SportPasswordInput/SportPasswordInput";
 
-import { Dividers } from "../../Dividers/Dividers";
-import { useLogin } from "../useLogin";
+import { authService } from "@api/auth/authService";
+import { useWrapApi } from "@hooks/useWrapApi";
 
 interface FormProps {
   methods: UseFormReturn<ILoginForm>;
 }
 
 export const Form: React.FC<FormProps> = ({ methods }) => {
-  const { handleSubmit, register } = methods;
+  const { register } = methods;
   const { isMobile } = useMedia();
-  const login = useLogin();
 
-  const test = handleSubmit(
-    (data) => console.log("===data===", data),
-    (err) => console.log("===err===", err)
+  const router = useRouter();
+  const withErrorAndLoading = useWrapApi();
+
+  const onSubmit = methods.handleSubmit(async (data) =>
+    withErrorAndLoading(authService.login, data, {
+      onSuccess: () => {
+        router.push(routes.Test);
+      },
+    })
   );
 
   return (
@@ -51,7 +59,7 @@ export const Form: React.FC<FormProps> = ({ methods }) => {
       <SportLink className={"float-right"} to={routes.Register}>
         Forgot password?
       </SportLink>
-      <SportButton className="w-full my-5" onClick={handleSubmit(login)}>
+      <SportButton className="w-full my-5" onClick={onSubmit}>
         Login
       </SportButton>
       <Typography component={"span"} className={styles.text}>
