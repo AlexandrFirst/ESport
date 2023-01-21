@@ -3,20 +3,18 @@ import styles from "./mainLayout.module.scss";
 
 import cn from "classnames";
 
-import { useMedia } from "../../shared/lib/hooks/useMedia";
+import { useMedia } from "@shared/lib/hooks/useMedia";
+import { useAppDispatch, useAppSelector } from "@shared/lib/hooks/useStore";
 
 import { TopPageLoader } from "@features/TopPageLoader/TopPageLoader";
 import { SportHead, SportHeadProps } from "@features/SportHead/SportHead";
 
-import { SportSidebar } from "../../widgets/SportSidebar/SportSidebar";
-import { SportHeader } from "../../widgets/SportHeader/SportHeader";
+import { SportSidebar } from "@widgets/SportSidebar/SportSidebar";
+import { SportHeader } from "@widgets/SportHeader/SportHeader";
 
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../shared/lib/hooks/useStore";
+import { useMediaQuery } from "@shared/lib/hooks/useMediaQuery";
+
 import { updateSidebarOpened } from "./mainLayout.slice";
-import { useMediaQuery } from "../../shared/lib/hooks/useMediaQuery";
 
 type MainLayoutProps = PropsWithChildren & SportHeadProps & {};
 
