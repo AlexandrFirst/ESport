@@ -1,10 +1,13 @@
 import React from "react";
-import styles from "./largeScreenSidebar.module.css";
+import styles from "./largeScreenSidebar.module.scss";
+
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 
-import { SidebarData } from "../SidebarData/SidebarData";
 import cn from "classnames";
-import { SportIconButton } from "../../../../shared/ui/SportIconButton/SportIconButton";
+
+import { SportIconButton } from "@shared/ui/SportIconButton/SportIconButton";
+
+import { SidebarData } from "../SidebarData/SidebarData";
 import { useSidebarContext } from "../SidebarContext/SidebarContext";
 
 interface LargeScreenSidebarProps {}
@@ -23,9 +26,9 @@ export const LargeScreenSidebar: React.FC<LargeScreenSidebarProps> = () => {
     >
       <SportIconButton className={styles.iconBtn} onClick={handleClickArrow}>
         <KeyboardDoubleArrowLeftIcon
-          className={`${
-            isSidebarOpened ? "" : "rotate-180"
-          } transition-transform`}
+          className={cn(styles.arrow, {
+            [styles.arrow_closed]: !isSidebarOpened,
+          })}
         />
       </SportIconButton>
       <SidebarData />

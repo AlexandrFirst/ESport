@@ -5,7 +5,7 @@ import { useTheme } from "next-themes";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 
-import { SportIconButton } from "../../shared/ui/SportIconButton/SportIconButton";
+import { SportIconButton } from "@shared/ui/SportIconButton/SportIconButton";
 
 interface ThemeSwitcherProps {
   className?: string;

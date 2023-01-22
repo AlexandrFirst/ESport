@@ -6,3 +6,17 @@
   @apply absolute top-20
 }
 
+.opened {
+  @apply w-10/12
+}
+.closed {
+  @apply w-4/6
+}
+
+.list_item {
+  @apply flex justify-start flex-col rounded-md p-0 cursor-pointer text-skin-main text-sm transition-all duration-500 items-start mt-2
+}
+
+.gap {
+  @apply mt-9
+}

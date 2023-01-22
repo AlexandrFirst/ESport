@@ -1,16 +1,18 @@
 import React from "react";
+import styles from "./sportHeader.module.scss";
+
 import cn from "classnames";
 
 import { List } from "@mui/material";
 
-import { selectUser } from "../../entities/user/model/user.slice";
-import { useAppSelector } from "../../shared/lib/hooks/useStore";
+import { useAppSelector } from "@shared/lib/hooks/useStore";
+
+import { selectUser } from "@entities/user";
 
 import { SportThemeSwitcher } from "@features/SportThemeSwitcher/SportThemeSwitcher";
+import { Translate } from "@features/Translate/Translate";
 
 import { HeaderListItem } from "./components/ListItem/ListItem";
-
-import { Translate } from "@features/Translate/Translate";
 import { AuthItems } from "./components/AuthItems/AuthItems";
 import { AnonItems } from "./components/AnonItems/AnonItems";
 
@@ -22,9 +24,9 @@ export const SportHeader: React.FC<SportHeaderProps> = ({ className }) => {
   const { isAuth } = useAppSelector(selectUser);
 
   return (
-    <header className={cn("bg-skin-main fixed h-[64px]", className)}>
-      <nav className="float-right">
-        <List className="flex">
+    <header className={cn(styles.header, className)}>
+      <nav className={styles.nav}>
+        <List className={styles.list}>
           <HeaderListItem>
             <Translate />
           </HeaderListItem>

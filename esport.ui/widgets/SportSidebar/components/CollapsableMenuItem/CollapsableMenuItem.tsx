@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import styles from "./collapsableMenuItem.module.css";
+import React, { useEffect, useState } from "react";
+import styles from "./collapsableMenuItem.module.scss";
 
 import Link from "next/link";
 
@@ -43,6 +43,10 @@ export const CollapsableMenuItem: React.FC<CollapsableMenuItemProps> = ({
   const selected = item.items?.some(
     ({ link }) => link && link === currentPathname
   );
+
+  useEffect(() => {
+    selected && setSubmenuOpen(true);
+  }, [selected]);
 
   return (
     <>

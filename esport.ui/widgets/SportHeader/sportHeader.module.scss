@@ -1,0 +1,11 @@
+.header {
+  @apply bg-skin-main fixed h-[64px]
+}
+
+.nav {
+  @apply float-right
+}
+
+.list {
+  @apply flex
+}

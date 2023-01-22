@@ -13,3 +13,11 @@
 .iconBtn {
     @apply absolute top-10 -right-2 transition-colors
 }
+
+.arrow {
+    @apply transition-transform
+}
+
+.arrow_closed {
+    @apply rotate-180
+}

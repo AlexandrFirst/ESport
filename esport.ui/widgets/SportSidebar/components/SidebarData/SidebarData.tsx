@@ -33,19 +33,18 @@ export const SidebarData: React.FC<SidebarDataProps> = () => {
       <SportLogo className={styles.logo} showText={isSidebarOpened} />
       <List
         className={cn(styles.list, {
-          ["w-10/12"]: isSidebarOpened,
-          ["w-4/6"]: !isSidebarOpened,
+          [styles.opened]: isSidebarOpened,
+          [styles.closed]: !isSidebarOpened,
         })}
       >
         <SportScrollable>
           <nav>
-            {menu.map((sMenu, index) => (
+            {menu.map((sMenu) => (
               <ListItem
                 key={sMenu.title}
-                className={`flex justify-start flex-col rounded-md p-0 cursor-pointer hover:bg-light-white text-skin-main text-sm transition-all duration-500 items-start
-                ${sMenu.gap ? "mt-9" : "mt-2"} ${
-                  index === 0 && "bg-light-white"
-                } `}
+                className={cn(styles.list_item, {
+                  [styles.gap]: sMenu.gap,
+                })}
               >
                 {sMenu.items ? (
                   <CollapsableMenuItem
