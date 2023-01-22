@@ -69,7 +69,7 @@ namespace StreamingService.Hubs
 
             if (userIdClaim == null)
             {
-                await Clients.Group(userIdClaim.Value).Send(new ClientMessageBody()
+                await Clients.Client(Context.ConnectionId).Send(new ClientMessageBody()
                 {
                     Id = userIdClaim.Value,
                     Body = "Cannot stop translation. Reload the page"
@@ -98,6 +98,7 @@ namespace StreamingService.Hubs
                         }
                         else
                         {
+                            streamRepositry.SetStreamByConnectionId(Context.ConnectionId, presentorRequest.StreamId);
                             await Clients.Group(userId.ToString()).Send(new ClientMessageBody()
                             {
                                 Id = "presenterResponse",
@@ -121,6 +122,7 @@ namespace StreamingService.Hubs
                         }
                         else
                         {
+                            streamRepositry.SetStreamByConnectionId(Context.ConnectionId, viewerRequest.StreamId);
                             await Clients.Group(userId.ToString()).Send(new ClientMessageBody()
                             {
                                 Id = "viewerResponse",
@@ -132,6 +134,8 @@ namespace StreamingService.Hubs
                     case MessageType.Stop:
                         var request = messageBody.GetMessageBody<StopRequest>();
                         await streamRepositry.StopStream(request.StreamId, userId);
+                        streamRepositry.RemoveUserConnectionId(Context.ConnectionId);
+                        streamRepositry.RemoveStreamByConnectionId(Context.ConnectionId, request.StreamId);
                         break;
                     case MessageType.onIceCandidate:
                         var onIceCandidateRequest = messageBody.GetMessageBody<IceCandidateRequest>();
@@ -170,17 +174,21 @@ namespace StreamingService.Hubs
         public override async Task OnDisconnectedAsync(Exception exception)
         {
             var connectionId = Context.ConnectionId;
-            var eventId = streamRepositry.GetStreamIdByConnectionId(connectionId);
+            var streamId = streamRepositry.GetStreamIdByConnectionId(connectionId);
             var userId = streamRepositry.GetUserIdByConnectionId(connectionId);
 
 
-            if (eventId.Equals(Guid.Empty) || userId == -1)
+            if (streamId.Equals(Guid.Empty) || userId == -1)
             {
                 return;
             }
 
             logger.LogError($"{userId} is closing its connection");
-            await streamRepositry.StopStream(eventId, userId);
+
+            await streamRepositry.StopStream(streamId, userId);
+
+            streamRepositry.RemoveUserConnectionId(Context.ConnectionId);
+            streamRepositry.RemoveStreamByConnectionId(Context.ConnectionId, streamId);
 
             await Groups.RemoveFromGroupAsync(connectionId, userId.ToString());
 
@@ -198,6 +206,8 @@ namespace StreamingService.Hubs
             }
 
             var userId = userIdClaim.Value;
+
+            streamRepositry.SetUserConnectionId(int.Parse(userId), connectionId);
 
             await Groups.AddToGroupAsync(connectionId, userId.ToString());
 

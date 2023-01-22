@@ -19,7 +19,7 @@ namespace StreamingService.Services
 {
     public class StreamProvider
     {
-        private readonly IServiceProvider serviceProvider;
+        private readonly IServiceScopeFactory serviceProvider;
         private readonly ILogger<StreamProvider> logger;
         private readonly KurrentoOptions kurrentoOptions;
 
@@ -33,15 +33,7 @@ namespace StreamingService.Services
 
         private bool isStreamRecording = false;
 
-        private IHubContext<KurrentoHub, IKurentoHubClient> signalHubInstance
-        {
-            get
-            {
-                return this.serviceProvider.GetRequiredService<IHubContext<KurrentoHub, IKurentoHubClient>>();
-            }
-        }
-
-        public StreamProvider(IServiceProvider serviceProvider, ILogger<StreamProvider> _logger, IOptions<KurrentoOptions> kurrentoOptions)
+        public StreamProvider(IServiceScopeFactory serviceProvider, ILogger<StreamProvider> _logger, IOptions<KurrentoOptions> kurrentoOptions)
         {
             this.serviceProvider = serviceProvider;
             logger = _logger;
@@ -58,6 +50,9 @@ namespace StreamingService.Services
 
             if (presenter != null && presenter.UserId.ToString().Equals(userId))
             {
+                using var scope = serviceProvider.CreateScope();
+                var signalHubInstance = scope.ServiceProvider.GetRequiredService<IHubContext<KurrentoHub, IKurentoHubClient>>();
+
                 foreach (var i in viewers)
                 {
                     await signalHubInstance.Clients.Group(i.UserId.ToString()).Send(new ClientMessageBody()
@@ -118,15 +113,22 @@ namespace StreamingService.Services
 
             _ = Task.Run(async () =>
             {
-                while (true)
+                while (!cts.IsCancellationRequested)
                 {
-                    var response = await kurentoClient.SendAsync("ping", new
+                    if (kurentoClient != null)
                     {
-                        interval = 1000
-                    });
-                    var res = response.Result.GetValue("value");
-                    Console.WriteLine("Result of ping: " + res + " " + DateTime.Now);
-                    Thread.Sleep(500);
+                        var response = await kurentoClient.SendAsync("ping", new
+                        {
+                            interval = 1000
+                        });
+                        var res = response.Result.GetValue("value");
+                        Console.WriteLine("Result of ping: " + res + " " + DateTime.Now);
+                        Thread.Sleep(500);
+                    }
+                    else 
+                    {
+                        break;
+                    }
                 }
             }, cts.Token);
 
@@ -158,6 +160,9 @@ namespace StreamingService.Services
 
             webRtcEndPoint.IceCandidateFound += (IceCandidateFoundEventArgs obj) =>
             {
+                using var scope = serviceProvider.CreateScope();
+                var signalHubInstance = scope.ServiceProvider.GetRequiredService<IHubContext<KurrentoHub, IKurentoHubClient>>();
+
                 var cadidate = obj.candidate;
                 signalHubInstance.Clients.Group(userId).Send(new ClientMessageBody()
                 {
@@ -191,16 +196,16 @@ namespace StreamingService.Services
             return true;
         }
 
-        public async Task<bool> StopRecording(string userId) 
+        public async Task<bool> StopRecording(string userId)
         {
-            if (isStreamRecording == false) 
+            if (isStreamRecording == false)
             {
                 throw new Exception("Recording is not started");
             }
 
             if (!checkAccessRules(userId)) { return false; }
 
-            if (presenter.RecorderEndpoint == null) 
+            if (presenter.RecorderEndpoint == null)
             {
                 throw new Exception("Presentor doesn't have record endpoint");
             }
@@ -269,6 +274,9 @@ namespace StreamingService.Services
 
             webRtcEndPoint.IceCandidateFound += (IceCandidateFoundEventArgs obj) =>
             {
+                using var scope = serviceProvider.CreateScope();
+                var signalHubInstance = scope.ServiceProvider.GetRequiredService<IHubContext<KurrentoHub, IKurentoHubClient>>();
+
                 var cadidate = obj.candidate;
                 signalHubInstance.Clients.Group(userId).Send(new ClientMessageBody()
                 {

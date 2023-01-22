@@ -15,36 +15,95 @@ namespace StreamingService.Services
 {
     public class StreamRepositry
     {
-        private readonly IServiceProvider serviceProvider;
-        
-        private ConcurrentDictionary<string, StreamProvider> streamProviders = new ConcurrentDictionary<string, StreamProvider>(); //{eventId -> stream}
-        private ConcurrentDictionary<Guid, List<string>> userIdStreams= new ConcurrentDictionary<Guid, List<string>>(); //{streamId -> list of connectionsId}
-        private ConcurrentDictionary<string, int> connectionUserId  = new ConcurrentDictionary<string, int>(); //{connectionId -> userId}
+        private readonly IServiceScopeFactory serviceProvider;
 
-        public StreamRepositry(IServiceProvider serviceProvider)
+        private ConcurrentDictionary<string, StreamProvider> streamProviders = new ConcurrentDictionary<string, StreamProvider>(); //{eventId -> stream}
+        private ConcurrentDictionary<Guid, List<string>> userIdStreams = new ConcurrentDictionary<Guid, List<string>>(); //{streamId -> list of connectionsId}
+        private ConcurrentDictionary<string, int> connectionUserId = new ConcurrentDictionary<string, int>(); //{connectionId -> userId}
+
+        public StreamRepositry(IServiceScopeFactory serviceProvider)
         {
             this.serviceProvider = serviceProvider;
         }
 
-        public Guid GetStreamIdByConnectionId(string connectionId) 
+        public Guid GetStreamIdByConnectionId(string connectionId)  //need to call this function when we join the stean or strat the stream
         {
             var eventIdConnection = userIdStreams.FirstOrDefault(x => x.Value.Any(p => p.Equals(connectionId)));
             if (eventIdConnection.Equals(default(KeyValuePair<Guid, List<string>>)))
             {
                 return Guid.Empty;
             }
-            else 
+            else
             {
                 var eventId = eventIdConnection.Key;
                 return eventId;
             }
         }
 
-        public int GetUserIdByConnectionId(string connectionId) 
+        public void SetStreamByConnectionId(string connectionId, Guid streamId)
+        {
+            var streamExists = userIdStreams.Keys.Contains(streamId);
+            if (!streamExists)
+            {
+                userIdStreams.TryAdd(streamId, new List<string>() { connectionId });
+            }
+            else
+            {
+                var isConnectionExists = userIdStreams.TryGetValue(streamId, out var connections);
+                if (!isConnectionExists) {
+                    throw new Exception($"Stream with id: {streamId} does not exists");
+                }
+
+                var isConnectionAdded = connections.Any(x => x == connectionId);
+                if (isConnectionAdded) { throw new Exception($"This connection {connectionId} is already at the stream"); }
+
+                connections.Add(connectionId);
+            }
+        }
+
+        public void RemoveStreamByConnectionId(string connectionId, Guid streamId) 
+        {
+            var streamExists = userIdStreams.Keys.Contains(streamId);
+            if (!streamExists) 
+            {
+                throw new Exception($"Unable to remove connection from unexisting stream with id: {streamId}");
+            }
+            var isConnectionExists = userIdStreams.TryGetValue(streamId, out var connections);
+            if (!isConnectionExists)
+            {
+                throw new Exception("Stream does not exists");
+            }
+
+            var connectionDeleted = connections.Remove(connectionId);
+            if (!connectionDeleted) 
+            {
+                throw new Exception($"No connection with id {connectionId} is exists");
+            }
+
+        }
+
+        public int GetUserIdByConnectionId(string connectionId)
         {
             var userIdExists = connectionUserId.TryGetValue(connectionId, out var userId);
             if (userIdExists) { return userId; }
             else return -1;
+        }
+
+        public void SetUserConnectionId(int userId, string connectionId)
+        {
+            var addedUserConnection = connectionUserId.TryAdd(connectionId, userId);
+            if (!addedUserConnection)
+            {
+                throw new Exception($"Such connection with id {connectionId} is already exists");
+            }
+        }
+        public void RemoveUserConnectionId(string connectionId) 
+        {
+            var removedConnectionsIdStatus = connectionUserId.TryRemove(connectionId, out var removedUserId);
+            if (!removedConnectionsIdStatus) 
+            {
+                throw new Exception($"Connection with id {connectionId} to remove is not found");
+            }
         }
 
         public bool IsStreamStarted(string eventId)
@@ -53,73 +112,97 @@ namespace StreamingService.Services
             return streamProviderExists;
         }
 
-        public async Task<PresenterResponse> StartStream(Guid streamId, int organiserId, string sdpOffer) 
+        public async Task<PresenterResponse> StartStream(Guid streamId, int organiserId, string sdpOffer)
         {
-            using var context = serviceProvider.GetRequiredService<StreamDataContext>();
+            using var scope = serviceProvider.CreateScope();
+            using var context = scope.ServiceProvider.GetRequiredService<StreamDataContext>();
             var stream = await context.EsStreams.FirstOrDefaultAsync(x => x.Id.Equals(streamId));
-            if (stream == null) {
-                throw new Exception("No stream is found");
+            if (stream == null)
+            {
+                throw new Exception($"No stream with id: {streamId} is found");
             }
 
             var streamProviderExists = streamProviders.ContainsKey(stream.EventId);
-            if (streamProviderExists) {
-                throw new Exception("The stream for this event is already exists");
+            if (streamProviderExists)
+            {
+                throw new Exception($"The stream for this event {stream.EventId} is already exists");
             }
 
-            var streamProvider = serviceProvider.GetRequiredService<StreamProvider>();
+            var streamProvider = scope.ServiceProvider.GetRequiredService<StreamProvider>();
+            var isPresenterStarted = streamProviders.TryAdd(stream.EventId, streamProvider);
+            if (!isPresenterStarted) 
+            {
+                throw new Exception($"Presenter for stream with event id: {stream.EventId} is not started; such stream exists");
+            }
+            
             var presenterResponse = await streamProvider.StartPresenter(organiserId.ToString(), sdpOffer);
 
             return presenterResponse;
         }
 
-        public async Task<ViewerResponse> JoinStream(Guid streamId, int viewerId, string sdpOffer) 
+        public async Task<ViewerResponse> JoinStream(Guid streamId, int viewerId, string sdpOffer)
         {
             var streamProvider = await getStreamProvider(streamId);
             var viewerResponse = await streamProvider.StartViewer(viewerId.ToString(), sdpOffer);
             return viewerResponse;
         }
 
-        public async Task OnIceCandidate(Guid streamId, int userId, IceCandidate iceCandidate) 
+        public async Task OnIceCandidate(Guid streamId, int userId, IceCandidate iceCandidate)
         {
             var streamProvider = await getStreamProvider(streamId);
             streamProvider.OnIceCandidate(userId.ToString(), iceCandidate);
         }
 
-        public async Task StopStream(Guid streamId, int userId) 
+        public async Task StopStream(Guid streamId, int userId)
         {
+            using var scope = serviceProvider.CreateScope();
+            using var context = scope.ServiceProvider.GetRequiredService<StreamDataContext>();
+            var stream = await context.EsStreams.FirstOrDefaultAsync(x => x.Id.Equals(streamId));
+
             var streamProvider = await getStreamProvider(streamId);
             await streamProvider.Stop(userId.ToString());
+
+            if (stream.OrganiserId == userId)
+            {
+                var isStreamRemoved = streamProviders.TryRemove(stream.EventId, out var removedStreamProvider);
+                if (!isStreamRemoved)
+                {
+                    throw new Exception($"stream with event id {stream.EventId} to stop is not found");
+                }
+            }
         }
 
-        public async Task<bool> StartRecording(Guid streamId, int userId) 
+        public async Task<bool> StartRecording(Guid streamId, int userId)
         {
             var streamProvider = await getStreamProvider(streamId);
             return await streamProvider.StartRecording(userId.ToString());
         }
 
-        public async Task<bool> StopRecording(Guid streamId, int userId) 
+        public async Task<bool> StopRecording(Guid streamId, int userId)
         {
             var streamProvider = await getStreamProvider(streamId);
             return await streamProvider.StopRecording(userId.ToString());
         }
 
-        private async Task<StreamProvider> getStreamProvider(Guid streamId) 
+        private async Task<StreamProvider> getStreamProvider(Guid streamId)
         {
-            using var context = serviceProvider.GetRequiredService<StreamDataContext>();
+            using var scope = serviceProvider.CreateScope();
+            using var context = scope.ServiceProvider.GetRequiredService<StreamDataContext>();
             var stream = await context.EsStreams.FirstOrDefaultAsync(x => x.Id.Equals(streamId));
+
             if (stream == null)
             {
-                throw new Exception("No stream is found");
+                throw new Exception($"No stream with id {streamId} is found");
             }
 
             var streamProviderExists = streamProviders.TryGetValue(stream.EventId, out var streamProvider);
             if (!streamProviderExists)
             {
-                throw new Exception("Stream is not started");
+                throw new Exception($"Stream for event with id {stream.EventId} is not started");
             }
 
             return streamProvider;
         }
-        
+
     }
 }

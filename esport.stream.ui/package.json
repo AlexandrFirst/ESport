@@ -31,6 +31,8 @@
     "bootstrap": "^5.2.3",
     "dayjs": "^1.11.7",
     "jquery": "^3.6.3",
+    "kurento-client": "^6.18.0",
+    "kurento-utils": "^6.18.0",
     "ng-pick-datetime-ex": "^15.0.0",
     "ng-select2-component": "^10.0.0",
     "ngx-cookie-service": "^15.0.0",
@@ -39,6 +41,8 @@
     "zone.js": "~0.12.0"
   },
   "devDependencies": {
+    "@types/kurento-client": "^6.14.9",
+    "@types/kurento-utils": "^6.7.1",
     "@angular-devkit/build-angular": "^15.0.4",
     "@angular/cli": "~15.0.4",
     "@angular/compiler-cli": "^15.0.0",

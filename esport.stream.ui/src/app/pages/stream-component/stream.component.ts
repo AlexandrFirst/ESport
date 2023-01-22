@@ -7,6 +7,8 @@ import { MediaModel, MediaType } from 'src/app/models/media-models';
 import { StreamUser } from 'src/app/models/stream-models';
 import { SignalService } from 'src/app/services/signal.service';
 import { StreamService } from 'src/app/services/stream.service';
+import * as kurentoUtils from 'kurento-utils';
+import { ClientMessage, IClientMessageBody, MessageType } from 'src/app/models/signal-models';
 
 @Component({
   selector: 'app-stream',
@@ -27,8 +29,14 @@ export class StreamComponent implements OnInit {
   public videoInput: MediaModel = MediaModel.createEmtyMediaModel(MediaType.VIDEO);
   public audioInput: MediaModel = MediaModel.createEmtyMediaModel(MediaType.AUDIO);
 
+  private v_mediaStream: MediaStream;
+  private s_mediaStream: MediaStream;
+
   private isConnectionSetup = true;
+  private isCommunicationOn: boolean = false;
+
   private hubConnection: HubConnection;
+  private webRtcPeer: kurentoUtils.WebRtcPeer
 
   get videoDevices(): MediaModel[] {
     return this.allMediaDevices.filter(x => x.MediaDeviceType == MediaType.VIDEO);
@@ -55,6 +63,7 @@ export class StreamComponent implements OnInit {
       return;
     }
     this.isLoading = true;
+
     this.streamService.getStreamUser(this.streamId).subscribe({
       next: (value: StreamUser) => {
         this.userInfo = value;
@@ -62,7 +71,13 @@ export class StreamComponent implements OnInit {
         this.signalService.setup().then(m => {
           this.isConnectionSetup = true;
           this.hubConnection = m.connection;
+          this.messageHandlers(m.connection)
         })
+
+        if (value.isOrganizer) {
+          //this.setupDevices();
+        }
+
       },
       error: (error: any) => {
         console.log(error)
@@ -76,7 +91,7 @@ export class StreamComponent implements OnInit {
       }
     })
 
-    this.setupDevices();
+
   }
 
   videoInputSelected(sourceId: string) {
@@ -86,6 +101,7 @@ export class StreamComponent implements OnInit {
       }
     }).then(x => {
       this.videoElement.nativeElement.srcObject = x;
+      this.v_mediaStream = x;
     })
   }
 
@@ -95,8 +111,7 @@ export class StreamComponent implements OnInit {
         deviceId: sourceId
       }
     }).then(x => {
-      console.log(this.videoInput)
-      console.log(this.audioInput)
+      this.s_mediaStream = x;
     })
   }
 
@@ -135,5 +150,214 @@ export class StreamComponent implements OnInit {
     });
 
     return dialogRef;
+  }
+
+  public async presenter() {
+    if (!this.isConnectionSetup) {
+      console.log("Connection is not set up")
+      return;
+    }
+    debugger;
+    var options = {
+      localVideo: this.videoElement.nativeElement,
+      configuration: [
+        {
+          "urls": "turn:relay.metered.ca:80",
+          "username": "e76b1e18382eb8485e4ced0f",
+          "credential": "awmeGuNs0IsK0VkM"
+        }
+      ],
+      onicecandidate: (candidate: any) => {
+        const data = {
+          iceCandidate: candidate,
+          streamId: this.streamId
+        }
+
+        this.onIceCandidate(data);
+      }
+    }
+
+    this.webRtcPeer = kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options, (error) => {
+      if (error) {
+        console.log("[presenter] WebRtcPeerSendonly: ", error);
+        return;
+      }
+      this.webRtcPeer?.generateOffer((error: any | undefined, sdp: string) => { this.onOfferPresenter(error, sdp) });
+    })
+  }
+
+  public viewer() {
+    if (!this.isConnectionSetup) {
+      console.log("Connection is not set up")
+      return;
+    }
+
+    var options = {
+      remoteVideo: this.videoElement.nativeElement,
+      configuration: [
+        {
+          "urls": "turn:relay.metered.ca:80",
+          "username": "e76b1e18382eb8485e4ced0f",
+          "credential": "awmeGuNs0IsK0VkM"
+        }
+      ],
+      onicecandidate: (candidate: any) => {
+        const data = {
+          iceCandidate: candidate,
+          streamId: this.streamId
+        }
+
+        this.onIceCandidate(data);
+      }
+    }
+
+    this.webRtcPeer = kurentoUtils.WebRtcPeer.WebRtcPeerRecvonly(options, (error) => {
+      if (error) {
+        console.log("[viewer] WebRtcPeerSendonly: ", error);
+        return;
+      }
+      this.webRtcPeer?.generateOffer((error: any | undefined, sdp: string) => { this.onOfferViewer(error, sdp) });
+    })
+  }
+
+  public stop() {
+    if (!this.isConnectionSetup || !this.isCommunicationOn) {
+      console.log("Unable to stop not initialized connection");
+      return;
+    }
+
+    const data = {
+      message: "Message to stop connecting",
+      streamId: this.streamId
+    }
+    var message: ClientMessage = {
+      body: JSON.stringify(data)
+    };
+
+    this.sendMessage(MessageType.Stop, message)
+
+    this.dispose();
+  }
+
+  private messageHandlers(hubConnection: HubConnection) {
+    if (!hubConnection) {
+      console.log("Unable to get hubconnection")
+      return;
+    }
+
+
+    hubConnection.on("Send", (messageBody: IClientMessageBody) => {
+      console.log(messageBody)
+      const parsedMessage = JSON.parse(messageBody.body);
+      switch (messageBody.id) {
+        case 'presenterResponse':
+          this.presenterResponse(parsedMessage)
+          break;
+        case 'viewerResponse':
+          this.viewerResponse(parsedMessage);
+          break;
+        case 'stopCommunication':
+          this.dispose();
+          break;
+        case 'iceCandidate':
+          console.log('Ice candidate: ', parsedMessage);
+          this.webRtcPeer?.addIceCandidate(parsedMessage)
+          break;
+        default:
+          console.log('unrecognised message: ', parsedMessage);
+      }
+    });
+
+  }
+
+
+  private onIceCandidate(candidate: any) {
+    debugger;
+    console.log('local candidate: ', candidate);
+    var message: ClientMessage = {
+      body: JSON.stringify(candidate)
+    };
+
+    this.sendMessage(MessageType.onIceCandidate, message)
+  }
+
+  private onOfferPresenter(error: any, offerSdp: any) {
+    if (error) {
+      console.log("onOfferPresenter: ", error);
+      return;
+    }
+
+    console.log("Offer sdp: ", offerSdp);
+
+    const data = {
+      sdpOffer: offerSdp,
+      streamId: this.streamId
+    }
+    var message: ClientMessage = {
+      body: JSON.stringify(data)
+    };
+
+    this.sendMessage(MessageType.Presenter, message)
+  }
+
+  private onOfferViewer(error: any, offerSdp: any) {
+    if (error) {
+      console.log("onOfferViewer: ", error);
+      return;
+    }
+
+    console.log("Offer sdp: ", offerSdp);
+
+    const data = {
+      sdpOffer: offerSdp,
+      streamId: this.streamId
+    }
+    var message: ClientMessage = {
+      body: JSON.stringify(data)
+    };
+
+    this.sendMessage(MessageType.Viewer, message)
+  }
+
+  private sendMessage(messageType: MessageType, body: ClientMessage) {
+    if (!this.isConnectionSetup) {
+      console.log("unable to send message")
+      return;
+    }
+
+    this.hubConnection.send("Message", messageType, body);
+  }
+
+  public presenterResponse(parsedMessage: any) {
+    console.log('Presenter response message: ', parsedMessage);
+    if (parsedMessage.message !== 'accepted') {
+      console.log(parsedMessage.errors);
+      this.dispose();
+      return;
+    }
+    else {
+      this.webRtcPeer?.processAnswer(parsedMessage.sdpAnswer);
+      this.isCommunicationOn = true;
+    }
+  }
+
+  public viewerResponse(parsedMessage: any) {
+    console.log('Viewer response message: ', parsedMessage);
+    if (parsedMessage.message !== 'accepted') {
+      console.log(parsedMessage.errors);
+      this.dispose();
+      return;
+    }
+    else {
+      this.webRtcPeer?.processAnswer(parsedMessage.sdpAnswer);
+      this.isCommunicationOn = true;
+    }
+  }
+
+  private dispose() {
+    if (this.isConnectionSetup) {
+      this.webRtcPeer?.dispose();
+      this.isCommunicationOn = false;
+    }
   }
 }
