@@ -28,6 +28,7 @@ export const SportDatePicker: React.FC<SportDatePickerProps> = ({
           <DesktopDatePicker
             {...props}
             {...field}
+            value={field.value ?? null}
             mask="__.__.____"
             inputFormat={"dd.MM.yyyy"}
             PaperProps={{

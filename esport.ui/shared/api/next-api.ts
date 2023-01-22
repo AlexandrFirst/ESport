@@ -1,10 +1,13 @@
 import { GetServerSidePropsContext, NextPageContext } from "next";
+import axios from "axios";
 
 export type ApiReturnType = {
   // user: ReturnType<typeof UserApi>
 };
 
-export const Api = (ctx?: NextPageContext | GetServerSidePropsContext): ApiReturnType => {
+export const Api = (
+  ctx?: NextPageContext | GetServerSidePropsContext
+): ApiReturnType => {
   // const cookies = ctx ? Cookies.get(ctx) : parseCookies()
   // const token = cookies._token
 
@@ -13,5 +16,35 @@ export const Api = (ctx?: NextPageContext | GetServerSidePropsContext): ApiRetur
   //     Authorization: 'Bearer ' + token
   //   }
   // })
-  return {}
-}
+  return {};
+};
+
+export const $api = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
+});
+
+$api.interceptors.response.use(
+  (config) => {
+    return config;
+  },
+  (error) => {
+    const originalRequest = error.config;
+    if (error.response.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      //TODO: confirm refresh with Sasha
+      return $api
+        .post(
+          "/refresh"
+          // {},
+          // {
+          //   withCredentials: true,
+          // }
+        )
+        .then((res) => {
+          if (res.status === 200) {
+            return $api.request(originalRequest);
+          }
+        });
+    }
+  }
+);

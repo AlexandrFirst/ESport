@@ -6,8 +6,9 @@ import cn from "classnames";
 import { useMedia } from "@shared/lib/hooks/useMedia";
 import { useAppDispatch, useAppSelector } from "@shared/lib/hooks/useStore";
 
-import { TopPageLoader } from "@features/TopPageLoader/TopPageLoader";
 import { SportHead, SportHeadProps } from "@features/SportHead/SportHead";
+import { TopPageLoader } from "@features/TopPageLoader";
+import { SportSnackbar } from "@features/SportSnackbar";
 
 import { SportSidebar } from "@widgets/SportSidebar/SportSidebar";
 import { SportHeader } from "@widgets/SportHeader/SportHeader";
@@ -61,6 +62,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
           {children}
         </section>
       </main>
+      <SportSnackbar />
     </>
   );
 };

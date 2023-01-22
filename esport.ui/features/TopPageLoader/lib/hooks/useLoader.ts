@@ -1,10 +1,10 @@
 import { useCallback } from "react";
 
-import { useAppDispatch } from "./useStore";
+import { useAppDispatch } from "@shared/lib/hooks/useStore";
 import {
   hideLoading,
   showLoading,
-} from "@features/TopPageLoader/topPageLoader.slice";
+} from "@features/TopPageLoader/model/topPageLoader.slice";
 
 export const useLoader = () => {
   const dispatch = useAppDispatch();

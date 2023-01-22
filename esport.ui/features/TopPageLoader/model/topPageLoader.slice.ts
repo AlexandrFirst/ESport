@@ -1,5 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { RootState } from "../../app/store/store";
+import { HYDRATE } from "next-redux-wrapper";
+
+import { RootState } from "@app/store/store";
 
 interface TopPageLoaderState {
   isLoading: boolean;
@@ -19,6 +21,12 @@ const topPageLoaderSlice = createSlice({
     hideLoading(state) {
       state.isLoading = false;
     },
+  },
+  extraReducers: {
+    [HYDRATE]: (state, action) => ({
+      ...state.loadingIndicator,
+      ...action.payload.loadingIndicator,
+    }),
   },
 });
 

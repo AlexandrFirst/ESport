@@ -1,7 +1,7 @@
 import { useRouter } from "next/router";
 
 import { routes } from "routes";
-import { useLoader } from "../../../../shared/lib/hooks/useLoader";
+import { useLoader } from "@features/TopPageLoader/lib/hooks/useLoader";
 
 import { authService } from "../../../../entities/user/api/auth/authService";
 import { ILoginForm } from "../../types/login-form";

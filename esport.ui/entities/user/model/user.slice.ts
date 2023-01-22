@@ -31,7 +31,10 @@ const userSlice = createSlice({
     },
   },
   extraReducers: {
-    [HYDRATE]: (state, action) => {},
+    [HYDRATE]: (state, action) => ({
+      ...state.user,
+      ...action.payload.user,
+    }),
   },
 });
 
