@@ -4,6 +4,7 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  Param,
   Post,
 } from '@nestjs/common';
 import { RMQService } from 'nestjs-rmq';
@@ -11,6 +12,7 @@ import { RMQService } from 'nestjs-rmq';
 import {
   CompetitionCreate,
   CompetitionsGetAll,
+  CompetitionsGetById,
 } from 'esport-lib-ts/lib/competitions';
 
 import { res } from 'src/utility';
@@ -28,6 +30,16 @@ export class CompetitionsController {
         CompetitionsGetAll.topic,
         {},
       ),
+    );
+  }
+
+  @Get(':id')
+  async getById(@Param('id') _id: string) {
+    return res(() =>
+      this.rmqService.send<
+        CompetitionsGetById.Request,
+        CompetitionsGetById.Response
+      >(CompetitionsGetById.topic, { _id }),
     );
   }
 

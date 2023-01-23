@@ -1,6 +1,11 @@
 import { Injectable } from '@nestjs/common';
 
-import { FilterQuery, Model, ProjectionType } from 'mongoose';
+import {
+  FilterQuery,
+  isObjectIdOrHexString,
+  Model,
+  ProjectionType,
+} from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 
 import { ICompetition } from 'esport-lib-ts/lib/competitions';
@@ -31,5 +36,15 @@ export class CompetitionRepository extends EntityRepository<Competition> {
       .find(entityFilterQuery, projection)
       .populate('categories')
       .exec();
+  }
+
+  async findByIdWithPopulate(
+    _id: string,
+    projection?: ProjectionType<ICompetition>,
+  ) {
+    if (!isObjectIdOrHexString(_id)) {
+      throw new Error('Invalid id');
+    }
+    return this.model.findById(_id, projection).populate('categories').exec();
   }
 }

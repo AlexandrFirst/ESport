@@ -1,12 +1,7 @@
 import { createSlice, Draft, PayloadAction } from "@reduxjs/toolkit";
 import { HYDRATE } from "next-redux-wrapper";
 
-export enum SnackBarType {
-  ERROR = "error",
-  INFO = "info",
-  SUCCESS = "success",
-  WARNING = "warning",
-}
+import { SnackbarPosition, SnackBarType } from "@features/SportSnackbar";
 
 const openSnackBar = (
   state: Draft<SportSnackbarState>,
@@ -21,11 +16,12 @@ interface SportSnackbarState {
   open?: boolean;
   type?: SnackBarType;
   message: string;
+  position?: SnackbarPosition;
 }
 
 const initialState: SportSnackbarState = {
   open: false,
-  type: SnackBarType.SUCCESS,
+  type: undefined,
   message: "",
 };
 
@@ -33,27 +29,30 @@ const sportSnackbar = createSlice({
   name: "snackbar",
   initialState,
   reducers: {
-    success: (state, action: PayloadAction<string>) => {
+    success: (state, action: PayloadAction<Partial<SportSnackbarState>>) => {
       openSnackBar(state, {
-        message: action.payload,
+        message: action.payload.message ?? "",
         type: SnackBarType.SUCCESS,
       });
     },
-    error: (state, action: PayloadAction<string>) => {
+    error: (state, action: PayloadAction<Partial<SportSnackbarState>>) => {
       openSnackBar(state, {
-        message: action.payload,
+        message: action.payload.message ?? "",
         type: SnackBarType.ERROR,
       });
     },
-    warning: (state, action: PayloadAction<string>) => {
+    warning: (state, action: PayloadAction<Partial<SportSnackbarState>>) => {
       openSnackBar(state, {
-        message: action.payload,
+        message: action.payload.message ?? "",
         type: SnackBarType.WARNING,
       });
     },
-    informational: (state, action: PayloadAction<string>) => {
+    informational: (
+      state,
+      action: PayloadAction<Partial<SportSnackbarState>>
+    ) => {
       openSnackBar(state, {
-        message: action.payload,
+        message: action.payload.message ?? "",
         type: SnackBarType.INFO,
       });
     },
@@ -65,7 +64,7 @@ const sportSnackbar = createSlice({
   },
   extraReducers: {
     [HYDRATE]: (state, action) => ({
-      ...state.snackbar,
+      ...state,
       ...action.payload.snackbar,
     }),
   },

@@ -2,14 +2,14 @@
   width: 100vw;
 }
 
-.ptHeader {
-  padding-top: 80px;
-}
-
 .layout {
-  @apply bg-skin-main transition-all duration-500 dark:bg-darkSkin-main
+  @apply bg-skin-main transition-all duration-500 dark:bg-darkSkin-main pr-6;
 }
 
 .main {
-  @apply h-screen flex flex-row justify-start
+  @apply flex flex-row justify-start;
+}
+
+.content {
+  @apply min-h-screen pb-6 pt-[80px];
 }

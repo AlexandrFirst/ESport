@@ -1,6 +1,17 @@
 .alert {
-  @apply bg-skin-primary-hover dark:bg-darkSkin-contrast text-teal-50 shadow-gray-400 dark:shadow-neutral-700 shadow-2xl;
-  svg {
-    @apply text-teal-50 dark:text-darkSkin-accent;
+  @apply shadow-2xl drop-shadow-2xl shadow-gray-400 dark:shadow-neutral-700;
+
+  &_success {
+    @apply bg-skin-primary-hover dark:bg-darkSkin-contrast text-teal-50;
+    svg {
+      @apply text-teal-50 dark:text-darkSkin-accent;
+    }
+  }
+
+  &_error {
+    @apply bg-red-500 text-white;
+    svg {
+      @apply text-red-800;
+    }
   }
 }

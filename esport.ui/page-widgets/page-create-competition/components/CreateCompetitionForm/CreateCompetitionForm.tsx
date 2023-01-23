@@ -1,10 +1,13 @@
 import React from "react";
 import styles from "./createCompetitionForm.module.scss";
 
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { Grid } from "@mui/material";
+
+import { routes } from "routes";
 
 import { SportButton } from "@shared/ui/SportButton/SportButton";
 import { SportInput } from "@shared/ui/SportInput/SportInput";
@@ -12,17 +15,18 @@ import { SportDatePicker } from "@shared/ui/SportDatePicker/SportDatePicker";
 
 import { useHttpRequest } from "@shared/lib/hooks/useHttpRequest";
 
-import { SportForm } from "@features/SportForm/SportForm";
+import { SportForm } from "@features/SportForm";
+import { useSnackbar } from "@features/SportSnackbar";
 
 import { competitionApi } from "@entities/competition";
 
 import { ICreateCompetitionForm } from "@page-widgets/page-create-competition/types/create-competition-form.interface";
 import { useCreateCompetitionValidation } from "@page-widgets/page-create-competition/lib/hooks/use-create-competition-validation";
-import { useSnackbar } from "@features/SportSnackbar";
 
 export const CreateCompetitionForm: React.FC = () => {
   const [createCompetition, loading] = useHttpRequest(competitionApi.create);
 
+  const router = useRouter();
   const { success, error } = useSnackbar();
 
   const validationSchema = useCreateCompetitionValidation();
@@ -33,13 +37,15 @@ export const CreateCompetitionForm: React.FC = () => {
 
   const onSubmit = methods.handleSubmit(async (data) => {
     try {
-      await createCompetition({
+      const { id } = await createCompetition({
         ...data,
         //TODO: handle it
         organizationId: 1,
+        categories: [],
       });
       success("Competition created successfully");
-    } catch (e) {
+      router.push(routes.Competition.Id(id));
+    } catch (e: any) {
       error(e.message);
     }
   });

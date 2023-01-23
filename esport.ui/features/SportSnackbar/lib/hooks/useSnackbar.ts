@@ -5,6 +5,7 @@ import { useAppDispatch } from "@shared/lib/hooks/useStore";
 import {
   error,
   informational,
+  SnackbarPosition,
   success,
   warning,
 } from "@features/SportSnackbar";
@@ -13,22 +14,26 @@ export const useSnackbar = () => {
   const dispatch = useAppDispatch();
 
   const showSuccess = useCallback(
-    (message: string) => dispatch(success(message)),
+    (message: string, position?: SnackbarPosition) =>
+      dispatch(success({ message, position })),
     [dispatch]
   );
 
   const showError = useCallback(
-    (message: string) => dispatch(error(message)),
+    (message: string, position?: SnackbarPosition) =>
+      dispatch(error({ message, position })),
     [dispatch]
   );
 
   const showWarning = useCallback(
-    (message: string) => dispatch(warning(message)),
+    (message: string, position?: SnackbarPosition) =>
+      dispatch(warning({ message, position })),
     [dispatch]
   );
 
   const showInfo = useCallback(
-    (message: string) => dispatch(informational(message)),
+    (message: string, position?: SnackbarPosition) =>
+      dispatch(informational({ message, position })),
     [dispatch]
   );
 

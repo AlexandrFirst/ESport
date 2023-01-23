@@ -12,9 +12,9 @@ export const defaultHttpRequestConfig: HttpRequestConfig<any> = {
 };
 
 export function useHttpRequest<Args, Res>(
-  request: (...arg: Args[]) => Promise<Res | void>,
+  request: (...arg: Args[]) => Promise<Res>,
   httpRequestConfig?: Partial<HttpRequestConfig<Res>>
-): [(...args: Args[]) => Promise<Res | void>, boolean, string] {
+): [(...args: Args[]) => Promise<Res>, boolean, string] {
   const config: HttpRequestConfig<Res> = {
     ...defaultHttpRequestConfig,
     ...httpRequestConfig,
@@ -22,13 +22,10 @@ export function useHttpRequest<Args, Res>(
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const method = async (...args: Args[]): Promise<Res | void> => {
+  const method = async (...args: Args[]): Promise<Res> => {
     try {
       config.shouldShowLoading && setLoading(true);
-      const data = await request(...args);
-      data && config.action && dispatch(config.action(data));
-
-      return data;
+      return request(...args);
     } catch (err: any) {
       let message = err?.response?.data?.message;
 

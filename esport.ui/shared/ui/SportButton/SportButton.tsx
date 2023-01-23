@@ -5,7 +5,7 @@ import { LoadingButton, LoadingButtonProps } from "@mui/lab";
 
 import cn from "classnames";
 
-interface SportButtonProps extends LoadingButtonProps {}
+export interface SportButtonProps extends LoadingButtonProps {}
 
 export const SportButton: React.FC<SportButtonProps> = ({
   children,

@@ -25,7 +25,7 @@ export const $api = axios.create({
 
 $api.interceptors.response.use(
   (config) => {
-    return config;
+    return config.data;
   },
   (error) => {
     const originalRequest = error.config;

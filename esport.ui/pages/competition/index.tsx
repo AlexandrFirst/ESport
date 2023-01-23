@@ -1,14 +1,28 @@
 import React from "react";
-import { NextPage } from "next";
+import { GetServerSideProps, NextPage } from "next";
 
-import { MainLayout } from "../../layouts/MainLayout/MainLayout";
+import { MainLayout } from "@layouts/MainLayout";
 
-const CompetitionPage: NextPage = () => {
+import { CompetitionsGrid, ICompetition } from "@entities/competition";
+
+type PageProps = {
+  competitions: ICompetition[];
+};
+
+const CompetitionPage: NextPage<PageProps> = ({ competitions }) => {
   return (
     <MainLayout>
-      <h1>Implement me</h1>
+      <CompetitionsGrid competitions={competitions} />
     </MainLayout>
   );
 };
 
 export default CompetitionPage;
+
+export const getServerSideProps: GetServerSideProps = async () => {
+  return {
+    props: {
+      competitions: [],
+    },
+  };
+};

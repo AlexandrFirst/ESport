@@ -17,10 +17,14 @@ import { useMediaQuery } from "@shared/lib/hooks/useMediaQuery";
 
 import { updateSidebarOpened } from "./mainLayout.slice";
 
-type MainLayoutProps = PropsWithChildren & SportHeadProps & {};
+type MainLayoutProps = PropsWithChildren &
+  SportHeadProps & {
+    className?: string;
+  };
 
 export const MainLayout: React.FC<MainLayoutProps> = ({
   headProps,
+  className,
   children,
 }) => {
   const { isMobile, tabletBreakPoint } = useMedia();
@@ -58,7 +62,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
           isSidebarOpened={isSidebarOpened}
           setIsSidebarOpened={setIsSidebarOpened}
         />
-        <section className={cn(layoutClassName, styles.ptHeader)}>
+        <section className={cn(layoutClassName, styles.content, className)}>
           {children}
         </section>
       </main>

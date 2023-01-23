@@ -11,9 +11,14 @@ import {
 
 import { RMQService } from 'nestjs-rmq';
 
-import { CategoryUpdate, ICategory } from 'esport-lib-ts/lib/competitions';
+import {
+  CategoryCreate,
+  CategoryUpdate,
+  ICategory,
+} from 'esport-lib-ts/lib/competitions';
 
 import { res } from 'src/utility';
+import { CategoriesGetById } from 'esport-lib-ts/lib/competitions/contracts/queries/category.get-category-by-id.query';
 
 @Controller('competitions/categories')
 export class CategoriesController {
@@ -22,7 +27,10 @@ export class CategoriesController {
   @Get(':id')
   async getById(@Param('id') _id: string) {
     return res(() =>
-      this.rmqService.send('competitions.category.get-category-by-id.query', {
+      this.rmqService.send<
+        CategoriesGetById.Request,
+        CategoriesGetById.Response
+      >(CategoriesGetById.topic, {
         _id,
       }),
     );
@@ -35,8 +43,8 @@ export class CategoriesController {
     category: ICategory,
   ) {
     return res(() =>
-      this.rmqService.send(
-        'competitions.category.create-category.command',
+      this.rmqService.send<CategoryCreate.Request, CategoryCreate.Response>(
+        CategoryCreate.topic,
         category,
       ),
     );
@@ -44,14 +52,14 @@ export class CategoriesController {
 
   @Patch('/update/:id')
   async updateCompetition(
-    @Param('id') id: string,
+    @Param('id') _id: string,
     @Body()
     body: Omit<CategoryUpdate.Request, '_id'>,
   ): Promise<CategoryUpdate.Response> {
     return res(() =>
       this.rmqService.send(CategoryUpdate.topic, {
         ...body,
-        _id: id,
+        _id,
       }),
     );
   }
