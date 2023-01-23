@@ -3,7 +3,9 @@ import { GetServerSideProps, NextPage } from "next";
 
 import { MainLayout } from "@layouts/MainLayout";
 
-import { CompetitionsGrid, ICompetition } from "@entities/competition";
+import { competitionApi, ICompetition } from "@entities/competition";
+
+import { CompetitionsGrid } from "@page-widgets/page-all-competitions";
 
 type PageProps = {
   competitions: ICompetition[];
@@ -19,10 +21,14 @@ const CompetitionPage: NextPage<PageProps> = ({ competitions }) => {
 
 export default CompetitionPage;
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+  const competitions = await competitionApi.getAllCompetitions({
+    search: query.q as string,
+  });
+
   return {
     props: {
-      competitions: [],
+      competitions,
     },
   };
 };

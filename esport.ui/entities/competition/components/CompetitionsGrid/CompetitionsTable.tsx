@@ -2,36 +2,24 @@ import React from "react";
 import styles from "./competitionsGrid.module.scss";
 
 import { GridColDef, GridValueGetterParams } from "@mui/x-data-grid";
-import { ICompetition } from "@entities/competition";
 
 import { SportTable } from "@shared/ui/SportTable/SportTable";
 import { SportLink } from "@shared/ui/SportLink/SportLink";
-import { SportSearch } from "@widgets/SportSearch/SportSearch";
-import { SportCard } from "@shared/ui/SportCard/SportCard";
 
-const mocked_competitions: ICompetition[] = [
-  {
-    _id: "1",
-    title: "title",
-    dateStart: new Date().toISOString(),
-    dateEnd: new Date().toISOString(),
-    organizationId: 1,
-    categories: [],
-  },
-];
+import { ICompetition } from "@entities/competition";
 
 interface CompetitionsGridProps {
   competitions: ICompetition[];
 }
 
-export const CompetitionsGrid: React.FC<CompetitionsGridProps> = ({
+export const CompetitionsTable: React.FC<CompetitionsGridProps> = ({
   competitions,
 }) => {
   const columns: GridColDef<ICompetition>[] = [
     {
       field: "title",
       headerName: "Competition title",
-      width: 150,
+      width: 250,
       editable: false,
     },
     {
@@ -53,9 +41,7 @@ export const CompetitionsGrid: React.FC<CompetitionsGridProps> = ({
       sortable: false,
       width: 160,
       valueGetter: ({ row }: GridValueGetterParams<any, ICompetition>) =>
-        row.categories.length,
-      align: "center",
-      headerAlign: "center",
+        row.categories?.length ?? 0,
     },
     {
       field: "",
@@ -66,19 +52,16 @@ export const CompetitionsGrid: React.FC<CompetitionsGridProps> = ({
   ];
 
   return (
-    <SportCard>
-      <SportSearch className={styles.search} />
-      <SportTable
-        rows={mocked_competitions}
-        columns={columns}
-        pageSize={5}
-        className={styles.grid}
-        // rowsPerPageOptions={[5]}
-        // checkboxSelection
-        disableSelectionOnClick
-        // experimentalFeatures={{ newEditingApi: true }}
-        hideFooter
-      />
-    </SportCard>
+    <SportTable
+      rows={competitions}
+      columns={columns}
+      pageSize={5}
+      className={styles.grid}
+      // rowsPerPageOptions={[5]}
+      // checkboxSelection
+      disableSelectionOnClick
+      // experimentalFeatures={{ newEditingApi: true }}
+      hideFooter
+    />
   );
 };

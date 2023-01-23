@@ -1,54 +1,37 @@
 import React from "react";
 import styles from "./createCompetitionForm.module.scss";
-
-import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { Grid } from "@mui/material";
 
-import { routes } from "routes";
-
 import { SportButton } from "@shared/ui/SportButton/SportButton";
 import { SportInput } from "@shared/ui/SportInput/SportInput";
 import { SportDatePicker } from "@shared/ui/SportDatePicker/SportDatePicker";
 
-import { useHttpRequest } from "@shared/lib/hooks/useHttpRequest";
-
 import { SportForm } from "@features/SportForm";
-import { useSnackbar } from "@features/SportSnackbar";
 
-import { competitionApi } from "@entities/competition";
+import { ICreateCompetitionForm } from "@entities/competition/types/create-competition-form.interface";
+import { useCreateCompetitionValidation } from "@entities/competition/lib/hooks/use-create-competition-validation";
 
-import { ICreateCompetitionForm } from "@page-widgets/page-create-competition/types/create-competition-form.interface";
-import { useCreateCompetitionValidation } from "@page-widgets/page-create-competition/lib/hooks/use-create-competition-validation";
+interface CreateCompetitionFormProps {
+  loading?: boolean;
+  onSubmit?: (data: ICreateCompetitionForm) => void;
+  withValidation?: boolean;
+}
 
-export const CreateCompetitionForm: React.FC = () => {
-  const [createCompetition, loading] = useHttpRequest(competitionApi.create);
-
-  const router = useRouter();
-  const { success, error } = useSnackbar();
-
+export const CreateCompetitionForm: React.FC<CreateCompetitionFormProps> = ({
+  withValidation = true,
+  loading,
+  onSubmit,
+}) => {
   const validationSchema = useCreateCompetitionValidation();
 
   const methods = useForm<ICreateCompetitionForm>({
-    resolver: yupResolver(validationSchema),
+    resolver: withValidation ? yupResolver(validationSchema) : undefined,
   });
 
-  const onSubmit = methods.handleSubmit(async (data) => {
-    try {
-      const { id } = await createCompetition({
-        ...data,
-        //TODO: handle it
-        organizationId: 1,
-        categories: [],
-      });
-      success("Competition created successfully");
-      router.push(routes.Competition.Id(id));
-    } catch (e: any) {
-      error(e.message);
-    }
-  });
+  const handleSubmit = methods.handleSubmit((data) => onSubmit?.(data));
 
   return (
     <SportForm methods={methods} className={styles.form}>
@@ -70,7 +53,7 @@ export const CreateCompetitionForm: React.FC = () => {
         minDate={new Date()}
       />
       <Grid item xs={12} className={styles.btn_container}>
-        <SportButton loading={loading} onClick={onSubmit}>
+        <SportButton loading={loading} onClick={handleSubmit}>
           Create
         </SportButton>
       </Grid>
