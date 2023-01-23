@@ -21,6 +21,7 @@ export class StreamComponent implements OnInit {
 
   userInfo: StreamUser;
   isLoading: boolean = false;
+  isRecording: boolean = false;
 
   @ViewChild('video') videoElement: ElementRef;
 
@@ -75,7 +76,7 @@ export class StreamComponent implements OnInit {
         })
 
         if (value.isOrganizer) {
-          //this.setupDevices();
+          this.setupDevices();
         }
 
       },
@@ -102,6 +103,9 @@ export class StreamComponent implements OnInit {
     }).then(x => {
       this.videoElement.nativeElement.srcObject = x;
       this.v_mediaStream = x;
+
+      console.log('source id: ', sourceId, "media: ", x)
+      this.s_mediaStream = x;
     })
   }
 
@@ -111,6 +115,7 @@ export class StreamComponent implements OnInit {
         deviceId: sourceId
       }
     }).then(x => {
+      console.log('source id: ', sourceId, "media: ", x)
       this.s_mediaStream = x;
     })
   }
@@ -152,27 +157,75 @@ export class StreamComponent implements OnInit {
     return dialogRef;
   }
 
+  public record() {
+    if (this.isRecording) {
+      this.stopRecording();
+    } else {
+      this.startRecording();
+    }
+  }
+
+  private startRecording() {
+    if (!this.isConnectionSetup || !this.isCommunicationOn) {
+      console.log("Unable to record not initialized connection");
+      return;
+    }
+
+    const data = {
+      streamId: this.streamId
+    }
+    var message: ClientMessage = {
+      body: JSON.stringify(data)
+    };
+
+    this.sendMessage(MessageType.StartRecording, message)
+    this.isRecording = true;
+  }
+
+  private stopRecording() {
+    if (!this.isRecording) {
+      console.log('Cant stop recording of not-recording stream')
+    }
+
+    if (!this.isConnectionSetup || !this.isCommunicationOn) {
+      console.log("Unable to stop not initialized connection");
+      return;
+    }
+
+    const data = {
+      streamId: this.streamId
+    }
+    var message: ClientMessage = {
+      body: JSON.stringify(data)
+    };
+
+    this.sendMessage(MessageType.StopRecording, message)
+    this.isRecording = false;
+  }
+
   public async presenter() {
     if (!this.isConnectionSetup) {
       console.log("Connection is not set up")
       return;
     }
-    debugger;
+
+    const constraints: MediaStreamConstraints = {
+      video: {
+        deviceId: this.videoInput.MediaDeviceId
+      },
+      audio: {
+        deviceId: this.audioInput.MediaDeviceId
+      }
+    }
+
     var options = {
       localVideo: this.videoElement.nativeElement,
-      configuration: [
-        {
-          "urls": "turn:relay.metered.ca:80",
-          "username": "e76b1e18382eb8485e4ced0f",
-          "credential": "awmeGuNs0IsK0VkM"
-        }
-      ],
+      mediaConstraints: constraints,
       onicecandidate: (candidate: any) => {
         const data = {
           iceCandidate: candidate,
           streamId: this.streamId
         }
-
         this.onIceCandidate(data);
       }
     }
@@ -194,13 +247,6 @@ export class StreamComponent implements OnInit {
 
     var options = {
       remoteVideo: this.videoElement.nativeElement,
-      configuration: [
-        {
-          "urls": "turn:relay.metered.ca:80",
-          "username": "e76b1e18382eb8485e4ced0f",
-          "credential": "awmeGuNs0IsK0VkM"
-        }
-      ],
       onicecandidate: (candidate: any) => {
         const data = {
           iceCandidate: candidate,

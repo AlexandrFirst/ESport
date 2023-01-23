@@ -106,7 +106,7 @@ namespace StreamingService.Services
             {
                 UserId = int.Parse(userId),
                 MediaPipeline = null,
-                WebRtcEndpoiont = null
+                WebRtcEndpoint = null
             };
 
             kurentoClient = getKurentoClient();
@@ -125,7 +125,7 @@ namespace StreamingService.Services
                         Console.WriteLine("Result of ping: " + res + " " + DateTime.Now);
                         Thread.Sleep(500);
                     }
-                    else 
+                    else
                     {
                         break;
                     }
@@ -141,10 +141,8 @@ namespace StreamingService.Services
 
             var mediaPipeline = await kurentoClient.CreateAsync(new MediaPipeline());
 
-            presenter.MediaPipeline = mediaPipeline;
-
             var webRtcEndPoint = await kurentoClient.CreateAsync(new WebRtcEndpoint(mediaPipeline, recvonly: false, sendonly: true, useDataChannels: false));
-            presenter.WebRtcEndpoiont = webRtcEndPoint;
+
 
             await webRtcEndPoint.SetMinOutputBitrateAsync(30);
             await webRtcEndPoint.SetMaxOutputBitrateAsync(100);
@@ -171,7 +169,13 @@ namespace StreamingService.Services
                 });
             };
 
+
             var sdpAnswer = await webRtcEndPoint.ProcessOfferAsync(sdpOffer);
+            presenter.MediaPipeline = mediaPipeline;
+            presenter.WebRtcEndpoint = webRtcEndPoint;
+
+            // await StartRecording(userId);
+
             return new PresenterResponse() { IsSuccess = true, SdpAnswer = sdpAnswer, Endpoint = webRtcEndPoint };
 
         }
@@ -180,20 +184,38 @@ namespace StreamingService.Services
         {
             if (!checkAccessRules(userId)) { return false; }
 
-            RecorderEndpoint recorderEndpoint = await kurentoClient.CreateAsync(new RecorderEndpoint(presenter.MediaPipeline, kurrentoOptions.WsUri));
+
+            var fileGuid = Guid.NewGuid().ToString();
+
+            string fileName = $"{fileGuid}.WEBM";
+
+            string recordUri = kurrentoOptions.RecordUri + fileName;
+
+
+
+            RecorderEndpoint recorderEndpoint = await kurentoClient.CreateAsync(new RecorderEndpoint(presenter.MediaPipeline, recordUri, MediaProfileSpecType.WEBM));
+
+            //await recorderEndpoint.ConnectAsync(presenter.WebRtcEndpoint);
             await presenter.WebRtcEndpoint.ConnectAsync(recorderEndpoint);
 
             recorderEndpoint.Recording += (RecordingEventArgs obj) =>
             {
                 logger.LogInformation("Recording started: " + obj.timestamp);
             };
-
             presenter.RecorderEndpoint = recorderEndpoint;
 
-            await recorderEndpoint.RecordAsync();
+            //await recorderEndpoint.RecordAsync();
+
+            //state = await presenter.RecorderEndpoint.GetStateAsync();
+
+
+            await presenter.RecorderEndpoint.RecordAsync();
+
+
             isStreamRecording = true;
 
             return true;
+
         }
 
         public async Task<bool> StopRecording(string userId)
@@ -318,7 +340,7 @@ namespace StreamingService.Services
 
             var sdpAnswer = await webRtcEndPoint.ProcessOfferAsync(sdpOffer);
 
-            await presenter.WebRtcEndpoiont.ConnectAsync(webRtcEndPoint);
+            await presenter.WebRtcEndpoint.ConnectAsync(webRtcEndPoint);
 
             //await webRtcEndPoint.GatherCandidatesAsync();
 
@@ -331,10 +353,10 @@ namespace StreamingService.Services
         {
             if (presenter != null &&
                 presenter.UserId.ToString().Equals(userId) &&
-                presenter.WebRtcEndpoiont != null)
+                presenter.WebRtcEndpoint != null)
             {
                 logger.LogDebug("Sending presenter candidate");
-                presenter.WebRtcEndpoiont.AddIceCandidateAsync(_candidate);
+                presenter.WebRtcEndpoint.AddIceCandidateAsync(_candidate);
             }
             else if (viewers.Any(x => x.UserId.ToString().Equals(userId)) &&
                 viewers.First(x => x.UserId.ToString().Equals(userId)).WebRtcEndpoint != null)
@@ -369,7 +391,7 @@ namespace StreamingService.Services
 
             try
             {
-                var _kurentoClient = new KurentoClient(kurrentoOptions.WsUri, logger) { };
+                var _kurentoClient = new KurentoClient(kurrentoOptions.WsUri) { };
                 return _kurentoClient;
             }
             catch (Exception ex)

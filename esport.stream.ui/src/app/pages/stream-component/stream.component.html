@@ -27,6 +27,7 @@
         <div class="d-flex justify-content-center mt-3">
             <button class="btn btn-primary me-2" (click)="presenter()" *ngIf="userInfo.isOrganizer">Start stream</button>
             <button class="btn btn-primary me-2" (click)="viewer()" *ngIf="!userInfo.isOrganizer">Join stream</button>
+            <button class="btn btn-warning me-2" (click)="record()" *ngIf="userInfo.isOrganizer">Record stream</button>
             <button class="btn btn-danger ms-2" (click)="stop()">
                 <span *ngIf="userInfo.isOrganizer">Stop</span>
                 <span *ngIf="!userInfo.isOrganizer">Leave</span> 

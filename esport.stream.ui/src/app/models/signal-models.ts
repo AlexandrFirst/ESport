@@ -8,5 +8,5 @@ export interface IClientMessageBody{
 }
 
 export enum MessageType{
-    Presenter = 1, Viewer = 2, Stop = 3, onIceCandidate = 4 
+    Presenter = 1, Viewer = 2, Stop = 3, onIceCandidate = 4, StartRecording = 5, StopRecording = 6
 }
