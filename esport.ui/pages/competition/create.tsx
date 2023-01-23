@@ -2,7 +2,7 @@ import { NextPage } from "next";
 
 import { MainLayout } from "@layouts/MainLayout";
 
-import { CreateCompetitionFormCard } from "@page-widgets/page-create-competition/components/CreateCompetitionFormCard/CreateCompetitionFormCard";
+import { CreateCompetitionFormCard } from "@page-widgets/page-create-competition";
 
 const CreateCompetitionPage: NextPage = () => {
   return (
