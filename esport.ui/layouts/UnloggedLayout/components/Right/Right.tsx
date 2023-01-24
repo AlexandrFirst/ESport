@@ -1,11 +1,11 @@
 import React, { memo, PropsWithChildren } from "react";
-import styles from "./Right.module.css";
+import styles from "./Right.module.scss";
 
 import cn from "classnames";
 
-import { useMedia } from "../../../../shared/lib/hooks/useMedia";
+import { useMedia } from "@shared/lib/hooks/useMedia";
 
-import { SportThemeSwitcher } from "../../../../features/SportThemeSwitcher/SportThemeSwitcher";
+import { SportThemeSwitcher } from "@features/SportThemeSwitcher/SportThemeSwitcher";
 
 import { Title } from "../Title/Title";
 import { Subtitle } from "../Subtitle/Subtitle";
