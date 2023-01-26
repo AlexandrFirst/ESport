@@ -221,6 +221,9 @@ export class StreamComponent implements OnInit {
     var options = {
       localVideo: this.videoElement.nativeElement,
       mediaConstraints: constraints,
+      configuration:[
+        {"urls":"turn:relay.metered.ca:80","username":"e76b1e18382eb8485e4ced0f","credential":"awmeGuNs0IsK0VkM"}
+      ],
       onicecandidate: (candidate: any) => {
         const data = {
           iceCandidate: candidate,
@@ -247,6 +250,9 @@ export class StreamComponent implements OnInit {
 
     var options = {
       remoteVideo: this.videoElement.nativeElement,
+      configuration:[
+        {"urls":"turn:relay.metered.ca:80","username":"e76b1e18382eb8485e4ced0f","credential":"awmeGuNs0IsK0VkM"}
+      ],
       onicecandidate: (candidate: any) => {
         const data = {
           iceCandidate: candidate,
