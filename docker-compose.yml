@@ -28,7 +28,6 @@ services:
     ports:
       - '15672:15672'
       - '5672:5672'
-
   mongo:
     image: mongo:4.4.4
     container_name: mongo
@@ -43,6 +42,18 @@ services:
       - ./mongo-data-4.4:/data/db
     networks:
       - mongo_bridge_network
+  kurrento:
+    image: kurento/kurento-media-server:6.18.0
+    container_name: kurento
+    restart: on-failure
+    environment:
+      - KMS_MIN_PORT=5000
+      - KMS_MAX_PORT=5050
+      - KMS_ICE_TCP=1
+      - KMS_TURN_URL=e76b1e18382eb8485e4ced0f:awmeGuNs0IsK0VkM@216.39.253.11:80
+      - GST_DEBUG="${GST_DEBUG:-2},KurentoUriEndpointImpl:5,uriendpoint:5,playerendpoint:5,kmselement:5,appsrc:4,agnosticbin*:5,uridecodebin:6,rtspsrc:6,souphttpsrc:5,GST_URI:6,*CAPS*:3"
+    volumes:
+      - ./records:/tmp
   identity:
     image: diplom_identity
     build:
@@ -69,7 +80,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
     ports:
-      - '6000:80'
+      - '5001:80'
   userflow:
     image: userflow
     build:
@@ -81,7 +92,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
     ports:
-      - '7000:80'
+      - '5002:80'
   message:
     image: messageservice
     build:
@@ -94,7 +105,22 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
     ports:
-      - '8000:80'
+      - '5003:80'
+  stream:
+    image: stream-service
+    build:
+      context: ./
+      dockerfile: ./StreamService.Dockerfile
+    depends_on:
+      - kurrento
+      - sqldb
+      - api-gateway
+      - identity
+    restart: on-failure
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+    ports:
+      - '5004:80'
   web:
     image: esport-web
     container_name: esport-web
@@ -104,6 +130,14 @@ services:
     restart: on-failure
     ports:
       - '3000:3000'
+  stream-ui:
+    container_name: stream-ui
+    build:
+      context: ./esport.stream.ui
+      dockerfile: ./Dockerfile
+    restart: on-failure
+    ports:
+      - '4500:80'
   competitions:
     container_name: esport-competitions
     build:
@@ -139,7 +173,6 @@ services:
       - rabbit
     ports:
       - '3001:3001'
-
 
 networks:
   mongo_bridge_network:

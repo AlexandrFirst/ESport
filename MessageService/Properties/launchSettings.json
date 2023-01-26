@@ -3,7 +3,7 @@
   "profiles": {
     "MessageService": {
       "commandName": "Project",
-      "applicationUrl": "http://localhost:8000",
+      "applicationUrl": "http://localhost:5004",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

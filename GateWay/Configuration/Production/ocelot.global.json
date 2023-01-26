@@ -1,0 +1,5 @@
+{
+  "GlobalConfiguration": {
+    "BaseUrl": "http://host.docker.internal:6005"
+  }
+}
