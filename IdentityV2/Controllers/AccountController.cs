@@ -42,11 +42,6 @@ namespace IdentityV2.Controllers
                 Expires = DateTime.Now.AddMonths(1),
                 SameSite = Microsoft.AspNetCore.Http.SameSiteMode.None,
                 Secure = true
-                Path = "/",
-                IsEssential = true,
-                Expires = DateTime.Now.AddMonths(1),
-                SameSite = Microsoft.AspNetCore.Http.SameSiteMode.None,
-                Secure = true
             });
 
             return Ok(token);
@@ -54,14 +49,12 @@ namespace IdentityV2.Controllers
 
         [HttpGet("Confirm")]
         public async Task<IActionResult> ConfirmRegistration(string token)
-        public async Task<IActionResult> ConfirmRegistration(string token)
         {
             var validationResult = await accountService.ConfirmRegistration(token);
             if (validationResult)
             {
                 return Ok();
             }
-            else
             else
             {
                 return BadRequest();

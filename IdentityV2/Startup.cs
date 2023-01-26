@@ -49,14 +49,9 @@ namespace IdentityV2
                        .AllowAnyMethod()
                        .AllowAnyHeader()
                        .AllowCredentials();
-                       .AllowAnyHeader()
-                       .AllowCredentials();
             }));
 
             services.AddControllersWithViews().AddNewtonsoftJson(options =>
-                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
-
-            services.AddControllers().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
             services.AddSwaggerGen(c => c.SwaggerDoc("v1",new Microsoft.OpenApi.Models.OpenApiInfo() 
@@ -73,12 +68,6 @@ namespace IdentityV2
             })
             .AddScheme<ESportAuthenticationOptions, ESportAuthenticationHandler>("ESport", o => { });
             services.AddHttpContextAccessor();
-
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -106,7 +95,6 @@ namespace IdentityV2
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors("ESportCors");
             app.UseCors("ESportCors");
 
             app.UseStaticFiles();
