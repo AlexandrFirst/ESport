@@ -1,5 +1,5 @@
 import React, { PropsWithChildren, useEffect } from "react";
-import styles from "./mainLayout.module.scss";
+import styles from "./mainLayout.module.css";
 
 import cn from "classnames";
 

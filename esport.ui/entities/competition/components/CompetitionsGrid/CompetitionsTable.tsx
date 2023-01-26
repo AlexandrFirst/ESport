@@ -1,5 +1,5 @@
 import React, { useMemo } from "react";
-import styles from "./competitionsGrid.module.scss";
+import styles from "./competitionsGrid.module.css";
 
 import cn from "classnames";
 
@@ -9,12 +9,15 @@ import {
   GridValueGetterParams,
 } from "@mui/x-data-grid";
 
+import { routes } from "routes";
+
 import { SportTable } from "@shared/ui/SportTable/SportTable";
 import { SportLink } from "@shared/ui/SportLink/SportLink";
 
 import { ICompetition } from "@entities/competition";
 
-interface CompetitionsTableProps extends DataGridProps {
+interface CompetitionsTableProps
+  extends Omit<DataGridProps, "rows" | "columns"> {
   competitions: ICompetition[];
 }
 
@@ -58,7 +61,9 @@ export const CompetitionsTable: React.FC<CompetitionsTableProps> = ({
         field: "",
         headerName: "",
         width: 100,
-        renderCell: () => <SportLink to={"#"}>Actions</SportLink>,
+        renderCell: ({ row }) => (
+          <SportLink to={routes.Competition.Id(row._id ?? "")}>Go to</SportLink>
+        ),
       },
     ],
     [competitions]

@@ -21,14 +21,16 @@ const CompetitionPage: NextPage<PageProps> = ({ competitions }) => {
 
 export default CompetitionPage;
 
-export const getServerSideProps: GetServerSideProps = async ({ query }) => {
+export const getServerSideProps: GetServerSideProps<PageProps> = async ({
+  query,
+}) => {
   const competitions = await competitionApi.getAllCompetitions({
     search: query.q as string,
   });
 
   return {
     props: {
-      competitions,
+      competitions: competitions ?? [],
     },
   };
 };

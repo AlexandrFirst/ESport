@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./createCompetitionFormCard.module.scss";
+import styles from "./createCompetitionFormCard.module.css";
 
 import { useRouter } from "next/navigation";
 

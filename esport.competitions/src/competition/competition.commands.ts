@@ -31,6 +31,7 @@ export class CompetitionCommands {
         req.categoryIds,
       );
     }
+    console.log('===categories  ===', categories);
     const { id } = await this.competitionService.createCompetition({
       ...req,
       dateStart: new Date(req.dateStart),

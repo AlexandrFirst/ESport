@@ -35,6 +35,7 @@ export class CompetitionRepository extends EntityRepository<Competition> {
     return this.model
       .find(entityFilterQuery, projection)
       .populate('categories')
+      .sort({ createdAt: -1 })
       .exec();
   }
 

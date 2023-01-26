@@ -1,6 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 
+import { motion } from "framer-motion";
 import { Grid } from "@mui/material";
 
 import { SportButton } from "@shared/ui/SportButton/SportButton";
@@ -23,14 +24,19 @@ const Home: NextPage = () => {
         <h3>H3</h3>
         <h4>H4</h4>
         <h5>H5</h5>
-        <h6>H6</h6>
+        <motion.h6
+          drag
+          dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
+        >
+          H6
+        </motion.h6>
         <p>
-          <span>
+          <motion.span initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. A
             accusamus corporis, cum dolore excepturi illum iure labore
             laudantium nesciunt, nisi non numquam odio perferendis porro quidem,
             reiciendis rerum sed vero.
-          </span>
+          </motion.span>
         </p>
         <Grid>
           <SportButton>Contained</SportButton>

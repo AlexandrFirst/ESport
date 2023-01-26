@@ -1,3 +1,5 @@
+const competitionRoute = "competition";
+
 export const routes = {
   Main: "/",
   Register: "/register",
@@ -5,8 +7,12 @@ export const routes = {
   Test: "/test",
 
   Competition: {
-    Main: "/competition",
-    Id: (id: string) => `/competition/${id}`,
-    Create: "/competition/create",
+    Main: `/${competitionRoute}`,
+    Id: (id: string) => `/${competitionRoute}/${id}`,
+    Create: `/${competitionRoute}/create`,
+    Category: {
+      Id: (compId: string, catId: string) =>
+        `/${competitionRoute}/${compId}/${catId}`,
+    },
   },
 };

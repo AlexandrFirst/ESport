@@ -1,15 +1,18 @@
 import React from "react";
-import styles from "./sportCard.module.scss";
+import styles from "./sportCard.module.css";
 
-import { Card, CardContent, CardProps } from "@mui/material";
+import { Card, CardActionArea, CardContent, CardProps } from "@mui/material";
 import cn from "classnames";
 
-interface SportCardProps extends CardProps {}
+export interface SportCardProps extends CardProps {
+  withAction?: boolean;
+}
 
 export const SportCard: React.FC<SportCardProps> = ({
   className,
   children,
   elevation = 6,
+  withAction = false,
   ...props
 }) => {
   return (
@@ -18,7 +21,13 @@ export const SportCard: React.FC<SportCardProps> = ({
       elevation={elevation}
       className={cn(styles.card, className)}
     >
-      <CardContent>{children}</CardContent>
+      {withAction ? (
+        <CardActionArea>
+          <CardContent>{children}</CardContent>{" "}
+        </CardActionArea>
+      ) : (
+        <CardContent>{children}</CardContent>
+      )}
     </Card>
   );
 };

@@ -1,5 +1,5 @@
 import { GetServerSideProps, NextPage } from "next";
-import styles from "@page-widgets/page-create-categories/pageCreateCategories.module.scss";
+import styles from "@page-widgets/page-create-categories/pageCreateCategories.module.css";
 
 import { MainLayout } from "@layouts/MainLayout";
 import { competitionApi, ICompetition } from "@entities/competition";

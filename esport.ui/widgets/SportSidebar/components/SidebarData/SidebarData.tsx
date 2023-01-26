@@ -16,7 +16,9 @@ import { CollapsableMenuItem } from "../CollapsableMenuItem/CollapsableMenuItem"
 import { SimpleMenuItem } from "../SimpleMenuItem/SimpleMenuItem";
 import { useSidebarContext } from "../SidebarContext/SidebarContext";
 
-interface SidebarDataProps {}
+interface SidebarDataProps {
+  closeOnItemClick?: boolean;
+}
 
 export const SidebarData: React.FC<SidebarDataProps> = () => {
   const { menu } = useMenu();
