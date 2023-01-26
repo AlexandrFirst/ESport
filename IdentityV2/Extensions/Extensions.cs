@@ -39,10 +39,10 @@ namespace IdentityV2.Extensions
                         var adminRole = context.Roles.FirstOrDefault(x => x.Title == "OrgAdmin");
                         if (adminRole != null)
                         {
-                            foreach (var user in seedUsers)
+                            foreach (var userSlice in seedUsers)
                             {
-                                var userToInsert = mapper.Map<User>(user);
-                                userToInsert.HashedPassword = passwordHelper.Hash(user.Password);
+                                var userToInsert = mapper.Map<User>(userSlice);
+                                userToInsert.HashedPassword = passwordHelper.Hash(userSlice.Password);
 
 
                                 var userRole = new UserRoles() { Role = adminRole, User = userToInsert };

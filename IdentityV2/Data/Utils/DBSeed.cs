@@ -11,10 +11,10 @@ namespace IdentityV2.Data.Utils
     }
     public static class DBSeed
     {
-        public static List<CreateUserDto> GetSeedUser(string filePath) 
+        public static List<CreateUserDto> GetSeedUser(string filePath)
         {
-         
-            var jsonData = System.IO.File.ReadAllText(filePath); 
+
+            var jsonData = System.IO.File.ReadAllText(filePath);
 
             if (string.IsNullOrWhiteSpace(jsonData)) return null;
 

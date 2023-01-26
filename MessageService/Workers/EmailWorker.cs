@@ -38,7 +38,7 @@ namespace MessageService.Workers
         {
             this.serviceProvider = serviceProvider;
             this._logger = logger;
-            
+
         }
 
         public override Task StartAsync(CancellationToken cancellationToken)
@@ -77,18 +77,18 @@ namespace MessageService.Workers
             consumer.Received += async (bc, ea) =>
             {
                 var message = Encoding.UTF8.GetString(ea.Body.ToArray());
-              
-                
+
+
                 Console.WriteLine(message);
                 _logger.LogInformation($"Processing msg: '{message}'.");
                 try
                 {
                     var deserializedMessage = JsonConvert.DeserializeObject<MailIncommingModel>(message);
 
-                    await emailService.SendMessagesAsync(new SendMessageRequest() 
+                    await emailService.SendMessagesAsync(new SendMessageRequest()
                     {
-                        Template = String.Format(deserializedMessage.Template, deserializedMessage.Token), 
-                        ToMail = new System.Collections.Generic.List<string>() { deserializedMessage.Mail} 
+                        Template = String.Format(deserializedMessage.Template, deserializedMessage.Token),
+                        ToMail = new System.Collections.Generic.List<string>() { deserializedMessage.Mail}
                     });
                     _channel.BasicAck(ea.DeliveryTag, false);
                 }
@@ -105,7 +105,7 @@ namespace MessageService.Workers
                 {
                     _logger.LogError(default, e, e.Message);
                 }
-               
+
 
             };
 

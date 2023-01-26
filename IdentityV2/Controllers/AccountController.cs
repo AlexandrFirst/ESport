@@ -30,12 +30,18 @@ namespace IdentityV2.Controllers
                 Password = loginModel.Password
             };
             Console.WriteLine("sdsd");
+            Console.WriteLine("sdsd");
             var token = await accountService.Login(loginDto);
             if (token == null) { return BadRequest(new { Message = "Login or password is incorrect"}); }
             Response.Headers.Add("access-control-expose-headers", "Set-Cookie");
             Response.Headers.Add("Access-Control-Allow-Credentials", "true");
             Response.Cookies.Append("ESportCookie", token.Token, new Microsoft.AspNetCore.Http.CookieOptions()
             {
+                Path = "/",
+                IsEssential = true,
+                Expires = DateTime.Now.AddMonths(1),
+                SameSite = Microsoft.AspNetCore.Http.SameSiteMode.None,
+                Secure = true
                 Path = "/",
                 IsEssential = true,
                 Expires = DateTime.Now.AddMonths(1),
@@ -48,12 +54,14 @@ namespace IdentityV2.Controllers
 
         [HttpGet("Confirm")]
         public async Task<IActionResult> ConfirmRegistration(string token)
+        public async Task<IActionResult> ConfirmRegistration(string token)
         {
             var validationResult = await accountService.ConfirmRegistration(token);
             if (validationResult)
             {
                 return Ok();
             }
+            else
             else
             {
                 return BadRequest();

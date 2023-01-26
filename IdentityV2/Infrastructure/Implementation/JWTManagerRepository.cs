@@ -36,7 +36,7 @@ namespace IdentityV2.Infrastructure.Implementation
 
             var dbUser = await context.Users.FirstOrDefaultAsync(x => x.Email == userLogin.Mail && x.IsPending == false);
             bool isPasswordCorrect = false;
-            if (dbUser != null) 
+            if (dbUser != null)
             {
                 var dbPassword = dbUser.HashedPassword;
                 var inputPassword = userLogin.Password;
@@ -46,14 +46,14 @@ namespace IdentityV2.Infrastructure.Implementation
             if (!isPasswordCorrect) { return null; }
 
             var tokenHandler = new JwtSecurityTokenHandler();
-            
+
             var tokenKey = Encoding.UTF8.GetBytes(iconfiguration["JWT:Key"]);
             var audience = iconfiguration.GetSection("JWT")["Audience"];
             var issuer = iconfiguration.GetSection("JWT")["Issuer"];
 
             var userRolesEnumerable = dbUser.UserRoles.Select(x => x.Role.Title);
             string userRoles = "";
-            if (userRolesEnumerable.Any()) 
+            if (userRolesEnumerable.Any())
             {
                 userRoles = userRolesEnumerable.Aggregate((acc, s) => string.IsNullOrEmpty(acc) ? s : acc + "," + s);
             }
@@ -80,10 +80,10 @@ namespace IdentityV2.Infrastructure.Implementation
         public ESportAuthorizationResult Authorize(ClaimsPrincipal user)
         {
            var isAuthentificatedClaim = user.Claims.FirstOrDefault(x => x.Type == "IsAuthentificated");
-            if (isAuthentificatedClaim != null) 
+            if (isAuthentificatedClaim != null)
             {
                 var isAuthentificated = bool.Parse(isAuthentificatedClaim.Value);
-                if (!isAuthentificated) 
+                if (!isAuthentificated)
                 {
                     return new ESportAuthorizationResult() { Success = false };
                 }

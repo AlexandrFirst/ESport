@@ -2,15 +2,15 @@ import React from "react";
 
 import { NextPage } from "next";
 
-import { SportButton } from "@components/SportButton/SportButton";
-import { MainLayout } from "@features/MainLayout/MainLayout";
+import { SportButton } from "../shared/ui/SportButton/SportButton";
+import { MainLayout } from "../layouts/MainLayout/MainLayout";
 
-import { useAppDispatch, useAppSelector } from "@storage/hooks/useStore";
+import { useAppDispatch, useAppSelector } from "../shared/lib/hooks/useStore";
 import {
   hideLoading,
   selectLoadingIndicator,
   showLoading,
-} from "@storage/slices/loadingIndicator";
+} from "@features/TopPageLoader/topPageLoader.slice";
 
 const Test: NextPage = () => {
   const dispatch = useAppDispatch();

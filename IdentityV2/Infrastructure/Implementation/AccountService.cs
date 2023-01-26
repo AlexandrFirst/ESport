@@ -28,7 +28,7 @@ namespace IdentityV2.Infrastructure.Core
         private readonly IHttpContextAccessor httpContextAccessor;
         private readonly string passwordSecretKey;
 
-        public AccountService(IdentityDataContext dataContext, 
+        public AccountService(IdentityDataContext dataContext,
             IJWTManagerRepository jwtMananager,
             IConfiguration configuration,
             IMapper mapper,
@@ -50,7 +50,7 @@ namespace IdentityV2.Infrastructure.Core
             if (pendingUser == null)
                 return false;
 
-            if (DateTime.Now > pendingUser.PendingDateEnd) 
+            if (DateTime.Now > pendingUser.PendingDateEnd)
             {
                 dataContext.Remove(pendingUser);
                 return false;
@@ -104,7 +104,7 @@ namespace IdentityV2.Infrastructure.Core
 
                 dataContext.Users.Add(userToInsert);
 
-                messageProducer.SendMessage(new 
+                messageProducer.SendMessage(new
                 {
                     token = userToInsert.PendingUser.PendingToken.ToString(),
                     mail = userToInsert.Email,
@@ -114,7 +114,7 @@ namespace IdentityV2.Infrastructure.Core
 
                 return new RegisterResultModel { IsSuccess = true };
             }
-            else 
+            else
             {
                 var errors = validationResults.Select(o => o.ErrorMessage).ToList();
                 return new RegisterResultModel { IsSuccess = false, Error = errors };

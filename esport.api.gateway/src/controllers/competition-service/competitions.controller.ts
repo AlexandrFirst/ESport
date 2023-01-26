@@ -8,7 +8,10 @@ import {
 } from '@nestjs/common';
 import { RMQService } from 'nestjs-rmq';
 
-import { CompetitionCreate, CompetitionsGetAll } from 'esport-lib-ts/lib';
+import {
+  CompetitionCreate,
+  CompetitionsGetAll,
+} from 'esport-lib-ts/lib/competitions';
 
 import { res } from 'src/utility';
 
@@ -32,16 +35,13 @@ export class CompetitionsController {
   @Post('create')
   async createCompetition(
     @Body()
-    { categories, ...rest }: CreateCompetitionDto,
+    body: CreateCompetitionDto,
   ) {
     return res(() =>
       this.rmqService.send<
         CompetitionCreate.Request,
         CompetitionCreate.Response
-      >(CompetitionCreate.topic, {
-        ...rest,
-        categories: categories ?? [],
-      }),
+      >(CompetitionCreate.topic, body),
     );
   }
 }

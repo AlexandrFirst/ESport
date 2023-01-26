@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Routing;
@@ -48,6 +49,8 @@ namespace IdentityV2
                        .AllowAnyMethod()
                        .AllowAnyHeader()
                        .AllowCredentials();
+                       .AllowAnyHeader()
+                       .AllowCredentials();
             }));
 
             services.AddControllersWithViews().AddNewtonsoftJson(options =>
@@ -77,6 +80,12 @@ namespace IdentityV2
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
             services.AddDbContext<IdentityDataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("IdentityDb")));
 
             services.AddOptions<RabbitMqOptions>().Bind(Configuration.GetSection("RabbitMq"));
@@ -97,6 +106,7 @@ namespace IdentityV2
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCors("ESportCors");
             app.UseCors("ESportCors");
 
             app.UseStaticFiles();

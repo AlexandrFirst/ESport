@@ -5,3 +5,6 @@ export * from "./competition.add-category.command";
 //category
 export * from "./category.create-category.command";
 export * from "./category.update-category.command";
+
+//fight
+export * from "./fight.create-fight.command";

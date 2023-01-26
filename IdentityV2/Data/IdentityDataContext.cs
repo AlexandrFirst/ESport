@@ -18,7 +18,7 @@ namespace IdentityV2.Data
             Database.Migrate();
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseLazyLoadingProxies();
         }

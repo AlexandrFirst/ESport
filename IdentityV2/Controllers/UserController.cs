@@ -16,7 +16,7 @@ namespace IdentityV2.Controllers
     {
         [HttpGet("validate")]
         [ESportIdentity]
-        public IActionResult Validate([FromQuery]UserValidateNavigation userValidateNavigation) 
+        public IActionResult Validate([FromQuery]UserValidateNavigation userValidateNavigation)
         {
             var userClaims = User.Claims;
             return Ok("Hello world");
@@ -24,7 +24,7 @@ namespace IdentityV2.Controllers
 
         [Authorize]
         [HttpGet("oclelot_validate")]
-        public IActionResult OclelotValidate() 
+        public IActionResult OclelotValidate()
         {
             var user = User;
 

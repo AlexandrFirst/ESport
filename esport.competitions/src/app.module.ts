@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { RMQModule } from 'nestjs-rmq';
@@ -8,6 +8,7 @@ import { getMongoConfig } from '@configs/mongo.config';
 import { CompetitionModule } from './competition/competition.module';
 import { CategoryModule } from './category/category.module';
 import { FightModule } from './fight/fight.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -22,8 +23,13 @@ import { FightModule } from './fight/fight.module';
     CompetitionModule,
     CategoryModule,
     FightModule,
+    UserModule,
   ],
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule {
+  constructor() {
+    Logger.log(process.env.NODE_ENV);
+  }
+}

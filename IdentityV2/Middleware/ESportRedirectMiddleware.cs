@@ -53,7 +53,7 @@ namespace IdentityV2.Middleware
                         var path = $"http://localhost:5000/Account/login?postBackUrl=" + postbackUrl;
                         ctx.Response.Redirect(path);
                     }
-                    else 
+                    else
                     {
                         var path = $"http://host.docker.internal:5000/Account/login?postBackUrl=" + postbackUrl;
                         ctx.Response.Redirect(path);

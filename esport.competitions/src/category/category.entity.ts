@@ -1,4 +1,5 @@
-import { ICategory, IDominEvent, IFight } from 'esport-lib-ts/lib';
+import { IDominEvent } from 'esport-lib-ts/lib';
+import { ICategory, IFight } from 'esport-lib-ts/lib/competitions';
 
 export class CategoryEntity implements ICategory {
   _id: string;

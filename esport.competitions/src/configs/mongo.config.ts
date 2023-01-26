@@ -15,6 +15,7 @@ export const getMongoFactory = async (
 ): Promise<MongooseModuleFactoryOptions> => {
   return {
     uri: configService.get('MONGO_DIRECT_URL') || getMongoUrl(configService),
+    ...getMongoOptions(),
   };
 };
 
@@ -29,3 +30,8 @@ const getMongoUrl = (configService: ConfigService): string =>
   configService.get('MONGO_PORT') +
   '/' +
   configService.get('MONGO_AUTHDATABASE');
+
+const getMongoOptions = () => ({
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});

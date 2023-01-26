@@ -16,33 +16,13 @@
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@components/*": [
-        "components/*"
-      ],
-      "@features/*": [
-        "features/*"
-      ],
-      "@interfaces/*": [
-        "interfaces/*"
-      ],
-      "@constants/*": [
-        "constants/*"
-      ],
-      "@hooks/*": [
-        "hooks/*"
-      ],
-      "@storage/*": [
-        "storage/*"
-      ],
-      "@enums/*": [
-        "enums/*"
-      ],
-      "@pageComponents/*": [
-        "pageComponents/*"
-      ],
-      "@api/*": [
-        "api/*"
-      ]
+      "@shared/*": ["shared/*"],
+      "@app/*": ["app/*"],
+      "@entities/*": ["entities/*"],
+      "@features/*": ["features/*"],
+      "@layouts/*": ["layouts/*"],
+      "@page-widgets/*": ["page-widgets/*"],
+      "@widgets/*": ["widgets/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
