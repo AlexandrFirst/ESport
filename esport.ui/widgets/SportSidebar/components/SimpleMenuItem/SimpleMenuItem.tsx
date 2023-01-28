@@ -23,16 +23,12 @@ export const SimpleMenuItem: React.FC<SimpleMenuItemProps> = ({
 }) => {
   const { isSidebarOpened } = useSidebarContext();
 
-  const handleItemClick = (item: IMenuItem) => {
-    onItemClick && onItemClick(item);
-  };
-
   const selected = item.link && currentPathname === item.link;
 
   return (
     <ListItemButton
       className={cn(styles.list_item, { [styles.selected]: selected })}
-      onClick={() => handleItemClick(item)}
+      onClick={() => onItemClick?.(item)}
     >
       {item.icon}
       <Link

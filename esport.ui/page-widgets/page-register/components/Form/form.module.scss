@@ -1,5 +1,12 @@
 .form {
-  margin: 0 auto;
+  @apply text-center overflow-hidden mx-auto w-80;
+  &_mobile {
+    @apply w-full;
+  }
+}
+
+.btn {
+  @apply w-60 my-3;
 }
 
 .text {
@@ -8,4 +15,8 @@
 
 .dividers {
   @apply px-3
+}
+
+.grid {
+  @apply mt-6;
 }

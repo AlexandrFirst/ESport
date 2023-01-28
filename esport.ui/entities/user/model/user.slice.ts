@@ -1,8 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { HYDRATE } from "next-redux-wrapper";
 
-import { IUser } from "../../../shared/types/app-user";
-import { RootState } from "../../../app/store/store";
+import { RootState } from "@app/store/store";
+
+import { IUser } from "../types/user.interface";
 
 const mocked_User: IUser = { name: "John", lastName: "Doe", role: "Admin" };
 
@@ -30,7 +31,10 @@ const userSlice = createSlice({
     },
   },
   extraReducers: {
-    [HYDRATE]: (state, action) => {},
+    [HYDRATE]: (state, action) => ({
+      ...state.user,
+      ...action.payload.user,
+    }),
   },
 });
 

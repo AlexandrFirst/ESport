@@ -11,6 +11,6 @@ export class UserEvents {
   //TODO: to confirm with Sasha
   @RMQRoute('user-created')
   async userCreated(u: IUser) {
-    return this.userService.create(u);
+    await this.userService.create(u);
   }
 }

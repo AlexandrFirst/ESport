@@ -3,12 +3,12 @@ import styles from "./mobileSportSidebar.module.scss";
 
 import MenuIcon from "@mui/icons-material/Menu";
 
-import { sidebarOpenedWidth } from "../../../../shared/consts/layout";
+import { sidebarOpenedWidth } from "@shared/consts/layout";
+import { SportSwipeableDrawer } from "@shared/ui/SportDrawer/SportSwipeableDrawer";
+import { SportIconButton } from "@shared/ui/SportIconButton/SportIconButton";
 
-import { SportIconButton } from "../../../../shared/ui/SportIconButton/SportIconButton";
 import { SidebarData } from "../SidebarData/SidebarData";
 import { useSidebarContext } from "../SidebarContext/SidebarContext";
-import { SportSwipeableDrawer } from "../../../../shared/ui/SportDrawer/SportSwipeableDrawer";
 
 interface MobileSportSidebarProps {}
 

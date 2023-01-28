@@ -10,7 +10,7 @@ import {
   hideLoading,
   selectLoadingIndicator,
   showLoading,
-} from "@features/TopPageLoader/topPageLoader.slice";
+} from "@features/TopPageLoader/model/topPageLoader.slice";
 
 const Test: NextPage = () => {
   const dispatch = useAppDispatch();

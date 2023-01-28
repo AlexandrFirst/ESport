@@ -7,7 +7,7 @@ import { authService } from "../../../../entities/user/api/auth/authService";
 import { logIn } from "../../../../entities/user/model/user.slice";
 import { useAppDispatch } from "../../../../shared/lib/hooks/useStore";
 
-import { useLoader } from "../../../../shared/lib/hooks/useLoader";
+import { useLoader } from "@features/TopPageLoader/lib/hooks/useLoader";
 
 import { routes } from "routes";
 

@@ -19,6 +19,10 @@ export class CompetitionService {
     return this.competitionRepo.findWithPopulate({});
   }
 
+  async findByIdWithPopulate(id: string) {
+    return this.competitionRepo.findByIdWithPopulate(id);
+  }
+
   async createCompetition(c: ICompetition) {
     const newCompetition = new CompetitionEntity(c);
     const comp = await this.competitionRepo.create(newCompetition);

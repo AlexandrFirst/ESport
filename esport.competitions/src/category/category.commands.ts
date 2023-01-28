@@ -22,7 +22,8 @@ export class CategoryCommands {
   async createCategory(
     req: CategoryCreate.Request,
   ): Promise<CategoryCreate.Response> {
-    const { _id } = await this.categoryService.create(req);
+    const fights = await this.fightService.updateOrCreateMany(req.fights);
+    const { _id } = await this.categoryService.create({ ...req, fights });
     return { id: _id };
   }
 

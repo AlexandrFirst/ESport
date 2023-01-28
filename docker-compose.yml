@@ -165,7 +165,7 @@ services:
       - ./esport.api.gateway:/usr/src/app
     command: npm run start
     env_file:
-      - ./esport.api.gateway/.env
+      - ./esport.api.gateway/.env.production
     depends_on:
       - rabbit
     ports:

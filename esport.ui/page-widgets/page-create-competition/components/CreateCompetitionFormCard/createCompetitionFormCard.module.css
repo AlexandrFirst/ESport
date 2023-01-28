@@ -1,0 +1,7 @@
+.title {
+  @apply text-center
+}
+
+.card {
+  @apply mx-[3vw] py-6;
+}

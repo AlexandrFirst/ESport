@@ -1,4 +1,6 @@
 import React, { PropsWithChildren } from "react";
+import styles from "./subtitle.module.scss";
+
 import cn from "classnames";
 
 interface SubtitleProps extends PropsWithChildren {
@@ -6,5 +8,5 @@ interface SubtitleProps extends PropsWithChildren {
 }
 
 export const Subtitle: React.FC<SubtitleProps> = ({ className, children }) => {
-  return <h2 className={cn('text-skin-main text-sm font-medium', className)}>{children}</h2>
-}
+  return <h2 className={cn(styles.text, className)}>{children}</h2>;
+};

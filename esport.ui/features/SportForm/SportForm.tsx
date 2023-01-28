@@ -1,15 +1,28 @@
-import React, { PropsWithChildren } from "react";
+import React, { FormEvent, PropsWithChildren } from "react";
 import { FormProvider, UseFormReturn } from "react-hook-form";
 
 interface SportFormProps extends PropsWithChildren {
   methods: UseFormReturn<any>;
   className?: string;
+  onSubmit?: (e?: FormEvent<HTMLFormElement>) => void;
 }
 
-export function SportForm({ methods, className, children }: SportFormProps) {
+export function SportForm({
+  methods,
+  className,
+  onSubmit,
+  children,
+}: SportFormProps) {
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    onSubmit?.(e);
+  };
+
   return (
     <FormProvider {...methods}>
-      <form className={className}>{children}</form>
+      <form className={className} onSubmit={handleSubmit}>
+        {children}
+      </form>
     </FormProvider>
   );
 }

@@ -50,30 +50,29 @@ export const Form: React.FC = () => {
   return (
     <SportForm
       methods={methods}
-      className={cn("text-center", {
-        ["w-full"]: isMobile,
-        ["w-80"]: !isMobile,
-      })}
+      // className={cn("text-center", {
+      //   ["w-full"]: isMobile,
+      //   ["w-80"]: !isMobile,
+      // })}
+      className={cn(styles.form, { [styles.form_mobile]: isMobile })}
     >
       <SportInput
         {...methods.register("mail")}
-        className="my-3"
+        className={styles.input}
         placeholder="E-mail"
       />
       <SportPasswordInput
         {...methods.register("password")}
-        className="my-3"
+        className={styles.input}
         placeholder="Password"
       />
-      <SportLink className={"float-right"} to={routes.Register}>
+      <SportLink className={styles.link} to={routes.Register}>
         Forgot password?
       </SportLink>
-      <SportButton className="w-full my-5" onClick={onSubmit}>
+      <SportButton className={styles.btn} onClick={onSubmit}>
         Login
       </SportButton>
-      <Typography component={"span"} className={styles.text}>
-        New on our platform?{" "}
-      </Typography>
+      <span className={styles.text}>New on our platform? </span>
       <SportLink to={routes.Register}>Create an account</SportLink>
       <Grid
         container

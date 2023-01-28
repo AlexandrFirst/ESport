@@ -1,0 +1,14 @@
+.form {
+  @apply relative w-fit;
+}
+
+.input {
+  input {
+    @apply pr-7
+  }
+}
+
+.icon_button {
+  @apply absolute -right-1 -top-1;
+}
+

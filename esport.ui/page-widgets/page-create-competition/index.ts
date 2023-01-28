@@ -1,1 +1,1 @@
-export * from "./components/CreateCompetitionForm/CreateCompetitionForm";
+export * from "./components/CreateCompetitionFormCard/CreateCompetitionFormCard";
