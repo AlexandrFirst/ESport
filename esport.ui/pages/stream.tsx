@@ -12,7 +12,7 @@ declare global {
 
 const StreamPage: NextPage = () => {
 
-    let basePath = 'http://localhost:4200/';
+    let basePath = process.env.STREAM_UI_APP ?? "";
     const [value, setValue] = useState('');
 
     const router = useRouter();
