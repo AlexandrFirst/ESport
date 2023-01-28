@@ -11,6 +11,6 @@ export const CategoryFightList: React.FC<CategoryFightListProps> = ({
   return !category ? (
     <h1>There is no such category!</h1>
   ) : (
-    <FightList category={category} />
+    <FightList competitors={category.fights.flatMap((f) => f.competitors)} />
   );
 };

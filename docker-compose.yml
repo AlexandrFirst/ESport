@@ -28,6 +28,8 @@ services:
     ports:
       - '15672:15672'
       - '5672:5672'
+#    networks:
+#        - rmq_bridge_network
 
   mongo:
     image: mongo:4.4.4
@@ -41,8 +43,8 @@ services:
       - '27017:27017'
     volumes:
       - ./mongo-data-4.4:/data/db
-    networks:
-      - mongo_bridge_network
+#    networks:
+#      - mongo_bridge_network
   identity:
     image: diplom_identity
     build:
@@ -120,9 +122,9 @@ services:
       - rabbit
       - mongo
       - api-gateway
-    networks:
-      - mongo_bridge_network
-      - rabbit_bridge_network
+#    networks:
+#      - mongo_bridge_network
+#      - rmq_bridge_network
   api-gateway:
     container_name: esport-api-gateway
     build:
@@ -134,13 +136,16 @@ services:
       - ./esport.api.gateway:/usr/src/app
     command: npm run start
     env_file:
-      - ./esport.api.gateway/.env
+      - ./esport.competitions/.env.production
     depends_on:
       - rabbit
     ports:
       - '3001:3001'
+#    networks:
+#      - rmq_bridge_network
 
-
-networks:
-  mongo_bridge_network:
-    driver: bridge
+#networks:
+#  mongo_bridge_network:
+#    driver: bridge
+#  rmq_bridge_network:
+#    driver: bridge

@@ -11,7 +11,12 @@ import { FightsController } from './controllers/competition-service/fight.contro
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      envFilePath: !process.env.NODE_ENV
+        ? '.env'
+        : `.env.${process.env.NODE_ENV}`,
+    }),
     RMQModule.forRootAsync(getRMQConfig()),
     // JwtModule.registerAsync(getJWTConfig()),
     // PassportModule,

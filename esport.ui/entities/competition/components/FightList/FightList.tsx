@@ -1,30 +1,28 @@
-import React, { useState } from "react";
-import styles from "./fightList.module.css";
+import React from "react";
 
-import { Reorder } from "framer-motion";
-
-import { ICategory } from "@entities/competition";
+import { ICompetitor } from "@entities/competition";
 
 interface CategoryListProps {
-  category: ICategory;
+  competitors: ICompetitor[];
 }
 
-export const FightList: React.FC<CategoryListProps> = ({ category }) => {
-  const [competitors, setCompetitors] = useState(() =>
-    category.fights.flatMap((f) => f.competitors)
-  );
-
+export const FightList: React.FC<CategoryListProps> = ({ competitors }) => {
   console.log("===competitors===", competitors);
 
   return (
     <>
-      <Reorder.Group onReorder={setCompetitors} values={competitors}>
-        {competitors.map((f) => (
-          <Reorder.Item key={f.userId} value={f}>
-            <div className={styles.competitor}>{f.userId}</div>
-          </Reorder.Item>
-        ))}
-      </Reorder.Group>
+      {/*{competitors.map((f) => (*/}
+      {/*  // <div key={f.userId} className={styles.competitor}>*/}
+      {/*  //   {f.userId}*/}
+      {/*  // </div>*/}
+      {/*))}*/}
+      {/*<Reorder.Group onReorder={setCompetitors} values={competitors}>*/}
+      {/*  {competitors.map((f) => (*/}
+      {/*    <Reorder.Item key={f.userId} value={f}>*/}
+      {/*      <div className={styles.competitor}>{f.userId}</div>*/}
+      {/*    </Reorder.Item>*/}
+      {/*  ))}*/}
+      {/*</Reorder.Group>*/}
     </>
   );
 };
