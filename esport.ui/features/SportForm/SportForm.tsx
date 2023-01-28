@@ -13,7 +13,7 @@ export function SportForm({
   onSubmit,
   children,
 }: SportFormProps) {
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSubmit?.(e);
   };

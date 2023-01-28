@@ -24,7 +24,6 @@ const topPageLoaderSlice = createSlice({
   },
   extraReducers: {
     [HYDRATE]: (state, action) => ({
-      ...state.loadingIndicator,
       ...action.payload.loadingIndicator,
     }),
   },
