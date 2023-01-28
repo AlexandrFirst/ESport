@@ -1,22 +1,29 @@
 import React, { useEffect } from "react";
 import { NextPage } from "next";
-import { authService } from "../../../entities/user/api/auth/authService";
 import { useRouter } from "next/router";
+
+import { routes } from "routes";
+
+import { authService } from "@entities/user";
+import { useSnackbar } from "@features/SportSnackbar";
 
 const Confirm: NextPage = () => {
   const router = useRouter();
 
+  const { error, success } = useSnackbar();
+
   useEffect(() => {
-    const getData = async () => {
+    const activate = async () => {
       try {
-        authService.confirm((router.query.token as string) ?? "");
-      } catch (e) {
-        //TODO: handle error
+        await authService.confirm((router.query.token as string) ?? "");
+        success("Your account has been activated");
+      } catch (e: any) {
+        error(e.message);
       } finally {
-        router.push("/");
+        router.push(routes.Main);
       }
     };
-    getData();
+    activate();
   }, []);
 
   return <></>;

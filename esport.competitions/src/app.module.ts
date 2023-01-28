@@ -9,6 +9,7 @@ import { CompetitionModule } from './competition/competition.module';
 import { CategoryModule } from './category/category.module';
 import { FightModule } from './fight/fight.module';
 import { UserModule } from './user/user.module';
+import { OrganizationModule } from './organization/organization.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { UserModule } from './user/user.module';
     CategoryModule,
     FightModule,
     UserModule,
+    OrganizationModule,
   ],
   controllers: [],
   providers: [],

@@ -1,5 +1,5 @@
 import { INSTEAD_STRING } from "../../../../shared/consts/app";
-import { IUser } from "../../../../shared/types/app-user";
+import { IUser } from "../../types/user.interface";
 
 export const getDisplayName = (
   user: Partial<IUser> | null,

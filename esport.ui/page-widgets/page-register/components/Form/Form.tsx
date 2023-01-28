@@ -59,9 +59,8 @@ export const Form: React.FC = () => {
   return (
     <SportForm
       methods={methods}
-      className={cn("text-center overflow-hidden", styles.form, {
-        ["w-full"]: isMobile,
-        ["w-80"]: !isMobile,
+      className={cn(styles.form, {
+        [styles.form_mobile]: isMobile,
       })}
     >
       <FirstStep currStep={currStep} register={register} />
@@ -72,24 +71,22 @@ export const Form: React.FC = () => {
           <KeyboardDoubleArrowLeftIcon />
         </SportIconButton>
         {!isLastStep ? (
-          <SportButton className="w-60 my-3" onClick={handleNext}>
+          <SportButton className={styles.btn} onClick={handleNext}>
             Next
           </SportButton>
         ) : (
-          <SportButton className="w-60 my-3" onClick={onSubmit}>
+          <SportButton className={styles.btn} onClick={onSubmit}>
             Submit
           </SportButton>
         )}
       </Grid>
-      <Typography component={"span"} className={styles.text}>
-        Already have an account?{" "}
-      </Typography>
+      <span className={styles.text}>Already have an account? </span>
       <SportLink to={routes.Login}>Sign in instead</SportLink>
       <Grid
         container
         alignItems="center"
         justifyContent="center"
-        className="mt-6"
+        className={styles.grid}
       >
         <Dividers>
           <Typography className={cn(styles.text, styles.dividers)}>

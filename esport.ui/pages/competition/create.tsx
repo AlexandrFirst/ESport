@@ -1,16 +1,15 @@
-import React from "react";
 import { NextPage } from "next";
 
 import { MainLayout } from "@layouts/MainLayout";
 
-import { CreateCompetitionForm } from "@page-widgets/page-create-competition";
+import { CreateCompetitionFormCard } from "@page-widgets/page-create-competition";
 
-const CompetitionPage: NextPage = () => {
+const CreateCompetitionPage: NextPage = () => {
   return (
     <MainLayout>
-      <CreateCompetitionForm />
+      <CreateCompetitionFormCard />
     </MainLayout>
   );
 };
 
-export default CompetitionPage;
+export default CreateCompetitionPage;

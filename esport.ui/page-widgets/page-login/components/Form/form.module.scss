@@ -1,3 +1,22 @@
+.form {
+    @apply text-center w-80;
+    &_mobile {
+        @apply w-full
+    }
+}
+
+.input {
+    @apply my-3;
+}
+
+.link {
+    @apply float-right;
+}
+
+.btn {
+    @apply w-full my-5;
+}
+
 .text {
     @apply dark:text-darkSkin-subsidiary
 }

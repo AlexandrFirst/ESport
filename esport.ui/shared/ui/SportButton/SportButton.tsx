@@ -1,10 +1,11 @@
 import React from "react";
 import styles from "./sportButton.module.css";
 
-import { Button, ButtonProps } from "@mui/material";
+import { LoadingButton, LoadingButtonProps } from "@mui/lab";
+
 import cn from "classnames";
 
-interface SportButtonProps extends ButtonProps {}
+export interface SportButtonProps extends LoadingButtonProps {}
 
 export const SportButton: React.FC<SportButtonProps> = ({
   children,
@@ -13,7 +14,7 @@ export const SportButton: React.FC<SportButtonProps> = ({
   ...props
 }) => {
   return (
-    <Button
+    <LoadingButton
       {...props}
       className={cn(
         {
@@ -26,6 +27,6 @@ export const SportButton: React.FC<SportButtonProps> = ({
       variant={variant}
     >
       {children}
-    </Button>
+    </LoadingButton>
   );
 };

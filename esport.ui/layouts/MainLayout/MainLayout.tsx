@@ -1,13 +1,14 @@
 import React, { PropsWithChildren, useEffect } from "react";
-import styles from "./mainLayout.module.scss";
+import styles from "./mainLayout.module.css";
 
 import cn from "classnames";
 
 import { useMedia } from "@shared/lib/hooks/useMedia";
 import { useAppDispatch, useAppSelector } from "@shared/lib/hooks/useStore";
 
-import { TopPageLoader } from "@features/TopPageLoader/TopPageLoader";
 import { SportHead, SportHeadProps } from "@features/SportHead/SportHead";
+import { TopPageLoader } from "@features/TopPageLoader";
+import { SportSnackbar } from "@features/SportSnackbar";
 
 import { SportSidebar } from "@widgets/SportSidebar/SportSidebar";
 import { SportHeader } from "@widgets/SportHeader/SportHeader";
@@ -16,10 +17,14 @@ import { useMediaQuery } from "@shared/lib/hooks/useMediaQuery";
 
 import { updateSidebarOpened } from "./mainLayout.slice";
 
-type MainLayoutProps = PropsWithChildren & SportHeadProps & {};
+type MainLayoutProps = PropsWithChildren &
+  SportHeadProps & {
+    className?: string;
+  };
 
 export const MainLayout: React.FC<MainLayoutProps> = ({
   headProps,
+  className,
   children,
 }) => {
   const { isMobile, tabletBreakPoint } = useMedia();
@@ -57,10 +62,11 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
           isSidebarOpened={isSidebarOpened}
           setIsSidebarOpened={setIsSidebarOpened}
         />
-        <section className={cn(layoutClassName, styles.ptHeader)}>
+        <section className={cn(layoutClassName, styles.content, className)}>
           {children}
         </section>
       </main>
+      <SportSnackbar />
     </>
   );
 };

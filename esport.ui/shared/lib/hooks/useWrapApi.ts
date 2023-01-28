@@ -1,4 +1,4 @@
-import { useLoader } from "./useLoader";
+import { useLoader } from "@features/TopPageLoader/lib/hooks/useLoader";
 
 interface WrapApiConfigParams {
   onSuccess?: () => void;

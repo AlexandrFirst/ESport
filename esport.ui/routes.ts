@@ -1,5 +1,18 @@
+const competitionRoute = "competition";
+
 export const routes = {
-  Register: '/register',
-  Login: '/login',
-  Test: '/test',
-}
+  Main: "/",
+  Register: "/register",
+  Login: "/login",
+  Test: "/test",
+
+  Competition: {
+    Main: `/${competitionRoute}`,
+    Id: (id: string) => `/${competitionRoute}/${id}`,
+    Create: `/${competitionRoute}/create`,
+    Category: {
+      Id: (compId: string, catId: string) =>
+        `/${competitionRoute}/${compId}/${catId}`,
+    },
+  },
+};

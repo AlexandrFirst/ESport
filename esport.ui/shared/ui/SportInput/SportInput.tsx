@@ -1,5 +1,5 @@
 import React, { forwardRef } from "react";
-import styles from "./sportInput.module.css";
+import styles from "./sportInput.module.scss";
 
 import cn from "classnames";
 import { Controller, useFormContext } from "react-hook-form";
@@ -11,6 +11,7 @@ export type Message = { message: string };
 export type SportInputProps = TextFieldProps & {
   name: string;
   errors?: Record<string, Message>;
+  callbackOnChange?: (value: string) => void;
 };
 
 export const SportInput = forwardRef<HTMLDivElement, SportInputProps>(
@@ -18,12 +19,13 @@ export const SportInput = forwardRef<HTMLDivElement, SportInputProps>(
     {
       name,
       defaultValue,
-      variant = "filled",
+      variant = "outlined",
       inputProps,
       fullWidth = true,
       errors,
       InputProps,
       inputRef,
+      callbackOnChange,
       ...props
     },
     ref
@@ -38,6 +40,11 @@ export const SportInput = forwardRef<HTMLDivElement, SportInputProps>(
           <TextField
             {...props}
             {...field}
+            onChange={(e) => {
+              field.onChange(e);
+              callbackOnChange?.(e.target.value);
+            }}
+            variant={variant}
             inputRef={inputRef}
             ref={ref}
             // sx={{

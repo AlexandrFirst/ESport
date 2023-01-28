@@ -1,8 +1,8 @@
 import React, { memo } from "react";
-import styles from "./Left.module.css";
+import styles from "./Left.module.scss";
 import cn from "classnames";
 
-import { useMedia } from "../../../../shared/lib/hooks/useMedia";
+import { useMedia } from "@shared/lib/hooks/useMedia";
 
 export const Left: React.FC = memo(() => {
   const { isMobile } = useMedia();

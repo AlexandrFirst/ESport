@@ -1,6 +1,6 @@
 import React, { PropsWithChildren } from "react";
 
-import { useMedia } from "../../shared/lib/hooks/useMedia";
+import { useMedia } from "@shared/lib/hooks/useMedia";
 
 import { SidebarContextProvider } from "./components/SidebarContext/SidebarContext";
 import MobileSportSidebar from "./components/MobileSportSidebar/MobileSportSidebar";

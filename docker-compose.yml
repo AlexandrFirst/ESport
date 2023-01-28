@@ -40,8 +40,6 @@ services:
       - '27017:27017'
     volumes:
       - ./mongo-data-4.4:/data/db
-    networks:
-      - mongo_bridge_network
   kurrento:
     image: kurento/kurento-media-server:6.18.0
     container_name: kurento
@@ -154,9 +152,6 @@ services:
       - rabbit
       - mongo
       - api-gateway
-    networks:
-      - mongo_bridge_network
-      - rabbit_bridge_network
   api-gateway:
     container_name: esport-api-gateway
     build:
@@ -168,12 +163,8 @@ services:
       - ./esport.api.gateway:/usr/src/app
     command: npm run start
     env_file:
-      - ./esport.api.gateway/.env
+      - ./esport.api.gateway/.env.production
     depends_on:
       - rabbit
     ports:
       - '3001:3001'
-
-networks:
-  mongo_bridge_network:
-    driver: bridge

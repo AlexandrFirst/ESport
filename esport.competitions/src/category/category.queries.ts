@@ -1,8 +1,9 @@
 import { Controller } from '@nestjs/common';
 import { RMQRoute, RMQValidate } from 'nestjs-rmq';
 
+import { CategoriesGetById } from 'esport-lib-ts/lib/competitions';
+
 import { CategoryService } from './category.service';
-import { CategoriesGetById } from '../_TEMP/category/queries/category.get-category-by-id.query';
 
 @Controller()
 export class CategoryQueries {

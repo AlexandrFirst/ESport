@@ -1,0 +1,11 @@
+.form {
+    @apply flex flex-col items-center w-1/2 mx-auto;
+}
+
+.input {
+    @apply mt-4
+}
+
+.btn_container {
+    @apply w-[100%] mt-5 text-right;
+}
