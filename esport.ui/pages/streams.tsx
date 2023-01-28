@@ -10,7 +10,7 @@ declare global {
     }
 }
 
-const StreamPage: NextPage = () => {
+const StreamsPage: NextPage = () => {
 
     let basePath = process.env.STREAM_UI_APP ?? "";
     const [value, setValue] = useState('');
@@ -47,4 +47,4 @@ const StreamPage: NextPage = () => {
 
 
 
-export default StreamPage;
+export default StreamsPage;

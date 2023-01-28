@@ -54,6 +54,7 @@ namespace GateWay
                 o.DefaultChallengeScheme = "ESport";
             })
             .AddScheme<ESportClientAuthenticationOptions, ESportClientAuthenticationHandler>("ESport", o => { o.Authority = Configuration.GetSection("Security")["Authority"]; });
+            
 
             services.AddOcelot();
         }

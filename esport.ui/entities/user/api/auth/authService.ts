@@ -30,23 +30,28 @@ const headers = {
   'Sec-Fetch-Site': 'same-origin'
 };
 
+const identityApi = axios.create({
+  baseURL: process.env.NEXT_PUBLIC_LOGIN_API_URL ?? "",
+  withCredentials: true,
+});
+
+
 class AuthService {
-  identityApi = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_LOGIN_API_URL ?? "",
-    withCredentials: true,
-  });
- 
+
+  constructor() {
+    console.log(identityApi)
+  }
 
   register(registerRequest: IRegisterRequest): Promise<IRegisterResponse> {
-    return this.identityApi.post("/register", registerRequest);
+    return identityApi.post("/register", registerRequest);
   }
 
   login(loginRequest: ILoginRequest): Promise<ILoginResponse> {
-    return this.identityApi.post("/apiLogin", loginRequest);
+    return identityApi.post("/apiLogin", loginRequest);
   }
 
   confirm(token: string): Promise<void> {
-    return this.identityApi.get(`/confirm?token=${token}`);
+    return identityApi.get(`/confirm?token=${token}`);
   }
 }
 
