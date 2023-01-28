@@ -3,7 +3,6 @@ import { IFight } from 'esport-lib-ts/lib/competitions';
 
 import { FightRepository } from './fight.repository';
 import { FightEntity } from './fight.entity';
-import { Fight } from './fight.model';
 
 @Injectable()
 export class FightService {
@@ -21,7 +20,7 @@ export class FightService {
     const fight = await this.fightRepo.findById(f._id);
     const fightEntity = new FightEntity(fight).partialUpdate(f);
     await this.fightRepo.update(fightEntity);
-    return fight;
+    return fightEntity;
   }
 
   async updateMany(fights: Partial<IFight>[]) {
@@ -29,7 +28,7 @@ export class FightService {
   }
 
   async updateOrCreateMany(fights: Partial<IFight>[]) {
-    let newFights: Fight[] = [];
+    let newFights: IFight[] = [];
     await Promise.all(
       fights.map(async (fight) => {
         if (fight._id) {

@@ -5,8 +5,8 @@ export namespace CategoryUpdate {
   export const topic = "competitions.category.update-category.command";
 
   export class Request {
-    @IsString()
-    _id: string;
+    // @IsString()
+    // _id: string;
 
     @IsString()
     @IsOptional()

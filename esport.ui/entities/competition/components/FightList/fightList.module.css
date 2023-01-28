@@ -1,0 +1,3 @@
+.competitor {
+  @apply border border-gray-200 rounded-lg p-4 mt-4 max-w-sm;
+}

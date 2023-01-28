@@ -4,23 +4,28 @@ import {
   GetAllCompetitionsRequest,
   GetByIdRequest,
 } from "@entities/competition/types/api";
+import { ICategory } from "@entities/competition";
 
 class CompetitionApi {
   //TODO: implement search on server
-  getAllCompetitions({
+  async getAllCompetitions({
     search,
   }: GetAllCompetitionsRequest): Promise<ICompetition[]> {
     return $api.get("/competitions/all");
   }
 
-  getById({
+  async getById({
     id,
     search,
   }: GetByIdRequest): Promise<{ competition: ICompetition }> {
     return $api.get(`/competitions/${id}`);
   }
 
-  create(competition: ICompetition): Promise<{ id: string }> {
+  async getCategoryById(id: string): Promise<{ category: ICategory | null }> {
+    return $api.get(`/competitions/categories/${id}`);
+  }
+
+  async create(competition: ICompetition): Promise<{ id: string }> {
     return $api.post("/competitions/create", competition);
   }
 }

@@ -12,13 +12,13 @@ import {
 import { RMQService } from 'nestjs-rmq';
 
 import {
+  CategoriesGetById,
   CategoryCreate,
   CategoryUpdate,
   ICategory,
 } from 'esport-lib-ts/lib/competitions';
 
 import { res } from 'src/utility';
-import { CategoriesGetById } from 'esport-lib-ts/lib/competitions/contracts/queries/category.get-category-by-id.query';
 
 @Controller('competitions/categories')
 export class CategoriesController {
