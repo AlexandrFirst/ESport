@@ -1,0 +1,23 @@
+<div class="p-2">
+  <h2>Stream list</h2>
+
+  <div class="list-group">
+    <div *ngIf="streams.length == 0">
+      No streams exists
+    </div>
+    <div *ngFor="let item of streams" href="#" class="list-group-item list-group-item-action" aria-current="true">
+      <div class="d-flex justify-content-between align-items-center">
+        <ul style="list-style-type:none">
+          <li>Stream name: {{item.name}}</li>
+          <li>Description: {{item.description}}</li>
+          <li>Start time: {{item.startTime | date: 'medium'}}</li>
+          <li>End time: {{item.endTime ? (item.endTime | date: 'medium') : 'No end time is specified'}}</li>
+        </ul>
+        <div>
+          <button class="btn btn-primary" (click)="goToStreamPage(item.id)">Visit</button>
+        </div>
+      </div>
+    </div>
+    <button class="btn btn-primary mt-3" (click)="goToAddEditPage()">Add new stream event</button>
+  </div>
+</div>

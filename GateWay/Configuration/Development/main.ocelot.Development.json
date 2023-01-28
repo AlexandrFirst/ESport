@@ -24,7 +24,6 @@
         "Name": "Claims[Name] > value > |",
         "Email": "Claims[Email] > value > |"
       }
-
     }
   ]
 }

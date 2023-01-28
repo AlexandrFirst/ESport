@@ -23,7 +23,7 @@ namespace UserWorkFlow.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
+        [HttpGet("myGet")]
         public IEnumerable<WeatherForecast> Get()
         {
             var user = User;
