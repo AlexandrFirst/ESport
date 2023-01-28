@@ -12,7 +12,13 @@ declare global {
 
 const StreamsPage: NextPage = () => {
 
-    let basePath = process.env.STREAM_UI_APP ?? "";
+    let basePath = process.env.NEXT_PUBLIC_STREAM_UI_APP ?? "";
+
+
+    console.log('STREAM_UI_APP', process.env.NEXT_PUBLIC_STREAM_UI_APP);
+    console.log('NEXT_PUBLIC_LOGIN_API_URL', process.env.NEXT_PUBLIC_LOGIN_API_URL);
+
+
     const [value, setValue] = useState('');
 
     const router = useRouter();
