@@ -55,7 +55,10 @@ services:
     volumes:
       - ./records:/tmp
   identity:
-    image: 12345flex402/esport_identity
+    image: diplom_identity
+    build:
+      context: ./IdentityV2
+      dockerfile: ./Dockerfile
     depends_on:
       sqldb:
         condition: service_healthy
@@ -67,7 +70,10 @@ services:
     ports:
       - '5000:80'
   gateway:
-    image: 12345flex402/esport-gateway
+    image: gateway
+    build:
+      context: .
+      dockerfile: Dockerfile
     depends_on:
       - identity
     restart: on-failure
@@ -75,8 +81,23 @@ services:
       - ASPNETCORE_ENVIRONMENT=Production
     ports:
       - '5001:80'
+  userflow:
+    image: userflow
+    build:
+      context: ./UserWorkFlow
+      dockerfile: ./Dockerfile
+    depends_on:
+      - gateway
+    restart: on-failure
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+    ports:
+      - '5002:80'
   message:
-    image: 12345flex402/esport-message-service
+    image: messageservice
+    build:
+      context: ./MessageService
+      dockerfile: ./Dockerfile
     depends_on:
       rabbit:
         condition: service_healthy
@@ -86,7 +107,10 @@ services:
     ports:
       - '5003:80'
   stream:
-    image: 12345flex402/esport-stream-service
+    image: stream-service
+    build:
+      context: ./
+      dockerfile: ./StreamService.Dockerfile
     depends_on:
       - kurrento
       - sqldb
@@ -98,20 +122,27 @@ services:
     ports:
       - '5004:80'
   web:
-    image: 12345flex402/esport-web
+    image: esport-web
     container_name: esport-web
+    build:
+      context: ./esport.ui
+      dockerfile: ./Dockerfile
     restart: on-failure
     ports:
       - '3000:3000'
   stream-ui:
-    image: 12345flex402/esport-stream-ui
     container_name: stream-ui
+    build:
+      context: ./esport.stream.ui
+      dockerfile: ./Dockerfile
     restart: on-failure
     ports:
       - '4200:80'
   competitions:
-    image: 12345flex402/esport-competitions
     container_name: esport-competitions
+    build:
+      context: ./esport.competitions
+      dockerfile: ./Dockerfile
     restart: on-failure
     volumes:
       - /usr/src/app/node_modules
@@ -124,8 +155,10 @@ services:
       - mongo
       - api-gateway
   api-gateway:
-    image: 12345flex402/esport-gateway-ts
     container_name: esport-api-gateway
+    build:
+      context: ./esport.api.gateway
+      dockerfile: ./Dockerfile
     restart: on-failure
     volumes:
       - /usr/src/app/node_modules

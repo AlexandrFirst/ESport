@@ -10,9 +10,15 @@ declare global {
     }
 }
 
-const StreamPage: NextPage = () => {
+const StreamsPage: NextPage = () => {
 
-    let basePath = 'http://localhost:4200/';
+    let basePath = process.env.NEXT_PUBLIC_STREAM_UI_APP ?? "";
+
+
+    console.log('STREAM_UI_APP', process.env.NEXT_PUBLIC_STREAM_UI_APP);
+    console.log('NEXT_PUBLIC_LOGIN_API_URL', process.env.NEXT_PUBLIC_LOGIN_API_URL);
+
+
     const [value, setValue] = useState('');
 
     const router = useRouter();
@@ -47,4 +53,4 @@ const StreamPage: NextPage = () => {
 
 
 
-export default StreamPage;
+export default StreamsPage;
