@@ -118,7 +118,6 @@ services:
       - ./esport.competitions/.env.production
     depends_on:
       - rabbit
-      - mongo
       - api-gateway
   api-gateway:
     image: 12345flex402/esport-gateway-ts
