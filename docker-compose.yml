@@ -17,6 +17,8 @@ services:
       - "./db_volume/_data:/var/opt/mssql/data"
       - "./db_volume/_log:/var/opt/mssql/log"
       - "./db_volume/_log:/var/opt/mssql/secrets"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
   rabbit:
     image: rabbitmq:3-management
     user: root
@@ -31,6 +33,8 @@ services:
     ports:
       - '15672:15672'
       - '5672:5672'
+    extra_hosts:
+    - "host.docker.internal:host-gateway"
   kurrento:
     image: kurento/kurento-media-server:6.18.0
     user: root
@@ -46,8 +50,13 @@ services:
       - '8888:8888'
     volumes:
       - ./records:/tmp
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
   identity:
     image: 12345flex402/esport_identity
+    build:
+      context: ./IdentityV2
+      dockerfile: ./Dockerfile
     depends_on:
       sqldb:
         condition: service_healthy
@@ -58,9 +67,14 @@ services:
       - ASPNETCORE_ENVIRONMENT=Production
     ports:
       - '5000:80'
+    extra_hosts:
+    - "host.docker.internal:host-gateway"
   gateway:
     image: 12345flex402/esport-gateway
     user: root
+    build:
+      context: .
+      dockerfile: Dockerfile
     depends_on:
       - identity
     restart: on-failure
@@ -68,9 +82,14 @@ services:
       - ASPNETCORE_ENVIRONMENT=Production
     ports:
       - '5001:80'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
   message:
     image: 12345flex402/esport-message-service
     user: root
+    build:
+      context: ./MessageService
+      dockerfile: ./Dockerfile
     depends_on:
       rabbit:
         condition: service_healthy
@@ -79,9 +98,14 @@ services:
       - ASPNETCORE_ENVIRONMENT=Production
     ports:
       - '5003:80'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
   stream:
     image: 12345flex402/esport-stream-service
     user: root
+    build:
+      context: ./
+      dockerfile: ./StreamService.Dockerfile
     depends_on:
       - kurrento
       - sqldb
@@ -92,16 +116,24 @@ services:
       - ASPNETCORE_ENVIRONMENT=Production
     ports:
       - '5004:80'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
   web:
     image: 12345flex402/esport-web
     user: root
     container_name: esport-web
+    build:
+      context: ./esport.ui
+      dockerfile: ./Dockerfile
     restart: on-failure
     ports:
       - '3000:3000'
   stream-ui:
     image: 12345flex402/esport-stream-ui
     container_name: stream-ui
+    build:
+      context: ./esport.stream.ui
+      dockerfile: ./Dockerfile
     restart: on-failure
     ports:
       - '4200:80'
@@ -109,6 +141,9 @@ services:
     image: 12345flex402/esport-competitions
     user: root
     container_name: esport-competitions
+    build:
+      context: ./esport.competitions
+      dockerfile: ./Dockerfile
     restart: on-failure
     volumes:
       - /usr/src/app/node_modules
@@ -122,6 +157,9 @@ services:
   api-gateway:
     image: 12345flex402/esport-gateway-ts
     user: root
+    build:
+      context: ./esport.api.gateway
+      dockerfile: ./Dockerfile
     container_name: esport-api-gateway
     restart: on-failure
     volumes:
