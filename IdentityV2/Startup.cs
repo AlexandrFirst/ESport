@@ -81,6 +81,7 @@ namespace IdentityV2
             services.AddDbContext<IdentityDataContext>(options => options.UseSqlServer(connectionString));
 
             services.AddOptions<RabbitMqOptions>().Bind(Configuration.GetSection("RabbitMq"));
+            services.AddOptions<MailOption>().Bind(Configuration.GetSection("MailOption"));
 
             services.AddAutoMapper(typeof(Startup));
 
