@@ -85,12 +85,13 @@ namespace MessageService.Workers
                 {
                     var deserializedMessage = JsonConvert.DeserializeObject<MailIncommingModel>(message);
 
-                    await emailService.SendMessagesAsync(new SendMessageRequest()
+                    var result = await emailService.SendMessagesAsync(new SendMessageRequest()
                     {
                         Template = String.Format(deserializedMessage.Template, deserializedMessage.Token),
                         ToMail = new System.Collections.Generic.List<string>() { deserializedMessage.Mail}
                     });
-                    _channel.BasicAck(ea.DeliveryTag, false);
+                    if(result == 1)
+                        _channel.BasicAck(ea.DeliveryTag, false);
                 }
                 catch (JsonException)
                 {

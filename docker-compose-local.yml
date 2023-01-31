@@ -28,18 +28,6 @@ services:
     ports:
       - '15672:15672'
       - '5672:5672'
-  mongo:
-    image: mongo:4.4.4
-    container_name: mongo
-    restart: on-failure
-    environment:
-      - MONGO_INITDB_DATABASE=Esport
-      - MONGO_INITDB_ROOT_USERNAME=admin
-      - MONGO_INITDB_ROOT_PASSWORD=admin
-    ports:
-      - '27017:27017'
-    volumes:
-      - ./mongo-data-4.4:/data/db
   kurrento:
     image: kurento/kurento-media-server:6.18.0
     container_name: kurento
@@ -152,7 +140,6 @@ services:
       - ./esport.competitions/.env.production
     depends_on:
       - rabbit
-      - mongo
       - api-gateway
   api-gateway:
     container_name: esport-api-gateway

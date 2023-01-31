@@ -75,7 +75,9 @@ namespace IdentityV2
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<IdentityDataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("IdentityDb")));
+            var connectionString = Configuration.GetConnectionString("IdentityDb");
+            System.Console.WriteLine("Connection string: " + connectionString);
+            services.AddDbContext<IdentityDataContext>(options => options.UseSqlServer(connectionString));
 
             services.AddOptions<RabbitMqOptions>().Bind(Configuration.GetSection("RabbitMq"));
 

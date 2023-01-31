@@ -28,16 +28,17 @@ namespace MessageService.Services
         {
             var emailprovide = SmtpEmailDeliveryProvider.Name;
 
-            //if (env.EnvironmentName == "Production")
-            //{
-            //    emailprovide = SendgridEmailDeliveryProvider.Name;
-            //}
+            if (env.EnvironmentName == "Production")
+            {
+               emailprovide = SendgridEmailDeliveryProvider.Name;
+            }
 
             foreach (var mail in sendMessageRequest.ToMail)
             {
                 var message = EmailMessage.Compose()
                  .To(mail)
                  .WithHtmlContent(sendMessageRequest.Template)
+                 .WithSubject("Registration confirmation")
                  .WithHighPriority()
                  .Build();
 
@@ -48,7 +49,11 @@ namespace MessageService.Services
                 }
                 else 
                 {
-                    logger.LogError("Error while sending confirmation message to: " + mail);
+                    logger.LogError("Error while sending confirmation message to: " + mail + "; ");
+                    result.Errors.ToList().ForEach(x => {
+                        logger.LogError($"{x.Message};{x.Code};{x.Exception} ");
+                    });
+                    return 0;
                 }
             }
 
