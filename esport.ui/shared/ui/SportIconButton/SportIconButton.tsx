@@ -8,8 +8,8 @@ export interface SportIconButtonProps extends IconButtonProps {}
 
 export const SportIconButton: React.FC<SportIconButtonProps> = ({
   className,
-  children,
   disabled,
+  children,
   ...props
 }) => {
   return (

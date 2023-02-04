@@ -85,6 +85,14 @@ module.exports = {
         "unloggedin-layout-1": "url('/public/unloggedin-backgound.jpg')",
         "unloggedin-layout-2": "url('/public/unloggedin-backgound-1.jpg')",
       },
+      borderColor: {
+        skin: {
+          error: withOpacity("--color-dark-error-main"),
+        },
+        darkSkin: {
+          error: withOpacity("--color-dark-error-main"),
+        },
+      },
     },
   },
   variants: {
