@@ -7,8 +7,8 @@ import cn from "classnames";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
-import { SportIconButton } from "../SportIconButton/SportIconButton";
 import { SportInput, SportInputProps } from "@shared/ui/SportInput/SportInput";
+import { SportIconButton } from "@shared/ui/SportIconButton/SportIconButton";
 
 type SportPasswordInputProps = SportInputProps & {
   name: string;
