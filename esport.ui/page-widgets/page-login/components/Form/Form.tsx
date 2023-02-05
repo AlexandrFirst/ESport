@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import styles from "./form.module.css";
 
 import { useRouter } from "next/router";
@@ -26,6 +26,7 @@ import { SportForm } from "@features/SportForm/SportForm";
 
 import { useValidation } from "@page-widgets/page-login/lib/hooks";
 import { ILoginForm } from "@page-widgets/page-login/types/login-form";
+import { Context } from "../../../../pages/login";
 
 export const Form: React.FC = () => {
   const { isMobile } = useMedia();
@@ -38,14 +39,23 @@ export const Form: React.FC = () => {
 
   const router = useRouter();
   const withErrorAndLoading = useWrapApi();
+  const { httpsAgent } = useContext(Context);
 
   const onSubmit = methods.handleSubmit(
-    async (data) =>
-      withErrorAndLoading(authService.login, data, {
-        onSuccess: () => {
-          router.push(routes.Test);
-        },
-      }),
+    async (data) => {
+      const res = await authService.login(data, { httpsAgent });
+      console.log("===res===", res);
+      if (res) {
+        router.push(routes.Test);
+      }
+    },
+    // withErrorAndLoading(
+    //   {
+    //     onSuccess: () => {
+    //       router.push(routes.Test);
+    //     },
+    //   }
+    // ),
     (err) => console.log(err)
   );
 
