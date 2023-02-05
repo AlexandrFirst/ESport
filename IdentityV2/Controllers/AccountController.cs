@@ -21,6 +21,7 @@ namespace IdentityV2.Controllers
             this.accountService = accountService;
         }
 
+        [RequireHttps]
         [HttpPost("ApiLogin")]
         public async Task<IActionResult> ApiLogin([FromBody] LoginModel loginModel)
         {
@@ -29,8 +30,7 @@ namespace IdentityV2.Controllers
                 Mail = loginModel.Mail,
                 Password = loginModel.Password
             };
-            Console.WriteLine("sdsd");
-            Console.WriteLine("sdsd");
+            
             var token = await accountService.Login(loginDto);
             if (token == null) { return BadRequest(new { Message = "Login or password is incorrect"}); }
             Response.Headers.Add("access-control-expose-headers", "Set-Cookie");
@@ -40,8 +40,8 @@ namespace IdentityV2.Controllers
                 Path = "/",
                 IsEssential = false,
                 Expires = DateTime.Now.AddMonths(1),
-                SameSite = Microsoft.AspNetCore.Http.SameSiteMode.Lax,
-                Secure = false,
+                SameSite = Microsoft.AspNetCore.Http.SameSiteMode.None,
+                Secure = true,
                 HttpOnly = false
             });
 
