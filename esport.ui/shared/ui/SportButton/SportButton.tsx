@@ -38,17 +38,15 @@ export const SportButton: React.FC<SportButtonProps> = ({
       {children}
     </LoadingButton>
   ) : (
-    <ButtonBase component={"div"} className={styles.btnBase}>
-      <button
-        {...props}
-        className={cn(styles.btn, className, {
-          [styles.contained]: variant === "contained",
-          [styles.textVariant]: variant === "text",
-          [styles.disabled]: loading || disabled,
-        })}
-      >
-        {!loading ? children : <SportSpinner />}
-      </button>
+    <ButtonBase
+      {...props}
+      className={cn(styles.btnBase, styles.btn, className, {
+        [styles.contained]: variant === "contained",
+        [styles.textVariant]: variant === "text",
+        [styles.disabled]: loading || disabled,
+      })}
+    >
+      {!loading ? children : <SportSpinner />}
     </ButtonBase>
   );
 };

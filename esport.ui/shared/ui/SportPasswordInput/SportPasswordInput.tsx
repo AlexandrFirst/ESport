@@ -16,22 +16,16 @@ type SportPasswordInputProps = SportInputProps & {
 };
 
 export const SportPasswordInput = forwardRef<
-  HTMLDivElement,
+  HTMLInputElement,
   SportPasswordInputProps
 >(function SportPasswordInput({ name, type, ...props }, ref) {
   const {
     formState: { errors },
   } = useFormContext();
-  const refInput = React.useRef<HTMLInputElement>(ref ?? null);
 
   const [visible, setVisible] = useState(false);
 
-  const handleClickShowPassword = () => {
-    refInput?.current?.focus();
-    refInput.current.selectionStart = refInput.current.value.length;
-    refInput.current.selectionEnd = refInput.current.value.length;
-    setVisible((prev) => !prev);
-  };
+  const handleClickShowPassword = () => setVisible((p) => !p);
 
   const hasError = !!errors[name]?.message;
 
@@ -39,7 +33,7 @@ export const SportPasswordInput = forwardRef<
     <SportInput
       {...props}
       name={name}
-      ref={refInput}
+      ref={ref}
       type={visible ? "text" : "password"}
       endIcon={
         <SportIconButton

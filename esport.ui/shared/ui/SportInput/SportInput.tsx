@@ -4,7 +4,7 @@ import React, {
   ReactNode,
   useState,
 } from "react";
-import styles from "./sportInput.module.scss";
+import styles from "./sportInput.module.css";
 
 import { motion } from "framer-motion";
 import cn from "classnames";
@@ -21,7 +21,7 @@ export type SportInputProps = InputHTMLAttributes<HTMLInputElement> & {
   variant?: "outlined" | "standard" | "filled";
 };
 
-export const SportInput = forwardRef<HTMLDivElement, SportInputProps>(
+export const SportInput = forwardRef<HTMLInputElement, SportInputProps>(
   function SportInput(
     {
       name,

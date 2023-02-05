@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./form.module.scss";
+import styles from "./form.module.css";
 
 import { useRouter } from "next/router";
 
@@ -71,7 +71,7 @@ export const Form: React.FC = () => {
       <SportLink className={styles.link} to={routes.Register}>
         Forgot password?
       </SportLink>
-      <SportButton className={styles.btn} onClick={onSubmit}>
+      <SportButton isNew className={styles.btn} onClick={onSubmit}>
         Login
       </SportButton>
       <span className={styles.text}>New on our platform? </span>

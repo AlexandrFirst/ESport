@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import styles from "./form.module.scss";
+import styles from "./form.module.css";
 
 import cn from "classnames";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 
 import { routes } from "routes";
@@ -34,7 +34,7 @@ export const Form: React.FC = () => {
   const methods = useForm<IRegisterForm>({
     resolver: yupResolver(validationSchema),
   });
-  const { register } = methods;
+  const { register, trigger } = methods;
 
   const [currStep, setCurrStep] = useState(RegisterSteps.MainInfo);
 
@@ -44,15 +44,24 @@ export const Form: React.FC = () => {
   const isFirstStep = currStep === RegisterSteps.MainInfo;
   const isLastStep = currStep === RegisterSteps.AdditioanalInfo;
 
-  const handleNext = () => {
-    const newStep = currStep + 1;
-    setCurrStep(newStep);
+  const validate = async (currStep: RegisterSteps) => {
+    if (currStep === RegisterSteps.MainInfo) {
+      return trigger(["email", "firstName", "lastName"]);
+    } else if (currStep === RegisterSteps.SportInfo) {
+      return trigger(["password", "confirmPassword"]);
+    } else if (currStep === RegisterSteps.AdditioanalInfo) {
+      return trigger(["telephoneNumber"]);
+    }
   };
 
-  const handleBack = () => {
-    const newStep = currStep - 1;
-    setCurrStep(newStep);
+  const handleNext = async () => {
+    const isValidated = await validate(currStep);
+    if (isValidated) {
+      setCurrStep((p) => p + 1);
+    }
   };
+
+  const handleBack = () => setCurrStep((p) => p - 1);
 
   const onSubmit = methods.handleSubmit(apiRegister);
 
@@ -71,11 +80,11 @@ export const Form: React.FC = () => {
           <KeyboardDoubleArrowLeftIcon />
         </SportIconButton>
         {!isLastStep ? (
-          <SportButton className={styles.btn} onClick={handleNext}>
+          <SportButton isNew className={styles.btn} onClick={handleNext}>
             Next
           </SportButton>
         ) : (
-          <SportButton className={styles.btn} onClick={onSubmit}>
+          <SportButton isNew className={styles.btn} onClick={onSubmit}>
             Submit
           </SportButton>
         )}
@@ -89,9 +98,7 @@ export const Form: React.FC = () => {
         className={styles.grid}
       >
         <Dividers>
-          <Typography className={cn(styles.text, styles.dividers)}>
-            or
-          </Typography>
+          <span className={cn(styles.text, styles.dividers)}>or</span>
         </Dividers>
       </Grid>
     </SportForm>

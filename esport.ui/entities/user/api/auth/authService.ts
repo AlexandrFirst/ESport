@@ -27,7 +27,7 @@ export interface ILoginResponse {
 }
 
 const headers = {
-  'Sec-Fetch-Site': 'same-origin'
+  "Sec-Fetch-Site": "same-origin",
 };
 
 const identityApi = axios.create({
@@ -35,13 +35,7 @@ const identityApi = axios.create({
   withCredentials: true,
 });
 
-
 class AuthService {
-
-  constructor() {
-    console.log(identityApi)
-  }
-
   register(registerRequest: IRegisterRequest): Promise<IRegisterResponse> {
     return identityApi.post("/register", registerRequest);
   }

@@ -11,14 +11,14 @@
 }
 
 .focus fieldset {
-    @apply border-primary-hover #{!important}
+    @apply !border-primary-hover;
 }
 
 .input svg {
     @apply text-skin-main dark:text-darkSkin-main
 }
 
-//--------------------------------------------
+/*//--------------------------------------------*/
 
 .main_wrapper {
     @apply mb-7;
@@ -38,9 +38,10 @@
 
 .input_1 {
     @apply rounded-md bg-skin-main dark:bg-darkSkin-main  border-[1px] focus:border-2 focus:outline-0 min-h-[45px] border-primary-hover w-[100%] px-2.5;
-    &_error {
-        @apply border-skin-error dark:border-darkSkin-error;
-    }
+}
+
+.input_1_error {
+    @apply border-skin-error dark:border-darkSkin-error;
 }
 
 .helper_text {
