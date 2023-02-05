@@ -11,6 +11,7 @@ using IdentityV2.Utils;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -26,6 +27,7 @@ namespace IdentityV2.Infrastructure.Core
         private readonly IMapper mapper;
         private readonly IMessageProducer messageProducer;
         private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly MailOption mailOptions;
         private readonly string passwordSecretKey;
 
         public AccountService(IdentityDataContext dataContext,
@@ -33,7 +35,8 @@ namespace IdentityV2.Infrastructure.Core
             IConfiguration configuration,
             IMapper mapper,
             IMessageProducer messageProducer,
-            IHttpContextAccessor httpContextAccessor)
+            IHttpContextAccessor httpContextAccessor,
+            IOptions<MailOption> mailOptions)
         {
             this.dataContext = dataContext;
             this.jwtMananager = jwtMananager;
@@ -41,7 +44,7 @@ namespace IdentityV2.Infrastructure.Core
             this.messageProducer = messageProducer;
             this.httpContextAccessor = httpContextAccessor;
             passwordSecretKey = configuration.GetSection("User")["Key"];
-
+            this.mailOptions = mailOptions.Value;
         }
 
         public async Task<bool> ConfirmRegistration(string token)
@@ -108,7 +111,7 @@ namespace IdentityV2.Infrastructure.Core
                 {
                     token = userToInsert.PendingUser.PendingToken.ToString(),
                     mail = userToInsert.Email,
-                    template = "<p>Click to confirm your account <a href='http://localhost:3000/user/confirm/{0}'>Confirm</a></p>"
+                    template = "<p>Click to confirm your account <a href='http://" + mailOptions.ConfirmationHost +":3000/user/confirm/{0}'>Confirm</a></p>"
                 });
                 await dataContext.SaveChangesAsync();
 

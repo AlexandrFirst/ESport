@@ -40,7 +40,9 @@ namespace GateWay
 
             services.AddCors(options => options.AddPolicy("ESportCors", builder =>
             {
-                builder.WithOrigins("http://localhost:4200")
+                builder.WithOrigins("http://localhost:3000", "http://localhost:6005", 
+                "http://164.92.190.247:3000", "http://164.92.190.247:6005",
+                "http://localhost:4200", "http://164.92.190.247:4200")
                        .AllowAnyMethod()
                        .AllowAnyHeader()
                        .AllowCredentials();
