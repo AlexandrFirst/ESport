@@ -43,7 +43,9 @@ export const Form: React.FC = () => {
 
   const onSubmit = methods.handleSubmit(
     async (data) => {
-      const res = await authService.login(data, { httpsAgent });
+      const res = await authService.login(data, {
+        httpsAgent: JSON.parse(httpsAgent),
+      });
       console.log("===res===", res);
       if (res) {
         router.push(routes.Test);
