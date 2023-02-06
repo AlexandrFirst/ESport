@@ -3,6 +3,8 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using UserWorkflow.Application.Requests;
+using UserWorkFlow.Infrastructure.Queries;
 
 namespace UserWorkflow.Application
 {
@@ -10,6 +12,8 @@ namespace UserWorkflow.Application
     {
         public static void RegisterIocContainers(IServiceCollection services, IConfiguration configuration)
         {
+
+            services.AddTransient<IRequestHandler<GetUser, GetUserResult>, GetUserHandler>();
 
 
             UserWorkflow.Esport.Bootstrapper.RegisterIocContainers(services, configuration);
