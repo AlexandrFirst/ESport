@@ -23,6 +23,11 @@ namespace IdentityV2
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    webBuilder.UseKestrel(o =>
+                    {
+                        o.Listen(IPAddress.Any, 5001, opt => opt.UseHttps(".cerfs/localhost.pfx", "1234"));
+                        o.Listen(IPAddress.Any, 5000);
+                    });
                 });
     }
 }
