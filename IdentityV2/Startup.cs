@@ -45,7 +45,7 @@ namespace IdentityV2
 
             services.AddCors(options => options.AddPolicy("ESportCors", builder =>
             {
-                builder.WithOrigins("https://localhost:3000", "http://localhost:6005", 
+                builder.WithOrigins("http://localhost:3000", "http://localhost:6005", 
                 "http://164.92.190.247:3000", "http://164.92.190.247:6005")
                        .AllowAnyMethod()
                        .AllowAnyHeader()
@@ -98,8 +98,9 @@ namespace IdentityV2
             {
                 app.UseDeveloperExceptionPage();
             }
-
             app.UseCors("ESportCors");
+            
+            app.UseHttpsRedirection();
 
             app.UseStaticFiles();
 

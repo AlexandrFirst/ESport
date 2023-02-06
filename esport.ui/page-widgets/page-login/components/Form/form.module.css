@@ -1,8 +1,9 @@
 .form {
     @apply text-center w-80;
-    &_mobile {
-        @apply w-full
-    }
+}
+
+.form_mobile {
+    @apply w-full
 }
 
 .input {

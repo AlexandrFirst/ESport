@@ -1,5 +1,5 @@
-import React from "react";
-import styles from "./form.module.scss";
+import React, { useContext } from "react";
+import styles from "./form.module.css";
 
 import { useRouter } from "next/router";
 
@@ -26,6 +26,7 @@ import { SportForm } from "@features/SportForm/SportForm";
 
 import { useValidation } from "@page-widgets/page-login/lib/hooks";
 import { ILoginForm } from "@page-widgets/page-login/types/login-form";
+import { Context } from "../../../../pages/login";
 
 export const Form: React.FC = () => {
   const { isMobile } = useMedia();
@@ -38,13 +39,26 @@ export const Form: React.FC = () => {
 
   const router = useRouter();
   const withErrorAndLoading = useWrapApi();
+  const { httpsAgent } = useContext(Context);
 
-  const onSubmit = methods.handleSubmit(async (data) =>
-    withErrorAndLoading(authService.login, data, {
-      onSuccess: () => {
+  const onSubmit = methods.handleSubmit(
+    async (data) => {
+      const res = await authService.login(data, {
+        httpsAgent: JSON.parse(httpsAgent),
+      });
+      console.log("===res===", res);
+      if (res) {
         router.push(routes.Test);
-      },
-    })
+      }
+    },
+    // withErrorAndLoading(
+    //   {
+    //     onSuccess: () => {
+    //       router.push(routes.Test);
+    //     },
+    //   }
+    // ),
+    (err) => console.log(err)
   );
 
   return (
@@ -59,17 +73,17 @@ export const Form: React.FC = () => {
       <SportInput
         {...methods.register("mail")}
         className={styles.input}
-        placeholder="E-mail"
+        label={"E-mail"}
       />
       <SportPasswordInput
         {...methods.register("password")}
         className={styles.input}
-        placeholder="Password"
+        label="Password"
       />
       <SportLink className={styles.link} to={routes.Register}>
         Forgot password?
       </SportLink>
-      <SportButton className={styles.btn} onClick={onSubmit}>
+      <SportButton isNew className={styles.btn} onClick={onSubmit}>
         Login
       </SportButton>
       <span className={styles.text}>New on our platform? </span>

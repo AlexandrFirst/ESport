@@ -1,11 +1,26 @@
 .contained {
-    @apply bg-skin-primary hover:bg-skin-primary-hover dark:bg-darkSkin-primary
-}
-
-.outlined {
-    @apply border-primary text-primary hover:border-primary-hover dark:border-primary dark:text-darkSkin-primary
+  @apply bg-skin-primary hover:bg-skin-primary-hover dark:bg-darkSkin-primary dark:hover:bg-darkSkin-primary-hover  shadow-xl hover:shadow-2xl;
 }
 
 .text {
-    @apply text-primary dark:text-darkSkin-primary
+  @apply text-primary dark:text-darkSkin-primary;
+}
+
+/* NEW BUTTON */
+
+.btnBase {
+  @apply rounded-md transition-all;
+}
+
+/*TODO: update text*/
+.btn {
+  @apply px-4 py-1.5 font-semibold rounded-md text-blue-100 transition-all w-[100%];
+}
+
+.disabled {
+  @apply bg-gray-400;
+}
+
+.textVariant {
+  @apply text-skin-primary dark:text-darkSkin-primary;
 }

@@ -55,7 +55,12 @@ services:
     restart: on-failure
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS="https://+;http://+"
+      - ASPNETCORE_HTTPS_PORT=5001
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=".\localhost.pfx"
+      - ASPNETCORE_Kestrel__Certificates__Default__Password="1234"
     ports:
+      - '5001:443'
       - '5000:80'
   gateway:
     image: gateway
