@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MessageService", "MessageSe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StreamingService", "StreamingService\StreamingService.csproj", "{BDDA1503-DDD4-409C-AD21-086CC996417D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OcelotAuthClient", "OcelotAuthClient\OcelotAuthClient.csproj", "{54B850AD-4475-4B44-9CC4-04501AF3D657}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OcelotAuthClient", "OcelotAuthClient\OcelotAuthClient.csproj", "{54B850AD-4475-4B44-9CC4-04501AF3D657}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "9.Extrenal", "9.Extrenal", "{CEACC709-AAB5-4BB0-96F0-7566E7D820CD}"
 EndProject
@@ -33,13 +33,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.2.Application", "5.2.Appl
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.3.Data", "5.3.Data", "{AA5D3245-1071-47A7-8439-B9CD15F2DBA5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserWorkflow.Api", "UserWorkflow.Api\UserWorkflow.Api.csproj", "{BFACD5A5-AF64-4519-B0F2-8F8C33CD0D99}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserWorkflow.Api", "UserWorkflow.Api\UserWorkflow.Api.csproj", "{BFACD5A5-AF64-4519-B0F2-8F8C33CD0D99}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserWorkflow.Application", "UserWorkflow.Application\UserWorkflow.Application.csproj", "{EB9FB4B1-E058-4675-805D-6358DD478CB6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserWorkflow.Application", "UserWorkflow.Application\UserWorkflow.Application.csproj", "{EB9FB4B1-E058-4675-805D-6358DD478CB6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{96C82145-260E-42C1-9938-2C7592515E6C} = {96C82145-260E-42C1-9938-2C7592515E6C}
+		{F7F5AA64-117E-4A03-B6C8-7640FA71394B} = {F7F5AA64-117E-4A03-B6C8-7640FA71394B}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserWorkflow.Esport", "Userworkflow.Esport\UserWorkflow.Esport.csproj", "{96C82145-260E-42C1-9938-2C7592515E6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserWorkflow.Esport", "Userworkflow.Esport\UserWorkflow.Esport.csproj", "{96C82145-260E-42C1-9938-2C7592515E6C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserWorkflow.Images", "UserWorkflow.Images\UserWorkflow.Images.csproj", "{F7F5AA64-117E-4A03-B6C8-7640FA71394B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserWorkflow.Images", "UserWorkflow.Images\UserWorkflow.Images.csproj", "{F7F5AA64-117E-4A03-B6C8-7640FA71394B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.4.Infrastructure", "5.4.Infrastructure", "{9960B713-6F2A-488D-BD2A-200D7B2833DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserFlow.Infrastructure", "UserFlow.Infrastructure\UserFlow.Infrastructure.csproj", "{8F7B1233-D123-4DC6-B312-83028E0293A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -87,6 +95,10 @@ Global
 		{F7F5AA64-117E-4A03-B6C8-7640FA71394B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F7F5AA64-117E-4A03-B6C8-7640FA71394B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F7F5AA64-117E-4A03-B6C8-7640FA71394B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F7B1233-D123-4DC6-B312-83028E0293A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F7B1233-D123-4DC6-B312-83028E0293A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F7B1233-D123-4DC6-B312-83028E0293A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F7B1233-D123-4DC6-B312-83028E0293A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -105,6 +117,8 @@ Global
 		{EB9FB4B1-E058-4675-805D-6358DD478CB6} = {60EF8AD0-1D1F-4915-AC80-1D3C38FFF29C}
 		{96C82145-260E-42C1-9938-2C7592515E6C} = {AA5D3245-1071-47A7-8439-B9CD15F2DBA5}
 		{F7F5AA64-117E-4A03-B6C8-7640FA71394B} = {AA5D3245-1071-47A7-8439-B9CD15F2DBA5}
+		{9960B713-6F2A-488D-BD2A-200D7B2833DA} = {2515F6B4-E4D5-4D66-B9FD-6D6A3C4795CA}
+		{8F7B1233-D123-4DC6-B312-83028E0293A7} = {9960B713-6F2A-488D-BD2A-200D7B2833DA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C6DC7AF7-5CCE-4874-926A-1B4521D4B7F5}

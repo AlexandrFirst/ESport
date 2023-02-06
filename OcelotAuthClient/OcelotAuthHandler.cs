@@ -22,10 +22,10 @@ namespace OcelotAuthClient
         {
             List<Claim> claims = new List<Claim>();
 
-            addClaim(claims, AuthRequestHeaders.Id.Value);
-            addClaim(claims, AuthRequestHeaders.Email.Value);
-            addClaim(claims, AuthRequestHeaders.Name.Value);
-            addClaim(claims, AuthRequestHeaders.Role.Value);
+            addClaim(claims, AuthRequestData.Id.Value);
+            addClaim(claims, AuthRequestData.Email.Value);
+            addClaim(claims, AuthRequestData.Name.Value);
+            addClaim(claims, AuthRequestData.Role.Value);
 
             var claimsIdentity = new ClaimsIdentity(claims,
                         nameof(OcelotAuthHandler));
