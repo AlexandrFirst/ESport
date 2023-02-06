@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace IdentityV2
@@ -22,6 +23,11 @@ namespace IdentityV2
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    webBuilder.UseKestrel(o =>
+                    {
+                        o.Listen(IPAddress.Any, 5001, opt => opt.UseHttps(".cerfs/key.pfx", "1234"));
+                        o.Listen(IPAddress.Any, 5000);
+                    });
                 });
     }
 }

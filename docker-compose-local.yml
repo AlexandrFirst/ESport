@@ -55,7 +55,9 @@ services:
     restart: on-failure
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS="https://+;http://+"
     ports:
+      - '5001:443'
       - '5000:80'
   gateway:
     image: gateway

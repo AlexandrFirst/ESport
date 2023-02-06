@@ -1,0 +1,57 @@
+.input_label {
+    @apply text-skin-main focus:text-skin-main dark:text-darkSkin-main
+}
+
+.input {
+    @apply text-skin-main rounded-lg dark:text-darkSkin-main;
+}
+
+.root fieldset {
+    @apply border-primary
+}
+
+.focus fieldset {
+    @apply !border-primary-hover;
+}
+
+.input svg {
+    @apply text-skin-main dark:text-darkSkin-main
+}
+
+/*//--------------------------------------------*/
+
+.main_wrapper {
+    @apply mb-7;
+}
+
+.wrapper {
+    @apply relative;
+}
+
+.text {
+    @apply text-skin-main dark:text-darkSkin-main;
+}
+
+.label {
+    @apply absolute top-[25%] left-2.5 focus:top-0 cursor-text font-semibold;
+}
+
+.input_1 {
+    @apply rounded-md bg-skin-main dark:bg-darkSkin-main  border-[1px] focus:border-2 focus:outline-0 min-h-[45px] border-primary-hover w-[100%] px-2.5;
+}
+
+.input_1_error {
+    @apply border-skin-error dark:border-darkSkin-error;
+}
+
+.helper_text {
+    @apply text-left text-sm mb-6;
+}
+
+.error {
+    @apply text-skin-error dark:text-darkSkin-error;
+}
+
+.endIcon {
+    @apply absolute right-2.5 top-[9%] cursor-pointer;
+}

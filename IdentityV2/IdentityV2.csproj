@@ -31,4 +31,13 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include=".cerfs\key.pfx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include=".cerfs\localhost.pfx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

@@ -3,11 +3,8 @@ import styles from "./registerInput.module.scss";
 
 import cn from "classnames";
 
-import {
-  SportInput,
-  SportInputProps,
-} from "../../../../shared/ui/SportInput/SportInput";
-import { SportPasswordInput } from "../../../../shared/ui/SportPasswordInput/SportPasswordInput";
+import { SportInput, SportInputProps } from "@shared/ui/SportInput/SportInput";
+import { SportPasswordInput } from "@shared/ui/SportPasswordInput/SportPasswordInput";
 
 type RegisterInputProps = SportInputProps & {
   isHided?: boolean;

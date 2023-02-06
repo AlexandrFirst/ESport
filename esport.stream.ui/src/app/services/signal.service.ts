@@ -12,11 +12,15 @@ export class SignalService {
   constructor() { }
 
   public setup(): Promise<any> {
+
+    const signalHost = environment.signalHost;
+    console.log('signalHost:', signalHost)
+
     return new Promise((res, rej) => {
       this.hubConnection = new HubConnectionBuilder()
         .configureLogging(LogLevel.Information)
         .withAutomaticReconnect()
-        .withUrl(`http://localhost:5004/kurrento`, {
+        .withUrl(`${signalHost}/kurrento`, {
           transport: HttpTransportType.WebSockets,
           skipNegotiation: true,
           withCredentials: true,

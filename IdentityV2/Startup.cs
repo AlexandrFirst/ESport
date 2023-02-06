@@ -98,8 +98,9 @@ namespace IdentityV2
             {
                 app.UseDeveloperExceptionPage();
             }
-
             app.UseCors("ESportCors");
+            
+            app.UseHttpsRedirection();
 
             app.UseStaticFiles();
 
