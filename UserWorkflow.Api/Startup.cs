@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace UserWorkFlow
+namespace UserWorkflow.Api
 {
     public class Startup
     {
@@ -36,6 +36,8 @@ namespace UserWorkFlow
             }
 
             app.UseRouting();
+
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
