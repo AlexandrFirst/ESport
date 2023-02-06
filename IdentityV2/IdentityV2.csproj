@@ -29,9 +29,15 @@
     <Content Update="Data\Utils\dbseed.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include=".cerfs\key.pfx">
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include=".cerfs\key.pfx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </None>
+    <None Include=".cerfs\localhost.pfx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

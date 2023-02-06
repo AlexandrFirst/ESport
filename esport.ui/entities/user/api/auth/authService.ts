@@ -41,7 +41,7 @@ class AuthService {
   }
 
   login(loginRequest: ILoginRequest, config?: any): Promise<ILoginResponse> {
-    return identityApi.post("/apiLogin", loginRequest, config);
+    return axios.post("https://localhost:5001/account/apiLogin", loginRequest, { ...config, withCredentials: true });
   }
 
   confirm(token: string): Promise<void> {

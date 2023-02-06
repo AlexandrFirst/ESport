@@ -44,8 +44,8 @@ export const getServerSideProps: GetServerSideProps<{
 }> = async () => {
   const httpsAgent = new https.Agent({
     rejectUnauthorized: false,
-    cert: fs.readFileSync(path.resolve("fullchain.pem")),
-    key: fs.readFileSync(path.resolve("privkey.pem")),
+    cert: fs.readFileSync(path.resolve(".cerfs", "fullchain.pem")),
+    key: fs.readFileSync(path.resolve(".cerfs", "privkey.pem")),
     passphrase: "1234",
   });
 
