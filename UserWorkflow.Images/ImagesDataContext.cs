@@ -8,7 +8,7 @@ namespace UserWorkflow.Images
 {
     public class ImagesDataContext: DbContext
     {
-        public ImagesDataContext([NotNull] DbContextOptions options) : base(options)
+        public ImagesDataContext([NotNull] DbContextOptions<ImagesDataContext> options) : base(options)
         {
             Database.Migrate();
         }

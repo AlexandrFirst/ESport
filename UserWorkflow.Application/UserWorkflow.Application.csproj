@@ -2,4 +2,13 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\UserFlow.Infrastructure\UserWorkflow.Infrastructure.csproj" />
+    <ProjectReference Include="..\Userworkflow.Esport\UserWorkflow.Esport.csproj" />
+    <ProjectReference Include="..\UserWorkflow.Images\UserWorkflow.Images.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Commands\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
 </Project>

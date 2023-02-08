@@ -47,7 +47,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserWorkflow.Images", "User
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.4.Infrastructure", "5.4.Infrastructure", "{9960B713-6F2A-488D-BD2A-200D7B2833DA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserFlow.Infrastructure", "UserFlow.Infrastructure\UserFlow.Infrastructure.csproj", "{8F7B1233-D123-4DC6-B312-83028E0293A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserWorkflow.Infrastructure", "UserFlow.Infrastructure\UserWorkflow.Infrastructure.csproj", "{8F7B1233-D123-4DC6-B312-83028E0293A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
