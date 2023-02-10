@@ -136,7 +136,7 @@ services:
       dockerfile: ./Dockerfile
     restart: on-failure
     ports:
-      - '4200:80'
+      - '4200:443'
   competitions:
     image: 12345flex402/esport-competitions
     user: root
