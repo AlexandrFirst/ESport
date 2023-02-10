@@ -4,7 +4,7 @@ using System.Text;
 
 namespace UserWorkflow.Esport.Models
 {
-    public class Administrators
+    public class Administrators: User
     {
         public Administrators()
         {
@@ -12,9 +12,6 @@ namespace UserWorkflow.Esport.Models
         }
 
         public int Id { get; set; }
-        public int UserId { get; set; }
-        public Guid? PhotoId { get; set; }
-
         public virtual List<GymAdministrators> GymAdministrators { get; set; }
     }
 }

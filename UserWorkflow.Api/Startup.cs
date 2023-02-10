@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using OcelotAuthClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,9 +25,17 @@ namespace UserWorkflow.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
-            UserWorkflow.Application.Bootstrapper.RegisterIocContainers(services, Configuration);
+            services.AddAuthentication(o =>
+            {
+                o.DefaultAuthenticateScheme = "EStream";
+                o.DefaultChallengeScheme = "EStream";
+            })
+           .AddScheme<OcelotAuthOptions, OcelotAuthHandler>("EStream", o => { });
+
+            Application.Bootstrapper.RegisterIocContainers(services, Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,6 +48,7 @@ namespace UserWorkflow.Api
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

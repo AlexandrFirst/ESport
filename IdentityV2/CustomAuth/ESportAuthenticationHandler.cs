@@ -22,6 +22,7 @@ namespace IdentityV2.CustomAuth
 {
     public class ESportAuthenticationHandler : AuthenticationHandler<ESportAuthenticationOptions>
     {
+        private readonly IAuthorizationCache authorizationCache;
         private readonly IJWTManagerRepository customAuthenticationManager;
         private readonly IConfiguration configuration;
 
@@ -30,10 +31,12 @@ namespace IdentityV2.CustomAuth
             ILoggerFactory logger,
             UrlEncoder encoder,
             ISystemClock clock,
+            IAuthorizationCache authorizationCache,
             IJWTManagerRepository customAuthenticationManager,
             IConfiguration configuration)
             : base(options, logger, encoder, clock)
         {
+            this.authorizationCache = authorizationCache;
             this.customAuthenticationManager = customAuthenticationManager;
             this.configuration = configuration;
         }
@@ -157,6 +160,9 @@ namespace IdentityV2.CustomAuth
             var email = jwtToken.Claims.Where(x => x.Type == UserClaims.Email).First();
             var role = jwtToken.Claims.Where(x => x.Type == UserClaims.Role).First();
 
+            var existingToken = authorizationCache.CheckUserTokenInCache(int.Parse(id.Value));
+            if (!string.Equals(token, existingToken)) { throw new Exception("Token is changed"); }
+    
             return new[] { id, name, email, role };
         }
     }

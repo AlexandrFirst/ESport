@@ -7,6 +7,8 @@ namespace UserWorkflow.Images.Models
 {
     public abstract class DomainImage
     {
+        public int Id { get; set; }
+
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public Guid ImageId { get; set; }
         public string ContentType { get; set; }

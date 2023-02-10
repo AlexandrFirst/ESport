@@ -10,6 +10,7 @@ namespace UserWorkflow.Esport.Models
         public TimeSpan To { get; set; }
         public int DayOfTheWeeks { get; set; }
     }
+    public enum TrainerStatus { Pending, Active, Stopped }
 
     public class TrainerShedule
     {
@@ -25,6 +26,8 @@ namespace UserWorkflow.Esport.Models
 
         public int TrainerId { get; set; }
         public virtual Trainer Trainer { get; set; }
+
+        public TrainerStatus Status { get; set; }
 
         public List<TimeOverride> TimeOverride { get; set; }
 

@@ -49,6 +49,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.4.Infrastructure", "5.4.I
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserWorkflow.Infrastructure", "UserFlow.Infrastructure\UserWorkflow.Infrastructure.csproj", "{8F7B1233-D123-4DC6-B312-83028E0293A7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RMQEsportClient", "RMQEsportClient\RMQEsportClient.csproj", "{45448F28-CA9B-48B6-A74C-5B7CF7C7F108}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +101,10 @@ Global
 		{8F7B1233-D123-4DC6-B312-83028E0293A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F7B1233-D123-4DC6-B312-83028E0293A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F7B1233-D123-4DC6-B312-83028E0293A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45448F28-CA9B-48B6-A74C-5B7CF7C7F108}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45448F28-CA9B-48B6-A74C-5B7CF7C7F108}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45448F28-CA9B-48B6-A74C-5B7CF7C7F108}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45448F28-CA9B-48B6-A74C-5B7CF7C7F108}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -119,6 +125,7 @@ Global
 		{F7F5AA64-117E-4A03-B6C8-7640FA71394B} = {AA5D3245-1071-47A7-8439-B9CD15F2DBA5}
 		{9960B713-6F2A-488D-BD2A-200D7B2833DA} = {2515F6B4-E4D5-4D66-B9FD-6D6A3C4795CA}
 		{8F7B1233-D123-4DC6-B312-83028E0293A7} = {9960B713-6F2A-488D-BD2A-200D7B2833DA}
+		{45448F28-CA9B-48B6-A74C-5B7CF7C7F108} = {CEACC709-AAB5-4BB0-96F0-7566E7D820CD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C6DC7AF7-5CCE-4874-926A-1B4521D4B7F5}

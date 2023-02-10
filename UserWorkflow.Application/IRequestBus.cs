@@ -7,7 +7,7 @@ using UserWorkFlow.Infrastructure.Queries;
 
 namespace UserWorkflow.Application
 {
-    public interface IRquestBus
+    public interface IRequestBus
     {
         Task<IRequestResult<TData>> ExecuteAsync<T, TData>(ClaimsPrincipal user, T query)
             where T : IRequest;

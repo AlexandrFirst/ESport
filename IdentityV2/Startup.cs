@@ -1,10 +1,10 @@
+using IdentityV2.Config;
 using IdentityV2.CustomAttrubutes;
 using IdentityV2.CustomAuth;
 using IdentityV2.Data;
 using IdentityV2.Infrastructure.Core;
 using IdentityV2.Infrastructure.Implementation;
 using IdentityV2.Middleware;
-using IdentityV2.RMQ;
 using IdentityV2.Utils;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -79,15 +79,21 @@ namespace IdentityV2
             System.Console.WriteLine("Connection string: " + connectionString);
             services.AddDbContext<IdentityDataContext>(options => options.UseSqlServer(connectionString));
 
-            services.AddOptions<RabbitMqOptions>().Bind(Configuration.GetSection("RabbitMq"));
+           
             services.AddOptions<MailOption>().Bind(Configuration.GetSection("MailOption"));
+
+            RMQEsportClient.Bootstrapper.RegisterIocContainers(services, Configuration);
+
 
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddSingleton<IMessageProducer, RabbitMQProducer>();
+            services.AddMemoryCache();
+
 
             services.AddScoped<IJWTManagerRepository, JWTManagerRepository>();
             services.AddScoped<IAccountService, AccountService>();
+
+            services.AddTransient<IAuthorizationCache, AuthorizationCache>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

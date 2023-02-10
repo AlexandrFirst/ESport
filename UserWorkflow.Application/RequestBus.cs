@@ -10,7 +10,7 @@ using UserWorkFlow.Infrastructure.Queries;
 
 namespace UserWorkflow.Application
 {
-    public class RequestBus : IRquestBus
+    public class RequestBus : IRequestBus
     {
         private readonly IServiceProvider _serviceProvider;
         private readonly IValidateRequest _validateRequest;

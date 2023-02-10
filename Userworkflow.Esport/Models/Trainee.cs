@@ -4,7 +4,7 @@ using System.Text;
 
 namespace UserWorkflow.Esport.Models
 {
-    public class Trainee
+    public class Trainee: User
     {
         public Trainee()
         {
@@ -13,10 +13,8 @@ namespace UserWorkflow.Esport.Models
         }
 
         public int Id { get; set; }
-        public int UserId { get; set; }
         public string Info { get; set; }
-        public Guid? PhotoId { get; set; }
-
+        
         public virtual List<TraineeAnswers> TraineeAnswers { get; set; }
         public virtual List<TraineeShedule> TraineeShedules { get; set; }
     }

@@ -40,4 +40,8 @@
     </None>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\RMQEsportClient\RMQEsportClient.csproj" />
+  </ItemGroup>
+
 </Project>

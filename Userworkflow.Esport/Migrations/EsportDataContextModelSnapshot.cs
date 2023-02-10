@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UserWorkflow.Esport;
 
+#nullable disable
+
 namespace UserWorkflow.Esport.Migrations
 {
     [DbContext(typeof(EsportDataContext))]
@@ -15,19 +17,30 @@ namespace UserWorkflow.Esport.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.32")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "6.0.13")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
             modelBuilder.Entity("UserWorkflow.Esport.Models.Administrators", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("PhotoId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Surname")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -41,8 +54,9 @@ namespace UserWorkflow.Esport.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("AnswerId")
                         .HasColumnType("int");
@@ -62,12 +76,34 @@ namespace UserWorkflow.Esport.Migrations
                     b.ToTable("AnswerBodyParts");
                 });
 
+            modelBuilder.Entity("UserWorkflow.Esport.Models.Answers", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Answer")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("QuestionId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("QuestionId");
+
+                    b.ToTable("Answers");
+                });
+
             modelBuilder.Entity("UserWorkflow.Esport.Models.AnswerSport", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("AnswerId")
                         .HasColumnType("int");
@@ -91,8 +127,9 @@ namespace UserWorkflow.Esport.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("AnswerId")
                         .HasColumnType("int");
@@ -109,32 +146,13 @@ namespace UserWorkflow.Esport.Migrations
                     b.ToTable("AnswerTraumas");
                 });
 
-            modelBuilder.Entity("UserWorkflow.Esport.Models.Answers", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Answer")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("QuestionId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("QuestionId");
-
-                    b.ToTable("Answers");
-                });
-
             modelBuilder.Entity("UserWorkflow.Esport.Models.BodyParts", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -154,8 +172,9 @@ namespace UserWorkflow.Esport.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int?>("AgeLimit")
                         .HasColumnType("int");
@@ -175,8 +194,9 @@ namespace UserWorkflow.Esport.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("BodyPartId")
                         .HasColumnType("int");
@@ -200,8 +220,9 @@ namespace UserWorkflow.Esport.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("ExerciseId")
                         .HasColumnType("int");
@@ -222,8 +243,9 @@ namespace UserWorkflow.Esport.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("ExerciseId")
                         .HasColumnType("int");
@@ -244,8 +266,9 @@ namespace UserWorkflow.Esport.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int?>("ExerciseId")
                         .HasColumnType("int");
@@ -267,8 +290,9 @@ namespace UserWorkflow.Esport.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<float>("Caloric")
                         .HasColumnType("real");
@@ -290,35 +314,13 @@ namespace UserWorkflow.Esport.Migrations
                     b.ToTable("Foods");
                 });
 
-            modelBuilder.Entity("UserWorkflow.Esport.Models.FoodDiet", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("TrainerId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TrainerId");
-
-                    b.ToTable("FoodDiets");
-                });
-
             modelBuilder.Entity("UserWorkflow.Esport.Models.Food_FoodDiet", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<float>("Amount")
                         .HasColumnType("real");
@@ -341,12 +343,37 @@ namespace UserWorkflow.Esport.Migrations
                     b.ToTable("Food_FoodDiets");
                 });
 
+            modelBuilder.Entity("UserWorkflow.Esport.Models.FoodDiet", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("TrainerId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TrainerId");
+
+                    b.ToTable("FoodDiets");
+                });
+
             modelBuilder.Entity("UserWorkflow.Esport.Models.Gym", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
@@ -374,8 +401,9 @@ namespace UserWorkflow.Esport.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("AdministratorId")
                         .HasColumnType("int");
@@ -396,8 +424,9 @@ namespace UserWorkflow.Esport.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("DayOfTheWeeks")
                         .HasColumnType("int");
@@ -422,8 +451,9 @@ namespace UserWorkflow.Esport.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int?>("DayOfTheWeek")
                         .HasColumnType("int");
@@ -454,8 +484,9 @@ namespace UserWorkflow.Esport.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("FoodDietId")
                         .HasColumnType("int");
@@ -476,8 +507,9 @@ namespace UserWorkflow.Esport.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -494,11 +526,24 @@ namespace UserWorkflow.Esport.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("OrganisationId")
                         .HasColumnType("int");
+
+                    b.Property<Guid?>("PhotoId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Surname")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -514,8 +559,9 @@ namespace UserWorkflow.Esport.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("QuestionText")
                         .HasColumnType("nvarchar(max)");
@@ -532,8 +578,9 @@ namespace UserWorkflow.Esport.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
@@ -553,14 +600,24 @@ namespace UserWorkflow.Esport.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Info")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<Guid?>("PhotoId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Surname")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("int");
@@ -574,8 +631,9 @@ namespace UserWorkflow.Esport.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("AnswerId")
                         .HasColumnType("int");
@@ -596,8 +654,9 @@ namespace UserWorkflow.Esport.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("DescriptionOverride")
                         .HasColumnType("nvarchar(max)");
@@ -628,8 +687,9 @@ namespace UserWorkflow.Esport.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("LessonId")
                         .HasColumnType("int");
@@ -650,8 +710,9 @@ namespace UserWorkflow.Esport.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
@@ -678,20 +739,27 @@ namespace UserWorkflow.Esport.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Info")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("PhotoId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
+                    b.Property<string>("Surname")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -702,10 +770,14 @@ namespace UserWorkflow.Esport.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("ShiftId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.Property<string>("TimeOverride")
@@ -727,8 +799,9 @@ namespace UserWorkflow.Esport.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<DateTime>("FromDate")
                         .HasColumnType("datetime2");
@@ -761,8 +834,9 @@ namespace UserWorkflow.Esport.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<int>("BodyPart")
                         .HasColumnType("int");
@@ -794,6 +868,21 @@ namespace UserWorkflow.Esport.Migrations
                         .HasForeignKey("BodyPartId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Answers");
+
+                    b.Navigation("BodyParts");
+                });
+
+            modelBuilder.Entity("UserWorkflow.Esport.Models.Answers", b =>
+                {
+                    b.HasOne("UserWorkflow.Esport.Models.Question", "Question")
+                        .WithMany("Answers")
+                        .HasForeignKey("QuestionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Question");
                 });
 
             modelBuilder.Entity("UserWorkflow.Esport.Models.AnswerSport", b =>
@@ -809,6 +898,10 @@ namespace UserWorkflow.Esport.Migrations
                         .HasForeignKey("SportId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Answers");
+
+                    b.Navigation("Sport");
                 });
 
             modelBuilder.Entity("UserWorkflow.Esport.Models.AnswerTraumas", b =>
@@ -824,15 +917,10 @@ namespace UserWorkflow.Esport.Migrations
                         .HasForeignKey("TraumaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
 
-            modelBuilder.Entity("UserWorkflow.Esport.Models.Answers", b =>
-                {
-                    b.HasOne("UserWorkflow.Esport.Models.Question", "Question")
-                        .WithMany("Answers")
-                        .HasForeignKey("QuestionId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Navigation("Answers");
+
+                    b.Navigation("Traumas");
                 });
 
             modelBuilder.Entity("UserWorkflow.Esport.Models.ExerciseBodyPart", b =>
@@ -848,6 +936,10 @@ namespace UserWorkflow.Esport.Migrations
                         .HasForeignKey("ExerciseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("BodyParts");
+
+                    b.Navigation("Exercise");
                 });
 
             modelBuilder.Entity("UserWorkflow.Esport.Models.ExerciseSport", b =>
@@ -863,6 +955,10 @@ namespace UserWorkflow.Esport.Migrations
                         .HasForeignKey("SportId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Exercise");
+
+                    b.Navigation("Sport");
                 });
 
             modelBuilder.Entity("UserWorkflow.Esport.Models.ExerciseTraumas", b =>
@@ -878,6 +974,10 @@ namespace UserWorkflow.Esport.Migrations
                         .HasForeignKey("TraumaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Exercise");
+
+                    b.Navigation("Traumas");
                 });
 
             modelBuilder.Entity("UserWorkflow.Esport.Models.ExerciseTutorial", b =>
@@ -886,14 +986,8 @@ namespace UserWorkflow.Esport.Migrations
                         .WithMany("ExerciseTutorails")
                         .HasForeignKey("ExerciseId")
                         .OnDelete(DeleteBehavior.SetNull);
-                });
 
-            modelBuilder.Entity("UserWorkflow.Esport.Models.FoodDiet", b =>
-                {
-                    b.HasOne("UserWorkflow.Esport.Models.Trainer", "Trainer")
-                        .WithMany("FoodDiets")
-                        .HasForeignKey("TrainerId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                    b.Navigation("Exercise");
                 });
 
             modelBuilder.Entity("UserWorkflow.Esport.Models.Food_FoodDiet", b =>
@@ -909,6 +1003,20 @@ namespace UserWorkflow.Esport.Migrations
                         .HasForeignKey("FoodId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Food");
+
+                    b.Navigation("FoodDiet");
+                });
+
+            modelBuilder.Entity("UserWorkflow.Esport.Models.FoodDiet", b =>
+                {
+                    b.HasOne("UserWorkflow.Esport.Models.Trainer", "Trainer")
+                        .WithMany("FoodDiets")
+                        .HasForeignKey("TrainerId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Trainer");
                 });
 
             modelBuilder.Entity("UserWorkflow.Esport.Models.Gym", b =>
@@ -917,6 +1025,8 @@ namespace UserWorkflow.Esport.Migrations
                         .WithMany("Gyms")
                         .HasForeignKey("OrganisationId")
                         .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("Organisation");
                 });
 
             modelBuilder.Entity("UserWorkflow.Esport.Models.GymAdministrators", b =>
@@ -932,6 +1042,10 @@ namespace UserWorkflow.Esport.Migrations
                         .HasForeignKey("GymId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Administrators");
+
+                    b.Navigation("Gym");
                 });
 
             modelBuilder.Entity("UserWorkflow.Esport.Models.GymShift", b =>
@@ -941,6 +1055,8 @@ namespace UserWorkflow.Esport.Migrations
                         .HasForeignKey("GymId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Gym");
                 });
 
             modelBuilder.Entity("UserWorkflow.Esport.Models.Lesson", b =>
@@ -950,6 +1066,8 @@ namespace UserWorkflow.Esport.Migrations
                         .HasForeignKey("TrainerSheduleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("TrainerShedule");
                 });
 
             modelBuilder.Entity("UserWorkflow.Esport.Models.Lesson_FoodDiet", b =>
@@ -965,6 +1083,10 @@ namespace UserWorkflow.Esport.Migrations
                         .HasForeignKey("LessonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("FoodDiet");
+
+                    b.Navigation("Lesson");
                 });
 
             modelBuilder.Entity("UserWorkflow.Esport.Models.OrganisationAdministrators", b =>
@@ -974,6 +1096,8 @@ namespace UserWorkflow.Esport.Migrations
                         .HasForeignKey("OrganisationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Organisation");
                 });
 
             modelBuilder.Entity("UserWorkflow.Esport.Models.TraineeAnswers", b =>
@@ -989,6 +1113,10 @@ namespace UserWorkflow.Esport.Migrations
                         .HasForeignKey("TraineeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Answers");
+
+                    b.Navigation("Trainee");
                 });
 
             modelBuilder.Entity("UserWorkflow.Esport.Models.TraineeExercise", b =>
@@ -998,6 +1126,8 @@ namespace UserWorkflow.Esport.Migrations
                         .HasForeignKey("ExerciseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Exercise");
                 });
 
             modelBuilder.Entity("UserWorkflow.Esport.Models.TraineeShedule", b =>
@@ -1013,6 +1143,10 @@ namespace UserWorkflow.Esport.Migrations
                         .HasForeignKey("TraineeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Lesson");
+
+                    b.Navigation("Trainee");
                 });
 
             modelBuilder.Entity("UserWorkflow.Esport.Models.TraineeSheduleTraineeExercise", b =>
@@ -1028,6 +1162,10 @@ namespace UserWorkflow.Esport.Migrations
                         .HasForeignKey("TraineeSheduleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("TraineeExercise");
+
+                    b.Navigation("TraineeShedule");
                 });
 
             modelBuilder.Entity("UserWorkflow.Esport.Models.TrainerShedule", b =>
@@ -1043,6 +1181,10 @@ namespace UserWorkflow.Esport.Migrations
                         .HasForeignKey("TrainerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("GymShift");
+
+                    b.Navigation("Trainer");
                 });
 
             modelBuilder.Entity("UserWorkflow.Esport.Models.TrainerSport", b =>
@@ -1058,6 +1200,136 @@ namespace UserWorkflow.Esport.Migrations
                         .HasForeignKey("TrainerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Sport");
+
+                    b.Navigation("Trainer");
+                });
+
+            modelBuilder.Entity("UserWorkflow.Esport.Models.Administrators", b =>
+                {
+                    b.Navigation("GymAdministrators");
+                });
+
+            modelBuilder.Entity("UserWorkflow.Esport.Models.Answers", b =>
+                {
+                    b.Navigation("AnswerBodyParts");
+
+                    b.Navigation("AnswerSports");
+
+                    b.Navigation("AnswerTraumas");
+
+                    b.Navigation("TraineeAnswers");
+                });
+
+            modelBuilder.Entity("UserWorkflow.Esport.Models.BodyParts", b =>
+                {
+                    b.Navigation("AnswerBodyParts");
+
+                    b.Navigation("ExerciseBodyParts");
+                });
+
+            modelBuilder.Entity("UserWorkflow.Esport.Models.Exercise", b =>
+                {
+                    b.Navigation("BodyParts");
+
+                    b.Navigation("ExerciseSports");
+
+                    b.Navigation("ExerciseTraumas");
+
+                    b.Navigation("ExerciseTutorails");
+
+                    b.Navigation("TraineeExercises");
+                });
+
+            modelBuilder.Entity("UserWorkflow.Esport.Models.Food", b =>
+                {
+                    b.Navigation("FoodDiets");
+                });
+
+            modelBuilder.Entity("UserWorkflow.Esport.Models.FoodDiet", b =>
+                {
+                    b.Navigation("Food_FoodDiets");
+
+                    b.Navigation("LessonFoodDiets");
+                });
+
+            modelBuilder.Entity("UserWorkflow.Esport.Models.Gym", b =>
+                {
+                    b.Navigation("GymAdministrators");
+
+                    b.Navigation("GymShifts");
+                });
+
+            modelBuilder.Entity("UserWorkflow.Esport.Models.GymShift", b =>
+                {
+                    b.Navigation("TrainerShedules");
+                });
+
+            modelBuilder.Entity("UserWorkflow.Esport.Models.Lesson", b =>
+                {
+                    b.Navigation("LessonFoodDiets");
+
+                    b.Navigation("TraineeShedules");
+                });
+
+            modelBuilder.Entity("UserWorkflow.Esport.Models.Organisation", b =>
+                {
+                    b.Navigation("Gyms");
+
+                    b.Navigation("OrganisationAdministrators");
+                });
+
+            modelBuilder.Entity("UserWorkflow.Esport.Models.Question", b =>
+                {
+                    b.Navigation("Answers");
+                });
+
+            modelBuilder.Entity("UserWorkflow.Esport.Models.Sport", b =>
+                {
+                    b.Navigation("AnswerSports");
+
+                    b.Navigation("ExerciseSports");
+
+                    b.Navigation("TrainerSports");
+                });
+
+            modelBuilder.Entity("UserWorkflow.Esport.Models.Trainee", b =>
+                {
+                    b.Navigation("TraineeAnswers");
+
+                    b.Navigation("TraineeShedules");
+                });
+
+            modelBuilder.Entity("UserWorkflow.Esport.Models.TraineeExercise", b =>
+                {
+                    b.Navigation("TraineeSheduleExercises");
+                });
+
+            modelBuilder.Entity("UserWorkflow.Esport.Models.TraineeShedule", b =>
+                {
+                    b.Navigation("TraineeSheduleExercises");
+                });
+
+            modelBuilder.Entity("UserWorkflow.Esport.Models.Trainer", b =>
+                {
+                    b.Navigation("FoodDiets");
+
+                    b.Navigation("TraineeShedules");
+
+                    b.Navigation("TrainerSports");
+                });
+
+            modelBuilder.Entity("UserWorkflow.Esport.Models.TrainerShedule", b =>
+                {
+                    b.Navigation("Lessons");
+                });
+
+            modelBuilder.Entity("UserWorkflow.Esport.Models.Traumas", b =>
+                {
+                    b.Navigation("AnswerTraumas");
+
+                    b.Navigation("ExerciseTraumas");
                 });
 #pragma warning restore 612, 618
         }

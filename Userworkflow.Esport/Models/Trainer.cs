@@ -4,9 +4,9 @@ using System.Text;
 
 namespace UserWorkflow.Esport.Models
 {
-    public enum TrainerStatus {Pending, Active, Stopped}
+    
 
-    public class Trainer
+    public class Trainer: User
     {
         public Trainer()
         {
@@ -16,9 +16,7 @@ namespace UserWorkflow.Esport.Models
         }
 
         public int Id { get; set; }
-        public string UserId { get; set; }
-        public TrainerStatus Status { get; set; }
-        public Guid? PhotoId { get; set; }
+      
         public string Info { get; set; }
 
         public virtual List<TrainerShedule> TraineeShedules { get; set; }

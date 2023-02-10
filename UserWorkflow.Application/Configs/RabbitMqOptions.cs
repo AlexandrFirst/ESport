@@ -1,4 +1,8 @@
-﻿namespace IdentityV2.RMQ
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace UserWorkflow.Application.Configs
 {
     public class RabbitMqOptions
     {
