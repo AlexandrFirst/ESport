@@ -80,11 +80,21 @@ export const Form: React.FC = () => {
           <KeyboardDoubleArrowLeftIcon />
         </SportIconButton>
         {!isLastStep ? (
-          <SportButton isNew className={styles.btn} onClick={handleNext}>
+          <SportButton
+            fullWidth={false}
+            isNew
+            className={styles.btn}
+            onClick={handleNext}
+          >
             Next
           </SportButton>
         ) : (
-          <SportButton isNew className={styles.btn} onClick={onSubmit}>
+          <SportButton
+            fullWidth={false}
+            isNew
+            className={styles.btn}
+            onClick={onSubmit}
+          >
             Submit
           </SportButton>
         )}

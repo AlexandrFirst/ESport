@@ -9,6 +9,7 @@ import { ButtonBase } from "@mui/material";
 
 export interface SportButtonProps extends LoadingButtonProps {
   isNew?: boolean;
+  fullWidth?: boolean;
 }
 
 export const SportButton: React.FC<SportButtonProps> = ({
@@ -17,6 +18,7 @@ export const SportButton: React.FC<SportButtonProps> = ({
   loading,
   disabled,
   variant = "contained",
+  fullWidth = true,
   children,
   ...props
 }) => {
@@ -26,7 +28,7 @@ export const SportButton: React.FC<SportButtonProps> = ({
       className={cn(
         {
           [styles.contained]: variant === "contained",
-          [styles.outlined]: variant === "outlined",
+          // [styles.outlined]: variant === "outlined",
           [styles.text]: !variant || variant === "text",
         },
         className
@@ -43,7 +45,9 @@ export const SportButton: React.FC<SportButtonProps> = ({
       className={cn(styles.btnBase, styles.btn, className, {
         [styles.contained]: variant === "contained",
         [styles.textVariant]: variant === "text",
+        [styles.outlined]: variant === "outlined",
         [styles.disabled]: loading || disabled,
+        [styles.full_width]: fullWidth,
       })}
     >
       {!loading ? children : <SportSpinner />}

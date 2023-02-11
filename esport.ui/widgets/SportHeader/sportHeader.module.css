@@ -1,5 +1,5 @@
 .header {
-  @apply bg-skin-main fixed h-[64px];
+  @apply bg-skin-main fixed h-[64px] z-10;
 }
 
 .nav {

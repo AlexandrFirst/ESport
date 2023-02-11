@@ -6,7 +6,7 @@ import React, {
 } from "react";
 import styles from "./sportInput.module.css";
 
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import cn from "classnames";
 import { Controller, useFormContext } from "react-hook-form";
 
@@ -19,6 +19,8 @@ export type SportInputProps = InputHTMLAttributes<HTMLInputElement> & {
   label?: ReactNode;
   endIcon?: ReactNode;
   variant?: "outlined" | "standard" | "filled";
+  fullWidth?: boolean;
+  labelActive?: boolean;
 };
 
 export const SportInput = forwardRef<HTMLInputElement, SportInputProps>(
@@ -33,6 +35,8 @@ export const SportInput = forwardRef<HTMLInputElement, SportInputProps>(
       placeholder,
       endIcon,
       className,
+      fullWidth = true,
+      labelActive = false,
       ...props
     },
     ref
@@ -46,15 +50,19 @@ export const SportInput = forwardRef<HTMLInputElement, SportInputProps>(
         control={control}
         defaultValue={defaultValue}
         render={({ field, fieldState: { error } }) => (
-          <div className={cn(styles.main_wrapper, className)}>
+          <div
+            className={cn(styles.main_wrapper, className, {
+              [styles.full_width]: fullWidth,
+            })}
+          >
             <div className={cn(styles.wrapper)}>
               {label && (
                 <motion.label
                   initial={{ opacity: 0 }}
                   animate={{
                     opacity: 1,
-                    y: focused ? -35 : 0,
-                    x: focused ? -10 : 0,
+                    y: labelActive || focused ? -35 : 0,
+                    x: labelActive || focused ? -10 : 0,
                   }}
                   htmlFor={name}
                   className={cn(styles.text, styles.label, {
@@ -83,11 +91,18 @@ export const SportInput = forwardRef<HTMLInputElement, SportInputProps>(
                 {endIcon}
               </div>
             </div>
-            {error && (
-              <p className={cn(styles.error, styles.helper_text)}>
-                {error.message}
-              </p>
-            )}
+            <AnimatePresence initial={false}>
+              {error && (
+                <motion.p
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0 }}
+                  className={cn(styles.error, styles.helper_text)}
+                >
+                  {error.message}
+                </motion.p>
+              )}
+            </AnimatePresence>
           </div>
         )}
       />

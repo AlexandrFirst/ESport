@@ -14,14 +14,14 @@ const openSnackBar = (
 
 interface SportSnackbarState {
   open?: boolean;
-  type?: SnackBarType;
+  type: SnackBarType | null;
   message: string;
   position?: SnackbarPosition;
 }
 
 const initialState: SportSnackbarState = {
   open: false,
-  type: undefined,
+  type: null,
   message: "",
 };
 

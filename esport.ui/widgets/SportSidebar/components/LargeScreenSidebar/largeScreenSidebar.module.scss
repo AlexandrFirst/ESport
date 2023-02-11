@@ -1,5 +1,5 @@
 .wrapper {
-    @apply fixed pt-2.5 h-screen duration-500 bg-skin-main dark:bg-darkSkin-main
+    @apply fixed pt-2.5 h-screen duration-500 bg-skin-main dark:bg-darkSkin-main z-20;
 }
 
 .opened {

@@ -21,7 +21,7 @@
 /*//--------------------------------------------*/
 
 .main_wrapper {
-    @apply mb-7;
+    @apply transition-all;
 }
 
 .wrapper {
@@ -45,7 +45,7 @@
 }
 
 .helper_text {
-    @apply text-left text-sm mb-6;
+    @apply text-left text-sm mb-2;
 }
 
 .error {
@@ -54,4 +54,8 @@
 
 .endIcon {
     @apply absolute right-2.5 top-[9%] cursor-pointer;
+}
+
+.full_width {
+    @apply w-full;
 }

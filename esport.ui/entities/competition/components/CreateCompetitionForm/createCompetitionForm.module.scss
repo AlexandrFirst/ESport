@@ -3,9 +3,16 @@
 }
 
 .input {
-    @apply mt-4
+    @apply mt-6 mb-1 min-w-[400px];
+    &:last-child {
+        @apply mt-8;
+    }
 }
 
 .btn_container {
     @apply w-[100%] mt-5 text-right;
+}
+
+.full_width {
+    @apply w-full;
 }

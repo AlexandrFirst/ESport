@@ -12,9 +12,11 @@ const font = Nunito_Sans({
   weight: ["300", "600", "700", "900"],
 });
 
-function MyApp({ Component, ...rest }: AppProps) {
-  const { store, props } = wrapper.useWrappedStore(rest);
+function MyApp({ Component, ...restProps }: AppProps) {
+  const { store, props } = wrapper.useWrappedStore(restProps);
   const { pageProps } = props;
+
+  // const { withMainLayout = true } = pageProps;
 
   // const [showChild, setShowChild] = useState(false);
 
