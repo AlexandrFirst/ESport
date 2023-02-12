@@ -74,7 +74,7 @@ services:
     user: root
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Gateway.Dockerfile
     depends_on:
       - identity
     restart: on-failure

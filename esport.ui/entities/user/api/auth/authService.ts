@@ -41,7 +41,7 @@ class AuthService {
   }
 
   login(loginRequest: ILoginRequest, config?: any): Promise<ILoginResponse> {
-    return axios.post("https://e-sport.cloud:5001/account/apiLogin", loginRequest, { ...config, withCredentials: true });
+    return identityApi.post("/apiLogin", loginRequest, { ...config });
   }
 
   confirm(token: string): Promise<void> {

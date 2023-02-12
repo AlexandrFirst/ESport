@@ -17,5 +17,6 @@ COPY ./privkey.pem /etc/keys/privkey.pem
 COPY --from=build /app/dist /usr/share/nginx/html
 
 EXPOSE 80
+EXPOSE 443
 
 CMD ["nginx", "-g", "daemon off;"]
