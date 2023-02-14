@@ -14,7 +14,7 @@ interface SportDatePickerProps
     "value" | "onChange" | "renderInput"
   > {
   name: string;
-  inputProps?: SportInputProps;
+  inputProps?: Partial<SportInputProps>;
 }
 
 export const SportDatePicker: React.FC<SportDatePickerProps> = ({
@@ -36,8 +36,21 @@ export const SportDatePicker: React.FC<SportDatePickerProps> = ({
             PaperProps={{
               className: styles.calendar,
             }}
-            renderInput={(params) => (
-              <SportInput name={name} {...params} {...inputProps} />
+            renderInput={({ ref, InputProps, ...params }) => (
+              <SportInput
+                name={name}
+                {...params}
+                {...inputProps}
+                ref={ref}
+                type={"date"}
+                labelActive
+                // endIcon={
+                //   <SportIconButton onClick={ref?.click}>
+                //     {/*{InputProps?.endAdornment}*/}
+                //     <CalendarMonthIcon />
+                //   </SportIconButton>
+                // }
+              />
             )}
           />
         )}

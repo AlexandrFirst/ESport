@@ -1,6 +1,5 @@
-import React, { PropsWithChildren, useEffect } from "react";
+import React, { PropsWithChildren, useCallback, useEffect } from "react";
 import styles from "./mainLayout.module.css";
-
 import cn from "classnames";
 
 import { useMedia } from "@shared/lib/hooks/useMedia";
@@ -15,28 +14,30 @@ import { SportHeader } from "@widgets/SportHeader/SportHeader";
 
 import { useMediaQuery } from "@shared/lib/hooks/useMediaQuery";
 
-import { updateSidebarOpened } from "./mainLayout.slice";
+import { selectIsSidebarOpened, updateSidebarOpened } from "./mainLayout.slice";
 
 type MainLayoutProps = PropsWithChildren &
   SportHeadProps & {
     className?: string;
+    isSidebarOpened?: boolean;
   };
 
 export const MainLayout: React.FC<MainLayoutProps> = ({
   headProps,
   className,
+  // isSidebarOpened = false,
   children,
 }) => {
   const { isMobile, tabletBreakPoint } = useMedia();
   const dispatch = useAppDispatch();
 
   const isLessBreakpoint = useMediaQuery(tabletBreakPoint);
+  const isSidebarOpened = useAppSelector(selectIsSidebarOpened);
 
-  const isSidebarOpened = useAppSelector(
-    ({ layout }) => layout.isSidebarOpened
+  const setIsSidebarOpened = useCallback(
+    (isOpened: boolean) => dispatch(updateSidebarOpened(isOpened)),
+    [dispatch]
   );
-  const setIsSidebarOpened = (isOpened: boolean) =>
-    dispatch(updateSidebarOpened(isOpened));
 
   const paddingClasses = cn({
     ["pl-compact"]: !isSidebarOpened,
@@ -48,9 +49,23 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
     isMobile ? "pl-layout-tablet" : paddingClasses
   );
 
+  // const onRouteChangeStart = useCallback(() => {
+  //   setIsSidebarOpened(isLessBreakpoint);
+  // }, []);
+  //
+  // const removeListener = () => {
+  //   router.events.off("routeChangeStart", onRouteChangeStart);
+  // };
+  //
+  // useEffect(() => {
+  //   router.events.on("routeChangeStart", onRouteChangeStart);
+  //
+  //   return removeListener;
+  // }, [onRouteChangeStart]);
+
   useEffect(() => {
     setIsSidebarOpened(isLessBreakpoint);
-  }, [isLessBreakpoint]);
+  }, [isLessBreakpoint, dispatch, setIsSidebarOpened]);
 
   return (
     <>
