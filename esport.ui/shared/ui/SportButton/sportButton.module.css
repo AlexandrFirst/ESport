@@ -14,7 +14,7 @@
 
 /*TODO: update text*/
 .btn {
-  @apply px-4 py-1.5 font-semibold rounded-md text-blue-100 transition-all w-[100%];
+  @apply px-4 py-1.5 font-semibold rounded-md text-blue-100 transition-all;
 }
 
 .disabled {
@@ -23,4 +23,12 @@
 
 .textVariant {
   @apply text-skin-primary dark:text-darkSkin-primary;
+}
+
+.full_width {
+  @apply w-full;
+}
+
+.outlined {
+  @apply dark:border-text-subsidiary  text-skin-main dark:text-darkSkin-main shadow-xl hover:shadow-2xl;
 }

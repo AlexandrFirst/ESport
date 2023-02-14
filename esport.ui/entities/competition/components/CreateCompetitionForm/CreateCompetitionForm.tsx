@@ -13,6 +13,7 @@ import { SportForm } from "@features/SportForm";
 
 import { ICreateCompetitionForm } from "@entities/competition/types/create-competition-form.interface";
 import { useCreateCompetitionValidation } from "@entities/competition/lib/hooks/use-create-competition-validation";
+import { SportPrompt } from "@shared/ui/SportPrompt/SportPrompt";
 
 interface CreateCompetitionFormProps {
   loading?: boolean;
@@ -33,30 +34,39 @@ export const CreateCompetitionForm: React.FC<CreateCompetitionFormProps> = ({
 
   const handleSubmit = methods.handleSubmit((data) => onSubmit?.(data));
 
+  const { isSubmitted, isDirty } = methods.formState;
+  const shouldShowPrompt = !isSubmitted && isDirty;
+
   return (
-    <SportForm methods={methods} className={styles.form}>
-      <SportInput
-        name={"title"}
-        label={"Title for your next competition"}
-        className={styles.input}
-      />
-      <SportDatePicker
-        name={"dateStart"}
-        label={"Date start"}
-        className={styles.input}
-        minDate={new Date()}
-      />
-      <SportDatePicker
-        name={"dateEnd"}
-        label={"Date end"}
-        className={styles.input}
-        minDate={new Date()}
-      />
-      <Grid item xs={12} className={styles.btn_container}>
-        <SportButton loading={loading} onClick={handleSubmit}>
-          Create
-        </SportButton>
-      </Grid>
-    </SportForm>
+    <>
+      <SportForm methods={methods} className={styles.form}>
+        <SportInput
+          name={"title"}
+          label={"Title for your next competition"}
+          className={styles.input}
+          fullWidth
+        />
+        <SportDatePicker
+          name={"dateStart"}
+          label={"Date start"}
+          className={styles.input}
+          minDate={new Date()}
+          inputProps={{ fullWidth: true }}
+        />
+        <SportDatePicker
+          name={"dateEnd"}
+          label={"Date end"}
+          className={styles.input}
+          minDate={new Date()}
+          inputProps={{ fullWidth: true }}
+        />
+        <Grid item xs={12} className={styles.btn_container}>
+          <SportButton loading={loading} onClick={handleSubmit}>
+            Create
+          </SportButton>
+        </Grid>
+      </SportForm>
+      <SportPrompt shouldConfirmLeave={shouldShowPrompt} />
+    </>
   );
 };

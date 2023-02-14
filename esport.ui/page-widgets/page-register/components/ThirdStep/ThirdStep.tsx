@@ -2,7 +2,6 @@ import React from "react";
 import { UseFormRegister } from "react-hook-form";
 import { IRegisterForm } from "../../../../layouts/UnloggedLayout/interfaces";
 import { RegisterSteps } from "../../../../layouts/UnloggedLayout/enums";
-import { SportInputMask } from "../../../../shared/ui/SportInputMask/SportInputMask";
 import { RegisterInput } from "../RegisterInput/RegisterInput";
 
 interface ThirdStepProps {

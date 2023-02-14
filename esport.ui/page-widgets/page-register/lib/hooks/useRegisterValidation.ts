@@ -11,8 +11,7 @@ export const useRegisterValidation = () => {
     confirmPassword: yup
       .string()
       .oneOf([yup.ref("password"), null], "Passwords must match"),
-    telephoneNumber: yup
-      .string()
-      // .matches(phoneRegExp, "Phone number is not valid"),
+    telephoneNumber: yup.string(),
+    // .matches(phoneRegExp, "Phone number is not valid"),
   });
 };

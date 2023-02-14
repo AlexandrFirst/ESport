@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { HYDRATE } from "next-redux-wrapper";
 import { RootState } from "../../app/store/store";
 
@@ -11,7 +11,7 @@ const initialState: LayoutState = {
 };
 
 const mainLayoutSlice = createSlice({
-  name: "mainLayoutSlice",
+  name: "mainLayout",
   initialState,
   reducers: {
     updateSidebarOpened(state, action: PayloadAction<boolean>) {
@@ -29,7 +29,8 @@ const mainLayoutSlice = createSlice({
 export const { updateSidebarOpened } = mainLayoutSlice.actions;
 export const layoutReducer = mainLayoutSlice.reducer;
 export const selectLayout = (state: RootState) => state.layout;
-// export const selectIsSidebarOpened = createSelector(
-//   selectLayout,
-//   ({ isSidebarOpened }) => isSidebarOpened
-// );
+
+export const selectIsSidebarOpened = createSelector(
+  selectLayout,
+  ({ isSidebarOpened }) => isSidebarOpened
+);

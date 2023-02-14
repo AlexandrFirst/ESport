@@ -1,6 +1,5 @@
 import React from "react";
 // import { Bracket, IRenderSeedProps, IRoundProps } from "react-brackets";
-
 import { ICompetitor } from "@entities/competition";
 
 // const rounds: IRoundProps[] = [
