@@ -5,6 +5,8 @@ import { useForm } from "react-hook-form";
 
 import SettingsIcon from "@mui/icons-material/Settings";
 
+import { wrapper } from "@app/store/store";
+
 import { SportButton } from "@shared/ui/SportButton/SportButton";
 import { MainLayout } from "@layouts/MainLayout";
 
@@ -17,6 +19,7 @@ import {
 import { SportIconButton } from "@shared/ui/SportIconButton/SportIconButton";
 import { SportForm } from "@features/SportForm";
 import { SportInput } from "@shared/ui/SportInput/SportInput";
+import { makeSidebar } from "@app/store/lib/makeSidebar";
 
 const Test: NextPage = () => {
   const dispatch = useAppDispatch();
@@ -55,3 +58,7 @@ const Test: NextPage = () => {
 };
 
 export default Test;
+
+Test.getInitialProps = wrapper.getInitialPageProps((store) => () => {
+  makeSidebar(store);
+});

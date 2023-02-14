@@ -1,37 +1,34 @@
-import AdbIcon from "@mui/icons-material/Adb";
-import AccountBoxIcon from "@mui/icons-material/AccountBox";
+import BugReportIcon from "@mui/icons-material/BugReport";
 import SettingsIcon from "@mui/icons-material/Settings";
+import ConnectedTvIcon from "@mui/icons-material/ConnectedTv";
+import SportsKabaddiIcon from "@mui/icons-material/SportsKabaddi";
 
-// import tjwi from '@mui/icons-material/'
+import { routes } from "routes";
+
 import { IMenuItem } from "../../types/menu-item";
 
 export const useMenu = () => {
   const menu: IMenuItem[] = [
-    { title: "Test", icon: <AdbIcon className="mr-3" />, link: "/test" },
+    { title: "Test", icon: <BugReportIcon className="mr-3" />, link: "/test" },
     {
-      title: "Calculator",
-      icon: <AccountBoxIcon className="mr-3" />,
-      link: "/calculator",
+      title: "Streams",
+      icon: <ConnectedTvIcon className="mr-3" />,
+      link: routes.Streams,
     },
     {
       title: "Competitions",
-      icon: <AdbIcon className="mr-3" />,
+      icon: <SportsKabaddiIcon className="mr-3" />,
       gap: true,
       items: [
         {
-          title: "Index",
-          icon: <AccountBoxIcon className="mr-3" />,
-          link: "/competition",
+          title: "Competitions",
+          // icon: <SportsKabaddiIcon className="mr-3" />,
+          link: routes.Competition.Main,
         },
         {
           title: "Create",
-          icon: <AdbIcon className="mr-3" />,
-          link: "/competition/create",
-        },
-        {
-          title: "Settings",
-          icon: <AccountBoxIcon className="mr-3" />,
-          link: "/settings",
+          // icon: <AddIcon className="mr-3" />,
+          link: routes.Competition.Create,
         },
       ],
     },
