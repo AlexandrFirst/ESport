@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using UserWorkflow.Application.Models;
+using UserWorkflow.Application.Models.User;
 using UserWorkflow.Esport.Models;
 
 namespace UserWorkflow.Application.Profiles

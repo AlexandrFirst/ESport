@@ -43,23 +43,34 @@ namespace IdentityV2
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddCors(options => options.AddPolicy("ESportCors", builder =>
+            services.AddCors(options =>
             {
-                builder.WithOrigins("http://localhost:3000", "http://localhost:6005", "http://e-sport.cloud")
-                       .AllowAnyMethod()
-                       .AllowAnyHeader()
-                       .AllowCredentials();
-            }));
+                options.AddPolicy("ESportCors", builder =>
+                {
+                    builder.WithOrigins("http://localhost:3000", "http://localhost:6005", "https://e-sport.cloud")
+                           .AllowAnyMethod()
+                           .AllowAnyHeader()
+                           .AllowCredentials();
+                });
+
+                options.AddPolicy("UserFlowPolicy", builder =>
+                {
+                    builder.WithOrigins("http://localhost:5005", "https://e-sport.cloud:5005")
+                            .AllowAnyMethod()
+                            .AllowAnyHeader()
+                            .AllowCredentials();
+                });
+            });
 
             services.AddControllersWithViews().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
-            services.AddSwaggerGen(c => c.SwaggerDoc("v1",new Microsoft.OpenApi.Models.OpenApiInfo() 
+            services.AddSwaggerGen(c => c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
             {
                 Version = "v1",
                 Title = "Auth API",
                 Description = "EScore Identity microservice"
-            } ));
+            }));
 
             services.AddAuthentication(o =>
             {
@@ -79,7 +90,7 @@ namespace IdentityV2
             System.Console.WriteLine("Connection string: " + connectionString);
             services.AddDbContext<IdentityDataContext>(options => options.UseSqlServer(connectionString));
 
-           
+
             services.AddOptions<MailOption>().Bind(Configuration.GetSection("MailOption"));
 
             RMQEsportClient.Bootstrapper.RegisterIocContainers(services, Configuration);
@@ -104,14 +115,14 @@ namespace IdentityV2
                 app.UseDeveloperExceptionPage();
             }
             app.UseCors("ESportCors");
-            
+
             app.UseHttpsRedirection();
 
             app.UseStaticFiles();
 
 
             app.UseSwagger();
-            app.UseSwaggerUI(c => 
+            app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Auth API");
             });

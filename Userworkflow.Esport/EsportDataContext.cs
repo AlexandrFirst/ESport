@@ -80,6 +80,9 @@ namespace UserWorkflow.Esport
             modelBuilder.ApplyConfiguration(new TrainerSheduleConfiguration());
             modelBuilder.ApplyConfiguration(new TrainerSheduleConfiguration());
             modelBuilder.ApplyConfiguration(new TrainerSportConfiguration());
+            modelBuilder.ApplyConfiguration(new TrainerConfiguration());
+            modelBuilder.ApplyConfiguration(new TraineeConfiguration());
+            modelBuilder.ApplyConfiguration(new AdministratorConfiguration());
         }
     }
 }

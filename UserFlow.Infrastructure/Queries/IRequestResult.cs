@@ -8,7 +8,7 @@ namespace UserWorkFlow.Infrastructure.Queries
     {
         TData Data { get; }
         bool Succeeded { get; }
-        IEnumerable<string> Error { get; }
+        IEnumerable<string> Errors { get; }
         Exception ResultException { get; }
     }
 }

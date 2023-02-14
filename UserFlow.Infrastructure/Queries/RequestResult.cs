@@ -11,7 +11,7 @@ namespace UserWorkFlow.Infrastructure.Queries
 
         public bool Succeeded { get; }
 
-        public IEnumerable<string> Error { get; }
+        public IEnumerable<string> Errors { get; }
 
         public Exception ResultException { get; }
 
@@ -24,7 +24,7 @@ namespace UserWorkFlow.Infrastructure.Queries
         public RequestResult(IEnumerable<string> errors, Exception resultException = null)
         {
             Succeeded = false;
-            Error = errors;
+            Errors = errors;
             ResultException = resultException;
         }
     }

@@ -47,7 +47,7 @@ namespace UserWorkflow.Application
                     baseRequest.AuthenticatedBy = authorizedBy;
                 }
 
-                return await handler.HandlerQueryAsync(query);
+                return await handler.HandleQueryAsync(query);
             }
 
             return new RequestResult<TData>(new List<string>() { $"Unable to find request handler for {typeof(T).FullName}" });
