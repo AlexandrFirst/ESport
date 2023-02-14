@@ -5,6 +5,7 @@ export const routes = {
   Register: "/register",
   Login: "/login",
   Test: "/test",
+  Streams: "/streams",
 
   Competition: {
     Main: `/${competitionRoute}`,

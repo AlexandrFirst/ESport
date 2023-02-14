@@ -32,7 +32,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
   const dispatch = useAppDispatch();
 
   const isLessBreakpoint = useMediaQuery(tabletBreakPoint);
-  const isSidebarOpened = useAppSelector(selectIsSidebarOpened);
+  const isSidebarOpened = useAppSelector(selectIsSidebarOpened) ?? false;
 
   const setIsSidebarOpened = useCallback(
     (isOpened: boolean) => dispatch(updateSidebarOpened(isOpened)),
@@ -49,23 +49,14 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
     isMobile ? "pl-layout-tablet" : paddingClasses
   );
 
-  // const onRouteChangeStart = useCallback(() => {
-  //   setIsSidebarOpened(isLessBreakpoint);
-  // }, []);
-  //
-  // const removeListener = () => {
-  //   router.events.off("routeChangeStart", onRouteChangeStart);
-  // };
-  //
-  // useEffect(() => {
-  //   router.events.on("routeChangeStart", onRouteChangeStart);
-  //
-  //   return removeListener;
-  // }, [onRouteChangeStart]);
-
   useEffect(() => {
-    setIsSidebarOpened(isLessBreakpoint);
-  }, [isLessBreakpoint, dispatch, setIsSidebarOpened]);
+    const timerId = setTimeout(() => {
+      setIsSidebarOpened(isMobile ? false : isSidebarOpened);
+    });
+    return () => {
+      clearTimeout(timerId);
+    };
+  }, [isMobile, dispatch, setIsSidebarOpened]);
 
   return (
     <>

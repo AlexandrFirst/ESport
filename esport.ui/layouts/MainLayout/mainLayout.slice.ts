@@ -1,13 +1,14 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { HYDRATE } from "next-redux-wrapper";
-import { RootState } from "../../app/store/store";
+
+import { RootState } from "@app/store/store";
 
 interface LayoutState {
-  isSidebarOpened: boolean;
+  isSidebarOpened: boolean | null;
 }
 
 const initialState: LayoutState = {
-  isSidebarOpened: false,
+  isSidebarOpened: null,
 };
 
 const mainLayoutSlice = createSlice({

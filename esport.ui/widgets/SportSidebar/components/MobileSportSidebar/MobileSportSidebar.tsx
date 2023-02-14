@@ -14,11 +14,17 @@ interface MobileSportSidebarProps {}
 
 export const MobileSportSidebar: React.FC<MobileSportSidebarProps> = () => {
   const { isSidebarOpened, setIsSidebarOpened } = useSidebarContext();
+  console.log("===isSidebarOpened===", isSidebarOpened);
+
+  const handleSetIsSidebarOpened = () => {
+    console.log("wiqjpijwqprqwjwqjrpwq");
+    setIsSidebarOpened(true);
+  };
 
   return (
     <>
       <SportIconButton
-        onClick={() => setIsSidebarOpened(true)}
+        onClick={handleSetIsSidebarOpened}
         className={styles.icon}
       >
         <MenuIcon />
@@ -35,6 +41,7 @@ export const MobileSportSidebar: React.FC<MobileSportSidebarProps> = () => {
           "& .MuiDrawer-paper": {
             boxSizing: "border-box",
             width: sidebarOpenedWidth,
+            zIndex: isSidebarOpened ? 1300 : 0,
           },
         }}
       >
