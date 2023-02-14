@@ -45,7 +45,8 @@ namespace IdentityV2
 
             services.AddCors(options => options.AddPolicy("ESportCors", builder =>
             {
-                builder.WithOrigins("http://localhost:3000", "http://localhost:6005")
+                builder.WithOrigins("http://localhost:3000", "http://localhost:6005", 
+                "http://164.92.190.247:3000", "http://164.92.190.247:6005")
                        .AllowAnyMethod()
                        .AllowAnyHeader()
                        .AllowCredentials();
@@ -75,9 +76,12 @@ namespace IdentityV2
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            services.AddDbContext<IdentityDataContext>(options => options.UseSqlServer(Configuration.GetConnectionString("IdentityDb")));
+            var connectionString = Configuration.GetConnectionString("IdentityDb");
+            System.Console.WriteLine("Connection string: " + connectionString);
+            services.AddDbContext<IdentityDataContext>(options => options.UseSqlServer(connectionString));
 
             services.AddOptions<RabbitMqOptions>().Bind(Configuration.GetSection("RabbitMq"));
+            services.AddOptions<MailOption>().Bind(Configuration.GetSection("MailOption"));
 
             services.AddAutoMapper(typeof(Startup));
 

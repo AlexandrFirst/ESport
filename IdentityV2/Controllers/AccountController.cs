@@ -38,10 +38,11 @@ namespace IdentityV2.Controllers
             Response.Cookies.Append("ESportCookie", token.Token, new Microsoft.AspNetCore.Http.CookieOptions()
             {
                 Path = "/",
-                IsEssential = true,
+                IsEssential = false,
                 Expires = DateTime.Now.AddMonths(1),
-                SameSite = Microsoft.AspNetCore.Http.SameSiteMode.None,
-                Secure = true
+                SameSite = Microsoft.AspNetCore.Http.SameSiteMode.Lax,
+                Secure = false,
+                HttpOnly = false
             });
 
             return Ok(token);
