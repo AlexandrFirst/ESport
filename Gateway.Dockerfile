@@ -13,6 +13,11 @@ RUN dotnet publish GateWay/GateWay.csproj -c Release -o out
 
 # Build runtime image
 FROM mcr.microsoft.com/dotnet/aspnet:3.1
+
+EXPOSE 443
+EXPOSE 5000
+EXPOSE 80
+
 WORKDIR /app
 COPY --from=build-env /app/out .
 ENTRYPOINT ["dotnet", "GateWay.dll"]

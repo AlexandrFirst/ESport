@@ -56,6 +56,8 @@ namespace IdentityV2.CustomAuth
                     authData = authTokens.FirstOrDefault();
                 }
             }
+            if(authDataExists)
+                Console.WriteLine($"esport cookie {authData}");
 
             if (string.IsNullOrEmpty(authData))
             {

@@ -25,7 +25,6 @@ namespace IdentityV2.Controllers
             this.accountService = accountService;
         }
 
-        [RequireHttps]
         [HttpPost("ApiLogin")]
         public async Task<IActionResult> ApiLogin([FromBody] LoginModel loginModel)
         {

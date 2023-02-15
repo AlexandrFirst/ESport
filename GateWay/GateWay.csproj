@@ -25,5 +25,11 @@
     <Folder Include="Handlers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include=".cerfs\key.pfx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 
 </Project>

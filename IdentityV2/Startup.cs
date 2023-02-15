@@ -116,10 +116,7 @@ namespace IdentityV2
             }
             app.UseCors("ESportCors");
 
-            app.UseHttpsRedirection();
-
             app.UseStaticFiles();
-
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
