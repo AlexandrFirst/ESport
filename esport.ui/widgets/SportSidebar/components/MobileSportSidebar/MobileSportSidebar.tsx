@@ -14,7 +14,6 @@ interface MobileSportSidebarProps {}
 
 export const MobileSportSidebar: React.FC<MobileSportSidebarProps> = () => {
   const { isSidebarOpened, setIsSidebarOpened } = useSidebarContext();
-  console.log("===isSidebarOpened===", isSidebarOpened);
 
   const handleSetIsSidebarOpened = () => {
     console.log("wiqjpijwqprqwjwqjrpwq");

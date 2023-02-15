@@ -16,9 +16,15 @@ export const useMenu = () => {
       link: routes.Streams,
     },
     {
+      title: "Test-main",
+      icon: <BugReportIcon className="mr-3" />,
+      link: routes.Main,
+    },
+    {
       title: "Competitions",
       icon: <SportsKabaddiIcon className="mr-3" />,
       gap: true,
+      link: routes.Competition.Main,
       items: [
         {
           title: "Competitions",
