@@ -1,3 +1,4 @@
+"use client";
 import React, { useLayoutEffect, useState } from "react";
 import styles from "./collapsableMenuItem.module.scss";
 
