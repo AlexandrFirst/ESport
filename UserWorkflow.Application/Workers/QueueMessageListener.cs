@@ -89,6 +89,8 @@ namespace UserWorkflow.Application.Workers
                     var userService = scope.ServiceProvider.GetService<IUserService>();
 
                     await userService.CreateTrainee(userInfo);
+
+                    _channel.BasicAck(ea.DeliveryTag, false);
                 }
                 catch (Newtonsoft.Json.JsonException)
                 {

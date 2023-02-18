@@ -10,7 +10,7 @@ using UserWorkflow.Esport;
 using UserWorkflow.Esport.Models;
 using UserWorkFlow.Infrastructure.Queries;
 
-namespace UserWorkflow.Application.Requests
+namespace UserWorkflow.Application.Requests.User
 {
     public class GetUserHandler : IRequestHandler<GetUser, GetUserResult>
     {
@@ -52,7 +52,7 @@ namespace UserWorkflow.Application.Requests
 
         private UserTrainerInfo handleUserTrainerInfo(Trainer trainer)
         {
-            var model = UserTrainerInfo.InitFromDbUser(trainer) as UserTrainerInfo;
+            var model = UserIdentityInfo.InitFromDbUser(trainer) as UserTrainerInfo;
             model.Id = trainer.Id;
             model.Info = trainer.Info;
             return model;
@@ -60,7 +60,7 @@ namespace UserWorkflow.Application.Requests
 
         private UserTraineeInfo handleUserTraineeInfo(Trainee trainee)
         {
-            var model = UserTraineeInfo.InitFromDbUser(trainee) as UserTraineeInfo;
+            var model = UserIdentityInfo.InitFromDbUser(trainee) as UserTraineeInfo;
             model.Id = trainee.Id;
             model.Info = trainee.Info;
             return model;
@@ -68,7 +68,7 @@ namespace UserWorkflow.Application.Requests
 
         private UserOrganisationAdminInfo handleUserAdminOrgInfo(OrganisationAdministrators organisationAdministrators)
         {
-            var model = UserOrganisationAdminInfo.InitFromDbUser(organisationAdministrators) as UserOrganisationAdminInfo;
+            var model = UserIdentityInfo.InitFromDbUser(organisationAdministrators) as UserOrganisationAdminInfo;
             model.Id = organisationAdministrators.Id;
             model.OrganisationName = organisationAdministrators.Organisation?.Name;
             model.GymOrganisationId = organisationAdministrators.Organisation?.Id;
@@ -77,9 +77,9 @@ namespace UserWorkflow.Application.Requests
 
         private UserAdminInfo handleAdminInfo(Administrators administrators)
         {
-            var model = UserAdminInfo.InitFromDbUser(administrators) as UserAdminInfo;
+            var model = UserIdentityInfo.InitFromDbUser(administrators) as UserAdminInfo;
             model.Id = administrators.Id;
-            model.UserGyms = administrators.GymAdministrators.Select(x => new Models.User.GymInfo()
+            model.UserGyms = administrators.GymAdministrators.Select(x => new GymInfo()
             {
                 Address = x.Gym.Address,
                 CloseTime = x.Gym.CloseTime,

@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 using UserWorkflow.Application.Base;
 using UserWorkflow.Application.Models.User;
 
-namespace UserWorkflow.Application.Requests
+namespace UserWorkflow.Application.Requests.User
 {
-    public class GetUser: BaseRequest
+    public class GetUser : BaseRequest
     {
         [Required]
         public int UserId { get; set; }
     }
 
-    public class GetUserResult 
+    public class GetUserResult
     {
         public UserIdentityInfo UserIdentityInfo { get; set; }
         public UserTraineeInfo UserTraineeInfo { get; set; }

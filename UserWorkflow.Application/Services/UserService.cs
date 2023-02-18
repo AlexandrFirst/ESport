@@ -6,9 +6,10 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using UserWorkflow.Application.Models;
+using UserWorkflow.Application.Models.Rmq;
 using UserWorkflow.Esport;
 using UserWorkflow.Esport.Models;
+using UserWorkflow.Infrastructure.Security;
 
 namespace UserWorkflow.Application.Services
 {
@@ -38,7 +39,7 @@ namespace UserWorkflow.Application.Services
             await esportDataContext.Administrators.AddAsync(administrator);
             await esportDataContext.SaveChangesAsync();
 
-            notifyCompetitionService(administrator, "LocalAdmin", "Create");
+            notifyCompetitionService(administrator, UserRole.LocalAdmin.RoleName, "Create");
 
             return administrator.Id;
         }
@@ -56,7 +57,7 @@ namespace UserWorkflow.Application.Services
             await esportDataContext.OrganisationAdministrators.AddAsync(administrator);
             await esportDataContext.SaveChangesAsync();
 
-            notifyCompetitionService(administrator, "OrgAdmin", "Create");
+            notifyCompetitionService(administrator, UserRole.OrgAdmin.RoleName, "Create");
          
             return administrator.Id;
         }
@@ -68,7 +69,7 @@ namespace UserWorkflow.Application.Services
             await esportDataContext.Trainees.AddAsync(trainee);
             await esportDataContext.SaveChangesAsync();
 
-            notifyCompetitionService(trainee, "Trainee", "Create");
+            notifyCompetitionService(trainee, UserRole.Trainee.RoleName, "Create");
 
             return trainee.Id;
         }
@@ -80,8 +81,7 @@ namespace UserWorkflow.Application.Services
             await esportDataContext.Trainers.AddAsync(trainer);
             await esportDataContext.SaveChangesAsync();
 
-            notifyCompetitionService(trainer, "Trainer", "Create");
-
+            notifyCompetitionService(trainer, UserRole.Trainer.RoleName, "Create");
             return trainer.Id;
         }
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace UserWorkflow.Application.Models
+namespace UserWorkflow.Application.Models.Rmq
 {
     public class OrganisationMessageModel
     {

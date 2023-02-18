@@ -55,8 +55,8 @@ services:
   identity:
     image: 12345flex402/esport_identity
     build:
-      context: .
-      dockerfile: ./Identity.Dockerfile
+      context: ./IdentityV2
+      dockerfile: ./Dockerfile
     depends_on:
       sqldb:
         condition: service_healthy
@@ -65,10 +65,8 @@ services:
     restart: on-failure
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      - ASPNETCORE_URLS="https://+;http://+"
     ports:
-      - '5000:5000'
-      - '5001:5001'
+      - '5000:80'
     extra_hosts:
     - "host.docker.internal:host-gateway"
   gateway:
@@ -82,10 +80,8 @@ services:
     restart: on-failure
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
-      - ASPNETCORE_URLS="https://+;http://+"
     ports:
-      - '5002:5002'
-      - '5012:443'
+      - '5001:80'
     extra_hosts:
       - "host.docker.internal:host-gateway"
   message:
@@ -140,7 +136,8 @@ services:
       dockerfile: ./Dockerfile
     restart: on-failure
     ports:
-      - '4200:443'
+      - '4201:443'
+      - '4200:80'
   competitions:
     image: 12345flex402/esport-competitions
     user: root

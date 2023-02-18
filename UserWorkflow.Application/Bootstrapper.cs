@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using UserWorkflow.Application.Clients;
 using UserWorkflow.Application.Configs;
-using UserWorkflow.Application.Requests;
+using UserWorkflow.Application.Requests.User;
 using UserWorkflow.Application.Services;
 using UserWorkFlow.Infrastructure.Commands;
 using UserWorkFlow.Infrastructure.Queries;
@@ -35,7 +35,7 @@ namespace UserWorkflow.Application
 
 
             services.AddTransient<IRequestHandler<GetUser, GetUserResult>, GetUserHandler>();
-
+            services.AddScoped<IdentityClient>();
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 

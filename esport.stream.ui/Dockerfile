@@ -12,8 +12,8 @@ RUN ng build --configuration=production --output-path=dist
 FROM nginx:1.16.0-alpine
 
 COPY ./nginx.conf /etc/nginx/conf.d/default.conf
-COPY ./fullchain.pem /etc/keys/fullchain.pem
-COPY ./privkey.pem /etc/keys/privkey.pem
+COPY ./.cerf/fullchain.pem /etc/keys/fullchain.pem
+COPY ./.cerf/privkey.pem /etc/keys/privkey.pem
 COPY --from=build /app/dist /usr/share/nginx/html
 
 EXPOSE 80
