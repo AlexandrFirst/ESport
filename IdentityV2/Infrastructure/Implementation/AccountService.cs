@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using IdentityV2.Config;
 using IdentityV2.Data;
 using IdentityV2.Data.Domain;
 using IdentityV2.Data.Utils;
@@ -6,12 +7,14 @@ using IdentityV2.Dto.User;
 using IdentityV2.Infrastructure.Implementation;
 using IdentityV2.Models;
 using IdentityV2.Models.AccountModels;
-using IdentityV2.RMQ;
+using IdentityV2.Models.MessageModels;
 using IdentityV2.Utils;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using RMQEsportClient;
+using RMQEsportClient.QueueConfigs;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -26,7 +29,7 @@ namespace IdentityV2.Infrastructure.Core
         private readonly IJWTManagerRepository jwtMananager;
         private readonly IMapper mapper;
         private readonly IMessageProducer messageProducer;
-        private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly IAuthorizationCache authorizationCache;
         private readonly MailOption mailOptions;
         private readonly string passwordSecretKey;
 
@@ -36,13 +39,14 @@ namespace IdentityV2.Infrastructure.Core
             IMapper mapper,
             IMessageProducer messageProducer,
             IHttpContextAccessor httpContextAccessor,
+            IAuthorizationCache authorizationCache,
             IOptions<MailOption> mailOptions)
         {
             this.dataContext = dataContext;
             this.jwtMananager = jwtMananager;
             this.mapper = mapper;
             this.messageProducer = messageProducer;
-            this.httpContextAccessor = httpContextAccessor;
+            this.authorizationCache = authorizationCache;
             passwordSecretKey = configuration.GetSection("User")["Key"];
             this.mailOptions = mailOptions.Value;
         }
@@ -64,20 +68,35 @@ namespace IdentityV2.Infrastructure.Core
             dataContext.Remove(pendingUser);
             await dataContext.SaveChangesAsync();
 
+            messageProducer.SendMessage<UserPostConfirmationQueueModel>(new UserPostConfirmationQueueModel()
+            {
+                UserId = user.Id,
+                Email= user.Email,
+                Name= user.Name,
+                Surname= user.Surname
+            }, QueueConfigName.IdentityConfig);
+
             return true;
         }
 
         public async Task<Tokens> Login(UserLoginDto userLoginDto)
         {
             var token = await jwtMananager.AuthenticateAsync(userLoginDto);
+            authorizationCache.AddUserToCache(token.UserId, token.Token);
             return token;
+        }
+
+        public Task<bool> Logout(int userId)
+        {
+           authorizationCache.RemoveUserFromCache(userId);
+            return Task.FromResult(true);
         }
 
         public async Task<RegisterResultModel> Register(RegisterModel registerModel)
         {
             PasswordHelper passwordHelper = new PasswordHelper(passwordSecretKey);
-            var basicRole = dataContext.Roles.FirstOrDefault(x => x.Title == "LocalAdmin");
-            if (basicRole == null) { throw new System.Exception("Unable to find proper role"); }
+            var basicRole = dataContext.Roles.FirstOrDefault(x => x.Title == "Trainee");
+            if (basicRole == null) { throw new Exception("Unable to find proper role"); }
 
 
             var creatUserDto = new CreateUserDto()
@@ -112,7 +131,7 @@ namespace IdentityV2.Infrastructure.Core
                     token = userToInsert.PendingUser.PendingToken.ToString(),
                     mail = userToInsert.Email,
                     template = "<p>Click to confirm your account <a href='http://" + mailOptions.ConfirmationHost +":3000/user/confirm/{0}'>Confirm</a></p>"
-                });
+                }, QueueConfigName.MessageConfig);
                 await dataContext.SaveChangesAsync();
 
                 return new RegisterResultModel { IsSuccess = true };

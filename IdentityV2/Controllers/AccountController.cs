@@ -2,8 +2,12 @@
 using IdentityV2.Infrastructure.Core;
 using IdentityV2.Infrastructure.Implementation;
 using IdentityV2.Models.AccountModels;
+using IdentityV2.Utils;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -29,23 +33,38 @@ namespace IdentityV2.Controllers
                 Mail = loginModel.Mail,
                 Password = loginModel.Password
             };
-            Console.WriteLine("sdsd");
-            Console.WriteLine("sdsd");
+            
             var token = await accountService.Login(loginDto);
             if (token == null) { return BadRequest(new { Message = "Login or password is incorrect"}); }
+            
             Response.Headers.Add("access-control-expose-headers", "Set-Cookie");
             Response.Headers.Add("Access-Control-Allow-Credentials", "true");
+            
             Response.Cookies.Append("ESportCookie", token.Token, new Microsoft.AspNetCore.Http.CookieOptions()
             {
                 Path = "/",
                 IsEssential = false,
                 Expires = DateTime.Now.AddMonths(1),
-                SameSite = Microsoft.AspNetCore.Http.SameSiteMode.Lax,
-                Secure = false,
+                SameSite = Microsoft.AspNetCore.Http.SameSiteMode.None,
+                Secure = true,
                 HttpOnly = false
             });
 
             return Ok(token);
+        }
+
+
+        [Authorize]
+        [RequireHttps]
+        [HttpPost("ApiLogout")]
+        public async Task<IActionResult> ApiLogout() 
+        {
+            var userIdClaim = User.Claims.FirstOrDefault(x => x.Type == UserClaims.Id);
+            if (userIdClaim == null) { return BadRequest(new { Message = "USer is not logged in" }); }
+                
+            var userId = int.Parse(userIdClaim.Value);
+            await accountService.Logout(userId);
+            return Ok();
         }
 
         [HttpGet("Confirm")]

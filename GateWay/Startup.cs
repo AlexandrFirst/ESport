@@ -40,9 +40,8 @@ namespace GateWay
 
             services.AddCors(options => options.AddPolicy("ESportCors", builder =>
             {
-                builder.WithOrigins("http://localhost:3000", "http://localhost:6005", 
-                "http://164.92.190.247:3000", "http://164.92.190.247:6005",
-                "http://localhost:4200", "http://164.92.190.247:4200")
+                builder.WithOrigins("http://localhost:3000", "http://localhost:6005", "http://localhost:4200",
+                    "https://e-sport.cloud", "https://e-sport.cloud:4200")
                        .AllowAnyMethod()
                        .AllowAnyHeader()
                        .AllowCredentials();
@@ -56,7 +55,7 @@ namespace GateWay
                 o.DefaultChallengeScheme = "ESport";
             })
             .AddScheme<ESportClientAuthenticationOptions, ESportClientAuthenticationHandler>("ESport", o => { o.Authority = Configuration.GetSection("Security")["Authority"]; });
-            
+
 
             services.AddOcelot();
         }
@@ -73,7 +72,7 @@ namespace GateWay
                         {
                             await next.Invoke();
                         }
-                        catch (Exception ex) 
+                        catch (Exception ex)
                         {
                             context.Response.StatusCode = 500;
 

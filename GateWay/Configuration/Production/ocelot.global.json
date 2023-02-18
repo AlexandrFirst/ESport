@@ -1,5 +1,5 @@
 {
   "GlobalConfiguration": {
-    "BaseUrl": "http://host.docker.internal:6005"
+    "BaseUrl": "https://e-sport.cloud:5012"
   }
 }

@@ -12,8 +12,8 @@ namespace IdentityV2.Data.Configuration
             {
                 new Role(){ Id = 1, Title = "OrgAdmin"},
                 new Role(){ Id = 2, Title = "LocalAdmin"},
-                new Role(){ Id = 3, Title = "Teacher"},
-                new Role(){ Id = 4, Title = "Pupil"},
+                new Role(){ Id = 3, Title = "Trainer"},
+                new Role(){ Id = 4, Title = "Trainee"},
             });
         }
     }

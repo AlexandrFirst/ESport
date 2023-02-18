@@ -67,12 +67,12 @@ namespace IdentityV2.Migrations
                         new
                         {
                             Id = 3,
-                            Title = "Teacher"
+                            Title = "Trainer"
                         },
                         new
                         {
                             Id = 4,
-                            Title = "Pupil"
+                            Title = "Trainee"
                         });
                 });
 
@@ -159,7 +159,7 @@ namespace IdentityV2.Migrations
                     b.HasOne("IdentityV2.Data.Domain.User", "User")
                         .WithOne("PendingUser")
                         .HasForeignKey("IdentityV2.Data.Domain.PendingUser", "UserId")
-                        .OnDelete(DeleteBehavior.SetNull)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 

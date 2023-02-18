@@ -74,7 +74,7 @@ services:
     user: root
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Gateway.Dockerfile
     depends_on:
       - identity
     restart: on-failure
@@ -136,6 +136,7 @@ services:
       dockerfile: ./Dockerfile
     restart: on-failure
     ports:
+      - '4201:443'
       - '4200:80'
   competitions:
     image: 12345flex402/esport-competitions
