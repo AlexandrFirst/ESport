@@ -13,11 +13,11 @@ interface ProvidersProps extends PropsWithChildren {
 export const Providers: React.FC<ProvidersProps> = ({ store, children }) => {
   return (
     <StyledEngineProvider injectFirst>
-      <ThemeProvider attribute={"class"}>
-        <QueryProvider>
-          <Provider store={store}>{children}</Provider>
-        </QueryProvider>
-      </ThemeProvider>
+      <Provider store={store}>
+        <ThemeProvider attribute={"class"}>
+          <QueryProvider>{children}</QueryProvider>
+        </ThemeProvider>
+      </Provider>
     </StyledEngineProvider>
   );
 };

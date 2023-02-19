@@ -1,8 +1,8 @@
 import { UserConfig } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
+import { AppLanguage } from "@shared/enums/app-language";
 import { TranslationsCtx } from "@app/store";
-import { AppLanguage } from "@shared/config";
 
 export const getAppServerSideTranslations = async (
   { defaultLocale, locale }: TranslationsCtx,

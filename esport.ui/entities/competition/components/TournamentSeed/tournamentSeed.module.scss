@@ -11,34 +11,18 @@
   font-size: 14px;
 }
 
-//.seed_item {
-//  color: #fff;
-//  width: 100%;
-//  background-color: #1a1d2e;
-//  padding: 0;
-//  border-radius: 0.2em;
-//  box-shadow: 0 2px 4px -2px #111630;
-//  text-align: center;
-//  position: relative;
-//}
 
 .seed_item {
   @apply w-full shadow rounded p-0 relative;
 }
 
-//.seed_team {
-//  padding: 0.3rem 0.5rem;
-//  display: flex;
-//  justify-content: space-between;
-//  align-items: center;
-//  border-radius: 0.2em;
-//}
-
 .seed_team {
   @apply px-4 py-2 flex justify-between items-center text-sm bg-skin-main dark:bg-darkSkin-contrast;
+
   &:first-child {
     @apply rounded-t border-b;
   }
+
   &:last-child {
     @apply rounded-b border-t;
   }
@@ -112,6 +96,7 @@
       }
     }
   }
+
   .seed_time {
     height: auto;
   }
