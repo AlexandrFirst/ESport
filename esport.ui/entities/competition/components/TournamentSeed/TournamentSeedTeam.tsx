@@ -2,7 +2,6 @@ import React, { FC, PropsWithChildren } from "react";
 import styles from "./tournamentSeed.module.scss";
 
 import { motion } from "framer-motion";
-import { SportAutocomplete } from "@shared/ui/SportAutocomplete/SportAutocomplete";
 
 interface TournamentSeedTeamProps extends PropsWithChildren {}
 
@@ -12,28 +11,28 @@ export const TournamentSeedTeam: FC<TournamentSeedTeamProps> = ({
 }) => {
   return (
     <motion.div drag className={styles.seed_team}>
-      <SportAutocomplete
-        name={"qweqwe"}
-        displayKey={"name"}
-        options={[
-          {
-            id: "1",
-            name: "qweqwe",
-          },
-          {
-            id: "2",
-            name: "qweqwe",
-          },
-          {
-            id: "3",
-            name: "qweqwe",
-          },
-          {
-            id: "4",
-            name: "qweqwe",
-          },
-        ]}
-      />
+      {/*<SportAutocomplete*/}
+      {/*  name={"qweqwe"}*/}
+      {/*  displayKey={"name"}*/}
+      {/*  options={[*/}
+      {/*    {*/}
+      {/*      id: "1",*/}
+      {/*      name: "qweqwe",*/}
+      {/*    },*/}
+      {/*    {*/}
+      {/*      id: "2",*/}
+      {/*      name: "qweqwe",*/}
+      {/*    },*/}
+      {/*    {*/}
+      {/*      id: "3",*/}
+      {/*      name: "qweqwe",*/}
+      {/*    },*/}
+      {/*    {*/}
+      {/*      id: "4",*/}
+      {/*      name: "qweqwe",*/}
+      {/*    },*/}
+      {/*  ]}*/}
+      {/*/>*/}
       {children}
     </motion.div>
   );

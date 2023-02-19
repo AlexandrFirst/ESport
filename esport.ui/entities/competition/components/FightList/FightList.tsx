@@ -4,7 +4,7 @@ import { ICompetitor } from "@entities/competition";
 import { IRoundProps } from "@entities/competition/types/tournament/round-props";
 import { useForm } from "react-hook-form";
 import { SportForm } from "@features/SportForm";
-import { TournamentGrid } from "@entities/competition/components/testChatGPT";
+import { TournamentBracket } from "@entities/competition/components/TournamentBracket/TournamentBracket";
 
 const rounds: IRoundProps[] = [
   {
@@ -61,51 +61,11 @@ export const FightList: FC<CategoryListProps> = ({ competitors }) => {
               },
 * */
 
-  const methods = useForm();
+  const m = useForm();
+
   return (
-    <SportForm methods={methods}>
-      {/*<TournamentBracket rounds={rounds} />*/}
-      <TournamentGrid
-        rounds={[
-          {
-            id: "1",
-            name: "Round 1",
-            participants: [
-              {
-                id: "1",
-                name: "Bob",
-              },
-              {
-                id: "2",
-                name: "Alice",
-              },
-              {
-                id: "3",
-                name: "Mark",
-              },
-            ],
-          },
-          {
-            id: "2",
-            name: "Round 2",
-            participants: [
-              {
-                id: "1",
-                name: "Bob",
-              },
-              {
-                id: "2",
-                name: "Alice",
-              },
-              {
-                id: "3",
-                name: "Mark",
-              },
-            ],
-          },
-        ]}
-        // rounds={rounds}
-      />
+    <SportForm methods={m}>
+      <TournamentBracket rounds={rounds} />
     </SportForm>
   );
 };
