@@ -1,15 +1,15 @@
 .paper {
-    @apply bg-skin-contrast dark:bg-skin-contrast
+  @apply bg-skin-contrast dark:bg-skin-contrast
 }
 
 .text {
-    @apply text-skin-main
+  @apply text-skin-main
 }
 
 .menu_item {
-    @apply bg-skin-main hover:bg-skin-main dark:bg-darkSkin-main dark:hover:bg-darkSkin-main
+  @apply bg-skin-main hover:bg-skin-main dark:bg-darkSkin-main dark:hover:bg-darkSkin-main
 }
 
 .menu_item_selected {
-    @apply bg-skin-contrast hover:bg-skin-contrast dark:bg-darkSkin-contrast dark:hover:bg-darkSkin-contrast
+  @apply bg-skin-contrast hover:bg-skin-contrast dark:bg-darkSkin-contrast dark:hover:bg-darkSkin-contrast
 }

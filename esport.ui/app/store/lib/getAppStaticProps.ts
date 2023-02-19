@@ -3,7 +3,6 @@ import { GetStaticProps } from "next";
 import {
   AppPageProps,
   AppServerConfig,
-  getAppServerSideTranslations,
   updateSidebarState,
   updateSnackError,
   wrapper,
@@ -19,10 +18,7 @@ export const getAppStaticProps = <TProps extends AppPageProps>(
   return wrapper.getStaticProps<TProps>((store) => async (ctx) => {
     updateSidebarState(store);
     try {
-      const [localization, getStatic] = await Promise.all([
-        getAppServerSideTranslations(ctx, ns),
-        cb(ctx),
-      ]);
+      const getStatic = await cb(ctx);
       //TODO: fix this
 
       //@ts-ignore
@@ -31,7 +27,7 @@ export const getAppStaticProps = <TProps extends AppPageProps>(
           props: {
             //@ts-ignore
             ...getStatic.props,
-            ...localization,
+            // ...localization,
           },
         };
       }

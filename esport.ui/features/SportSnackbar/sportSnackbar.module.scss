@@ -3,6 +3,7 @@
 
   &_success {
     @apply bg-skin-primary-hover dark:bg-darkSkin-contrast text-teal-50;
+
     svg {
       @apply text-teal-50 dark:text-darkSkin-accent;
     }
@@ -10,6 +11,7 @@
 
   &_error {
     @apply bg-red-500 text-white;
+
     svg {
       @apply text-red-800;
     }
