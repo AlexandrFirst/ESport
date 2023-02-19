@@ -18,7 +18,7 @@ import { SportButton } from "@shared/ui/SportButton/SportButton";
 import { useLoader } from "@features/TopPageLoader";
 import { getAppInitialProps } from "@app/store/lib/getAppInitialProps";
 
-const Test: NextPage<{ todo: any }> = (props) => {
+const Nigga: NextPage<{ todo: any }> = (props) => {
   const { isLoading } = useAppSelector(selectLoadingIndicator);
   const { hideLoader, showLoader } = useLoader();
 
@@ -31,7 +31,7 @@ const Test: NextPage<{ todo: any }> = (props) => {
   return (
     <MainLayout>
       <SportForm methods={methods}>
-        <SportInput name={"test"} label={"Test"} endIcon={<SettingsIcon />} />
+        <SportInput name={"test"} label={"Nigga"} endIcon={<SettingsIcon />} />
       </SportForm>
       <h1 className="text-skin-main px-5">Some content</h1>
       <SportButton variant={"outlined"} onClick={handleClick}>
@@ -55,6 +55,6 @@ const Test: NextPage<{ todo: any }> = (props) => {
   );
 };
 
-export default Test;
+export default Nigga;
 
-Test.getInitialProps = getAppInitialProps(async () => {});
+Nigga.getInitialProps = getAppInitialProps(async () => {});
