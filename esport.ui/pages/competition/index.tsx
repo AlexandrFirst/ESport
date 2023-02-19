@@ -22,12 +22,24 @@ const CompetitionPage: NextPage<PageProps> = ({ competitions }) => {
 
 export default CompetitionPage;
 
-export const getServerSideProps = getAppServerSideProps<PageProps>(async () => {
-  const data = await new Promise<{ competitions: ICompetition[] }>((resolve) =>
-    resolve({ competitions: [] })
-  );
+export const getServerSideProps = getAppServerSideProps<PageProps>(
+  async () => {
+    const data = await new Promise<{ competitions: ICompetition[] }>(
+      (resolve, reject) => reject({ competitions: [] })
+    );
 
-  return {
-    props: data,
-  };
-});
+    return {
+      props: data,
+    };
+  },
+  ["competition"],
+  {
+    onReject: () => {
+      return {
+        props: {
+          competitions: [],
+        },
+      };
+    },
+  }
+);

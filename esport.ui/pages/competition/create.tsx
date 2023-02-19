@@ -3,7 +3,7 @@ import { NextPage } from "next";
 import { MainLayout } from "@layouts/MainLayout";
 
 import { CreateCompetitionFormCard } from "@page-widgets/page-create-competition";
-import { getAppServerSideProps } from "@app/store/lib/getAppServerSideProps";
+import { getAppServerSideProps } from "@app/store";
 
 interface CreateProps {}
 

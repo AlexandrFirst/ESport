@@ -2,15 +2,20 @@ import { GetStaticProps } from "next";
 
 import {
   AppPageProps,
+  AppServerConfig,
   getAppServerSideTranslations,
   updateSidebarState,
+  updateSnackError,
   wrapper,
 } from "@app/store";
 
 export const getAppStaticProps = <TProps extends AppPageProps>(
   cb: GetStaticProps<TProps & AppPageProps>,
-  ns = ["common"]
+  ns = ["common"],
+  config?: AppServerConfig
 ) => {
+  const { showInitialError = process.env.IS_DEV, onReject } = config || {};
+
   return wrapper.getStaticProps<TProps>((store) => async (ctx) => {
     updateSidebarState(store);
     try {
@@ -31,10 +36,15 @@ export const getAppStaticProps = <TProps extends AppPageProps>(
         };
       }
       return getStatic;
-    } catch (e) {
+    } catch (e: any) {
+      if (showInitialError) {
+        updateSnackError(store, e?.message ?? "Something went wrong");
+      }
+      const rejected = onReject?.(e);
       return {
         props: {
           error: e,
+          ...rejected?.props,
         },
       };
     }
