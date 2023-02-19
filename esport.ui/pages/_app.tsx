@@ -2,6 +2,7 @@ import "../app/styles/globals.css";
 
 import type { AppProps } from "next/app";
 import { Nunito_Sans } from "@next/font/google";
+import { appWithTranslation } from "next-i18next";
 
 import { wrapper } from "@app/store/store";
 
@@ -56,6 +57,6 @@ MyApp.getInitialProps = wrapper.getInitialAppProps(
       };
     }
 );
-export default MyApp;
+export default appWithTranslation(MyApp);
 
 // export default wrapper.withRedux(MyApp);

@@ -23,6 +23,7 @@
       "@layouts/*": ["layouts/*"],
       "@page-widgets/*": ["page-widgets/*"],
       "@widgets/*": ["widgets/*"],
+      "@config/*": ["config/*"],
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],

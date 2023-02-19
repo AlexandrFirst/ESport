@@ -5,7 +5,9 @@ import { MainLayout } from "@layouts/MainLayout";
 import { CreateCompetitionFormCard } from "@page-widgets/page-create-competition";
 import { getAppServerSideProps } from "@app/store/lib/getAppServerSideProps";
 
-const CreateCompetitionPage: NextPage = () => {
+interface CreateProps {}
+
+const CreateCompetitionPage: NextPage<CreateProps> = () => {
   return (
     <MainLayout>
       <CreateCompetitionFormCard />

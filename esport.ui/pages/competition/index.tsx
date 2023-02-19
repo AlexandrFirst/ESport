@@ -31,37 +31,3 @@ export const getServerSideProps = getAppServerSideProps<PageProps>(async () => {
     props: data,
   };
 });
-
-// export const getServerSideProps = wrapper.getServerSideProps<PageProps>(
-//   (store) =>
-//     async ({ query }) => {
-//       updateSidebarState(store);
-//       try {
-//         const competitions = await competitionApi.getAllCompetitions({
-//           search: query.q as string,
-//         });
-//         return {
-//           props: {
-//             competitions: competitions ?? [],
-//           },
-//         };
-//       } catch (e) {
-//         return {
-//           props: {
-//             competitions: [],
-//           },
-//         };
-//       }
-//     }
-// );
-
-// export const getServerSideProps: GetServerSideProps<PageProps> = async ({
-//   query,
-// }) => {
-//   return {
-//     redirect: {
-//       destination: "/",
-//       permanent: true,
-//     },
-//   };
-// };
