@@ -4,15 +4,15 @@ import { NextPage } from "next";
 import { MainLayout } from "@layouts/MainLayout";
 
 import { ICompetition } from "@entities/competition";
+import { getAppServerSideProps } from "@app/store";
 
 import { CompetitionsGrid } from "@page-widgets/page-all-competitions";
-import { getAppServerSideProps } from "@app/store/lib/getAppServerSideProps";
 
 type PageProps = {
   competitions: ICompetition[];
 };
 
-const CompetitionPage: NextPage<PageProps> = ({ competitions }) => {
+const CompetitionPage: NextPage<PageProps> = ({ competitions = [] }) => {
   return (
     <MainLayout>
       <CompetitionsGrid competitions={competitions} />
@@ -31,37 +31,3 @@ export const getServerSideProps = getAppServerSideProps<PageProps>(async () => {
     props: data,
   };
 });
-
-// export const getServerSideProps = wrapper.getServerSideProps<PageProps>(
-//   (store) =>
-//     async ({ query }) => {
-//       updateSidebarState(store);
-//       try {
-//         const competitions = await competitionApi.getAllCompetitions({
-//           search: query.q as string,
-//         });
-//         return {
-//           props: {
-//             competitions: competitions ?? [],
-//           },
-//         };
-//       } catch (e) {
-//         return {
-//           props: {
-//             competitions: [],
-//           },
-//         };
-//       }
-//     }
-// );
-
-// export const getServerSideProps: GetServerSideProps<PageProps> = async ({
-//   query,
-// }) => {
-//   return {
-//     redirect: {
-//       destination: "/",
-//       permanent: true,
-//     },
-//   };
-// };

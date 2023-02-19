@@ -1,7 +1,7 @@
 import { NextPageContext } from "next";
 
 import { wrapper } from "@app/store/store";
-import { updateSidebarState } from "@app/store/lib/updateSidebarState";
+import { updateSidebarState } from "@app/store";
 
 export const getAppInitialProps = (
   cb: (context: NextPageContext<any>) => {} | Promise<{}>
