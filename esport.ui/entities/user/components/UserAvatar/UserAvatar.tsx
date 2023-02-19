@@ -26,7 +26,10 @@ export const UserAvatar: React.FC<UserProps> = () => {
 
   return (
     <>
-      <SportIconButton onClick={handleOpenMenu}>
+      <SportIconButton
+        data-testId={"user-avatar-test"}
+        onClick={handleOpenMenu}
+      >
         <Avatar />
       </SportIconButton>
       {/*<Menu*/}
