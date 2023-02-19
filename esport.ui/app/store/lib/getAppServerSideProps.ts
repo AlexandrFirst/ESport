@@ -3,7 +3,6 @@ import { GetServerSideProps } from "next";
 import {
   AppPageProps,
   AppServerConfig,
-  getAppServerSideTranslations,
   updateSidebarState,
   updateSnackError,
   wrapper,
@@ -19,10 +18,8 @@ export const getAppServerSideProps = <TProps extends AppPageProps>(
   return wrapper.getServerSideProps<TProps>((store) => async (ctx) => {
     updateSidebarState(store);
     try {
-      const [localization, serverSide] = await Promise.all([
-        getAppServerSideTranslations(ctx, ns),
-        cb(ctx),
-      ]);
+      const serverSide = await cb(ctx);
+
       //TODO: fix this
       //@ts-ignore
       if (serverSide?.props) {
@@ -30,7 +27,7 @@ export const getAppServerSideProps = <TProps extends AppPageProps>(
           props: {
             //@ts-ignore
             ...serverSide.props,
-            ...localization,
+            // ...localization,
           },
         };
       }

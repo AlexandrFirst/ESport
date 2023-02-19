@@ -28,6 +28,15 @@ module.exports = {
     builder: "@storybook/builder-webpack5",
   },
   webpackFinal: async (config, { configType }) => {
+    config.resolve.fallback = {
+      ...config.resolve.fallback,
+      fs: false, // <------
+      path: false, // <-----
+    };
+    // config.resolve.alias = {
+    //   ...config.resolve.alias,
+    //   "next-i18next": "react-i18next",
+    // };
     // config.resolve.plugins = [new TsconfigPathsPlugin()];
     // // SASS + Tailwdind CSS
     // config.module.rules.push({
