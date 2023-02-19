@@ -68,13 +68,13 @@ namespace IdentityV2.Infrastructure.Implementation
                     new Claim(UserClaims.Email, dbUser.Email),
                     new Claim(UserClaims.Name, dbUser.Name),
                 }),
-                Expires = DateTime.UtcNow.AddMinutes(360),
+                Expires = DateTime.UtcNow.AddDays(1),
                 Audience = audience,
                 Issuer = issuer,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenKey), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
-            return new Tokens { Token = tokenHandler.WriteToken(token) };
+            return new Tokens { Token = tokenHandler.WriteToken(token), UserId = dbUser.Id };
         }
 
         public ESportAuthorizationResult Authorize(ClaimsPrincipal user)

@@ -13,7 +13,8 @@ export class CompetitionService {
 
   public getAllCompetitions(searchString?: string): Observable<CompetitionModel[]> {
     return this.httpClinet.get<CompetitionModel[]>(environment.apiHost + `/api/competitions/all`, {
-      withCredentials: true
+      withCredentials: true,
+      
     }).pipe(debounceTime(100), map(competition => competition.filter(v => v.title.includes(searchString || ''))));
   }
 }

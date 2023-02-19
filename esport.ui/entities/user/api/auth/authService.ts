@@ -40,8 +40,8 @@ class AuthService {
     return identityApi.post("/register", registerRequest);
   }
 
-  login(loginRequest: ILoginRequest): Promise<ILoginResponse> {
-    return identityApi.post("/apiLogin", loginRequest);
+  login(loginRequest: ILoginRequest, config?: any): Promise<ILoginResponse> {
+    return identityApi.post("/apiLogin", loginRequest, { ...config });
   }
 
   confirm(token: string): Promise<void> {

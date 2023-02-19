@@ -1,10 +1,10 @@
+using IdentityV2.Config;
 using IdentityV2.CustomAttrubutes;
 using IdentityV2.CustomAuth;
 using IdentityV2.Data;
 using IdentityV2.Infrastructure.Core;
 using IdentityV2.Infrastructure.Implementation;
 using IdentityV2.Middleware;
-using IdentityV2.RMQ;
 using IdentityV2.Utils;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -43,24 +43,34 @@ namespace IdentityV2
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddCors(options => options.AddPolicy("ESportCors", builder =>
+            services.AddCors(options =>
             {
-                builder.WithOrigins("http://localhost:3000", "http://localhost:6005", 
-                "http://164.92.190.247:3000", "http://164.92.190.247:6005")
-                       .AllowAnyMethod()
-                       .AllowAnyHeader()
-                       .AllowCredentials();
-            }));
+                options.AddPolicy("ESportCors", builder =>
+                {
+                    builder.WithOrigins("http://localhost:3000", "http://localhost:6005", "https://e-sport.cloud")
+                           .AllowAnyMethod()
+                           .AllowAnyHeader()
+                           .AllowCredentials();
+                });
+
+                options.AddPolicy("UserFlowPolicy", builder =>
+                {
+                    builder.WithOrigins("http://localhost:5005", "https://e-sport.cloud:5005")
+                            .AllowAnyMethod()
+                            .AllowAnyHeader()
+                            .AllowCredentials();
+                });
+            });
 
             services.AddControllersWithViews().AddNewtonsoftJson(options =>
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
 
-            services.AddSwaggerGen(c => c.SwaggerDoc("v1",new Microsoft.OpenApi.Models.OpenApiInfo() 
+            services.AddSwaggerGen(c => c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo()
             {
                 Version = "v1",
                 Title = "Auth API",
                 Description = "EScore Identity microservice"
-            } ));
+            }));
 
             services.AddAuthentication(o =>
             {
@@ -80,15 +90,21 @@ namespace IdentityV2
             System.Console.WriteLine("Connection string: " + connectionString);
             services.AddDbContext<IdentityDataContext>(options => options.UseSqlServer(connectionString));
 
-            services.AddOptions<RabbitMqOptions>().Bind(Configuration.GetSection("RabbitMq"));
+
             services.AddOptions<MailOption>().Bind(Configuration.GetSection("MailOption"));
+
+            RMQEsportClient.Bootstrapper.RegisterIocContainers(services, Configuration);
+
 
             services.AddAutoMapper(typeof(Startup));
 
-            services.AddSingleton<IMessageProducer, RabbitMQProducer>();
+            services.AddMemoryCache();
+
 
             services.AddScoped<IJWTManagerRepository, JWTManagerRepository>();
             services.AddScoped<IAccountService, AccountService>();
+
+            services.AddTransient<IAuthorizationCache, AuthorizationCache>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -98,14 +114,12 @@ namespace IdentityV2
             {
                 app.UseDeveloperExceptionPage();
             }
-
             app.UseCors("ESportCors");
 
             app.UseStaticFiles();
 
-
             app.UseSwagger();
-            app.UseSwaggerUI(c => 
+            app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Auth API");
             });
