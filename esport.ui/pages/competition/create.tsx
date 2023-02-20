@@ -2,8 +2,9 @@ import { NextPage } from "next";
 
 import { MainLayout } from "@layouts/MainLayout";
 
+import { getAppServerSideProps } from "@shared/lib";
+
 import { CreateCompetitionFormCard } from "@page-widgets/page-create-competition";
-import { getAppServerSideProps } from "@app/store";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { AppLanguage } from "@shared/enums/app-language";
 

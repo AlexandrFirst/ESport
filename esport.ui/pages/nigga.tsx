@@ -12,11 +12,12 @@ import { useAppSelector } from "@shared/lib/hooks/useStore";
 import { selectLoadingIndicator } from "@features/TopPageLoader/model/topPageLoader.slice";
 import { SportForm } from "@features/SportForm";
 
+import { getAppInitialProps } from "@shared/lib";
+
 import { SportIconButton } from "@shared/ui/SportIconButton/SportIconButton";
 import { SportInput } from "@shared/ui/SportInput/SportInput";
 import { SportButton } from "@shared/ui/SportButton/SportButton";
 import { useLoader } from "@features/TopPageLoader";
-import { getAppInitialProps } from "@app/store/lib/getAppInitialProps";
 
 const Nigga: NextPage<{ todo: any }> = (props) => {
   const { isLoading } = useAppSelector(selectLoadingIndicator);
