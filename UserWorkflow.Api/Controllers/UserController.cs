@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using UserWorkflow.Application;
 using UserWorkflow.Application.Requests;
+using UserWorkflow.Application.Requests.User;
 using UserWorkFlow.Infrastructure.Queries;
 
 namespace UserWorkflow.Api.Controllers

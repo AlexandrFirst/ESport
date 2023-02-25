@@ -27,6 +27,7 @@ namespace UserWorkflow.Api
                 .ConfigureServices(services => 
                 {
                     services.AddHostedService<QueueMessageListener>();
+                    services.AddHostedService<ConfirmationMessageListener>();
                 });
     }
 }

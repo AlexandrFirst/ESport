@@ -4,6 +4,7 @@ using RMQEsportClient;
 using RMQEsportClient.QueueConfigs;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UserWorkflow.Application.Models.Rmq;
@@ -19,6 +20,10 @@ namespace UserWorkflow.Application.Services
         private readonly IMessageProducer messageProducer;
         private readonly IMapper mapper;
 
+        private const string CREATE_ACTION = "Create";
+        private const string UPDATE_ACTION = "Update";
+        private const string DELETE_ACTION = "Delete";
+
         public UserService(EsportDataContext esportDataContext, IMessageProducer messageProducer, IMapper mapper)
         {
             this.esportDataContext = esportDataContext;
@@ -26,68 +31,136 @@ namespace UserWorkflow.Application.Services
             this.mapper = mapper;
         }
 
-        public async Task<int> CreateAdministrator(User userModel, int gymId)
+        public async Task<int> CreateOrUpdateAdministrator(User userModel, List<int> gymIds)
         {
-            var gym = await esportDataContext.Gyms.FirstOrDefaultAsync(x => x.Id == gymId);
-            if (gym == null)
+            var admin = await esportDataContext.Administrators.FirstOrDefaultAsync(x => x.UserId == userModel.UserId);
+            string action = string.Empty;
+
+            if (admin == null)
             {
-                throw new Exception($"Gym with id: {gymId} is not found");
+                List<Gym> gyms = await esportDataContext.Gyms.Where(x => gymIds.Any(p => p == x.Id)).ToListAsync();
+                List<GymAdministrators> gymAdministrators = gyms.Select(x => new GymAdministrators()
+                {
+                    Gym = x
+                }).ToList();
+
+                admin = userModel as Administrators;
+                admin.GymAdministrators.AddRange(gymAdministrators);
+                await esportDataContext.Administrators.AddAsync(admin);
+
+                action = CREATE_ACTION;
+            }
+            else
+            {
+                MapUser(userModel, admin);
+
+                var gymsToDelete = admin.GymAdministrators.Where(x => !gymIds.Any(g => g == x.Id)).ToList();
+                var gymsToAdd = gymIds.Where(x => !admin.GymAdministrators.Any(g => x == g.Id)).Select(x => new GymAdministrators()
+                {
+                    GymId = x
+                }).ToList();
+
+                admin.GymAdministrators.RemoveAll(x => gymsToDelete.Any(p => x.Id == p.Id));
+                admin.GymAdministrators.AddRange(gymsToAdd);
+                action = UPDATE_ACTION;
             }
 
-            Administrators administrator = userModel as Administrators;
-            administrator.GymAdministrators.Add(new GymAdministrators() { Gym = gym });
-            await esportDataContext.Administrators.AddAsync(administrator);
             await esportDataContext.SaveChangesAsync();
+            notifyCompetitionService(admin, UserRole.LocalAdmin.RoleName, action);
 
-            notifyCompetitionService(administrator, UserRole.LocalAdmin.RoleName, "Create");
-
-            return administrator.Id;
+            return admin.Id;
         }
 
-        public async Task<int> CreateOrganisationAdministrator(User userModel, int organistaionId)
+        public async Task<int> CreateOrUpdateOrganisationAdministrator(User userModel, int organistaionId)
         {
             var organistaion = esportDataContext.Organisations.FirstOrDefaultAsync(x => x.Id == organistaionId);
+            string action = string.Empty;
+
             if (organistaion == null)
             {
                 throw new Exception($"Organistaion with id: {organistaionId} is not found");
             }
 
-            OrganisationAdministrators administrator = userModel as OrganisationAdministrators;
-            administrator.OrganisationId = organistaionId;
-            await esportDataContext.OrganisationAdministrators.AddAsync(administrator);
-            await esportDataContext.SaveChangesAsync();
+            var organisationAdministrator = await esportDataContext.OrganisationAdministrators.FirstOrDefaultAsync(x => x.UserId == userModel.UserId);
+            if (organisationAdministrator == null)
+            {
 
-            notifyCompetitionService(administrator, UserRole.OrgAdmin.RoleName, "Create");
-         
-            return administrator.Id;
+                OrganisationAdministrators administrator = userModel as OrganisationAdministrators;
+                administrator.OrganisationId = organistaionId;
+                await esportDataContext.OrganisationAdministrators.AddAsync(administrator);
+                action = CREATE_ACTION;
+            }
+            else
+            {
+                MapUser(userModel, organisationAdministrator);
+                organisationAdministrator.IsProfileConfirmed = false;
+                organisationAdministrator.OrganisationId = organisationAdministrator.OrganisationId;
+            }
+
+            await esportDataContext.SaveChangesAsync();
+            notifyCompetitionService(organisationAdministrator, UserRole.OrgAdmin.RoleName, "Create");
+
+            return organisationAdministrator.Id;
         }
 
         public async Task<int> CreateTrainee(User userModel)
         {
-            Trainee trainee = userModel as Trainee;
+            var m_trainee = await esportDataContext.Trainees.FirstOrDefaultAsync(x => x.UserId == userModel.UserId);
+            string action = string.Empty;
 
-            await esportDataContext.Trainees.AddAsync(trainee);
+            if (m_trainee == null)
+            {
+                m_trainee = userModel as Trainee;
+
+                await esportDataContext.Trainees.AddAsync(m_trainee);
+                action = CREATE_ACTION;
+            }
+            else
+            {
+                MapUser(userModel, m_trainee);
+                action = UPDATE_ACTION;
+            }
+
             await esportDataContext.SaveChangesAsync();
 
-            notifyCompetitionService(trainee, UserRole.Trainee.RoleName, "Create");
+            notifyCompetitionService(m_trainee, UserRole.Trainee.RoleName, action);
 
-            return trainee.Id;
+            return m_trainee.Id;
         }
 
         public async Task<int> CreateTrainer(User userModel)
         {
-            Trainer trainer = userModel as Trainer;
+            var trainer = await esportDataContext.Trainers.FirstOrDefaultAsync(x => x.UserId == userModel.UserId);
+            string action = string.Empty;
+            if (trainer == null)
+            {
+                trainer = userModel as Trainer;
 
-            await esportDataContext.Trainers.AddAsync(trainer);
+                await esportDataContext.Trainers.AddAsync(trainer);
+                action = CREATE_ACTION;
+            }
+            else 
+            {
+                MapUser(userModel, trainer);
+                action = UPDATE_ACTION;
+            }
             await esportDataContext.SaveChangesAsync();
 
-            notifyCompetitionService(trainer, UserRole.Trainer.RoleName, "Create");
+            notifyCompetitionService(trainer, UserRole.Trainer.RoleName, action);
             return trainer.Id;
+        }
+
+        private void MapUser(User fromUser, User toUser)
+        {
+            toUser.Surname = fromUser.Surname;
+            toUser.Email = fromUser.Email;
+            toUser.Name = fromUser.Name;
+            toUser.TelephoneNumber = fromUser.TelephoneNumber;
         }
 
         private void notifyCompetitionService(User user, string action, string role)
         {
-            UserModel notifyModel = mapper.Map<UserModel>(user,
+            RmqUserModel notifyModel = mapper.Map<RmqUserModel>(user,
                 opt => opt.AfterMap((src, des) =>
                 {
                     des.Role = role;

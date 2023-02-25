@@ -4,8 +4,6 @@ using System.Text;
 
 namespace UserWorkflow.Esport.Models
 {
-    
-
     public class Trainer: User
     {
         public Trainer()

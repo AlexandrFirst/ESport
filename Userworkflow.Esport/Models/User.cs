@@ -12,5 +12,6 @@ namespace UserWorkflow.Esport.Models
         public string Email { get; set; }
         public string TelephoneNumber { get; set; }
         public Guid? PhotoId { get; set; }
+        public bool IsProfileConfirmed { get; set; } = true;
     }
 }

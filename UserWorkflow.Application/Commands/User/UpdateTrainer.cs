@@ -8,8 +8,8 @@ using UserWorkflow.Application.ReadModels;
 
 namespace UserWorkflow.Application.Commands.User
 {
-    public class CreateUser : BaseCommand
+    public class UpdateTrainer : BaseCommand
     {
-        public CreateUserInfo CreateUserInfo { get; set; }
+        public UpdateUserInfo UpdateUserInfo { get; set; }
     }
 }

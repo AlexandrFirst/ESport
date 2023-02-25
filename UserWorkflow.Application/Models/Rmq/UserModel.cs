@@ -4,7 +4,7 @@ using System.Text;
 
 namespace UserWorkflow.Application.Models.Rmq
 {
-    public class UserModel
+    public class RmqUserModel
     {
         public int UserId { get; set; }
         public string Name { get; set; }

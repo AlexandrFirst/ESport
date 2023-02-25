@@ -12,8 +12,8 @@ namespace UserWorkflow.Application.Commands.User
     public class UpdateAdmin : BaseCommand
     {
         [Required]
-        public UpdateUserInfo CreateUserInfo { get; set; }
+        public UpdateUserInfo UpdateUserInfo { get; set; }
         [Required]
-        public List<int> GymId { get; set; }
+        public List<int> GymIds { get; set; }
     }
 }
