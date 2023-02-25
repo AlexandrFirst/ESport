@@ -1,37 +1,32 @@
-import { GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 
-import {
-  AppPageProps,
-  AppServerConfig,
-  updateSidebarState,
-  updateSnackError,
-  wrapper,
-} from "@app/store";
+import { updateSnackError } from "@shared/lib";
+import { AppPageProps, AppServerConfig, wrapper } from "@app/Providers";
 
-export const getAppStaticProps = <TProps extends AppPageProps>(
-  cb: GetStaticProps<TProps & AppPageProps>,
+export const getAppServerSideProps = <TProps extends AppPageProps>(
+  cb: GetServerSideProps<TProps & AppPageProps>,
   ns = ["common"],
   config?: AppServerConfig
 ) => {
   const { showInitialError = process.env.IS_DEV, onReject } = config || {};
 
-  return wrapper.getStaticProps<TProps>((store) => async (ctx) => {
-    updateSidebarState(store);
+  return wrapper.getServerSideProps<TProps>((store) => async (ctx) => {
+    // updateSidebarState(store);
     try {
-      const getStatic = await cb(ctx);
-      //TODO: fix this
+      const serverSide = await cb(ctx);
 
+      //TODO: fix this
       //@ts-ignore
-      if (getStatic?.props) {
+      if (serverSide?.props) {
         return {
           props: {
             //@ts-ignore
-            ...getStatic.props,
+            ...serverSide.props,
             // ...localization,
           },
         };
       }
-      return getStatic;
+      return serverSide;
     } catch (e: any) {
       if (showInitialError) {
         updateSnackError(store, e?.message ?? "Something went wrong");

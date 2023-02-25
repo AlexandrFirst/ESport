@@ -4,9 +4,9 @@ import { NextPage } from "next";
 import { MainLayout } from "@layouts/MainLayout";
 
 import { ICompetition } from "@entities/competition";
-import { getAppServerSideProps } from "@app/store";
 
 import { CompetitionsGrid } from "@page-widgets/page-all-competitions";
+import { getAppServerSideProps } from "@shared/lib";
 
 type PageProps = {
   competitions: ICompetition[];

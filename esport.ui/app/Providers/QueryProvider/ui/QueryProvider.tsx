@@ -1,21 +1,15 @@
 import React, { PropsWithChildren } from "react";
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
-const queryProvider = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-    },
-  },
-});
+import { queryClient } from "@app/Providers/QueryProvider/config/queryClient";
 
 interface QueryProviderProps extends PropsWithChildren {}
 
 export const QueryProvider: React.FC<QueryProviderProps> = ({ children }) => {
   return (
-    <QueryClientProvider client={queryProvider}>
+    <QueryClientProvider client={queryClient}>
       {children}
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
