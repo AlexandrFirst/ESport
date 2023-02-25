@@ -1,11 +1,11 @@
-import React, { PropsWithChildren } from "react";
+import React, { FC, PropsWithChildren } from "react";
 import { createPortal } from "react-dom";
 
 interface SportPortalProps extends PropsWithChildren {
   element?: HTMLElement;
 }
 
-export const SportPortal: React.FC<SportPortalProps> = ({
+export const SportPortal: FC<SportPortalProps> = ({
   element = document.body,
   children,
 }) => {
