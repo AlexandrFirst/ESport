@@ -4,6 +4,6 @@ export interface IFight {
   _id?: string;
   isProcessed: boolean;
   winnerId?: string;
-  accNumber: number;
+  fightNumber: number;
   competitors: ICompetitor[];
 }

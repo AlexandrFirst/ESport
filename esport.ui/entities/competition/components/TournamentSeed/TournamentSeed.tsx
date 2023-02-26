@@ -1,23 +1,23 @@
 import { FC } from "react";
 import styles from "./tournamentSeed.module.scss";
 
-import { TournamentSeedItem } from "@entities/competition/components/TournamentSeed/TournamentSeedItem";
-import { TournamentSeedTeam } from "@entities/competition/components/TournamentSeed/TournamentSeedTeam";
-import { IRenderSeedProps } from "@entities/competition/types/tournament/seed";
-import { TournamentSeedTime } from "@entities/competition/components/TournamentSeed/TournamentSeedTime";
+import { TournamentRoundItem } from "@entities/competition/components/TournamentSeed/TournamentRoundItem";
+import { TournamentRoundFight } from "@entities/competition/components/TournamentSeed/TournamentRoundFight";
+import { IRenderRoundProps } from "@entities/competition/types/tournament/seed";
+import { TournamentRoundInfo } from "@entities/competition/components/TournamentSeed/TournamentRoundInfo";
 
-export const TournamentSeed: FC<IRenderSeedProps> = ({ seed }) => {
+export const TournamentSeed: FC<IRenderRoundProps> = ({ round }) => {
   return (
     <div className={styles.seed}>
-      <TournamentSeedItem>
-        <TournamentSeedTeam>
-          {seed.teams?.[0]?.name || "-----------"}
-        </TournamentSeedTeam>
-        <TournamentSeedTeam>
-          {seed.teams?.[1]?.name || "-----------"}
-        </TournamentSeedTeam>
-      </TournamentSeedItem>
-      <TournamentSeedTime>{seed?.date}</TournamentSeedTime>
+      <TournamentRoundItem>
+        <TournamentRoundFight>
+          {round.compatitors?.[0]?.name || "-----------"}
+        </TournamentRoundFight>
+        <TournamentRoundFight>
+          {round.compatitors?.[1]?.name || "-----------"}
+        </TournamentRoundFight>
+      </TournamentRoundItem>
+      <TournamentRoundInfo>{round?.roundNumber}</TournamentRoundInfo>
     </div>
   );
 };

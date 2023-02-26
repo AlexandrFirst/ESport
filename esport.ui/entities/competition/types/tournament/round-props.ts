@@ -1,7 +1,7 @@
 import { ISeedProps } from "@entities/competition/types/tournament/seed";
 
 export type IRoundProps = {
-  seeds: ISeedProps[];
+  rounds: ISeedProps[];
   title: string;
   [key: string]: any;
 };

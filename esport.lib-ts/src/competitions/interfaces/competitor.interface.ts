@@ -3,7 +3,7 @@ import { CompatitorType } from "../enums";
 export interface ICompetitor {
   _id?: string;
   userId?: number;
-  team?: number[];
+  teamMemberIds?: number[];
   teamName?: string;
   weight?: number;
   height?: number;

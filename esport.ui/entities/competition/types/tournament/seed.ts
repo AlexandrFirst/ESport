@@ -2,14 +2,14 @@ import { IRoundProps } from "@entities/competition/types/tournament/round-props"
 
 export type ISeedProps = {
   id: number | string;
-  teams: Array<{ name?: string; [key: string]: any }>;
-  date?: string;
+  compatitors: Array<{ name?: string; [key: string]: any }>;
+  roundNumber?: string;
   mobileBreakpoint?: number;
   [key: string]: any;
 };
 
-export interface IRenderSeedProps {
-  seed: ISeedProps;
+export interface IRenderRoundProps {
+  round: ISeedProps;
   breakpoint?: number;
   roundIndex: number;
   seedIndex: number;

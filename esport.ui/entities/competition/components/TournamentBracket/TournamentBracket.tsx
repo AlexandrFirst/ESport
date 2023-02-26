@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import SwipeableViews, { SwipeableViewsProps } from "react-swipeable-views";
 
 import { IRoundProps } from "@entities/competition/types/tournament/round-props";
-import { IRenderSeedProps } from "@entities/competition/types/tournament/seed";
+import { IRenderRoundProps } from "@entities/competition/types/tournament/seed";
 import { useMedia } from "@shared/lib/hooks/useMedia";
 import { TournamentRound } from "@entities/competition/components/TournamentRound/TournamentRound";
 import { TournamentSeedsList } from "@entities/competition/components/TournamentSeedsList/TournamentSeedsList";
@@ -35,7 +35,7 @@ interface TournamentBracketProps {
    * @param {number} breakpoint the breakpoint used to determine responsive size
    * @param {number} roundIdx the current round index
    */
-  renderSeedComponent?: (props: IRenderSeedProps) => JSX.Element;
+  renderSeedComponent?: (props: IRenderRoundProps) => JSX.Element;
 }
 
 export const TournamentBracket: FC<TournamentBracketProps> = ({
@@ -58,10 +58,10 @@ export const TournamentBracket: FC<TournamentBracketProps> = ({
     >
       {/*{round.title && roundTitleComponent(round.title, roundIdx)}*/}
       <TournamentSeedsList>
-        {round.seeds.map((seed, idx) => (
+        {round.rounds.map((round, idx) => (
           <TournamentSeed
-            key={seed.id}
-            seed={seed}
+            key={round.id}
+            round={round}
             roundIndex={roundIdx}
             seedIndex={idx}
             rounds={rounds}
