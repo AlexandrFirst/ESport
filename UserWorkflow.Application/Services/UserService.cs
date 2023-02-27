@@ -16,7 +16,7 @@ namespace UserWorkflow.Application.Services
 {
     public class UserService : IUserService
     {
-        private readonly EsportDataContext esportDataContext; 
+        private readonly EsportDataContext esportDataContext;
         private readonly IMessageProducer messageProducer;
         private readonly IMapper mapper;
 
