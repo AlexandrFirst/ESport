@@ -1,15 +1,13 @@
-import ReactDOM from "react-dom";
-import React, { PropsWithChildren, useEffect, useState } from "react";
+import React, { FC, PropsWithChildren } from "react";
+import { createPortal } from "react-dom";
 
-export const SportPortal: React.FC<PropsWithChildren> = ({ children }) => {
-  const [container] = useState(() => document?.createElement("div"));
+interface SportPortalProps extends PropsWithChildren {
+  element?: HTMLElement;
+}
 
-  useEffect(() => {
-    document?.body.appendChild(container);
-    return () => {
-      document?.body.removeChild(container);
-    };
-  }, []);
-
-  return ReactDOM.createPortal(children, container);
+export const SportPortal: FC<SportPortalProps> = ({
+  element = document.body,
+  children,
+}) => {
+  return createPortal(children, element);
 };

@@ -5,27 +5,26 @@ import { useForm } from "react-hook-form";
 
 import SettingsIcon from "@mui/icons-material/Settings";
 
-import { wrapper } from "@app/store/store";
-
-import { SportButton } from "@shared/ui/SportButton/SportButton";
 import { MainLayout } from "@layouts/MainLayout";
 
-import { useAppDispatch, useAppSelector } from "@shared/lib/hooks/useStore";
-import {
-  hideLoading,
-  selectLoadingIndicator,
-  showLoading,
-} from "@features/TopPageLoader/model/topPageLoader.slice";
-import { SportIconButton } from "@shared/ui/SportIconButton/SportIconButton";
-import { SportForm } from "@features/SportForm";
-import { SportInput } from "@shared/ui/SportInput/SportInput";
-import { makeSidebar } from "@app/store/lib/makeSidebar";
+import { useAppSelector } from "@shared/lib/hooks/useStore";
 
-const Test: NextPage = () => {
-  const dispatch = useAppDispatch();
+import { selectLoadingIndicator } from "@features/TopPageLoader/model/topPageLoader.slice";
+import { SportForm } from "@features/SportForm";
+
+import { getAppInitialProps } from "@shared/lib";
+
+import { SportIconButton } from "@shared/ui/SportIconButton/SportIconButton";
+import { SportInput } from "@shared/ui/SportInput/SportInput";
+import { SportButton } from "@shared/ui/SportButton/SportButton";
+import { useLoader } from "@features/TopPageLoader";
+
+const Nigga: NextPage<{ todo: any }> = (props) => {
   const { isLoading } = useAppSelector(selectLoadingIndicator);
+  const { hideLoader, showLoader } = useLoader();
+
   const handleClick = () => {
-    isLoading ? dispatch(hideLoading()) : dispatch(showLoading());
+    isLoading ? hideLoader() : showLoader();
   };
 
   const methods = useForm();
@@ -33,7 +32,7 @@ const Test: NextPage = () => {
   return (
     <MainLayout>
       <SportForm methods={methods}>
-        <SportInput name={"test"} label={"Test"} endIcon={<SettingsIcon />} />
+        <SportInput name={"test"} label={"Nigga"} endIcon={<SettingsIcon />} />
       </SportForm>
       <h1 className="text-skin-main px-5">Some content</h1>
       <SportButton variant={"outlined"} onClick={handleClick}>
@@ -57,8 +56,6 @@ const Test: NextPage = () => {
   );
 };
 
-export default Test;
+export default Nigga;
 
-Test.getInitialProps = wrapper.getInitialPageProps((store) => () => {
-  makeSidebar(store);
-});
+Nigga.getInitialProps = getAppInitialProps(async () => {});

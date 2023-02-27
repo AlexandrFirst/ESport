@@ -2,10 +2,10 @@ import "../app/styles/globals.css";
 
 import type { AppProps } from "next/app";
 import { Nunito_Sans } from "@next/font/google";
+import { appWithTranslation } from "next-i18next";
 
-import { wrapper } from "@app/store/store";
-
-import { Providers } from "@app/Providers/Providers";
+import { Providers, wrapper } from "@app/Providers";
+import { updateSidebarState } from "@shared/lib";
 
 const font = Nunito_Sans({
   subsets: ["latin", "cyrillic-ext", "cyrillic"],
@@ -44,6 +44,7 @@ function MyApp({ Component, ...restProps }: AppProps) {
 MyApp.getInitialProps = wrapper.getInitialAppProps(
   (store) =>
     async ({ ctx, Component }) => {
+      updateSidebarState(store);
       //Implement auth logic here
       return {
         pageProps: {
@@ -56,6 +57,6 @@ MyApp.getInitialProps = wrapper.getInitialAppProps(
       };
     }
 );
-export default MyApp;
+export default appWithTranslation(MyApp);
 
 // export default wrapper.withRedux(MyApp);

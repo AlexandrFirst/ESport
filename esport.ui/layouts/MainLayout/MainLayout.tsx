@@ -12,8 +12,6 @@ import { SportSnackbar } from "@features/SportSnackbar";
 import { SportSidebar } from "@widgets/SportSidebar/SportSidebar";
 import { SportHeader } from "@widgets/SportHeader/SportHeader";
 
-import { useMediaQuery } from "@shared/lib/hooks/useMediaQuery";
-
 import { selectIsSidebarOpened, updateSidebarOpened } from "./mainLayout.slice";
 
 type MainLayoutProps = PropsWithChildren &
@@ -31,7 +29,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
   const { isMobile, tabletBreakPoint } = useMedia();
   const dispatch = useAppDispatch();
 
-  const isLessBreakpoint = useMediaQuery(tabletBreakPoint);
+  // const isLessBreakpoint = useMediaQuery(tabletBreakPoint);
   const isSidebarOpened = useAppSelector(selectIsSidebarOpened) ?? false;
 
   const setIsSidebarOpened = useCallback(

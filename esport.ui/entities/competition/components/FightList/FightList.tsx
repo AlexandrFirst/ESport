@@ -1,71 +1,72 @@
-import React from "react";
+import React, { FC, useState } from "react";
 // import { Bracket, IRenderSeedProps, IRoundProps } from "react-brackets";
 import { ICompetitor } from "@entities/competition";
+import { IRoundProps } from "@entities/competition/types/tournament/round-props";
+import { useForm } from "react-hook-form";
+import { SportForm } from "@features/SportForm";
+import { TournamentBracket } from "@entities/competition/components/TournamentBracket/TournamentBracket";
 
-// const rounds: IRoundProps[] = [
-//   {
-//     title: "Round one",
-//     seeds: [
-//       {
-//         id: 1,
-//         date: new Date().toDateString(),
-//         teams: [{ name: "Team A" }, { name: "Team B" }],
-//       },
-//       {
-//         id: 2,
-//         date: new Date().toDateString(),
-//         teams: [{ name: "Team C" }, { name: "Team D" }],
-//       },
-//     ],
-//   },
-//   {
-//     title: "Round two",
-//     seeds: [
-//       {
-//         id: 3,
-//         date: new Date().toDateString(),
-//         teams: [{ name: "Team A" }, { name: "Team C" }],
-//       },
-//     ],
-//   },
-// ];
+const rounds: IRoundProps[] = [
+  {
+    title: "Round one",
+    seeds: [
+      {
+        id: 1,
+        date: new Date().toDateString(),
+        teams: [{ name: "Team A" }, { name: "Team B" }],
+      },
+      {
+        id: 2,
+        date: new Date().toDateString(),
+        teams: [{ name: "Team C" }, { name: "Team D" }],
+      },
+    ],
+  },
+  {
+    title: "Round two",
+    seeds: [
+      {
+        id: 3,
+        date: new Date().toDateString(),
+        teams: [{ name: "Team A" }, { name: "Team C" }],
+      },
+    ],
+  },
+];
 
 interface CategoryListProps {
   competitors: ICompetitor[];
 }
 
-export const FightList: React.FC<CategoryListProps> = ({ competitors }) => {
-  console.log("===competitors===", competitors);
+export const FightList: FC<CategoryListProps> = ({ competitors }) => {
+  const [state, setState] = useState();
 
-  // function renderSeedComponent({ seed }: IRenderSeedProps) {
-  //   console.log("===seed===", seed);
-  //   return (
-  //     <div>
-  //       {seed.teams.map((f) => (
-  //         <span>{f.name}</span>
-  //       ))}
-  //     </div>
-  //   );
-  // }
+  /*
+  *
+            {
+                id: "1",
+                matchups: [
+                  {
+                    id: "1",
+                    participant1: {
+                      id: "1",
+                      name: "Bob",
+                    },
+                    participant2: {
+                      id: "2",
+                      name: "Alice",
+                    },
+                  },
+                ],
+              },
+* */
+
+  const m = useForm();
 
   return (
-    <>
-      {/* <Bracket rounds={rounds} /> */}
-      {/*<CompetitorItem competitor={competitors[0]} />*/}
-      {/*<CompetitorItem competitor={competitors[1]} bottom />*/}
-      {/*{competitors.map((f) => (*/}
-      {/*  // <div key={f.userId} className={styles.competitor}>*/}
-      {/*  //   {f.userId}*/}
-      {/*  // </div>*/}
-      {/*))}*/}
-      {/*<Reorder.Group onReorder={setCompetitors} values={competitors}>*/}
-      {/*  {competitors.map((f) => (*/}
-      {/*    <Reorder.Item key={f.userId} value={f}>*/}
-      {/*      <div className={styles.competitor}>{f.userId}</div>*/}
-      {/*    </Reorder.Item>*/}
-      {/*  ))}*/}
-      {/*</Reorder.Group>*/}
-    </>
+    <SportForm methods={m}>
+      <TournamentBracket rounds={rounds} />
+    </SportForm>
   );
 };
 

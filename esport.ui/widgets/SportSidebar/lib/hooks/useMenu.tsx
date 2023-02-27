@@ -9,16 +9,26 @@ import { IMenuItem } from "../../types/menu-item";
 
 export const useMenu = () => {
   const menu: IMenuItem[] = [
-    { title: "Test", icon: <BugReportIcon className="mr-3" />, link: "/test" },
+    {
+      title: "Test",
+      icon: <BugReportIcon className="mr-3" />,
+      link: routes.Test,
+    },
     {
       title: "Streams",
       icon: <ConnectedTvIcon className="mr-3" />,
       link: routes.Streams,
     },
     {
+      title: "Test-main",
+      icon: <BugReportIcon className="mr-3" />,
+      link: routes.Main,
+    },
+    {
       title: "Competitions",
       icon: <SportsKabaddiIcon className="mr-3" />,
       gap: true,
+      link: routes.Competition.Main,
       items: [
         {
           title: "Competitions",

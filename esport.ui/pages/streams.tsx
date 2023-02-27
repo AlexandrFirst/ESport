@@ -48,7 +48,7 @@ const StreamsPage: NextPage = () => {
     );
 
     getIFramePath(router.asPath);
-  }, []);
+  }, [router.asPath]);
 
   return (
     <>
