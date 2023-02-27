@@ -10,8 +10,8 @@ namespace UserWorkflow.Application.Services
     public interface IUserService
     {
         public Task<int> CreateTrainee(User userModel);
-        public Task<int> CreateAdministrator(User userModel, int gymId);
-        public Task<int> CreateOrganisationAdministrator(User userModel, int organistaionId);
         public Task<int> CreateTrainer(User userModel);
+        public Task<int> CreateOrUpdateAdministrator(User userModel, List<int> gymId);
+        public Task<int> CreateOrUpdateOrganisationAdministrator(User userModel, int organistaionId);
     }
 }

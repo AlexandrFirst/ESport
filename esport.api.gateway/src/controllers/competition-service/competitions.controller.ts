@@ -49,6 +49,9 @@ export class CompetitionsController {
     @Body()
     body: CreateCompetitionDto,
   ) {
+
+    console.log("Create event")
+
     return res(() =>
       this.rmqService.send<
         CompetitionCreate.Request,
