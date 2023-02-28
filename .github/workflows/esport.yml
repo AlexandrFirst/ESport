@@ -16,6 +16,7 @@ jobs:
           docker-compose build
           docker-compose push
   restarting_dockercompose:
+    needs: build_push
     name: Deployment
     runs-on: ubuntu-latest
     steps:
