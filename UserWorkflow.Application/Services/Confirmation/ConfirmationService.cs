@@ -15,7 +15,7 @@ using UserWorkflow.Application.Configs;
 using UserWorkflow.Application.Models.User;
 using UserWorkflow.Infrastructure.Security;
 
-namespace UserWorkflow.Application.Services
+namespace UserWorkflow.Application.Services.Confirmation
 {
     public class ConfirmationService : IConfirmationService
     {
@@ -46,10 +46,10 @@ namespace UserWorkflow.Application.Services
             {
                 var confirmationToken = generateConfirmationToken(userRole, confirmationModel);
 
-                await channel.Writer.WriteAsync(new ProfileConfirmationMessage() 
+                await channel.Writer.WriteAsync(new ProfileConfirmationMessage()
                 {
                     Token = confirmationToken,
-                    Email= confirmationModel.Email
+                    Email = confirmationModel.Email
                 });
             }
             catch (Exception ex)

@@ -11,7 +11,9 @@ namespace UserWorkflow.Images
     {
         public static void RegisterIocContainers(IServiceCollection services, IConfiguration configuration) 
         {
-            services.AddDbContext<ImagesDataContext>(options => options.UseSqlServer(configuration.GetSection("ConnectionString")["EsportImagesDb"]));
+            services.AddDbContext<ImagesDataContext>(options => 
+                options.UseSqlServer(configuration.GetSection("ConnectionString")["EsportImagesDb"]),
+                ServiceLifetime.Transient);
         }
     }
 }

@@ -18,6 +18,6 @@ namespace UserWorkflow.Infrastructure.Security
         private UserRole(string roleName)
         {
             RoleName = roleName;
-        }   
+        }
     }
 }

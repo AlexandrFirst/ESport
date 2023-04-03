@@ -11,7 +11,9 @@ namespace UserWorkflow.Esport
     {
         public static void RegisterIocContainers(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<EsportDataContext>(options => options.UseSqlServer(configuration.GetSection("ConnectionString")["EsportDb"]));
+            services.AddDbContext<EsportDataContext>(options =>
+                options.UseSqlServer(configuration.GetSection("ConnectionString")["EsportDb"]),
+                ServiceLifetime.Transient);
         }
     }
 }

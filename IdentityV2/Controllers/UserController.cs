@@ -27,34 +27,55 @@ namespace IdentityV2.Controllers
 
         [HttpGet("{id}")]
         [Authorize(Policy = "UserFlowPolicy")]
-        public async Task<IActionResult> GetUserInfo(int id) 
+        public async Task<IActionResult> GetUserInfo(int id)
         {
-            if (id < 1) 
+            if (id < 1)
             {
                 throw new ApplicationException($"User Id: {id} is invalid");
             }
 
             var userInfo = await context.Users.FirstOrDefaultAsync(x => x.Id == id);
-            if (userInfo == null) 
+            if (userInfo == null)
             {
                 throw new ApplicationException($"User with id: {id} is not found");
             }
 
             UserIdentityInfo userDataToReturn = new UserIdentityInfo()
             {
-                Email= userInfo.Email,
-                Name=userInfo.Name,
-                Surname=userInfo.Surname,
-                TelephoneNumber=userInfo.TelephoneNumber,
+                Email = userInfo.Email,
+                Name = userInfo.Name,
+                Surname = userInfo.Surname,
+                TelephoneNumber = userInfo.TelephoneNumber,
                 UserId = id
             };
 
             return Ok(userDataToReturn);
         }
 
+        [HttpDelete("{id}")]
+        [Authorize(Policy = "UserFlowPolicy")]
+        public async Task<IActionResult> DeleteUserInfo(int id) 
+        {
+            if (id < 1)
+            {
+                throw new ApplicationException($"User Id: {id} is invalid");
+            }
+
+            var userInfo = await context.Users.FirstOrDefaultAsync(x => x.Id == id);
+            if (userInfo == null)
+            {
+                throw new ApplicationException($"User with id: {id} is not found");
+            }
+
+            context.Users.Remove(userInfo);
+            await context.SaveChangesAsync();
+            return Ok();
+        }
+
+
         [ESportIdentity]
         [HttpGet("validate")]
-        public IActionResult Validate([FromQuery]UserValidateNavigation userValidateNavigation)
+        public IActionResult Validate([FromQuery] UserValidateNavigation userValidateNavigation)
         {
             var userClaims = User.Claims;
             return Ok("Hello world");

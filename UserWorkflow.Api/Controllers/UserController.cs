@@ -4,13 +4,18 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using UserWorkflow.Api.Dto;
 using UserWorkflow.Application;
+using UserWorkflow.Application.Commands.User;
+using UserWorkflow.Application.Commands.UserCommands;
 using UserWorkflow.Application.Requests;
 using UserWorkflow.Application.Requests.User;
+using UserWorkFlow.Infrastructure.Commands;
 using UserWorkFlow.Infrastructure.Queries;
 
 namespace UserWorkflow.Api.Controllers
@@ -25,7 +30,8 @@ namespace UserWorkflow.Api.Controllers
         private readonly ILogger<UserController> logger;
         private readonly IWebHostEnvironment env;
 
-        public UserController(ICommandBus commandBus, IRequestBus requestBus, ILogger<UserController> logger, IWebHostEnvironment env)
+        public UserController(ICommandBus commandBus, IRequestBus requestBus,
+            ILogger<UserController> logger, IWebHostEnvironment env)
         {
             this.commandBus = commandBus;
             this.requestBus = requestBus;
@@ -33,7 +39,7 @@ namespace UserWorkflow.Api.Controllers
             this.env = env;
         }
 
-        [HttpGet("info/{id}")]
+        [HttpGet("info/{userId}")]
         public async Task<IActionResult> GetUserInfo(int userId)
         {
             var started = DateTime.UtcNow;
@@ -43,7 +49,6 @@ namespace UserWorkflow.Api.Controllers
             try
             {
                 logger.LogInformation($"STARTED {methodName} {requestInstanceId} at {started} utc");
-                var identity = User.Claims;
 
                 if (userId < 1)
                     return BadRequest(new[] { $"The given id cannot be less than 1. Id: {userId}" });
@@ -77,5 +82,104 @@ namespace UserWorkflow.Api.Controllers
             }
         }
 
+        [HttpPost("Update")]
+        public async Task<IActionResult> UpdateUser([FromBody] UpdateUserDto updateUserDto)
+        {
+            var started = DateTime.UtcNow;
+            var requestInstanceId = Guid.NewGuid();
+            var methodName = this.ControllerContext.RouteData.Values["action"].ToString();
+
+            try
+            {
+                logger.LogInformation($"STARTED {methodName} {requestInstanceId} at {started} utc");
+
+                var userId = User.Claims.FirstOrDefault(x => x.Type == "Id")?.Value;
+                if (string.IsNullOrEmpty(userId))
+                {
+                    return BadRequest(new[] { $"User Id information is abscent in request {methodName}" });
+                }
+
+                updateUserDto.SetUserId(int.Parse(userId));
+
+                List<Task<ICommandResult>> updateCommandTasks = new List<Task<ICommandResult>>();
+
+                if (updateUserDto.IsAdminUpdate)
+                {
+                    updateCommandTasks.Add(commandBus.ExecuteAsync(User, updateUserDto.UpdateAdminInfo));
+                }
+
+                if (updateUserDto.IsOrganiserUpdate)
+                {
+                    updateCommandTasks.Add(commandBus.ExecuteAsync(User, updateUserDto.UpdateOrganisationAdminInfo));
+                }
+
+                if (updateUserDto.IsTraineeUpdate)
+                {
+                    updateCommandTasks.Add(commandBus.ExecuteAsync(User, updateUserDto.UpdateTraineeInfo));
+                }
+
+                if (updateUserDto.IsTrainerUpdate)
+                {
+                    updateCommandTasks.Add(commandBus.ExecuteAsync(User, updateUserDto.UpdateTrainerInfo));
+                }
+
+                var result = await Task.WhenAll(updateCommandTasks);
+                return Ok(result.Select(x => x.Errors));
+            }
+            catch (ApplicationException exception)
+            {
+                return BadRequest(new[] { exception.Message });
+            }
+            catch (Exception e)
+            {
+                logger.LogError(e, e.Message);
+                if (e is InvalidOperationException)
+                    return BadRequest(new[] { e.Message });
+
+                return new StatusCodeResult((int)HttpStatusCode.InternalServerError);
+            }
+            finally
+            {
+                var ended = DateTime.UtcNow;
+                logger.LogInformation($"ENDED {methodName} {requestInstanceId} at {ended} utc. Took {ended - started}");
+            }
+        }
+
+        [HttpDelete("Delete")]
+        public async Task<IActionResult> DeleteUser([FromBody] DeleteUser deleteUser)
+        {
+            var started = DateTime.UtcNow;
+            var requestInstanceId = Guid.NewGuid();
+            var methodName = this.ControllerContext.RouteData.Values["action"].ToString();
+
+            try
+            {
+                logger.LogInformation($"STARTED {methodName} {requestInstanceId} at {started} utc");
+
+                var result = await commandBus.ExecuteAsync<DeleteUser>(User, deleteUser);
+
+                if (!result.Succeeded)
+                    return BadRequest(result.Errors);
+
+                return Ok(result.ItemId);
+            }
+            catch (ApplicationException exception)
+            {
+                return BadRequest(new[] { exception.Message });
+            }
+            catch (Exception e)
+            {
+                logger.LogError(e, e.Message);
+                if (e is InvalidOperationException)
+                    return BadRequest(new[] { e.Message });
+
+                return new StatusCodeResult((int)HttpStatusCode.InternalServerError);
+            }
+            finally
+            {
+                var ended = DateTime.UtcNow;
+                logger.LogInformation($"ENDED {methodName} {requestInstanceId} at {ended} utc. Took {ended - started}");
+            }
+        }
     }
 }

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UserWorkflow.Application.Services;
+using UserWorkflow.Application.Services.Users;
 using UserWorkflow.Esport;
 using UserWorkflow.Esport.Models;
 using UserWorkFlow.Infrastructure.Commands;

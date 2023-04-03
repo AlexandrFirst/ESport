@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UserWorkflow.Application.ReadModels;
+using UserWorkflow.Application.ReadModels.User;
 
 namespace UserWorkflow.Application.Commands.User
 {

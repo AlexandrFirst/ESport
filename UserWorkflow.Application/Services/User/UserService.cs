@@ -4,19 +4,22 @@ using RMQEsportClient;
 using RMQEsportClient.QueueConfigs;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UserWorkflow.Application.Extensions;
 using UserWorkflow.Application.Models.Rmq;
+using UserWorkflow.Application.ReadModels.User;
 using UserWorkflow.Esport;
 using UserWorkflow.Esport.Models;
 using UserWorkflow.Infrastructure.Security;
 
-namespace UserWorkflow.Application.Services
+namespace UserWorkflow.Application.Services.Users
 {
     public class UserService : IUserService
     {
-        private readonly EsportDataContext esportDataContext; 
+        private readonly EsportDataContext esportDataContext;
         private readonly IMessageProducer messageProducer;
         private readonly IMapper mapper;
 
@@ -139,7 +142,7 @@ namespace UserWorkflow.Application.Services
                 await esportDataContext.Trainers.AddAsync(trainer);
                 action = CREATE_ACTION;
             }
-            else 
+            else
             {
                 MapUser(userModel, trainer);
                 action = UPDATE_ACTION;
@@ -148,6 +151,45 @@ namespace UserWorkflow.Application.Services
 
             notifyCompetitionService(trainer, UserRole.Trainer.RoleName, action);
             return trainer.Id;
+        }
+
+
+        public async Task<List<DeleteUserResult>> DeleteUserProfile(UserTypeEntity userTypeEntity,
+            int userId, string userLoggedInMail)
+        {
+            var deletedInfoResult = new List<DeleteUserResult>();
+
+            if (userTypeEntity.Contains(UserTypeEntity.Trainee))
+            {
+                var deletedTraineeResult = await deleteEntityOperation(esportDataContext.Trainees,
+                    userId, userLoggedInMail);
+                deletedInfoResult.Add(deletedTraineeResult);
+            }
+
+            if (userTypeEntity.Contains(UserTypeEntity.Trainer))
+            {
+                var deletedTraineeResult = await deleteEntityOperation(esportDataContext.Trainers,
+                    userId, userLoggedInMail);
+                deletedInfoResult.Add(deletedTraineeResult);
+            }
+
+            if (userTypeEntity.Contains(UserTypeEntity.Admin))
+            {
+                var deletedTraineeResult = await deleteEntityOperation(esportDataContext.Administrators,
+                    userId, userLoggedInMail);
+                deletedInfoResult.Add(deletedTraineeResult);
+            }
+
+            if (userTypeEntity.Contains(UserTypeEntity.Organisator))
+            {
+                var deletedTraineeResult = await deleteEntityOperation(esportDataContext.OrganisationAdministrators,
+                    userId, userLoggedInMail);
+                deletedInfoResult.Add(deletedTraineeResult);
+            }
+
+            await esportDataContext.SaveChangesAsync();
+
+            return deletedInfoResult;
         }
 
         private void MapUser(User fromUser, User toUser)
@@ -168,6 +210,31 @@ namespace UserWorkflow.Application.Services
                 }));
 
             messageProducer.SendMessageToTopic(user, QueueConfigName.ESportCompetitionConfig);
+        }
+
+
+        private async Task<DeleteUserResult> deleteEntityOperation<T>(IQueryable<T> query, int userId, string userLoggedInMail) where T : User
+        {
+            var deleteUserResult = new DeleteUserResult() { IsSuccess = false, EntityId = 0, UserTypeEntity = UserTypeEntity.None };
+
+            var user = await query.FirstOrDefaultAsync(x => x.UserId == userId);
+            if (user != null)
+            {
+                var userType = typeof(T);
+
+                deleteUserResult.UserTypeEntity = user.GetUserType;
+                deleteUserResult.IsSuccess = true;
+                var keyProp = userType.GetProperties()
+                    .FirstOrDefault(x => x.GetCustomAttributes(false)
+                    .Any(a => a.GetType() == typeof(KeyAttribute)));
+                if (keyProp == null) { }
+                var keyPropValue = keyProp.GetValue(user);
+                deleteUserResult.EntityId = (int)keyPropValue;
+
+                esportDataContext.Remove(user);
+                notifyCompetitionService(user, DELETE_ACTION, deleteUserResult.UserTypeEntity.GetRole().RoleName);
+            }
+            return deleteUserResult;
         }
     }
 }

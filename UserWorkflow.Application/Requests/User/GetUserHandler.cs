@@ -36,7 +36,6 @@ namespace UserWorkflow.Application.Requests.User
             var trainerInfo = await context.Trainers.FirstOrDefaultAsync(x => x.UserId == request.UserId);
             var identityInfo = await identityClient.GetIdentityUserInfoAsync(request.UserId);
 
-
             var userInfo = new GetUserResult()
             {
                 UserAdminInfo = administrator != null ? handleAdminInfo(administrator) : null,

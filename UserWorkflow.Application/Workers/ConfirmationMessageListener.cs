@@ -12,7 +12,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using UserWorkflow.Application.Configs;
 using UserWorkflow.Application.Models.Email;
-using UserWorkflow.Application.Services;
+using UserWorkflow.Application.Services.Confirmation;
 
 namespace UserWorkflow.Application.Workers
 {

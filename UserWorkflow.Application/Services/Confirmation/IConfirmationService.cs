@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using UserWorkflow.Application.Models.User;
 using UserWorkflow.Infrastructure.Security;
 
-namespace UserWorkflow.Application.Services
+namespace UserWorkflow.Application.Services.Confirmation
 {
     public interface IConfirmationService
     {
