@@ -6,6 +6,7 @@ import cn from "classnames";
 
 export interface SportCardProps extends CardProps {
   withAction?: boolean;
+  cardContentClassName?: string;
 }
 
 export const SportCard: React.FC<SportCardProps> = ({
@@ -13,6 +14,7 @@ export const SportCard: React.FC<SportCardProps> = ({
   children,
   elevation = 6,
   withAction = false,
+  cardContentClassName,
   ...props
 }) => {
   return (
@@ -23,10 +25,10 @@ export const SportCard: React.FC<SportCardProps> = ({
     >
       {withAction ? (
         <CardActionArea>
-          <CardContent>{children}</CardContent>{" "}
+          <CardContent className={cardContentClassName}>{children}</CardContent>{" "}
         </CardActionArea>
       ) : (
-        <CardContent>{children}</CardContent>
+        <CardContent className={cardContentClassName}>{children}</CardContent>
       )}
     </Card>
   );

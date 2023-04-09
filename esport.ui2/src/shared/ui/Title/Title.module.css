@@ -1,0 +1,4 @@
+.title {
+    /*@apply text-skin-main origin-left font-medium text-base duration-200 w-fit dark:text-darkSkin-main*/
+    @apply origin-left font-medium text-base duration-200 w-fit leading-7;
+}

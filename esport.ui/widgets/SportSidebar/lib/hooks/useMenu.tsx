@@ -2,6 +2,7 @@ import BugReportIcon from "@mui/icons-material/BugReport";
 import SettingsIcon from "@mui/icons-material/Settings";
 import ConnectedTvIcon from "@mui/icons-material/ConnectedTv";
 import SportsKabaddiIcon from "@mui/icons-material/SportsKabaddi";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 import { routes } from "routes";
 
@@ -20,9 +21,9 @@ export const useMenu = () => {
       link: routes.Streams,
     },
     {
-      title: "Test-main",
-      icon: <BugReportIcon className="mr-3" />,
-      link: routes.Main,
+      title: "Profile",
+      icon: <AccountCircleIcon className="mr-3" />,
+      link: routes.User.Profile.Main,
     },
     {
       title: "Competitions",

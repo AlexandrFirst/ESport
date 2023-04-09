@@ -1,0 +1,6 @@
+.app_dark_theme {
+    --color-text-main: rgb(68, 64, 88);
+
+    /*background*/
+    --color-bg-main: rgb(255, 255, 255);
+}

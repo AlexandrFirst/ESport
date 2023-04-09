@@ -1,0 +1,20 @@
+.layout {
+    /*@apply bg-skin-main transition-all duration-500 dark:bg-darkSkin-main pr-6;*/
+    @apply bg-theme-main transition-all duration-500 pr-6;
+}
+
+.main {
+    @apply flex flex-row justify-start;
+}
+
+.content {
+    @apply min-h-screen pb-6 pt-[80px];
+}
+
+.pl_compact {
+    @apply pl-leftSidebarCompact;
+}
+
+.pl_full {
+    @apply pl-leftSidebarFull;
+}

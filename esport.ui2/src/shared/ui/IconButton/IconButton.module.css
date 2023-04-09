@@ -1,0 +1,15 @@
+.wrapper {
+    @apply rounded-full cursor-pointer hover:bg-theme-sub opacity-95 transition-colors hover:scale-105 px-1.5 py-1.5;
+}
+
+/*.s {*/
+/*    @apply px-1.5 py-1.5;*/
+/*}*/
+
+/*.m {*/
+/*    @apply px-3 py-3;*/
+/*}*/
+
+/*.l {*/
+/*    @apply px-5 py-5;*/
+/*}*/

@@ -3,17 +3,22 @@ import styles from "./PhotoBanner.module.scss";
 
 import Image from "next/image";
 
-import { SportCard } from "@shared/ui/SportCard/SportCard";
-
 interface PhotoBannerProps {
   src: string;
 }
 
 const PhotoBanner: React.FC<PhotoBannerProps> = ({ src }) => {
   return (
-    <SportCard className={styles.wrapper}>
-      <Image src={src} alt="Banner" className={styles.img} />
-    </SportCard>
+    <div className={styles.wrapper}>
+      <Image
+        width={4500}
+        height={250}
+        src={src}
+        loader={() => src}
+        alt="Banner"
+        className={styles.img}
+      />
+    </div>
   );
 };
 

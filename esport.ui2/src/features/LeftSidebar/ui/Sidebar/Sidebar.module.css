@@ -1,0 +1,7 @@
+.mobile {
+    @apply lg:hidden;
+}
+
+.large {
+    @apply hidden lg:block;
+}

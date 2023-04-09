@@ -1,0 +1,16 @@
+@import "./theme/light.css";
+@import "./theme/dark.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    /* layout */
+    --left-sidebar-full: 300px;
+    --left-sidebar-compact: 100px;
+}
+
+body {
+    margin: 0;
+}

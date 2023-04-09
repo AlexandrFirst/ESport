@@ -1,19 +1,19 @@
 .wrapper {
-  @apply rounded-md border-4 border-white;
+  @apply rounded-md;
 }
 
 .sm {
-  @apply w-16 h-16;
+  @apply w-8 h-8 md:w-16 md:h-16;
 }
 
 .md {
-    @apply w-24 h-24;
+  @apply w-16 h-16 md:w-24 md:h-24;
 }
 
 .lg {
-  @apply w-32 h-32;
+  @apply w-24 h-24 md:w-32 md:h-32;
 }
 
 .img {
-    @apply w-full h-full object-cover;
+  @apply w-full h-full object-cover rounded-md;
 }

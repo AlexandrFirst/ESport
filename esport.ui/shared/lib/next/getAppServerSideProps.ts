@@ -5,7 +5,6 @@ import { AppPageProps, AppServerConfig, wrapper } from "@app/Providers";
 
 export const getAppServerSideProps = <TProps extends AppPageProps>(
   cb: GetServerSideProps<TProps & AppPageProps>,
-  ns = ["common"],
   config?: AppServerConfig
 ) => {
   const { showInitialError = process.env.IS_DEV, onReject } = config || {};
