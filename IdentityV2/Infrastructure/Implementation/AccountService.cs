@@ -71,10 +71,10 @@ namespace IdentityV2.Infrastructure.Core
             messageProducer.SendMessage(new UserPostConfirmationQueueModel()
             {
                 UserId = user.Id,
-                Email= user.Email,
-                Name= user.Name,
-                Surname= user.Surname,
-                TelephoneNumber= user.TelephoneNumber
+                Email = user.Email,
+                Name = user.Name,
+                Surname = user.Surname,
+                TelephoneNumber = user.TelephoneNumber
             }, QueueConfigName.IdentityConfig);
 
             return true;
@@ -89,7 +89,7 @@ namespace IdentityV2.Infrastructure.Core
 
         public Task<bool> Logout(int userId)
         {
-           authorizationCache.RemoveUserFromCache(userId);
+            authorizationCache.RemoveUserFromCache(userId);
             return Task.FromResult(true);
         }
 
@@ -127,11 +127,13 @@ namespace IdentityV2.Infrastructure.Core
 
                 dataContext.Users.Add(userToInsert);
 
+                var isHttps = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production" ? true : false;
+
                 messageProducer.SendMessage(new
                 {
                     token = userToInsert.PendingUser.PendingToken.ToString(),
                     mail = userToInsert.Email,
-                    template = "<p>Click to confirm your account <a href='http://" + mailOptions.ConfirmationHost +":3000/user/confirm/{0}'>Confirm</a></p>"
+                    template = "<p>Click to confirm your account <a href='" + (isHttps ? "https" : "http") + "://" + mailOptions.ConfirmationHost + ":3000/user/confirm/{0}'>Confirm</a></p>"
                 }, QueueConfigName.MessageConfig);
                 await dataContext.SaveChangesAsync();
 
