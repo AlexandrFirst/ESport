@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using UserWorkflow.Application.Models.Rmq;
 using UserWorkflow.Application.Models.User;
+using UserWorkflow.Application.ReadModels.User;
 using UserWorkflow.Esport.Models;
 
 namespace UserWorkflow.Application.Profiles
@@ -12,7 +13,8 @@ namespace UserWorkflow.Application.Profiles
     {
         public UserProfile()
         {
-            CreateMap<User, UserModel>();
+            CreateMap<User, RmqUserModel>();
+            CreateMap<User, UserInfo>().ReverseMap();
         }
     }
 }

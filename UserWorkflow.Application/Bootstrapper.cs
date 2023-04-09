@@ -6,9 +6,12 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using UserWorkflow.Application.Clients;
+using UserWorkflow.Application.Commands.User;
+using UserWorkflow.Application.Commands.UserCommands;
 using UserWorkflow.Application.Configs;
 using UserWorkflow.Application.Requests.User;
-using UserWorkflow.Application.Services;
+using UserWorkflow.Application.Services.Confirmation;
+using UserWorkflow.Application.Services.Users;
 using UserWorkFlow.Infrastructure.Commands;
 using UserWorkFlow.Infrastructure.Queries;
 
@@ -25,6 +28,8 @@ namespace UserWorkflow.Application
             });
 
             services.AddOptions<RabbitMqOptions>().Bind(configuration.GetSection("RabbitMq"));
+            services.AddOptions<MailOption>().Bind(configuration.GetSection("MailOption"));
+            services.AddOptions<ConfirmationOption>().Bind(configuration.GetSection("ConfirmationOption"));
 
             services.AddTransient<ICommandBus, CommandBus>();
             services.AddTransient<IRequestBus, RequestBus>();
@@ -32,10 +37,19 @@ namespace UserWorkflow.Application
             services.AddTransient<IValidateRequest, ValidateRequest>();
 
             services.AddTransient<IUserService, UserService>();
-
-
+            
             services.AddTransient<IRequestHandler<GetUser, GetUserResult>, GetUserHandler>();
+
+            services.AddTransient<ICommandHandler<UpdateAdmin>, UpdateAdminHandler>();
+            services.AddTransient<ICommandHandler<UpdateOrganisationAdmin>, UpdateOrganisationAdminHandler>();
+            services.AddTransient<ICommandHandler<UpdateTrainee>, UpdateTraineeHandler>();
+            services.AddTransient<ICommandHandler<UpdateTrainer>, UpdateTrainerHandler>();
+
+            services.AddTransient<ICommandHandler<DeleteUser>, DeleteUserHandler>();
+
             services.AddScoped<IdentityClient>();
+
+            services.AddSingleton<IConfirmationService, ConfirmationService>();
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 

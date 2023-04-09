@@ -8,7 +8,15 @@ services:
       - SA_PASSWORD=2Secure*Password2
       - ACCEPT_EULA=Y
     healthcheck:
-      test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-Usa", "-P2Secure*Password2", "-Q", "select 1"]
+      test:
+        [
+          "CMD",
+          "/opt/mssql-tools/bin/sqlcmd",
+          "-Usa",
+          "-P2Secure*Password2",
+          "-Q",
+          "select 1"
+        ]
       interval: 2s
       retries: 20
     ports:
@@ -34,7 +42,7 @@ services:
       - '15672:15672'
       - '5672:5672'
     extra_hosts:
-    - "host.docker.internal:host-gateway"
+      - "host.docker.internal:host-gateway"
   kurrento:
     image: kurento/kurento-media-server:6.18.0
     user: root
@@ -55,8 +63,8 @@ services:
   identity:
     image: 12345flex402/esport_identity
     build:
-      context: ./IdentityV2
-      dockerfile: ./Dockerfile
+      context: .
+      dockerfile: ./deploy/Identity.Dockerfile
     depends_on:
       sqldb:
         condition: service_healthy
@@ -68,13 +76,13 @@ services:
     ports:
       - '5000:80'
     extra_hosts:
-    - "host.docker.internal:host-gateway"
+      - "host.docker.internal:host-gateway"
   gateway:
     image: 12345flex402/esport-gateway
     user: root
     build:
       context: .
-      dockerfile: Gateway.Dockerfile
+      dockerfile: ./deploy/Gateway.Dockerfile
     depends_on:
       - identity
     restart: on-failure
@@ -89,7 +97,7 @@ services:
     user: root
     build:
       context: ./MessageService
-      dockerfile: ./Dockerfile
+      dockerfile: ../deploy/MessageService.Dockerfile
     depends_on:
       rabbit:
         condition: service_healthy
@@ -104,8 +112,8 @@ services:
     image: 12345flex402/esport-stream-service
     user: root
     build:
-      context: ./
-      dockerfile: ./StreamService.Dockerfile
+      context: .
+      dockerfile: ./deploy/StreamService.Dockerfile
     depends_on:
       - kurrento
       - sqldb
@@ -124,7 +132,7 @@ services:
     container_name: esport-web
     build:
       context: ./esport.ui
-      dockerfile: ./Dockerfile
+      dockerfile: ../deploy/ESportUi.Dockerfile
     restart: on-failure
     ports:
       - '3000:3000'
@@ -133,7 +141,7 @@ services:
     container_name: stream-ui
     build:
       context: ./esport.stream.ui
-      dockerfile: ./Dockerfile
+      dockerfile: ../deploy/StreamUi.Dockerfile
     restart: on-failure
     ports:
       - '4201:443'
@@ -144,7 +152,7 @@ services:
     container_name: esport-competitions
     build:
       context: ./esport.competitions
-      dockerfile: ./Dockerfile
+      dockerfile: ../deploy/Competitions.Dockerfile
     restart: on-failure
     volumes:
       - /usr/src/app/node_modules
@@ -160,7 +168,7 @@ services:
     user: root
     build:
       context: ./esport.api.gateway
-      dockerfile: ./Dockerfile
+      dockerfile: ../deploy/ApiGateway.Dockerfile
     container_name: esport-api-gateway
     restart: on-failure
     volumes:
@@ -173,3 +181,21 @@ services:
       - rabbit
     ports:
       - '3001:3001'
+      - '3011:3011'
+  userworkflow:
+    image: 12345flex402/userworkflow
+    user: root
+    build:
+      context: .
+      dockerfile: ./deploy/UserWorkflow.Dockerfile
+    depends_on:
+      - rabbit
+      - gateway
+      - sqldb
+    restart: on-failure
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+    ports:
+      - '5005:80'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"

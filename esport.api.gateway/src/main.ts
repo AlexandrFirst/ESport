@@ -7,11 +7,6 @@ import * as https from 'https';
 import * as express from 'express';
 import { ValidationPipe } from '@nestjs/common';
 
-const httpsOptions = {
-  key: fs.readFileSync('./secrets/private-key.pem'),
-  cert: fs.readFileSync('./secrets/public-certificate.pem'),
-};
-
 async function bootstrap() {
 
   const privateKey = fs.readFileSync('./.cerf/privkey.pem');
@@ -29,7 +24,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.enableCors({
     credentials: true,
-    origin: ["https://e-sport.cloud", "https://e-sport.cloud:4201", "http://localhost"],
+    origin: ["https://e-sport.cloud", "https://e-sport.cloud:4201", "http://localhost", "http://localhost:3001", "http://localhost:3000"],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     optionsSuccessStatus: 204
   });

@@ -35,7 +35,18 @@ namespace UserWorkflow.Application.Clients
             string message = $"Error identity request: {identitytUserResponse.StatusCode} {identitytUserResponse.ReasonPhrase}";
             logger.LogCritical(message);
             throw new Exception(message);
+        }
 
+        public async Task<bool> DeleteIdentityClient(int userId) 
+        {
+            var identitytUserResponse = await client.DeleteAsync($"/user/{userId}");
+            if (!identitytUserResponse.IsSuccessStatusCode)
+            {
+                string message = $"Error identity request: {identitytUserResponse.StatusCode} {identitytUserResponse.ReasonPhrase}";
+                logger.LogCritical(message);
+                throw new Exception(message);
+            }
+            return true;
         }
     }
 }

@@ -14,7 +14,7 @@ using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using UserWorkflow.Application.Configs;
-using UserWorkflow.Application.Services;
+using UserWorkflow.Application.Services.Users;
 using UserWorkflow.Esport.Models;
 
 namespace UserWorkflow.Application.Workers
