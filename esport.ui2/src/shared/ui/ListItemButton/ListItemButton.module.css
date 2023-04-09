@@ -1,0 +1,3 @@
+.wrapper {
+    @apply w-full flex items-center pl-2 py-2 hover:bg-theme-sub transition-colors;
+}

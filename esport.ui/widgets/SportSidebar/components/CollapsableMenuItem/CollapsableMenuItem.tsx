@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+"use client";
+import React, { useLayoutEffect, useState } from "react";
 import styles from "./collapsableMenuItem.module.scss";
 
 import Link from "next/link";
@@ -11,6 +12,12 @@ import cn from "classnames";
 import { IMenuItem } from "@widgets/SportSidebar/types/menu-item";
 
 import { useSidebarContext } from "../SidebarContext/SidebarContext";
+import { useAppDispatch, useAppSelector } from "@shared/lib/hooks/useStore";
+import {
+  pushOpenedSubItem,
+  removeOpenedSubItem,
+  selectOpenedSubItems,
+} from "@layouts/MainLayout";
 
 interface ICollapsableMenuItem extends IMenuItem {
   items?: IMenuItem[];
@@ -27,12 +34,21 @@ export const CollapsableMenuItem: React.FC<CollapsableMenuItemProps> = ({
   currentPathname,
   onSubItemClick,
 }) => {
-  const [submenuOpen, setSubmenuOpen] = useState(false);
+  const openedSubItems = useAppSelector(selectOpenedSubItems);
+  const isThisSubItemOpened = openedSubItems.includes(item.link ?? "");
+  // console.log("===openedSubItems===", openedSubItems);
+
+  const [submenuOpen, setSubmenuOpen] = useState(isThisSubItemOpened);
+  //TODO: think how remove dispatch
+  const dispatch = useAppDispatch();
 
   const { isSidebarOpened, setIsSidebarOpened } = useSidebarContext();
 
   const handleItemClick = () => {
     setIsSidebarOpened(true);
+    !submenuOpen
+      ? dispatch(pushOpenedSubItem(item.link ?? ""))
+      : dispatch(removeOpenedSubItem(item.link ?? ""));
     setSubmenuOpen((prev) => !prev);
   };
 
@@ -44,9 +60,14 @@ export const CollapsableMenuItem: React.FC<CollapsableMenuItemProps> = ({
     ({ link }) => link && link === currentPathname
   );
 
-  useEffect(() => {
-    selected && setSubmenuOpen(true);
-  }, [selected]);
+  useLayoutEffect(() => {
+    if (selected) {
+      dispatch(pushOpenedSubItem(item.link ?? ""));
+      setSubmenuOpen(true);
+    } else {
+      dispatch(removeOpenedSubItem(item.link ?? ""));
+    }
+  }, [selected, dispatch]);
 
   return (
     <>

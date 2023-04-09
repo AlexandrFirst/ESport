@@ -3,7 +3,7 @@
 }
 
 .selected {
-    @apply bg-skin-subsidiary dark:bg-darkSkin-subsidiary;
+  @apply bg-skin-subsidiary dark:bg-darkSkin-subsidiary;
 }
 
 .title {
@@ -39,7 +39,7 @@
 }
 
 .inner_list_item {
-    @apply border-l-2 p-0 pb-2 border-text-subsidiary w-9/12 dark:text-darkSkin-main;
+  @apply border-l-2 p-0 pb-2 border-text-subsidiary w-9/12 dark:text-darkSkin-main;
 }
 
 .inner_list_item_not_opened {
@@ -51,5 +51,5 @@
 }
 
 .inner_list_item_button {
-    @apply hover:bg-skin-subsidiary transition-all rounded-md w-full dark:hover:bg-darkSkin-subsidiary font-semibold
+  @apply hover:bg-skin-subsidiary transition-all rounded-md w-full dark:hover:bg-darkSkin-subsidiary font-semibold
 }

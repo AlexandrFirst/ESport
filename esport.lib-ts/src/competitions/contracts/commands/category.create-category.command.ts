@@ -1,5 +1,5 @@
 import { IsArray, IsOptional, IsString } from "class-validator";
-import { IFight } from "../../interfaces";
+import { IRound } from "../../interfaces";
 
 export namespace CategoryCreate {
   export const topic = "competitions.category.create-category.command";
@@ -10,7 +10,7 @@ export namespace CategoryCreate {
 
     @IsArray()
     @IsOptional()
-    fights: Omit<IFight, "_id" | "winnerId">[];
+    rounds: Omit<IRound, "_id">[];
   }
 
   export class Response {

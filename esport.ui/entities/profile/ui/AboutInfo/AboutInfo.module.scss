@@ -1,0 +1,20 @@
+
+.title {
+  @apply text-sm uppercase;
+}
+
+.subtitle {
+  @apply text-sm uppercase pt-5;
+}
+
+.list {
+  @apply mt-3;
+}
+
+.list_item {
+  @apply flex items-center mt-3;
+}
+
+.item {
+  @apply mr-2;
+}

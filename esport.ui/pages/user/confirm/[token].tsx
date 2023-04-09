@@ -24,7 +24,7 @@ const Confirm: NextPage = () => {
       }
     };
     activate();
-  }, []);
+  }, [error, router, success]);
 
   return <></>;
 };

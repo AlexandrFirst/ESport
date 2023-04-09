@@ -1,0 +1,13 @@
+.round {
+  flex: 0;
+
+  //min-width:300px;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 900px) {
+  .round {
+    min-width: 0;
+  }
+}
