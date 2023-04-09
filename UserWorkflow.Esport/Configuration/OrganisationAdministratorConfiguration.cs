@@ -15,6 +15,7 @@ namespace UserWorkflow.Esport.Configuration
                 .WithMany(x => x.OrganisationAdministrators)
                 .HasForeignKey(x => x.OrganisationId)
                 .OnDelete(DeleteBehavior.Cascade);
+            builder.HasIndex(x => x.Email).IsUnique();
         }
     }
 }

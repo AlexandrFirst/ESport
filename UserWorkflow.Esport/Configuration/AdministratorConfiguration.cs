@@ -14,6 +14,7 @@ namespace UserWorkflow.Esport.Configuration
         public void Configure(EntityTypeBuilder<Administrators> builder)
         {
             builder.HasIndex(x => new { x.UserId }).IsUnique();
+            builder.HasIndex(x => x.Email).IsUnique();
         }
     }
 }

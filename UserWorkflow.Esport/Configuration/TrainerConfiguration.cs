@@ -12,6 +12,7 @@ namespace UserWorkflow.Esport.Configuration
         public void Configure(EntityTypeBuilder<Trainer> builder)
         {
             builder.HasKey(x => x.Id);
+            builder.HasIndex(x => x.Email).IsUnique();
         }
     }
 }

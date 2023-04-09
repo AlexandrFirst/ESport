@@ -9,6 +9,7 @@ namespace IdentityV2.Data.Configuration
         public void Configure(EntityTypeBuilder<User> builder)
         {
             builder.HasMany(u => u.UserHistory).WithOne(h => h.User).OnDelete(DeleteBehavior.Cascade);
+            builder.HasIndex(x => x.Email).IsUnique();
         }
     }
 }
