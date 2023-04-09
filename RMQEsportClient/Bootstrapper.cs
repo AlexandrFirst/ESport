@@ -12,6 +12,7 @@ namespace RMQEsportClient
         public static void RegisterIocContainers(IServiceCollection services, IConfiguration configuration)
         {
             services.AddOptions<QueueConfigFactory>().Bind(configuration.GetSection("QueueConfigs"));
+            services.AddOptions<RabbitMqOptions>().Bind(configuration.GetSection("RabbitMq"));
             services.AddSingleton<IMessageProducer, RabbitMQProducer>();
         }
     }

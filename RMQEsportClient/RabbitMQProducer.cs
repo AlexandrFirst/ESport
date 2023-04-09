@@ -20,7 +20,7 @@ namespace RMQEsportClient
         private readonly RabbitMqOptions rabbitMqOptions;
         private readonly QueueConfigFactory queueConfigFactory;
 
-        private ConcurrentDictionary<string, IModel> queueChannels = new ConcurrentDictionary<string, IModel>();       
+        private ConcurrentDictionary<string, IModel> queueChannels = new ConcurrentDictionary<string, IModel>();
 
         public RabbitMQProducer(IOptions<RabbitMqOptions> rabbitMqOptions, IOptions<QueueConfigFactory> queueFactoryOptions)
         {
@@ -47,9 +47,9 @@ namespace RMQEsportClient
             }
         }
 
-        public void SendMessageToTopic<T>(T message, QueueConfigName configName) 
+        public void SendMessageToTopic<T>(T message, QueueConfigName configName)
         {
-            lock (_topicLock) 
+            lock (_topicLock)
             {
                 var channelSend = GetChannel<T>(configName, ExchangeType.Topic);
                 channelSend(message);
@@ -57,7 +57,7 @@ namespace RMQEsportClient
         }
 
 
-        private Action<T> GetChannel<T>(QueueConfigName configName, string exchangeType) 
+        private Action<T> GetChannel<T>(QueueConfigName configName, string exchangeType)
         {
             if (_connection == null)
             {
@@ -74,20 +74,28 @@ namespace RMQEsportClient
             {
                 channel = _connection.CreateModel();
 
-                channel.ExchangeDeclare(queueOptions.MailExchangeName, exchangeType);
+                try
+                {
+                    channel.ExchangeDeclarePassive(queueOptions.ExchangeName);
+                }
+                catch (Exception ex)
+                {
+                    channel.ExchangeDeclare(queueOptions.ExchangeName, exchangeType);
+                }
+
                 channel.QueueDeclare(queueOptions.QueueName, true, false, true);
-                channel.QueueBind(queueOptions.QueueName, queueOptions.MailExchangeName, queueOptions.RoutingKey, null);
+                channel.QueueBind(queueOptions.QueueName, queueOptions.ExchangeName, queueOptions.RoutingKey, null);
 
 
                 channel.BasicQos(0, 1, false);
                 queueChannels.TryAdd(configName.Value, channel);
             }
 
-            return (T message) => 
+            return (T message) =>
             {
                 var json = JsonConvert.SerializeObject(message);
                 var body = Encoding.UTF8.GetBytes(json);
-                channel.BasicPublish(exchange: queueOptions.MailExchangeName, routingKey: queueOptions.RoutingKey, body: body);
+                channel.BasicPublish(exchange: queueOptions.ExchangeName, routingKey: queueOptions.RoutingKey, body: body);
             };
         }
     }

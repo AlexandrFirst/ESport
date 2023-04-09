@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using RMQEsportClient;
 using RMQEsportClient.QueueConfigs;
 using System;
@@ -22,16 +23,18 @@ namespace UserWorkflow.Application.Services.Users
         private readonly EsportDataContext esportDataContext;
         private readonly IMessageProducer messageProducer;
         private readonly IMapper mapper;
-
+        private readonly ILogger<UserService> logger;
         private const string CREATE_ACTION = "Create";
         private const string UPDATE_ACTION = "Update";
         private const string DELETE_ACTION = "Delete";
 
-        public UserService(EsportDataContext esportDataContext, IMessageProducer messageProducer, IMapper mapper)
+        public UserService(EsportDataContext esportDataContext, 
+            IMessageProducer messageProducer, IMapper mapper, ILogger<UserService> logger)
         {
             this.esportDataContext = esportDataContext;
             this.messageProducer = messageProducer;
             this.mapper = mapper;
+            this.logger = logger;
         }
 
         public async Task<int> CreateOrUpdateAdministrator(User userModel, List<int> gymIds)
@@ -69,7 +72,7 @@ namespace UserWorkflow.Application.Services.Users
             }
 
             await esportDataContext.SaveChangesAsync();
-            notifyCompetitionService(admin, UserRole.LocalAdmin.RoleName, action);
+            notifyCompetitionService(admin, role: UserRole.LocalAdmin.RoleName, action: action);
 
             return admin.Id;
         }
@@ -98,10 +101,11 @@ namespace UserWorkflow.Application.Services.Users
                 MapUser(userModel, organisationAdministrator);
                 organisationAdministrator.IsProfileConfirmed = false;
                 organisationAdministrator.OrganisationId = organisationAdministrator.OrganisationId;
+                action = UPDATE_ACTION;
             }
 
             await esportDataContext.SaveChangesAsync();
-            notifyCompetitionService(organisationAdministrator, UserRole.OrgAdmin.RoleName, "Create");
+            notifyCompetitionService(organisationAdministrator, role: UserRole.OrgAdmin.RoleName, action: action);
 
             return organisationAdministrator.Id;
         }
@@ -113,7 +117,7 @@ namespace UserWorkflow.Application.Services.Users
 
             if (m_trainee == null)
             {
-                m_trainee = userModel as Trainee;
+                m_trainee = (Trainee)userModel;
 
                 await esportDataContext.Trainees.AddAsync(m_trainee);
                 action = CREATE_ACTION;
@@ -126,7 +130,7 @@ namespace UserWorkflow.Application.Services.Users
 
             await esportDataContext.SaveChangesAsync();
 
-            notifyCompetitionService(m_trainee, UserRole.Trainee.RoleName, action);
+            notifyCompetitionService(m_trainee, role: UserRole.Trainee.RoleName, action: action);
 
             return m_trainee.Id;
         }
@@ -200,7 +204,7 @@ namespace UserWorkflow.Application.Services.Users
             toUser.TelephoneNumber = fromUser.TelephoneNumber;
         }
 
-        private void notifyCompetitionService(User user, string action, string role)
+        private bool notifyCompetitionService(User user, string action, string role)
         {
             RmqUserModel notifyModel = mapper.Map<RmqUserModel>(user,
                 opt => opt.AfterMap((src, des) =>
@@ -209,7 +213,16 @@ namespace UserWorkflow.Application.Services.Users
                     des.Operation = action;
                 }));
 
-            messageProducer.SendMessageToTopic(user, QueueConfigName.ESportCompetitionConfig);
+            try
+            {
+                messageProducer.SendMessageToTopic(notifyModel, QueueConfigName.ESportCompetitionConfig);
+            }
+            catch (Exception ex)
+            {
+                logger.LogError("Unable to send message due to: " + ex.Message);
+                return false;
+            }            
+            return true;
         }
 
 
@@ -231,8 +244,8 @@ namespace UserWorkflow.Application.Services.Users
                 var keyPropValue = keyProp.GetValue(user);
                 deleteUserResult.EntityId = (int)keyPropValue;
 
+                notifyCompetitionService(user, action: DELETE_ACTION, role: deleteUserResult.UserTypeEntity.GetRole().RoleName);
                 esportDataContext.Remove(user);
-                notifyCompetitionService(user, DELETE_ACTION, deleteUserResult.UserTypeEntity.GetRole().RoleName);
             }
             return deleteUserResult;
         }

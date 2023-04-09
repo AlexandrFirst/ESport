@@ -68,12 +68,13 @@ namespace IdentityV2.Infrastructure.Core
             dataContext.Remove(pendingUser);
             await dataContext.SaveChangesAsync();
 
-            messageProducer.SendMessage<UserPostConfirmationQueueModel>(new UserPostConfirmationQueueModel()
+            messageProducer.SendMessage(new UserPostConfirmationQueueModel()
             {
                 UserId = user.Id,
                 Email= user.Email,
                 Name= user.Name,
-                Surname= user.Surname
+                Surname= user.Surname,
+                TelephoneNumber= user.TelephoneNumber
             }, QueueConfigName.IdentityConfig);
 
             return true;
@@ -130,7 +131,7 @@ namespace IdentityV2.Infrastructure.Core
                 {
                     token = userToInsert.PendingUser.PendingToken.ToString(),
                     mail = userToInsert.Email,
-                    template = "<p>Click to confirm your account <a href='https://" + mailOptions.ConfirmationHost +":3000/user/confirm/{0}'>Confirm</a></p>"
+                    template = "<p>Click to confirm your account <a href='http://" + mailOptions.ConfirmationHost +":3000/user/confirm/{0}'>Confirm</a></p>"
                 }, QueueConfigName.MessageConfig);
                 await dataContext.SaveChangesAsync();
 

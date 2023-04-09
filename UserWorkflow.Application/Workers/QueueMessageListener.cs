@@ -83,7 +83,7 @@ namespace UserWorkflow.Application.Workers
                 _logger.LogInformation($"Processing msg: '{message}'.");
                 try
                 {
-                    var userInfo = JsonConvert.DeserializeObject<User>(message);
+                    var userInfo = JsonConvert.DeserializeObject<Trainee>(message);
                     using var scope = serviceProvider.CreateScope();
 
                     var userService = scope.ServiceProvider.GetService<IUserService>();

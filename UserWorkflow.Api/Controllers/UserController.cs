@@ -145,7 +145,7 @@ namespace UserWorkflow.Api.Controllers
             }
         }
 
-        [HttpDelete("Delete")]
+        [HttpPost("Delete")]
         public async Task<IActionResult> DeleteUser([FromBody] DeleteUser deleteUser)
         {
             var started = DateTime.UtcNow;
