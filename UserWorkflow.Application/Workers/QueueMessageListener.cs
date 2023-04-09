@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 using UserWorkflow.Application.Configs;
 using UserWorkflow.Application.Services.Users;
@@ -70,8 +71,15 @@ namespace UserWorkflow.Application.Workers
         {
             stoppingToken.ThrowIfCancellationRequested();
 
+            try
+            {
+                _channel.QueueDeclare(queue: QueueName, durable: true, exclusive: false, autoDelete: false);
+            }
+            catch (Exception)
+            {
+                _channel.QueueDeclarePassive(QueueName);
+            }
 
-            _channel.QueueDeclare(QueueName, true, false, true);
             var consumer = new AsyncEventingBasicConsumer(_channel);
 
             consumer.Received += async (bc, ea) =>

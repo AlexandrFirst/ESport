@@ -78,12 +78,20 @@ namespace RMQEsportClient
                 {
                     channel.ExchangeDeclarePassive(queueOptions.ExchangeName);
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     channel.ExchangeDeclare(queueOptions.ExchangeName, exchangeType);
                 }
 
-                channel.QueueDeclare(queueOptions.QueueName, true, false, true);
+                try
+                {
+                    channel.QueueDeclarePassive(queueOptions.QueueName);
+                }
+                catch (Exception) 
+                {
+                    channel.QueueDeclare(queue: queueOptions.QueueName, durable: true, exclusive: false, autoDelete: false);
+                }
+                
                 channel.QueueBind(queueOptions.QueueName, queueOptions.ExchangeName, queueOptions.RoutingKey, null);
 
 

@@ -24,11 +24,12 @@ namespace UserWorkflow.Application.Services.Users
         private readonly IMessageProducer messageProducer;
         private readonly IMapper mapper;
         private readonly ILogger<UserService> logger;
+
         private const string CREATE_ACTION = "Create";
         private const string UPDATE_ACTION = "Update";
         private const string DELETE_ACTION = "Delete";
 
-        public UserService(EsportDataContext esportDataContext, 
+        public UserService(EsportDataContext esportDataContext,
             IMessageProducer messageProducer, IMapper mapper, ILogger<UserService> logger)
         {
             this.esportDataContext = esportDataContext;
@@ -71,9 +72,7 @@ namespace UserWorkflow.Application.Services.Users
                 action = UPDATE_ACTION;
             }
 
-            await esportDataContext.SaveChangesAsync();
-            notifyCompetitionService(admin, role: UserRole.LocalAdmin.RoleName, action: action);
-
+            await saveUser(admin, action, "Error while Create/Updating administrator");
             return admin.Id;
         }
 
@@ -90,7 +89,6 @@ namespace UserWorkflow.Application.Services.Users
             var organisationAdministrator = await esportDataContext.OrganisationAdministrators.FirstOrDefaultAsync(x => x.UserId == userModel.UserId);
             if (organisationAdministrator == null)
             {
-
                 OrganisationAdministrators administrator = userModel as OrganisationAdministrators;
                 administrator.OrganisationId = organistaionId;
                 await esportDataContext.OrganisationAdministrators.AddAsync(administrator);
@@ -105,7 +103,8 @@ namespace UserWorkflow.Application.Services.Users
             }
 
             await esportDataContext.SaveChangesAsync();
-            notifyCompetitionService(organisationAdministrator, role: UserRole.OrgAdmin.RoleName, action: action);
+
+            await saveUser(organisationAdministrator, action, "Error while Create/Updating OrganisationAdministrator");
 
             return organisationAdministrator.Id;
         }
@@ -130,7 +129,7 @@ namespace UserWorkflow.Application.Services.Users
 
             await esportDataContext.SaveChangesAsync();
 
-            notifyCompetitionService(m_trainee, role: UserRole.Trainee.RoleName, action: action);
+            await saveUser(m_trainee, action, "Error while Create/Updating Trainee");
 
             return m_trainee.Id;
         }
@@ -151,9 +150,9 @@ namespace UserWorkflow.Application.Services.Users
                 MapUser(userModel, trainer);
                 action = UPDATE_ACTION;
             }
-            await esportDataContext.SaveChangesAsync();
 
-            notifyCompetitionService(trainer, UserRole.Trainer.RoleName, action);
+            await saveUser(trainer, action, "Error while Create/Updating Trainer");
+            
             return trainer.Id;
         }
 
@@ -196,6 +195,22 @@ namespace UserWorkflow.Application.Services.Users
             return deletedInfoResult;
         }
 
+        private async Task saveUser(User user, string action, string errorMessage)
+        {
+            var transacaction = await esportDataContext.Database.BeginTransactionAsync();
+
+            await esportDataContext.SaveChangesAsync();
+
+            var isNotified = notifyCompetitionService(user, role: UserRole.LocalAdmin.RoleName, action: action);
+            if (!isNotified)
+            {
+                await transacaction.RollbackAsync();
+                throw new ApplicationException(errorMessage);
+            }
+
+            await transacaction.CommitAsync();
+        }
+
         private void MapUser(User fromUser, User toUser)
         {
             toUser.Surname = fromUser.Surname;
@@ -221,7 +236,7 @@ namespace UserWorkflow.Application.Services.Users
             {
                 logger.LogError("Unable to send message due to: " + ex.Message);
                 return false;
-            }            
+            }
             return true;
         }
 

@@ -70,8 +70,15 @@ namespace MessageService.Workers
         {
             stoppingToken.ThrowIfCancellationRequested();
 
+            try
+            {
+                _channel.QueueDeclare(queue: QueueName, durable: true, exclusive: false, autoDelete: false);
+            }
+            catch 
+            {
+                _channel.QueueDeclarePassive(queue: QueueName);
+            }
 
-            _channel.QueueDeclare(QueueName, true, false, true);
             var consumer = new AsyncEventingBasicConsumer(_channel);
 
             consumer.Received += async (bc, ea) =>
