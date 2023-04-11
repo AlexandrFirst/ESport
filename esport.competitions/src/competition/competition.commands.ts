@@ -2,8 +2,6 @@ import { Controller } from '@nestjs/common';
 import { RMQRoute, RMQValidate } from 'nestjs-rmq';
 
 import { CompetitionCreate } from 'esport-lib-ts/lib/competitions';
-
-import { Category } from '../category/category.model';
 import { CategoryService } from '../category/category.service';
 
 import { CompetitionService } from './competition.service';
@@ -25,20 +23,19 @@ export class CompetitionCommands {
   async createCompetition(
     req: CompetitionCreate.Request,
   ): Promise<CompetitionCreate.Response> {
-    let categories: Category[] = [];
-    if (req.categoryIds) {
-      categories = await this.competitionExecutor.validateCategories(
-        req.categoryIds,
-      );
-    }
-    console.log('===categories  ===', categories);
+    // const categories: Category[] = [];
+    // if (req.categoryIds) {
+    //   categories = await this.competitionExecutor.validateCategories(
+    //     req.categoryIds,
+    //   );
+    // }
+    // console.log('===categories  ===', categories);
     const { id } = await this.competitionService.createCompetition({
       ...req,
       dateStart: new Date(req.dateStart),
       dateEnd: req.dateEnd ? new Date(req.dateEnd) : undefined,
       //TODO: fix this => only for compile
       categories: [],
-      _id: '',
     });
     return { id };
   }
