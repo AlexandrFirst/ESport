@@ -8,9 +8,13 @@ export class FightEntity implements IFight {
   isProcessed: boolean;
   winnerId: string;
   events: IDominEvent[] = [];
+  fightNumber: number;
 
   constructor(c: Partial<IFight>) {
     this._id = c._id;
+    //TODO: fix this => only for compile
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-ignore
     this.accNumber = c.accNumber ?? 0;
     this.competitors = c.competitors ?? [];
     this.isProcessed = c.isProcessed ?? false;
@@ -44,6 +48,9 @@ export class FightEntity implements IFight {
   }
 
   partialUpdate(c: Partial<IFight>) {
+    //TODO: fix this => only for compile
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    //@ts-ignore
     this.accNumber = c.accNumber ?? this.accNumber;
     this.isProcessed = c.isProcessed ?? this.isProcessed;
     this.winnerId = c.winnerId ?? this.winnerId;

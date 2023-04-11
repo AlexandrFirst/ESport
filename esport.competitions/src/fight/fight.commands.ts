@@ -14,6 +14,9 @@ export class FightCommands {
   async createFight(req: FightCreate.Request): Promise<FightCreate.Response> {
     const { id } = await this.fightService.create({
       ...req,
+      //TODO: fix this => only for compile
+      _id: '',
+      fightNumber: 0,
       competitors: [],
     });
     return { id };

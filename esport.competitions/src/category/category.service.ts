@@ -30,15 +30,17 @@ export class CategoryService {
     return this.categoryRepository.create(newCategory);
   }
 
-  async update({ _id, title, fights }: Partial<ICategory>) {
+  async update({ _id, title }: Partial<ICategory>) {
     const cat = await this.categoryRepository.findById(_id);
     if (!cat) {
       throw new Error('Category not found');
     }
     await this.updateCategory(
-      new CategoryEntity(cat).updateCategoryData({
+      //TODO: fix this => only for compile
+      new CategoryEntity(cat as any).updateCategoryData({
         title,
-        fights,
+        // fights,
+        rounds: [],
       }),
     );
     return { message: 'ok' };

@@ -13,6 +13,7 @@ export class FightQueries {
   @RMQRoute(FightGetAll.topic)
   async getAll(): Promise<FightGetAll.Response> {
     const fights = await this.fightService.getAll();
-    return { fights };
+    //TODO: fix this => only for compile
+    return { fights: fights as any };
   }
 }

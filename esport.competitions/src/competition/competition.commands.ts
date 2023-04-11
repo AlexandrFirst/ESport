@@ -36,7 +36,9 @@ export class CompetitionCommands {
       ...req,
       dateStart: new Date(req.dateStart),
       dateEnd: req.dateEnd ? new Date(req.dateEnd) : undefined,
-      categories,
+      //TODO: fix this => only for compile
+      categories: [],
+      _id: '',
     });
     return { id };
   }

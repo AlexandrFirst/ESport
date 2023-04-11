@@ -16,11 +16,9 @@ export class CategoryRepository extends EntityRepository<Category> {
     super(categoryModel);
   }
 
-  async update({ _id, fights, ...rest }: CategoryEntity) {
-    const fightToUpdate = fights?.map((f) => f._id);
-    return this.categoryModel
-      .updateOne({ _id }, { $set: { ...rest, fights: fightToUpdate } })
-      .exec();
+  async update({ _id, ...rest }: CategoryEntity) {
+    // const fightToUpdate = fights?.map((f) => f._id);
+    return this.categoryModel.updateOne({ _id }, { $set: { ...rest } }).exec();
   }
 
   async findByIdWithPopulate(
