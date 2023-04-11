@@ -12,6 +12,11 @@ const getRmqFactory = async (
   configService: ConfigService,
 ): Promise<IRMQServiceOptions> => ({
   exchangeName: configService.get('AMQP_EXCHANGE'),
+  queueOptions:{
+    autoDelete: false,
+    exclusive: false,
+    durable: true
+  },
   connections: [
     {
       login: configService.get('AMQP_LOGIN') ?? '',
