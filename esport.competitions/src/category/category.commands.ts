@@ -23,18 +23,18 @@ export class CategoryCommands {
     req: CategoryCreate.Request,
   ): Promise<CategoryCreate.Response> {
     const fights = await this.fightService.updateOrCreateMany(req.fights);
-    const { _id } = await this.categoryService.create({ ...req, fights });
+    const { _id } = await this.categoryService.create({ ...req, rounds: [] });
     return { id: _id };
   }
 
   @RMQValidate()
   @RMQRoute(CategoryUpdate.topic)
   async updateCategory({
-    _id,
     title,
     fights,
   }: CategoryUpdate.Request): Promise<CategoryUpdate.Response> {
-    const cat = await this.categoryService.findById(_id);
+    //TODO: fix this => only for compile
+    const cat = await this.categoryService.findById(0 as any);
     if (!cat) {
       throw new Error('Category not found');
     }
@@ -43,9 +43,8 @@ export class CategoryCommands {
       newFights = await this.fightService.updateOrCreateMany(fights);
     }
     return this.categoryService.update({
-      _id,
       title,
-      fights: fights ? newFights : undefined,
+      // fights: fights ? newFights : undefined,
     });
   }
 }

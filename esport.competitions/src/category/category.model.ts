@@ -2,12 +2,15 @@ import mongoose, { Document, now } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Type } from 'class-transformer';
 
-import { ICategory, IFight } from 'esport-lib-ts/lib/competitions';
+import { ICategory, IFight, IRound } from 'esport-lib-ts/lib/competitions';
 
 import { Fight } from '../fight/fight.model';
 
 @Schema({ timestamps: true })
 export class Category extends Document implements ICategory {
+  @Prop()
+  rounds: IRound[];
+
   @Prop({ required: true, set: (content: string) => content.trim() })
   title: string;
 

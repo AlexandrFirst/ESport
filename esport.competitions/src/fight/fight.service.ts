@@ -28,15 +28,17 @@ export class FightService {
   }
 
   async updateOrCreateMany(fights: Partial<IFight>[]) {
-    let newFights: IFight[] = [];
+    const newFights: IFight[] = [];
     await Promise.all(
       fights.map(async (fight) => {
         if (fight._id) {
           const f = await this.update(fight);
-          newFights.push(f);
+          //TODO: fix this => only for compile
+          newFights.push(f as any);
         } else {
           const f = await this.create(fight as IFight);
-          newFights.push(f);
+          //TODO: fix this => only for compile
+          newFights.push(f as any);
         }
       }),
     );

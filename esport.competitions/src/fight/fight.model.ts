@@ -5,6 +5,9 @@ import { ICompetitor, IFight } from 'esport-lib-ts/lib/competitions';
 @Schema({ timestamps: true })
 export class Fight extends Document implements IFight {
   @Prop({ required: true })
+  fightNumber: number;
+
+  @Prop({ required: true })
   isProcessed: boolean;
 
   @Prop()
