@@ -3,7 +3,7 @@
     @apply rounded-md w-full;
 }
 
-.selected {
+.list-item {
     /*@apply bg-skin-subsidiary dark:bg-darkSkin-subsidiary*/
     @apply bg-theme-sub;
 }

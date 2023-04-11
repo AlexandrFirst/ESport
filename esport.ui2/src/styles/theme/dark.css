@@ -1,6 +1,15 @@
 .app_dark_theme {
     --color-text-main: rgb(68, 64, 88);
+    --color-text-accent: rgb(215, 224, 241);
+    --color-text-light: rgb(253, 252, 252);
 
     /*background*/
     --color-bg-main: rgb(255, 255, 255);
+    --color-bg-sub: rgb(189, 189, 200);
+    --color-bg-accent: rgb(105,100,241);
+    --color-bg-light: rgb(246, 246, 250);
+
+    /*gradient*/
+    --color-gradient-main-from: #6366f1;
+    --color-gradient-main-to: #a855f7;
 }

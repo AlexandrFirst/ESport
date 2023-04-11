@@ -22,6 +22,12 @@ export const Translate: FC<TranslateProps> = ({ className }) => {
             // onClick={handleClick}
           />
         }
+        list={languages.map((language) => ({
+          children: language,
+          key: language,
+          selected: language === "English",
+        }))}
+        direction={"bottom left"}
       />
     </>
   );

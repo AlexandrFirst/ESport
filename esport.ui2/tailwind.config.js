@@ -17,11 +17,15 @@ module.exports = {
         theme: {
           main: "var(--color-bg-main)",
           sub: "var(--color-bg-sub)",
+          accent: "var(--color-bg-accent)",
+          light: "var(--color-bg-light)",
         },
       },
       textColor: {
         theme: {
           main: "var(--color-text-main)",
+          accent: "var(--color-text-accent)",
+          light: "var(--color-text-light)",
         },
       },
       padding: {
@@ -31,6 +35,12 @@ module.exports = {
       borderColor: {
         theme: {
           main: "var(--color-text-main)",
+        },
+      },
+      gradientColorStops: {
+        main: {
+          from: "var(--color-gradient-main-from)",
+          to: "var(--color-gradient-main-to)",
         },
       },
     },

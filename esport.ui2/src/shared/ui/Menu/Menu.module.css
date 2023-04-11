@@ -1,0 +1,35 @@
+.wrapper {
+  @apply relative;
+}
+
+.list {
+  @apply flex flex-col bg-theme-light absolute rounded-xl shadow-2xl overflow-hidden;
+}
+
+.listItem {
+  @apply headless-active:bg-theme-accent headless-active:text-theme-accent cursor-pointer px-7 py-1.5;
+}
+
+.selected {
+  @apply bg-gradient-to-r from-main-from to-main-to text-theme-light;
+}
+
+.optionsBottomLeft {
+  top: 100%;
+  right: 0;
+}
+
+.optionsBottomRight {
+  top: 100%;
+  left: 0;
+}
+
+.optionsTopRight {
+  bottom: 100%;
+  left: 0;
+}
+
+.optionsTopLeft {
+  right: 0;
+  bottom: 100%;
+}

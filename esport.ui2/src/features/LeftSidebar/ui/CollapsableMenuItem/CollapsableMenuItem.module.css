@@ -3,7 +3,7 @@
     @apply border-l-2 pb-2 w-full rounded-md;
 }
 
-.selected {
+.list-item {
     /*@apply bg-skin-subsidiary dark:bg-darkSkin-subsidiary;*/
 }
 
