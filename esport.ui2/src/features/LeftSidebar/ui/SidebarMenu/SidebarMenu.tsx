@@ -10,6 +10,7 @@ import { IMenuItem } from "../../types/menu-item";
 
 import { useSidebarContext } from "../SidebarContext/SidebarContext";
 import { SimpleMenuItem } from "../SimpleMenuItem/SimpleMenuItem";
+import { CollapsableMenuItem } from "@/features/LeftSidebar/ui/CollapsableMenuItem/CollapsableMenuItem";
 
 export const SidebarMenu: FC = () => {
   const router = useRouter();
@@ -39,19 +40,19 @@ export const SidebarMenu: FC = () => {
                 [styles.gap]: sMenu.gap,
               })}
             >
-              {/*{sMenu.items ? (*/}
-              {/*  <CollapsableMenuItem*/}
-              {/*    item={sMenu}*/}
-              {/*    onSubItemClick={handleClick}*/}
-              {/*    currentPathname={pathname}*/}
-              {/*  />*/}
-              {/*) : (*/}
-              <SimpleMenuItem
-                item={sMenu}
-                onItemClick={handleClick}
-                currentPathname={router.pathname}
-              />
-              {/*)}*/}
+              {sMenu.items ? (
+                <CollapsableMenuItem
+                  item={sMenu}
+                  onSubItemClick={handleClick}
+                  currentPathname={router.pathname}
+                />
+              ) : (
+                <SimpleMenuItem
+                  item={sMenu}
+                  onItemClick={handleClick}
+                  currentPathname={router.pathname}
+                />
+              )}
             </li>
           ))}
           {/*</SportScrollable>*/}

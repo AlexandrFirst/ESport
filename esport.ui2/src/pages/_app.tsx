@@ -1,7 +1,7 @@
 import "@/styles/globals.css";
 
 import type { AppProps } from "next/app";
-import { Nunito_Sans } from "next/font/google";
+import { Nunito } from "next/font/google";
 import { appWithTranslation } from "next-i18next";
 
 import cn from "classnames";
@@ -10,7 +10,7 @@ import { Providers, useTheme, wrapper } from "@/_app/Providers";
 
 import { updateSidebarState } from "@/features/LeftSidebar";
 
-const font = Nunito_Sans({
+const font = Nunito({
   subsets: ["latin", "cyrillic-ext", "cyrillic"],
   weight: ["300", "600", "700", "900"],
 });

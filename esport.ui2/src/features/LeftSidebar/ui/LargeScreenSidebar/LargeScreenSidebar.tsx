@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import styles from "./LargeScreenSidebar.module.css";
 
 import cn from "classnames";
-import { BeakerIcon } from "@heroicons/react/24/solid";
+import { ChevronDoubleRightIcon } from "@heroicons/react/24/solid";
 
 import { IconButton } from "@/shared/ui";
 
@@ -28,7 +28,7 @@ export const LargeScreenSidebar: FC<LargeScreenSidebarProps> = ({
   return (
     <aside className={cn(styles.wrapper, className, wrapperClasses)}>
       <IconButton
-        Svg={BeakerIcon}
+        Svg={ChevronDoubleRightIcon}
         className={styles.iconBtn}
         onClick={handleClickArrow}
         svgClassName={cn(styles.arrow, {

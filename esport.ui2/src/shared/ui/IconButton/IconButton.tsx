@@ -1,4 +1,10 @@
-import React, { ButtonHTMLAttributes, DetailedHTMLProps, FC } from "react";
+import React, {
+  ButtonHTMLAttributes,
+  DetailedHTMLProps,
+  ElementType,
+  FC,
+  HTMLAttributes,
+} from "react";
 import styles from "./IconButton.module.css";
 
 import { IconProps, Icon } from "@/shared/ui/Icon/Icon";
@@ -10,16 +16,25 @@ type IconButtonProps = IconProps &
     HTMLButtonElement
   > & {
     svgClassName?: string;
+    as?: ElementType;
   };
 
 export const IconButton: FC<IconButtonProps> = (props) => {
-  const { svgClassName, Svg, iconSize = "s", className, ...otherProps } = props;
+  const {
+    svgClassName,
+    Svg,
+    iconSize = "s",
+    className,
+    as: Component = "button",
+    ...otherProps
+  } = props;
+
   return (
-    <button
+    <Component
       {...otherProps}
       className={cn(styles.wrapper, className, styles[iconSize])}
     >
       <Icon Svg={Svg} className={svgClassName} iconSize={iconSize} />
-    </button>
+    </Component>
   );
 };
