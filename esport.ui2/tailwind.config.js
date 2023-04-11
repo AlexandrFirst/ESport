@@ -28,6 +28,11 @@ module.exports = {
         leftSidebarFull: "var(--left-sidebar-full)",
         leftSidebarCompact: "var(--left-sidebar-compact)",
       },
+      borderColor: {
+        theme: {
+          main: "var(--color-text-main)",
+        },
+      },
     },
   },
   plugins: [],
