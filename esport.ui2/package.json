@@ -6,9 +6,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "generate": "node ./scripts/createSlice/index.js"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.13",
+    "@headlessui/tailwindcss": "^0.1.2",
     "@heroicons/react": "^2.0.17",
     "@reduxjs/toolkit": "^1.9.3",
     "@types/node": "18.15.11",

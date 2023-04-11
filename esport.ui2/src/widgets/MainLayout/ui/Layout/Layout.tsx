@@ -9,6 +9,7 @@ import {
   selectIsSidebarOpened,
   Sidebar,
 } from "@/features/LeftSidebar";
+import { Header } from "@/features/Header";
 
 interface LayoutProps {
   className?: string;
@@ -38,6 +39,7 @@ export const Layout: FC<LayoutProps> = ({ className, children }) => {
 
   return (
     <>
+      <Header />
       <main>
         <Sidebar
           isSidebarOpened={isSidebarOpened}
