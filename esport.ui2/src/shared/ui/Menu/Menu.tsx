@@ -67,7 +67,11 @@ export const Menu: FC<MenuProps> = ({
               className={cn(styles.list, menuClasses)}
             >
               {list?.map((item) => (
-                <HeadlessMenu.Item key={item.key} disabled={item.disabled}>
+                <HeadlessMenu.Item
+                  key={item.key}
+                  disabled={item.disabled}
+                  as={Fragment}
+                >
                   {({ disabled, active }) => (
                     <li
                       className={cn(styles.listItem, {
