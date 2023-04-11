@@ -77,6 +77,56 @@ namespace StreamingService.Controllers
             return Ok(streamsToReturn);
         }
 
+        [HttpGet("{streamId}")]
+        public async Task<IActionResult> GetStreamInfo(string streamId) 
+        {
+            var isStreamIdValid =  Guid.TryParse(streamId, out var _streamId);
+            if (!isStreamIdValid) 
+            {
+                return BadRequest("Unable to parse stream id");
+            }
+
+            var stream = await context.EsStreams.FirstOrDefaultAsync(x => x.Id == _streamId);
+            var outputInfo = new StreamEventDto()
+            {
+                Description= stream.Description,
+                EndTime= stream.EndTime,
+                EventId= stream.EventId,
+                Name= stream.Name,
+                PreviewImageId = stream.PreviewImageId?.ToString(),
+                StartTime= stream.StartTime,
+                Id = streamId
+            };
+
+            return Ok(outputInfo);
+        }
+
+        [HttpPut("updateStream/{streamId}")]
+        public async Task<IActionResult> UpdateStreamEvent(string streamId, [FromBody] CreateStreamEventDto updateStreamEventDto) 
+        {
+            var isStreamIdValid = Guid.TryParse(streamId, out var _streamId);
+            if (!isStreamIdValid)
+            {
+                return BadRequest("Unable to parse stream id");
+            }
+            var stream = await context.EsStreams.FirstOrDefaultAsync(x => x.Id == _streamId);
+            //need to check wheather the stream is live
+            //if yes than create an exception
+            if (streamRepositry.IsStreamStarted(stream.EventId)) 
+            {
+                return BadRequest(new { Message = "Stream is already started" });
+            }
+            //else
+
+            stream.StartTime = updateStreamEventDto.StartTime;
+            stream.EndTime= updateStreamEventDto.EndTime;
+            stream.Name = updateStreamEventDto.Name;
+            stream.Description= updateStreamEventDto.Description;
+            stream.EventId= updateStreamEventDto.EventId;
+            await context.SaveChangesAsync();
+            return Ok(stream.Id);
+        }
+
         [HttpGet("user")]
         public async Task<IActionResult> GetUserStreamInfo(string streamId)
         {

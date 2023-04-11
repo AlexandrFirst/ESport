@@ -123,7 +123,8 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
     ports:
-      - '5004:80'
+      - '5004:5004'
+      - '5014:5014'
     extra_hosts:
       - "host.docker.internal:host-gateway"
   web:

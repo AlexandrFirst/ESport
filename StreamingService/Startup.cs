@@ -1,6 +1,7 @@
 using ESportAuthClient.ESportAuthClient;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -39,21 +40,22 @@ namespace StreamingService
                 o.DefaultChallengeScheme = "EStream";
             })
             .AddScheme<EStreamAuthOptions, EStreamAuthHandler>("EStream", o => { })
-            .AddScheme<ESportClientAuthenticationOptions, ESportClientAuthenticationHandler>("WS", o => { 
+            .AddScheme<ESportClientAuthenticationOptions, ESportClientAuthenticationHandler>("WS", o =>
+            {
                 o.Authority = Configuration.GetSection("Security")["Authority"];
             });
 
             services.AddControllers();
             services.AddSignalR();
 
-            services.AddDbContext<StreamDataContext>(options => 
+            services.AddDbContext<StreamDataContext>(options =>
                 options.UseSqlServer(Configuration.GetSection("ConnectionString")["StreamDb"]));
 
             services.AddOptions<KurrentoOptions>().Bind(Configuration.GetSection("KurentoData"));
-            
+
             services.AddCors(options => options.AddPolicy("ESportCors", builder =>
             {
-                builder.WithOrigins("http://localhost:4200", "http://164.92.190.247:4200")
+                builder.WithOrigins("http://localhost:4200", "http://164.92.190.247:4200", "https://e-sport.cloud:4200")
                        .AllowAnyMethod()
                        .AllowAnyHeader()
                        .AllowCredentials();
@@ -83,7 +85,12 @@ namespace StreamingService
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-                endpoints.MapHub<KurrentoHub>("/kurrento");
+                endpoints.MapHub<KurrentoHub>("/kurrento", options =>
+                {
+                    options.Transports =
+                       HttpTransportType.WebSockets |
+                       HttpTransportType.LongPolling;
+                });
             });
         }
     }

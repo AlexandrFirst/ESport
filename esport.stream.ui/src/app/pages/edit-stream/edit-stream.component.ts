@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Select2Data, Select2SearchEvent } from 'ng-select2-component';
 import { first, firstValueFrom } from 'rxjs';
 import { CompetitionModel } from 'src/app/models/competition-models';
@@ -24,19 +24,21 @@ export class EditStreamComponent implements OnInit {
   });
 
   private streamId: number | undefined;
+  private isCreateMode: boolean = false;
 
   constructor(private route: ActivatedRoute,
     private competitionService: CompetitionService,
-    private streamService: StreamService) {
+    private streamService: StreamService,
+    private router: Router) {
     this.streamId = route.snapshot.params["id"];
     this.streamEventData = []
   }
 
   ngOnInit(): void {
     if (!this.streamId) {
-      console.log("create mode")
+      this.isCreateMode = true;
     } else {
-      console.log("edit mode ", this.streamId)
+      this.isCreateMode = false;
     }
 
     this.getAllCompetition().then(x => {
@@ -82,5 +84,9 @@ export class EditStreamComponent implements OnInit {
       const select2Model = new CompetitionModel({ ...p });
       return select2Model.convertToSelect2Group();
     })
+  }
+
+  cancelBtnClick(){
+    this.router.navigate(["streams"])
   }
 }
