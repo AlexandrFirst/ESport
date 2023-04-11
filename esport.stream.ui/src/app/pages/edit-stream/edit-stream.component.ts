@@ -38,8 +38,7 @@ export class EditStreamComponent implements OnInit {
     if (!this.streamId) {
       this.isCreateMode = true;
     } else {
-      this.isCreateMode = false;
-
+      console.log("edit mode ", this.streamId)
     }
 
     this.getAllCompetition().then(x => {
