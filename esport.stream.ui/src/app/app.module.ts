@@ -43,7 +43,7 @@ import { YesNoComponent } from './components/modals/yes-no/yes-no.component';
     OwlNativeDateTimeModule,
     Select2Module,
     ReactiveFormsModule,
-    MatDialogModule
+    MatDialogModule,
   ],
   providers: [
     { provide: MAT_DIALOG_DEFAULT_OPTIONS, useValue: { hasBackdrop: false } }
