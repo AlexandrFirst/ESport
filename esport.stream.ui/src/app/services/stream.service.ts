@@ -1,8 +1,8 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment.dev';
-import { Observable } from 'rxjs';
-import { CreateStreamEvent, Stream, StreamUser } from '../models/stream-models';
+import { Observable, throwError } from 'rxjs';
+import { CreateStreamEvent, Stream, StreamEventDto, StreamUser } from '../models/stream-models';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +17,8 @@ export class StreamService {
     });
   }
 
-  public getStreamUser(streamId: string): Observable<StreamUser>{
-    let params = new HttpParams().set("streamId",streamId);
+  public getStreamUser(streamId: string): Observable<StreamUser> {
+    let params = new HttpParams().set("streamId", streamId);
     return this.httpClinet.get<StreamUser>(environment.apiHost + `/api/streams/user/`, {
       withCredentials: true,
       params: params
@@ -29,5 +29,23 @@ export class StreamService {
     return this.httpClinet.post<number>(environment.apiHost + `/api/streams/create`, streamEvent, {
       withCredentials: true
     })
+  }
+
+  public getStreamEvent(streamId: string | undefined): Observable<StreamEventDto> {
+    if (streamId === undefined) {
+      return throwError(() => {
+        const error: any = new Error(`unable retrieve stream with undefined id`);
+        error.timestamp = Date.now();
+        return error;
+      })
+
+    }
+    return this.httpClinet.get<StreamEventDto>(environment.apiHost + `/api/streams/${streamId}`, { withCredentials: true });
+  }
+
+  public updateStreamEvent(streamId: string, streamEvent: CreateStreamEvent): Observable<number> {
+    return this.httpClinet.put<number>(environment.apiHost + `/api/streams/updateStream/${streamId}`, streamEvent, {
+      withCredentials: true
+    });
   }
 }

@@ -122,7 +122,7 @@ namespace StreamingService.Services
                             interval = 1000
                         });
                         var res = response.Result.GetValue("value");
-                        Console.WriteLine("Result of ping: " + res + " " + DateTime.Now);
+                        //Console.WriteLine("Result of ping: " + res + " " + DateTime.Now);
                         Thread.Sleep(500);
                     }
                     else
@@ -173,8 +173,6 @@ namespace StreamingService.Services
             var sdpAnswer = await webRtcEndPoint.ProcessOfferAsync(sdpOffer);
             presenter.MediaPipeline = mediaPipeline;
             presenter.WebRtcEndpoint = webRtcEndPoint;
-
-            // await StartRecording(userId);
 
             return new PresenterResponse() { IsSuccess = true, SdpAnswer = sdpAnswer, Endpoint = webRtcEndPoint };
 

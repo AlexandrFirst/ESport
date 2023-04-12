@@ -117,7 +117,6 @@ namespace StreamingService.Controllers
                 return BadRequest(new { Message = "Stream is already started" });
             }
             //else
-
             stream.StartTime = updateStreamEventDto.StartTime;
             stream.EndTime= updateStreamEventDto.EndTime;
             stream.Name = updateStreamEventDto.Name;
