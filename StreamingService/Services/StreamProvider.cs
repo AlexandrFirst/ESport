@@ -14,6 +14,7 @@ using StreamingService.Models.Responses;
 using StreamingService.Models.Options;
 using Microsoft.Extensions.Options;
 using System.Threading;
+using StreamingService.ReadModels;
 
 namespace StreamingService.Services
 {
@@ -141,7 +142,7 @@ namespace StreamingService.Services
 
             var mediaPipeline = await kurentoClient.CreateAsync(new MediaPipeline());
 
-            var webRtcEndPoint = await kurentoClient.CreateAsync(new WebRtcEndpoint(mediaPipeline, recvonly: false, sendonly: true, useDataChannels: false));
+            var webRtcEndPoint = await kurentoClient.CreateAsync(new WebRtcEndpoint(mediaPipeline, recvonly: false, sendonly: true, useDataChannels: true));
 
 
             await webRtcEndPoint.SetMinOutputBitrateAsync(30);
@@ -270,11 +271,10 @@ namespace StreamingService.Services
                 };
             }
 
-            var webRtcEndPoint = await kurentoClient.CreateAsync(new WebRtcEndpoint(presenter.MediaPipeline, recvonly: true, sendonly: false, useDataChannels: false));
+            var webRtcEndPoint = await kurentoClient.CreateAsync(new WebRtcEndpoint(presenter.MediaPipeline, recvonly: true, sendonly: false, useDataChannels: true));
 
             await webRtcEndPoint.SetMinVideoRecvBandwidthAsync(30);
             await webRtcEndPoint.SetMaxVideoRecvBandwidthAsync(100);
-
 
             if (!candidateQueue.ContainsKey(userId))
                 candidateQueue.TryAdd(userId, new ConcurrentQueue<Candidate>());
@@ -346,7 +346,6 @@ namespace StreamingService.Services
 
         }
 
-
         public void OnIceCandidate(string userId, IceCandidate _candidate)
         {
             if (presenter != null &&
@@ -379,6 +378,32 @@ namespace StreamingService.Services
             }
         }
 
+        public async Task SendMessage(ChatMessageInfo chatMessageInfo) 
+        {
+            using var scope = serviceProvider.CreateScope();
+            var signalHubInstance = scope.ServiceProvider.GetRequiredService<IHubContext<KurrentoHub, IKurentoHubClient>>();
+
+            var msg = new ChatMessageResponse()
+            {
+                Message = $"{chatMessageInfo.UserName} ({chatMessageInfo.UserId}):{chatMessageInfo.Message}",
+                IsSuccess = true
+            };
+
+            foreach (var viewer in viewers)
+            {
+                await signalHubInstance.Clients.Group(viewer.UserId.ToString()).Send(new ClientMessageBody()
+                {
+                    Id = MessageType.ChatMessage.ToString(),
+                    Body = JsonConvert.SerializeObject(msg)
+                });
+            }
+
+            await signalHubInstance.Clients.Group(presenter.UserId.ToString()).Send(new ClientMessageBody()
+            {
+                Id = MessageType.ChatMessage.ToString(),
+                Body = JsonConvert.SerializeObject(msg)
+            });
+        }
 
         private KurentoClient getKurentoClient()
         {
