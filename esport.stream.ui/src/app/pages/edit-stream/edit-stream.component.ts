@@ -60,8 +60,6 @@ export class EditStreamComponent implements OnInit {
           competitionId: x.eventId,
           dateTimeRange: [x.startTime, x.endTime]
         })
-
-        debugger;
       },
       error: (er) => {
         console.log(er)
@@ -74,7 +72,6 @@ export class EditStreamComponent implements OnInit {
   }
 
   async updateBtnClick() {
-    debugger;
     if (this.isCreateMode || !this.streamId) {
       console.error('Cannot update in created mode or when stream id is abscent')
       return;

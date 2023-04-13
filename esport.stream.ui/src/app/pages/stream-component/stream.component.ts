@@ -42,6 +42,8 @@ export class StreamComponent implements OnInit {
   private hubConnection: HubConnection;
   private webRtcPeer: kurentoUtils.WebRtcPeer
 
+  public chatMessages: string[] = [];
+
   get videoDevices(): MediaModel[] {
     return this.allMediaDevices.filter(x => x.MediaDeviceType == MediaType.VIDEO);
   }
@@ -351,6 +353,11 @@ export class StreamComponent implements OnInit {
           console.log('Ice candidate: ', parsedMessage);
           this.webRtcPeer?.addIceCandidate(parsedMessage)
           break;
+        case 'ChatMessage':
+          console.log('chatMessage: ', parsedMessage);
+          this.chatMessages.push(parsedMessage.Message);
+          console.log(this.chatMessages)
+          break;
         default:
           console.log('unrecognised message: ', parsedMessage);
       }
@@ -358,9 +365,7 @@ export class StreamComponent implements OnInit {
 
   }
 
-
   private onIceCandidate(candidate: any) {
-    debugger;
     console.log('local candidate: ', candidate);
     var message: ClientMessage = {
       body: JSON.stringify(candidate)
@@ -430,6 +435,21 @@ export class StreamComponent implements OnInit {
     }
   }
 
+  public sendMessageToChat(inputField: any) {
+    const val = inputField?.value
+    if (val) {
+      const data = {
+        streamId: this.streamId,
+        message: val
+      }
+      var message: ClientMessage = {
+        body: JSON.stringify(data)
+      };
+
+      this.sendMessage(MessageType.ChatMessage, message)
+    }
+  }
+
   public viewerResponse(parsedMessage: any) {
     console.log('Viewer response message: ', parsedMessage);
     if (parsedMessage.message !== 'accepted') {
@@ -444,12 +464,15 @@ export class StreamComponent implements OnInit {
     }
   }
 
-  private dispose() {
+  private dispose(message: string = 'ok') {
     if (this.isConnectionSetup) {
       this.webRtcPeer?.dispose();
       this.isCommunicationOn = false;
-
-      //redirect to home page
+      this.router.navigate(["streams"], {
+        queryParams: {
+          "messsage": message
+        }
+      })
     }
   }
 }
