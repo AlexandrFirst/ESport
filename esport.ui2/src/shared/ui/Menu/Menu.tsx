@@ -1,11 +1,4 @@
-import React, {
-  ButtonHTMLAttributes,
-  DetailedHTMLProps,
-  ElementType,
-  FC,
-  Fragment,
-  ReactNode,
-} from "react";
+import React, { ElementType, FC, Fragment, ReactNode } from "react";
 import styles from "./Menu.module.css";
 
 import {
@@ -28,11 +21,11 @@ const mapDirectionClass: Record<DropdownDirection, string> = {
   "top left": styles.optionsTopLeft,
 };
 
-interface MenuItem {
+export interface MenuItem {
   key: string;
   disabled?: boolean;
   selected?: boolean;
-  children: ReactNode;
+  children: (close: () => void) => ReactNode;
 }
 
 interface MenuProps extends HeadlessMenuProps<ElementType> {
@@ -57,7 +50,7 @@ export const Menu: FC<MenuProps> = ({
       as={"div"}
       className={cn(styles.wrapper, { [styles.bold]: bold })}
     >
-      {({ open }) => (
+      {({ close }) => (
         <>
           <HeadlessMenu.Button>{menuButton}</HeadlessMenu.Button>
           <Transition
@@ -83,8 +76,9 @@ export const Menu: FC<MenuProps> = ({
                       className={cn(styles.listItem, {
                         [styles.selected]: item.selected,
                       })}
+                      onClick={close}
                     >
-                      {item.children}
+                      {item.children(close)}
                     </li>
                   )}
                 </HeadlessMenu.Item>

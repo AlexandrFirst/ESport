@@ -1,12 +1,21 @@
 import { FC, useMemo } from "react";
 import styles from "./Translate.module.css";
 
-import { DropdownDirection, IconButton, Menu, UILink } from "@/shared/ui";
+import { useRouter } from "next/router";
+import { useTranslation } from "next-i18next";
+import cn from "classnames";
 
 import { LanguageIcon } from "@heroicons/react/24/solid";
-import cn from "classnames";
+
+import {
+  DropdownDirection,
+  IconButton,
+  Menu,
+  MenuItem,
+  UILink,
+} from "@/shared/ui";
+
 import { Languages } from "@/shared/constants";
-import { useRouter } from "next/router";
 
 interface TranslateProps {
   className?: string;
@@ -17,23 +26,29 @@ export const Translate: FC<TranslateProps> = ({
   className,
   direction = "bottom right",
 }) => {
+  const { t } = useTranslation();
   const router = useRouter();
 
-  const list = useMemo(
+  const list: MenuItem[] = useMemo(
     () =>
       Object.entries({
-        [Languages.English]: "English",
-        [Languages.Ukrainian]: "Ukrainian",
+        [Languages.English]: t("en"),
+        [Languages.Ukrainian]: t("uk"),
       }).map(([locale, language]) => ({
         key: locale,
         selected: locale === router.locale,
-        children: (
-          <UILink href={""} locale={locale} className={styles.link}>
+        children: (close) => (
+          <UILink
+            href={""}
+            locale={locale}
+            className={styles.link}
+            onClick={close}
+          >
             {language}
           </UILink>
         ),
       })),
-    [router.locale]
+    [router.locale, t]
   );
 
   return (
