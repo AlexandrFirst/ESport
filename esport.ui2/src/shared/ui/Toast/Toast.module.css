@@ -1,0 +1,23 @@
+.wrapper {
+  @apply flex justify-between items-center overflow-hidden rounded-md shadow-lg my-3 relative bg-theme-main;
+}
+
+.durationWrapper {
+  @apply absolute bottom-0 right-0 left-0 w-full h-1 bg-theme-sub;
+}
+
+.duration {
+  @apply absolute bg-theme-accent left-0 top-0 bottom-0 h-full
+}
+
+.message {
+  @apply text-sm font-bold flex-grow p-3 text-theme-main;
+}
+
+.iconWrapper {
+  @apply inline-flex justify-center items-center w-6 h-6;
+}
+
+.close {
+  @apply w-4 h-4 mx-3 items-center justify-center text-theme-main hover:opacity-80 rounded-md focus:ring-2 focus:ring-gray-300 inline-flex;
+}

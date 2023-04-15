@@ -1,0 +1,12 @@
+.bgGirl {
+    /*background: url('../../../../public/unloggedin-backgound.jpg') no-repeat 50% / cover;*/
+    background: url('../../../../../public/anon-backgound.jpg') no-repeat 50% / cover;
+}
+
+.bgBoy {
+    background: url('../../../../../public/anon-backgound-1.jpg') no-repeat 50% / cover;
+}
+
+.container {
+    @apply w-8/12;
+}

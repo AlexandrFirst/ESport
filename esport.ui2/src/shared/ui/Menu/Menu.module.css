@@ -3,15 +3,19 @@
 }
 
 .list {
-  @apply flex flex-col bg-theme-light absolute rounded-xl shadow-2xl overflow-hidden;
+  @apply flex flex-col bg-theme-light text-theme-main absolute rounded-xl shadow-2xl overflow-hidden;
 }
 
 .listItem {
-  @apply headless-active:bg-theme-accent headless-active:text-theme-accent cursor-pointer px-7 py-1.5;
+  @apply headless-active:bg-theme-accent headless-active:text-theme-main cursor-pointer px-7 py-1.5;
 }
 
 .selected {
-  @apply bg-gradient-to-r from-main-from to-main-to text-theme-light;
+  @apply bg-gradient-to-r from-main-from to-main-to text-theme-main;
+}
+
+.bold {
+  @apply font-bold;
 }
 
 .optionsBottomLeft {

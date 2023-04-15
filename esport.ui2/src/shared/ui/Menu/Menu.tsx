@@ -39,18 +39,24 @@ interface MenuProps extends HeadlessMenuProps<ElementType> {
   menuButton?: ReactNode;
   list?: MenuItem[];
   direction?: DropdownDirection;
+  bold?: boolean;
 }
 
 export const Menu: FC<MenuProps> = ({
   menuButton = "...",
   list,
   direction = "bottom right",
+  bold = true,
   ...props
 }) => {
   const menuClasses = [mapDirectionClass[direction]];
 
   return (
-    <HeadlessMenu as={"div"} className={styles.wrapper}>
+    <HeadlessMenu
+      {...props}
+      as={"div"}
+      className={cn(styles.wrapper, { [styles.bold]: bold })}
+    >
       {({ open }) => (
         <>
           <HeadlessMenu.Button>{menuButton}</HeadlessMenu.Button>

@@ -1,0 +1,12 @@
+.header {
+    /*@apply bg-skin-main fixed h-[64px] z-10;*/
+    @apply bg-gradient-to-r from-bg-main-from to-bg-main-to fixed h-[64px] z-10 w-full;
+}
+
+.nav {
+    @apply float-right;
+}
+
+.list {
+    @apply flex items-center pt-3;
+}

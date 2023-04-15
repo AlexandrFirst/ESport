@@ -9,6 +9,9 @@
     /* layout */
     --left-sidebar-full: 300px;
     --left-sidebar-compact: 100px;
+
+    /* transform() -> needed for snackbar */
+    --elm-translate: translateX(-100%);
 }
 
 body {

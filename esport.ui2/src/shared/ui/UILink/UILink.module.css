@@ -1,0 +1,3 @@
+.wrapper {
+    @apply text-theme-accent font-bold active:text-theme-main transition-colors;
+}

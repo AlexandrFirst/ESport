@@ -26,6 +26,7 @@ module.exports = {
           main: "var(--color-text-main)",
           accent: "var(--color-text-accent)",
           light: "var(--color-text-light)",
+          error: "var(--color-error-main)",
         },
       },
       padding: {
@@ -35,12 +36,39 @@ module.exports = {
       borderColor: {
         theme: {
           main: "var(--color-text-main)",
+          error: "var(--color-error-main)",
         },
       },
       gradientColorStops: {
         main: {
           from: "var(--color-gradient-main-from)",
           to: "var(--color-gradient-main-to)",
+        },
+        "bg-main": {
+          from: "var(--color-gradient-bg-from)",
+          to: "var(--color-gradient-bg-to)",
+        },
+      },
+      animation: {
+        toastIn: "toastIn .8s both",
+        toastOut: "toastOut .8s both",
+      },
+      keyframes: {
+        toastIn: {
+          "0%": {
+            transform: "var(--elm-translate) scale(0.7)",
+            opacity: 0.7,
+          },
+          "80%": { transform: "translate(0px) scale(0.7)", opacity: 0.7 },
+          "100%": { transform: "scale(1)", opacity: 1 },
+        },
+        toastOut: {
+          "0%": { transform: "scale(1)", opacity: 1 },
+          "20%": { transform: "translate(0px) scale(0.7)", opacity: 0.7 },
+          "100%": {
+            transform: "var(--elm-translate) scale(0.7)",
+            opacity: 0.7,
+          },
         },
       },
     },

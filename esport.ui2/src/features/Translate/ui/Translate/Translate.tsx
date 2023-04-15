@@ -27,7 +27,7 @@ export const Translate: FC<TranslateProps> = ({ className }) => {
           key: language,
           selected: language === "English",
         }))}
-        direction={"bottom left"}
+        direction={"bottom right"}
       />
     </>
   );

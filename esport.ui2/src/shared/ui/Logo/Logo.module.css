@@ -1,19 +1,19 @@
 .wrapper {
-    @apply flex
+    @apply flex;
 }
 
 .logo {
-    @apply ml-3
+    @apply ml-3;
 }
 
 .title {
-    /*@apply text-skin-main dark:text-darkSkin-main*/
+    @apply text-theme-main;
 }
 
 .not_visible {
-    @apply opacity-0 scale-0
+    @apply opacity-0 scale-0;
 }
 
 .show_text {
-    @apply ml-3
+    @apply ml-3;
 }
