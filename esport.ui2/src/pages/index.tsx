@@ -48,7 +48,6 @@ export const getServerSideProps: GetServerSideProps = async ({
     locale ?? defaultLocale ?? "en",
     ["common"]
   );
-  console.log("===query===", query);
   return {
     props: {
       ...localization,

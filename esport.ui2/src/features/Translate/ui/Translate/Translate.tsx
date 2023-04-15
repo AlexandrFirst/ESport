@@ -17,25 +17,23 @@ export const Translate: FC<TranslateProps> = ({
   className,
   direction = "bottom right",
 }) => {
-  const languages: Record<Languages, string> = {
-    [Languages.English]: "English",
-    [Languages.Ukrainian]: "Ukrainian",
-  };
-
   const router = useRouter();
 
   const list = useMemo(
     () =>
-      Object.entries(languages).map(([locale, language]) => ({
+      Object.entries({
+        [Languages.English]: "English",
+        [Languages.Ukrainian]: "Ukrainian",
+      }).map(([locale, language]) => ({
+        key: locale,
+        selected: locale === router.locale,
         children: (
           <UILink href={""} locale={locale} className={styles.link}>
             {language}
           </UILink>
         ),
-        key: language,
-        selected: locale === router.locale,
       })),
-    [languages, router.locale]
+    [router.locale]
   );
 
   return (
