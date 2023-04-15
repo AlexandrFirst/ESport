@@ -1,12 +1,9 @@
 import { GetServerSideProps, NextPage } from "next";
 import React from "react";
 
-import https from "https";
-import fs from "fs";
-import path from "path";
-
 import { AnonLayout } from "@/widgets/AnonLayout";
 import { LoginForm } from "@/features/LoginForm";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 type Props = {
   httpsAgent: any;
@@ -28,3 +25,18 @@ const LoginPage: NextPage<Props> = ({ httpsAgent }) => {
 };
 
 export default LoginPage;
+
+export const getServerSideProps: GetServerSideProps = async ({
+  locale,
+  defaultLocale,
+}) => {
+  const localization = await serverSideTranslations(
+    locale ?? defaultLocale ?? "en",
+    ["common"]
+  );
+  return {
+    props: {
+      ...localization,
+    },
+  };
+};
