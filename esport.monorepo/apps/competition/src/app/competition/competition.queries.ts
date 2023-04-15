@@ -1,12 +1,15 @@
+import { CompetitionsGetAll } from '@esport.monorepo/contracts';
 import { Controller } from '@nestjs/common';
 import { RMQRoute } from 'nestjs-rmq';
 
-import { CompetitionsGetAll } from '@esport.monorepo/contracts';
+import { CompetitionService } from './competition.service';
 
 @Controller()
 export class CompetitionQueries {
+  constructor(private readonly competitionService: CompetitionService) {}
+
   @RMQRoute(CompetitionsGetAll.topic)
   async getAll() {
-    return [{ name: 'test' }];
+    return this.competitionService.getAll();
   }
 }
