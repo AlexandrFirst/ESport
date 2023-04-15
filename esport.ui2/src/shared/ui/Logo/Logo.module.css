@@ -1,5 +1,5 @@
 .wrapper {
-    @apply flex;
+    @apply flex items-center;
 }
 
 .logo {
@@ -7,7 +7,7 @@
 }
 
 .title {
-    @apply text-theme-main;
+    @apply text-theme-main !text-sm;
 }
 
 .not_visible {
