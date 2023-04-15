@@ -19,7 +19,7 @@
 }
 
 .wrapper {
-    @apply absolute right-1.5 top-1.5 flex items-center;
+    @apply absolute right-5 top-1.5 flex items-center;
 }
 
 .translate {

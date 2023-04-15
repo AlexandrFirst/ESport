@@ -47,7 +47,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     <Controller
       name={name}
       control={control}
-      defaultValue={defaultValue}
+      defaultValue={defaultValue ?? ""}
       render={({ field, fieldState: { error } }) => (
         <div
           className={cn(styles.main_wrapper, className, {

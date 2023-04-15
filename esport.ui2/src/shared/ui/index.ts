@@ -14,6 +14,7 @@ export { default as UILink } from "./UILink/UILink";
 
 export { FormWrapper } from "./FormWrapper/FormWrapper";
 export { Input } from "./Input/Input";
+export type { InputProps } from "./Input/Input";
 export { PasswordInput } from "./PasswordInput/PasswordInput";
 export { Button } from "./Button/Button";
 

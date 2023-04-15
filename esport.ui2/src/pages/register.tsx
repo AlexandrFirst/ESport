@@ -2,17 +2,17 @@ import { NextPage } from "next";
 import React from "react";
 
 import { AnonLayout } from "@/widgets/AnonLayout";
-import { LoginForm } from "@/features/LoginForm";
+import { RegisterForm } from "@/features/RegisterForm";
 
 type Props = {};
 
 const RegisterPage: NextPage<Props> = () => {
   return (
     <AnonLayout
-      title="Welcome to E-Sport 👋🏻"
+      title="Adventure starts here 🚀"
       subtitle="Please sign-in to your account and start the adventure"
     >
-      <LoginForm />
+      <RegisterForm />
     </AnonLayout>
   );
 };
