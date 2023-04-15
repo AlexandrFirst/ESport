@@ -3,7 +3,7 @@ import styles from "./AnonLayout.module.css";
 
 import { useMedia } from "@/shared/lib";
 
-import { Left } from "../Left/Left";
+import Left from "../Left/Left";
 import Right, { RightProps } from "../Right/Right";
 
 interface AnonLayoutProps extends RightProps {

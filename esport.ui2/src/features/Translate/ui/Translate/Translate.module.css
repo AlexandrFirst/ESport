@@ -1,3 +1,7 @@
 .wrapper {
     @apply flex items-center;
 }
+
+.link {
+    @apply text-theme-main;
+}

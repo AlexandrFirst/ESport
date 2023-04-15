@@ -1,22 +1,43 @@
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import styles from "./Translate.module.css";
 
-import { IconButton, Menu, DropdownDirection } from "@/shared/ui";
+import { DropdownDirection, IconButton, Menu, UILink } from "@/shared/ui";
 
 import { LanguageIcon } from "@heroicons/react/24/solid";
 import cn from "classnames";
+import { Languages } from "@/shared/constants";
+import { useRouter } from "next/router";
 
 interface TranslateProps {
   className?: string;
   direction?: DropdownDirection;
 }
 
-const languages = ["English", "Ukrainian", "French"];
-
 export const Translate: FC<TranslateProps> = ({
   className,
   direction = "bottom right",
 }) => {
+  const languages: Record<Languages, string> = {
+    [Languages.English]: "English",
+    [Languages.Ukrainian]: "Ukrainian",
+  };
+
+  const router = useRouter();
+
+  const list = useMemo(
+    () =>
+      Object.entries(languages).map(([locale, language]) => ({
+        children: (
+          <UILink href={""} locale={locale} className={styles.link}>
+            {language}
+          </UILink>
+        ),
+        key: language,
+        selected: locale === router.locale,
+      })),
+    [languages, router.locale]
+  );
+
   return (
     <>
       <Menu
@@ -28,11 +49,7 @@ export const Translate: FC<TranslateProps> = ({
             iconSize={"l"}
           />
         }
-        list={languages.map((language) => ({
-          children: language,
-          key: language,
-          selected: language === "English",
-        }))}
+        list={list}
         direction={direction}
       />
     </>

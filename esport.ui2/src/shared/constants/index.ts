@@ -7,3 +7,5 @@ export {
   MOBILE_M_MEDIA_QUERY,
   MOBILE_S_MEDIA_QUERY,
 } from "./media-query";
+
+export { Languages } from "./languages";
