@@ -7,6 +7,7 @@ import { useMedia } from "@/shared/lib";
 import { Title, SubTitle } from "@/shared/ui";
 
 import { ThemeSwitcher } from "@/features/ThemeSwitcher";
+import { Translate } from "@/features/Translate";
 
 export interface RightProps {
   title?: string;
@@ -26,7 +27,10 @@ const Right: FC<RightProps> = ({ className, children, subtitle, title }) => {
     >
       {title && <Title className={styles.title}>{title}</Title>}
       {subtitle && <SubTitle className={styles.subtitle}>{subtitle}</SubTitle>}
-      <ThemeSwitcher className={styles.theme_switcher} />
+      <div className={styles.wrapper}>
+        <Translate direction={"bottom left"} className={styles.translate} />
+        <ThemeSwitcher />
+      </div>
       {children}
     </section>
   );

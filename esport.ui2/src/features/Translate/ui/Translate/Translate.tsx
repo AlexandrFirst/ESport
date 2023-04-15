@@ -1,15 +1,22 @@
-import { FC, Fragment, memo } from "react";
-import { IconButton, Menu } from "@/shared/ui";
+import { FC } from "react";
+import styles from "./Translate.module.css";
+
+import { IconButton, Menu, DropdownDirection } from "@/shared/ui";
 
 import { LanguageIcon } from "@heroicons/react/24/solid";
+import cn from "classnames";
 
 interface TranslateProps {
   className?: string;
+  direction?: DropdownDirection;
 }
 
 const languages = ["English", "Ukrainian", "French"];
 
-export const Translate: FC<TranslateProps> = ({ className }) => {
+export const Translate: FC<TranslateProps> = ({
+  className,
+  direction = "bottom right",
+}) => {
   return (
     <>
       <Menu
@@ -17,9 +24,8 @@ export const Translate: FC<TranslateProps> = ({ className }) => {
           <IconButton
             as={"div"}
             Svg={LanguageIcon}
-            className={className}
+            className={cn(styles.wrapper, className)}
             iconSize={"l"}
-            // onClick={handleClick}
           />
         }
         list={languages.map((language) => ({
@@ -27,7 +33,7 @@ export const Translate: FC<TranslateProps> = ({ className }) => {
           key: language,
           selected: language === "English",
         }))}
-        direction={"bottom right"}
+        direction={direction}
       />
     </>
   );

@@ -4,11 +4,9 @@ import React from "react";
 import { AnonLayout } from "@/widgets/AnonLayout";
 import { LoginForm } from "@/features/LoginForm";
 
-type Props = {
-  httpsAgent: any;
-};
+type Props = {};
 
-const RegisterPage: NextPage<Props> = ({ httpsAgent }) => {
+const RegisterPage: NextPage<Props> = () => {
   return (
     <AnonLayout
       title="Welcome to E-Sport 👋🏻"

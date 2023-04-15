@@ -8,6 +8,7 @@ export { default as SubTitle } from "./SubTitle/SubTitle";
 
 export { ListItemButton } from "./ListItemButton/ListItemButton";
 export { Menu } from "./Menu/Menu";
+export type { DropdownDirection } from "./Menu/Menu";
 
 export { default as UILink } from "./UILink/UILink";
 
