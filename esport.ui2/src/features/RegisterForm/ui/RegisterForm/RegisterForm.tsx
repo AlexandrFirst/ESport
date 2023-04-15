@@ -23,11 +23,7 @@ import { FirstStep } from "../FirstStep/FirstStep";
 import { ThirdStep } from "../ThirdStep/ThirdStep";
 import { SecondStep } from "../SecondStep/SecondStep";
 
-interface RegisterFormProps {
-  className?: string;
-}
-
-export const RegisterForm: FC<RegisterFormProps> = (props) => {
+export const RegisterForm: FC = () => {
   const validationSchema = useValidation();
   const methods = useForm<IRegisterForm>({
     resolver: yupResolver(validationSchema),
