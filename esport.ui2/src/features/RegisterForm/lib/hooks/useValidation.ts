@@ -9,7 +9,7 @@ export const useValidation = () => {
     password: yup.string().required(),
     confirmPassword: yup
       .string()
-      .oneOf([yup.ref("password"), null], "Passwords must match"),
+      .oneOf([yup.ref("password")], "Passwords must match"),
     telephoneNumber: yup.string(),
     // .matches(phoneRegExp, "Phone number is not valid"),
   });

@@ -42,7 +42,9 @@ class AuthService {
   }
 
   confirm(token: string): Promise<void> {
-    return authApi.get(`/confirm?token=${token}`);
+    return authApi.get(
+      `${process.env.NEXT_PUBLIC_LOGIN_API_URL}/confirm?token=${token}`
+    );
   }
 
   test(): Promise<void> {

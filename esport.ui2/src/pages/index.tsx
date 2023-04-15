@@ -3,13 +3,28 @@ import { GetServerSideProps } from "next";
 import { useTranslation } from "next-i18next";
 
 import styles from "@/styles/Home.module.css";
-import { useTheme } from "@/_app/Providers";
 
 import { MainLayout } from "@/widgets/MainLayout";
+import { useSnackbar } from "@/features/Snackbar";
+import { useEffect } from "react";
 
-export default function Home() {
+type Props = {
+  snackbar?: {
+    error?: string;
+    success?: string;
+  };
+};
+
+export default function Home({ snackbar }: Props) {
+  const { error, success } = snackbar ?? {};
   const { t } = useTranslation("common");
-  const { toggleTheme } = useTheme();
+
+  const { showError, showSuccess } = useSnackbar();
+
+  useEffect(() => {
+    success && showSuccess(success);
+    error && showError(error);
+  }, [showError, showSuccess]);
 
   return (
     <MainLayout>
@@ -20,19 +35,27 @@ export default function Home() {
       <h4>Typography</h4>
       <h5>Typography</h5>
       <h6>Typography</h6>
-      <button onClick={toggleTheme}>Toggle</button>
     </MainLayout>
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  locale,
+  defaultLocale,
+  query,
+}) => {
   const localization = await serverSideTranslations(
-    ctx.locale ?? ctx.defaultLocale ?? "en",
+    locale ?? defaultLocale ?? "en",
     ["common"]
   );
+  console.log("===query===", query);
   return {
     props: {
       ...localization,
+      snackbar: {
+        error: query?.error ?? "",
+        sucsess: query?.sucsess ?? "",
+      },
     },
   };
 };
