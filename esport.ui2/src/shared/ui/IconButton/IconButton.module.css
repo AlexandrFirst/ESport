@@ -1,5 +1,9 @@
 .wrapper {
-    @apply rounded-full cursor-pointer hover:bg-theme-sub opacity-95 transition-colors hover:scale-105 px-1.5 py-1.5;
+  @apply rounded-full cursor-pointer hover:bg-theme-sub opacity-95 transition-all hover:scale-105 px-1.5 py-1.5 active:opacity-70;
+}
+
+.disabled {
+  @apply opacity-60 hover:scale-100 hover:bg-transparent cursor-auto active:opacity-60;
 }
 
 /*.s {*/

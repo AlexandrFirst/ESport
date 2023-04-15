@@ -1,0 +1,3 @@
+.wrapper {
+  @apply fixed w-screen max-w-md z-50 px-3;
+}

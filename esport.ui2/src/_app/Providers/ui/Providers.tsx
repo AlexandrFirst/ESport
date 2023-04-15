@@ -1,11 +1,13 @@
 import React, { FC, ReactNode } from "react";
 import { Store } from "@reduxjs/toolkit";
 import { CombinedState } from "redux";
+import { ThemeProvider } from "next-themes";
 
 import { StateSchema } from "../config/store/StateSchema";
 
-import { ThemeProvider } from "./ThemeProvider";
+// import { ThemeProvider } from "./ThemeProvider";
 import { StoreProvider } from "./StoreProvider";
+import { Snackbar } from "@/features/Snackbar";
 
 interface ProvidersProps {
   store: Store<CombinedState<StateSchema>>;
@@ -15,7 +17,9 @@ interface ProvidersProps {
 export const Providers: FC<ProvidersProps> = ({ store, children }) => {
   return (
     <StoreProvider store={store}>
-      <ThemeProvider>{children}</ThemeProvider>;
+      <ThemeProvider storageKey={"e-sport.theme"}>
+        <Snackbar>{children}</Snackbar>
+      </ThemeProvider>
     </StoreProvider>
   );
 };

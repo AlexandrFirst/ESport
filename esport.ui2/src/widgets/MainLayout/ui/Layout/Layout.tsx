@@ -8,8 +8,9 @@ import {
   leftSidebarActions,
   selectIsSidebarOpened,
   Sidebar,
-} from "@/features/LeftSidebar";
-import { Header } from "@/features/Header";
+} from "@/widgets/LeftSidebar";
+
+import { Header } from "@/widgets/Header";
 
 interface LayoutProps {
   className?: string;

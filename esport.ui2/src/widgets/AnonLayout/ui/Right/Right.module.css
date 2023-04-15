@@ -1,0 +1,27 @@
+.section {
+    @apply text-theme-main p-20 flex flex-col items-center;
+}
+
+.tablet {
+    @apply w-full;
+}
+
+.mobile {
+    @apply w-full px-10 py-16
+}
+
+.title {
+    @apply w-fit;
+}
+
+.subtitle {
+    @apply pt-5 pb-12;
+}
+
+.wrapper {
+    @apply absolute right-5 top-1.5 flex items-center;
+}
+
+.translate {
+    @apply  mr-2;
+}

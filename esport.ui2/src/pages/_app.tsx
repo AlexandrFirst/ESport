@@ -4,11 +4,9 @@ import type { AppProps } from "next/app";
 import { Nunito } from "next/font/google";
 import { appWithTranslation } from "next-i18next";
 
-import cn from "classnames";
+import { Providers, wrapper } from "@/_app/Providers";
 
-import { Providers, useTheme, wrapper } from "@/_app/Providers";
-
-import { updateSidebarState } from "@/features/LeftSidebar";
+import { updateSidebarState } from "@/widgets/LeftSidebar";
 
 const font = Nunito({
   subsets: ["latin", "cyrillic-ext", "cyrillic"],
@@ -19,11 +17,9 @@ function App({ Component, ...restProps }: AppProps) {
   const { store, props } = wrapper.useWrappedStore(restProps);
   const { pageProps } = props;
 
-  const { theme } = useTheme();
-
   return (
     <Providers store={store}>
-      <main className={cn(font.className, theme)}>
+      <main className={font.className}>
         <Component {...pageProps} />
       </main>
     </Providers>

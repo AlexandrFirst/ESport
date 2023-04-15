@@ -1,10 +1,14 @@
-"use client";
 import { useContext } from "react";
+import { SunIcon, MoonIcon, StarIcon } from "@heroicons/react/24/solid";
+
+import { IconSvg } from "@/shared/ui";
+
 import { LOCAL_STORAGE_THEME_KEY, Theme, ThemeContext } from "./ThemeContext";
 
 interface UseThemeResult {
   toggleTheme: () => void;
   theme: Theme;
+  themeIcon: IconSvg;
 }
 
 export function useTheme(): UseThemeResult {
@@ -30,8 +34,22 @@ export function useTheme(): UseThemeResult {
     localStorage.setItem(LOCAL_STORAGE_THEME_KEY, newTheme);
   };
 
+  const getThemeIcon = () => {
+    switch (theme) {
+      case Theme.DARK:
+        return MoonIcon;
+      case Theme.LIGHT:
+        return SunIcon;
+      case Theme.ORANGE:
+        return StarIcon;
+      default:
+        return SunIcon;
+    }
+  };
+
   return {
     theme: theme || Theme.LIGHT,
     toggleTheme,
+    themeIcon: getThemeIcon(),
   };
 }

@@ -1,0 +1,31 @@
+.form {
+  @apply text-center overflow-hidden mx-auto w-80;
+}
+
+.form_mobile {
+  @apply w-full;
+}
+
+.btn {
+  @apply w-60 my-3;
+}
+
+.text {
+  @apply text-theme-main;
+}
+
+.dividers {
+  @apply px-3;
+}
+
+.grid {
+  @apply mt-6;
+}
+
+.btn_container {
+    @apply flex justify-between;
+}
+
+.icon_container {
+  @apply flex items-center;
+}

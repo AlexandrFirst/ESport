@@ -1,0 +1,3 @@
+.text {
+    @apply text-theme-main font-bold text-sm;
+}

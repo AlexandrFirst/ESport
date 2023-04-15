@@ -1,7 +1,20 @@
 :root {
     --color-text-main: rgb(19, 27, 45);
+    --color-text-accent: rgb(105,100,241);
+    --color-text-light: rgb(253, 252, 252);
+
+    --color-error-main: rgb(255, 51, 51);
 
     /*background*/
     --color-bg-main: rgb(236, 237, 243);
     --color-bg-sub: rgb(189, 189, 200);
+    --color-bg-accent: rgb(105,100,241);
+    --color-bg-light: rgb(246, 246, 250);
+
+    /*gradient*/
+    --color-gradient-main-from: #6366f1;
+    --color-gradient-main-to: #a855f7;
+
+    --color-gradient-bg-from: #ecedf3;
+    --color-gradient-bg-to: #e5e7f5;
 }
