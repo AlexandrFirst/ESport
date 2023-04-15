@@ -7,7 +7,6 @@ import { appWithTranslation } from "next-i18next";
 import { Providers, wrapper } from "@/_app/Providers";
 
 import { updateSidebarState } from "@/widgets/LeftSidebar";
-import { Snackbar } from "@/features/Snackbar";
 
 const font = Nunito({
   subsets: ["latin", "cyrillic-ext", "cyrillic"],
@@ -21,9 +20,7 @@ function App({ Component, ...restProps }: AppProps) {
   return (
     <Providers store={store}>
       <main className={font.className}>
-        <Snackbar>
-          <Component {...pageProps} />
-        </Snackbar>
+        <Component {...pageProps} />
       </main>
     </Providers>
   );

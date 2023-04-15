@@ -7,6 +7,7 @@ import { StateSchema } from "../config/store/StateSchema";
 
 // import { ThemeProvider } from "./ThemeProvider";
 import { StoreProvider } from "./StoreProvider";
+import { Snackbar } from "@/features/Snackbar";
 
 interface ProvidersProps {
   store: Store<CombinedState<StateSchema>>;
@@ -16,7 +17,9 @@ interface ProvidersProps {
 export const Providers: FC<ProvidersProps> = ({ store, children }) => {
   return (
     <StoreProvider store={store}>
-      <ThemeProvider storageKey={"e-sport.theme"}>{children}</ThemeProvider>
+      <ThemeProvider storageKey={"e-sport.theme"}>
+        <Snackbar>{children}</Snackbar>
+      </ThemeProvider>
     </StoreProvider>
   );
 };
