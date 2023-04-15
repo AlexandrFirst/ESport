@@ -26,6 +26,25 @@ export interface ICreateStreamEvent {
     endTime?: Date;
 }
 
+export interface IStreamEventDto extends ICreateStreamEvent {
+    id: string;
+}
+
+export class StreamEventDto extends BaseModel implements IStreamEventDto {
+    id: string;
+    eventId: string;
+    name: string;
+    description: string;
+    previewImageId?: string | undefined;
+    startTime?: Date | undefined;
+    endTime?: Date | undefined;
+
+    constructor(data?: IStreamEventDto) {
+        super();
+        this.copyData(data)
+    }
+}
+
 export class CreateStreamEvent extends BaseModel implements ICreateStreamEvent {
 
     eventId: string;

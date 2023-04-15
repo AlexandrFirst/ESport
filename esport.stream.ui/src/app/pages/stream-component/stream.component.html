@@ -1,23 +1,45 @@
-<div>
+<div class="mt-3">
     <h3 *ngIf="isLoading">Retrieving information</h3>
     <div *ngIf="!isLoading">
-        <div class="d-flex justify-content-center">
-            <video autoplay style="width: 500px; height: 500px; background-color: cornflowerblue;" #video></video>
-            <div class="d-flex flex-column justify-content-evenly ms-4">
+        <div class="row m-auto justify-content-center">
+            <div *ngIf="isCommunicationOn" class="col-3"
+                style="display: block; position: relative; background-color: rgba(0, 0, 0, 0.034); overflow-y: scroll; height: 400px;">
+                <div *ngFor="let message of chatMessages">{{message}}</div>
+                <div class="sticky-bottom">
+                    <form>
+                        <div class="input-group">
+                            <input type="text" class="form-control" #messageText>
+                            <button class="btn btn-primary" (click)="sendMessageToChat(messageText)">Send
+                                message</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-5" style="display: block; position: relative;">
+                <video autoplay style="background-color: cornflowerblue; width: 100%; height: 100%;" #video></video>
+                <div style="position: absolute;
+                bottom: 0;
+                width: 100%;
+                display: flex;
+                justify-content: space-around;
+                margin-bottom: 10px;">
+                    <button class="btn btn-success" *ngIf="userInfo.isOrganizer">Mute mic</button>
+                    <button class="btn btn-success" *ngIf="userInfo.isOrganizer">Mute cam</button>
+                </div>
+            </div>
+            <div class="col-2 d-flex flex-column justify-content-evenly ms-4" *ngIf="userInfo.isOrganizer">
                 <div>
                     <label>Video Sources</label>
-                    <select class="ms-1" [(ngModel)]="videoInput.MediaDeviceId"
+                    <select class="ms-1 w-100" [(ngModel)]="videoInput.MediaDeviceId"
                         (ngModelChange)="videoInputSelected($event)">
-                        <option value="-1">None</option>
                         <option *ngFor="let x of videoDevices; index as i" value="{{x.MediaDeviceId}}">
                             {{x.MediaDeviceName}}</option>
                     </select>
                 </div>
                 <div>
                     <label>Audio Sources</label>
-                    <select class="ms-1" [(ngModel)]="audioInput.MediaDeviceId"
+                    <select class="ms-1 w-100" [(ngModel)]="audioInput.MediaDeviceId"
                         (ngModelChange)="audioInputSelected($event)">
-                        <option value="-1">None</option>
                         <option *ngFor="let x of audioDevices; index as i" value="{{x.MediaDeviceId}}">
                             {{x.MediaDeviceName}}</option>
                     </select>
@@ -25,13 +47,19 @@
             </div>
         </div>
         <div class="d-flex justify-content-center mt-3">
-            <button class="btn btn-primary me-2" (click)="presenter()" *ngIf="userInfo.isOrganizer">Start stream</button>
-            <button class="btn btn-primary me-2" (click)="viewer()" *ngIf="!userInfo.isOrganizer">Join stream</button>
-            <button class="btn btn-warning me-2" (click)="record()" *ngIf="userInfo.isOrganizer">Record stream</button>
-            <button class="btn btn-danger ms-2" (click)="stop()">
+            <button class="btn btn-primary me-2" (click)="presenter()" *ngIf="userInfo.isOrganizer"
+                [disabled]="isCommunicationOn">Start
+                stream</button>
+            <button class="btn btn-primary me-2" (click)="viewer()" *ngIf="!userInfo.isOrganizer"
+                [disabled]="isCommunicationOn">Join
+                stream</button>
+            <button class="btn btn-warning me-2" (click)="record()" *ngIf="userInfo.isOrganizer"
+                [disabled]="!isCommunicationOn">Record
+                stream</button>
+            <button class="btn btn-danger ms-2" (click)="stop()" [disabled]="!isCommunicationOn">
                 <span *ngIf="userInfo.isOrganizer">Stop</span>
-                <span *ngIf="!userInfo.isOrganizer">Leave</span> 
-            stream</button>
+                <span *ngIf="!userInfo.isOrganizer">Leave</span>
+                stream</button>
         </div>
     </div>
 </div>

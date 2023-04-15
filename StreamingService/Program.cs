@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace StreamingService
@@ -21,6 +22,11 @@ namespace StreamingService
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    webBuilder.UseKestrel(o =>
+                    {
+                        o.Listen(IPAddress.Any, 5014, opt => opt.UseHttps(".cerfs/key.pfx", "1234"));
+                        o.Listen(IPAddress.Any, 5004);
+                    });
                 });
     }
 }

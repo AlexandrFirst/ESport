@@ -9,11 +9,11 @@ import { StreamService } from 'src/app/services/stream.service';
   styleUrls: ['./stream-list.component.scss']
 })
 export class StreamListComponent implements OnInit {
-  
+
   streams: Stream[] = [];
 
-  constructor(private streamService: StreamService, 
-    private router: Router) {     
+  constructor(private streamService: StreamService,
+    private router: Router) {
   }
 
   ngOnInit(): void {
@@ -22,12 +22,16 @@ export class StreamListComponent implements OnInit {
     })
   }
 
-  public goToAddEditPage(){
+  public editStream(streamId: string) {
+    this.router.navigate(['edit', streamId])
+  }
+
+  public goToAddEditPage() {
     this.router.navigate(['add'])
   }
 
-  public goToStreamPage(pageId: string){
-    this.router.navigate(['streams', pageId])
+  public goToStreamPage(streamId: string) {
+    this.router.navigate(['streams', streamId])
   }
 
 }

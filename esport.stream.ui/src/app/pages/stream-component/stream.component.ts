@@ -20,8 +20,11 @@ export class StreamComponent implements OnInit {
   private streamId: string;
 
   userInfo: StreamUser;
-  isLoading: boolean = false;
+  isLoading: boolean = true;
   isRecording: boolean = false;
+
+  isConnecting: boolean = false;
+
 
   @ViewChild('video') videoElement: ElementRef;
 
@@ -33,11 +36,13 @@ export class StreamComponent implements OnInit {
   private v_mediaStream: MediaStream;
   private s_mediaStream: MediaStream;
 
-  private isConnectionSetup = true;
-  private isCommunicationOn: boolean = false;
+  public isConnectionSetup = true;
+  public isCommunicationOn: boolean = false;
 
   private hubConnection: HubConnection;
   private webRtcPeer: kurentoUtils.WebRtcPeer
+
+  public chatMessages: string[] = [];
 
   get videoDevices(): MediaModel[] {
     return this.allMediaDevices.filter(x => x.MediaDeviceType == MediaType.VIDEO);
@@ -147,10 +152,11 @@ export class StreamComponent implements OnInit {
     }
   }
 
-  private displayMessage(message: string): MatDialogRef<YesNoComponent, any> {
+  private displayMessage(message: string, timer: number = -1): MatDialogRef<YesNoComponent, any> {
     let dialogRef = this.dialog.open(YesNoComponent, {
       data: {
-        message: message
+        message: message,
+        timer: timer
       }
     });
 
@@ -178,8 +184,21 @@ export class StreamComponent implements OnInit {
       body: JSON.stringify(data)
     };
 
-    this.sendMessage(MessageType.StartRecording, message)
-    this.isRecording = true;
+    const dialog = this.displayMessage('Start recording?');
+    let local = this;
+
+    dialog.afterClosed().subscribe({
+      next(value) {
+        if (value.ok) {
+          local.sendMessage(MessageType.StartRecording, message)
+          local.isRecording = true;
+        }
+      },
+      error(err) {
+        console.error(err)
+      }
+    })
+
   }
 
   private stopRecording() {
@@ -192,15 +211,30 @@ export class StreamComponent implements OnInit {
       return;
     }
 
-    const data = {
-      streamId: this.streamId
-    }
-    var message: ClientMessage = {
-      body: JSON.stringify(data)
-    };
+    const dialog = this.displayMessage('Stop recording?');
 
-    this.sendMessage(MessageType.StopRecording, message)
-    this.isRecording = false;
+    let local = this;
+
+    dialog.afterClosed().subscribe({
+      next(value) {
+        if (value.ok) {
+          const data = {
+            streamId: local.streamId
+          }
+          var message: ClientMessage = {
+            body: JSON.stringify(data)
+          };
+
+          local.sendMessage(MessageType.StopRecording, message)
+          local.isRecording = false;
+        }
+      },
+      error(err) {
+        console.error(err)
+      }
+    })
+
+
   }
 
   public async presenter() {
@@ -208,6 +242,8 @@ export class StreamComponent implements OnInit {
       console.log("Connection is not set up")
       return;
     }
+
+    this.isConnecting = true
 
     const constraints: MediaStreamConstraints = {
       video: {
@@ -221,8 +257,8 @@ export class StreamComponent implements OnInit {
     var options = {
       localVideo: this.videoElement.nativeElement,
       mediaConstraints: constraints,
-      configuration:[
-        {"urls":"turn:relay.metered.ca:80","username":"e76b1e18382eb8485e4ced0f","credential":"awmeGuNs0IsK0VkM"}
+      configuration: [
+        { "urls": "turn:relay.metered.ca:80", "username": "e76b1e18382eb8485e4ced0f", "credential": "awmeGuNs0IsK0VkM" }
       ],
       onicecandidate: (candidate: any) => {
         const data = {
@@ -248,10 +284,12 @@ export class StreamComponent implements OnInit {
       return;
     }
 
+    this.isConnecting = true;
+
     var options = {
       remoteVideo: this.videoElement.nativeElement,
-      configuration:[
-        {"urls":"turn:relay.metered.ca:80","username":"e76b1e18382eb8485e4ced0f","credential":"awmeGuNs0IsK0VkM"}
+      configuration: [
+        { "urls": "turn:relay.metered.ca:80", "username": "e76b1e18382eb8485e4ced0f", "credential": "awmeGuNs0IsK0VkM" }
       ],
       onicecandidate: (candidate: any) => {
         const data = {
@@ -315,6 +353,11 @@ export class StreamComponent implements OnInit {
           console.log('Ice candidate: ', parsedMessage);
           this.webRtcPeer?.addIceCandidate(parsedMessage)
           break;
+        case 'ChatMessage':
+          console.log('chatMessage: ', parsedMessage);
+          this.chatMessages.push(parsedMessage.Message);
+          console.log(this.chatMessages)
+          break;
         default:
           console.log('unrecognised message: ', parsedMessage);
       }
@@ -322,9 +365,7 @@ export class StreamComponent implements OnInit {
 
   }
 
-
   private onIceCandidate(candidate: any) {
-    debugger;
     console.log('local candidate: ', candidate);
     var message: ClientMessage = {
       body: JSON.stringify(candidate)
@@ -390,6 +431,22 @@ export class StreamComponent implements OnInit {
     else {
       this.webRtcPeer?.processAnswer(parsedMessage.sdpAnswer);
       this.isCommunicationOn = true;
+      this.isConnecting = false;
+    }
+  }
+
+  public sendMessageToChat(inputField: any) {
+    const val = inputField?.value
+    if (val) {
+      const data = {
+        streamId: this.streamId,
+        message: val
+      }
+      var message: ClientMessage = {
+        body: JSON.stringify(data)
+      };
+
+      this.sendMessage(MessageType.ChatMessage, message)
     }
   }
 
@@ -403,13 +460,19 @@ export class StreamComponent implements OnInit {
     else {
       this.webRtcPeer?.processAnswer(parsedMessage.sdpAnswer);
       this.isCommunicationOn = true;
+      this.isConnecting = false;
     }
   }
 
-  private dispose() {
+  private dispose(message: string = 'ok') {
     if (this.isConnectionSetup) {
       this.webRtcPeer?.dispose();
       this.isCommunicationOn = false;
+      this.router.navigate(["streams"], {
+        queryParams: {
+          "messsage": message
+        }
+      })
     }
   }
 }

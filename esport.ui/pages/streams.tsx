@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import { wrapper } from "@app/store/store";
+import { wrapper } from "@app/Providers";
 import { updateSidebarOpened } from "@layouts/MainLayout";
 
 declare global {

@@ -28,6 +28,7 @@
     "@angular/platform-browser-dynamic": "^15.0.0",
     "@angular/router": "^15.0.0",
     "@microsoft/signalr": "^7.0.2",
+    "angular-countdown": "^1.2.1",
     "bootstrap": "^5.2.3",
     "dayjs": "^1.11.7",
     "jquery": "^3.6.3",
@@ -41,12 +42,12 @@
     "zone.js": "~0.12.0"
   },
   "devDependencies": {
-    "@types/kurento-client": "^6.14.9",
-    "@types/kurento-utils": "^6.7.1",
     "@angular-devkit/build-angular": "^15.0.4",
     "@angular/cli": "~15.0.4",
     "@angular/compiler-cli": "^15.0.0",
     "@types/jasmine": "~4.3.0",
+    "@types/kurento-client": "^6.14.9",
+    "@types/kurento-utils": "^6.7.1",
     "jasmine-core": "~4.5.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.1.0",
