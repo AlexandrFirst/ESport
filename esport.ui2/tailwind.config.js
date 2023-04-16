@@ -71,6 +71,10 @@ module.exports = {
           },
         },
       },
+      zIndex: {
+        overlay: "var(--overlay-z-index)",
+        modal: "var(--overlay-z-index)",
+      },
     },
   },
   plugins: [

@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from "next";
-import axios from "axios";
 import { routes } from "@/shared/config";
+import axios from "axios";
+import type { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(
   req: NextApiRequest,
@@ -9,9 +9,15 @@ export default async function handler(
 ) {
   if (req.method === "GET") {
     try {
-      await axios.get(
-        `${process.env.LOGIN_API_URL}/confirm?token=${req.query.token}`
+      console.log("===req.query===", req.query);
+      const { data } = await axios.get(
+        // `${process.env.LOGIN_API_URL}/confirm?token=${req.query.token}`
+        `/confirm?token=${req.query.token}`
       );
+      // const { data } = await axios.get(
+      //   "http://localhost:3001/api/v1/competitions/all"
+      // );
+      console.log("===data===", data);
       res.redirect(`${routes.Main}?success=Account activated`);
     } catch (e: any) {
       res.redirect(
