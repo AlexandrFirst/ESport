@@ -11,6 +11,9 @@
     --color-bg-accent: rgb(142, 92, 246);
     --color-bg-light: rgb(62, 54, 95);
 
+    /* card background*/
+    --color-card-bg-main: rgb(64, 59, 95);
+
     /*gradient*/
     --color-gradient-main-from: #6366f1;
     --color-gradient-main-to: #a855f7;

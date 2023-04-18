@@ -17,7 +17,12 @@ export { Input } from "./Input/Input";
 export type { InputProps } from "./Input/Input";
 export { PasswordInput } from "./PasswordInput/PasswordInput";
 export { Button } from "./Button/Button";
+export { DatePicker } from "./DatePicker/DatePicker";
 
 export { Toast } from "./Toast/Toast";
 export type { ToastPositionType, ToastProps } from "./Toast/Toast";
 export * from "./Toast/utils";
+
+export { Card } from "./Card/Card";
+export { Modal } from "./Modal/Modal";
+export { default as Overlay } from "./Overlay/Overlay";

@@ -1,11 +1,12 @@
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { GetServerSideProps } from "next";
-import { useTranslation } from "next-i18next";
+import { useSnackbar } from "@/features/Snackbar";
+import { Card } from "@/shared/ui";
 
 import styles from "@/styles/Home.module.css";
 
 import { MainLayout } from "@/widgets/MainLayout";
-import { useSnackbar } from "@/features/Snackbar";
+import { GetServerSideProps } from "next";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useEffect } from "react";
 
 type Props = {
@@ -28,6 +29,7 @@ export default function Home({ snackbar }: Props) {
 
   return (
     <MainLayout>
+      <Card>Card content</Card>
       <h1>{t("title")}</h1>
       <h1 className={styles.text}>Typography</h1>
       <h2>Typography</h2>

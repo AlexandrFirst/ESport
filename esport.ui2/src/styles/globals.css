@@ -10,6 +10,12 @@
     --left-sidebar-full: 300px;
     --left-sidebar-compact: 100px;
 
+    --overlay-color: rgba(0 0 0 / 60%);
+
+    /* z-index */
+    --modal-z-index: 1000;
+    --overlay-z-index: 100;
+
     /* transform() -> needed for snackbar */
     --elm-translate: translateX(-100%);
 }

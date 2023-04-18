@@ -19,6 +19,9 @@ module.exports = {
           sub: "var(--color-bg-sub)",
           accent: "var(--color-bg-accent)",
           light: "var(--color-bg-light)",
+          card: {
+            main: "var(--color-card-bg-main)",
+          },
         },
       },
       textColor: {
@@ -70,6 +73,10 @@ module.exports = {
             opacity: 0.7,
           },
         },
+      },
+      zIndex: {
+        overlay: "var(--overlay-z-index)",
+        modal: "var(--overlay-z-index)",
       },
     },
   },
