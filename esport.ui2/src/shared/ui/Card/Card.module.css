@@ -1,3 +1,3 @@
 .wrapper {
-    @apply bg-theme-sub rounded-lg p-4 shadow-xl;
+    @apply bg-theme-card-main rounded-lg p-4 shadow-xl;
 }

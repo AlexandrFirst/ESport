@@ -19,6 +19,9 @@ module.exports = {
           sub: "var(--color-bg-sub)",
           accent: "var(--color-bg-accent)",
           light: "var(--color-bg-light)",
+          card: {
+            main: "var(--color-card-bg-main)",
+          },
         },
       },
       textColor: {
