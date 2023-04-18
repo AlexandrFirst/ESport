@@ -11,8 +11,7 @@ export default async function handler(
     try {
       console.log("===req.query===", req.query);
       const { data } = await axios.get(
-        // `${process.env.LOGIN_API_URL}/confirm?token=${req.query.token}`
-        `/confirm?token=${req.query.token}`
+        `${process.env.LOGIN_API_URL}/confirm?token=${req.query.token}`
       );
       // const { data } = await axios.get(
       //   "http://localhost:3001/api/v1/competitions/all"
