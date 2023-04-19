@@ -28,7 +28,7 @@ export default function Home({ snackbar }: Props) {
   }, [showError, showSuccess]);
 
   return (
-    <MainLayout>
+    <MainLayout headProps={{ title: "E-Sport | Main" }}>
       <Card>Card content</Card>
       <h1>{t("title")}</h1>
       <h1 className={styles.text}>Typography</h1>

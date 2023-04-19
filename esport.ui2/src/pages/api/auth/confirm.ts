@@ -10,8 +10,11 @@ export default async function handler(
   if (req.method === "GET") {
     try {
       console.log("===req.query===", req.query);
-      const { data } = await axios.get(
-        `${process.env.LOGIN_API_URL}/confirm?token=${req.query.token}`
+      const { data, headers } = await axios.get(
+        `${process.env.LOGIN_API_URL}/confirm?token=${req.query.token}`,
+        {
+          headers: { host: "localhost:5000" },
+        }
       );
       // const { data } = await axios.get(
       //   "http://localhost:3001/api/v1/competitions/all"

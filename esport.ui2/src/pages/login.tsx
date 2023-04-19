@@ -1,9 +1,9 @@
-import { GetServerSideProps, NextPage } from "next";
-import React from "react";
+import { LoginForm } from "@/features/LoginForm";
 
 import { AnonLayout } from "@/widgets/AnonLayout";
-import { LoginForm } from "@/features/LoginForm";
+import { GetServerSideProps, NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import React from "react";
 
 type Props = {
   httpsAgent: any;
@@ -16,6 +16,7 @@ export const Context = React.createContext<{ httpsAgent: any }>({
 const LoginPage: NextPage<Props> = ({ httpsAgent }) => {
   return (
     <AnonLayout
+      headProps={{ title: "E-Sport | Login" }}
       title="Welcome to E-Sport 👋🏻"
       subtitle="Please sign-in to your account and start the adventure"
     >

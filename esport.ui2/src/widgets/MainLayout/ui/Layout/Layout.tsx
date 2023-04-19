@@ -1,8 +1,7 @@
-import React, { FC, ReactNode, useCallback } from "react";
-import styles from "./Layout.module.css";
-
-import cn from "classnames";
+import { Head, HeadProps } from "@/features/Head";
 import { useAppDispatch, useAppSelector } from "@/shared/lib";
+
+import { Header } from "@/widgets/Header";
 
 import {
   leftSidebarActions,
@@ -10,14 +9,16 @@ import {
   Sidebar,
 } from "@/widgets/LeftSidebar";
 
-import { Header } from "@/widgets/Header";
+import cn from "classnames";
+import React, { FC, ReactNode, useCallback } from "react";
+import styles from "./Layout.module.css";
 
-interface LayoutProps {
+interface LayoutProps extends HeadProps {
   className?: string;
   children: ReactNode;
 }
 
-export const Layout: FC<LayoutProps> = ({ className, children }) => {
+export const Layout: FC<LayoutProps> = ({ className, headProps, children }) => {
   const isSidebarOpened = useAppSelector(selectIsSidebarOpened) ?? false;
   const dispatch = useAppDispatch();
 
@@ -40,6 +41,7 @@ export const Layout: FC<LayoutProps> = ({ className, children }) => {
 
   return (
     <>
+      <Head {...headProps} />
       <Header />
       <main>
         <Sidebar
