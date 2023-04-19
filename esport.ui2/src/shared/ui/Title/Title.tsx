@@ -4,13 +4,19 @@ import cn from "classnames";
 
 interface SportTitleProps extends PropsWithChildren {
   className?: string;
+  center?: boolean;
 }
 
 export const Title: FC<SportTitleProps> = ({
   className,
-  children = "E-SPORT",
+  children = "",
+  center,
 }) => {
-  return <h1 className={cn(styles.title, className)}>{children}</h1>;
+  return (
+    <h1 className={cn(styles.title, className, { [styles.center]: center })}>
+      {children}
+    </h1>
+  );
 };
 
 export default memo(Title);

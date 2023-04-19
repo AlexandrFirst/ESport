@@ -1,2 +1,5 @@
-export { Competition } from './ui/Competition/Competition';
-export type { CompetitionSchema } from './model/types/competitionSchema';
+export { Competition } from "./ui/Competition/Competition";
+export { CreateCompetitionForm } from "./ui/CreateCompetitionForm/CreateCompetitionForm";
+
+export { competitionApi } from "./api/api";
+export { useCreateCompetition } from "./api/hooks/useCreateCompetition";

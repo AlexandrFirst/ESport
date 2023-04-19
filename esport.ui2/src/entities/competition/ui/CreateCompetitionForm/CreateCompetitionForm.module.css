@@ -1,9 +1,5 @@
 .form {
-  @apply flex flex-col items-center w-1/2 mx-auto;
-}
-
-.input {
-  @apply mt-6 mb-1 min-w-[400px];
+  @apply flex flex-col items-center mx-auto lg:w-1/2;
 }
 
 .input:last-child {
