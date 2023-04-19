@@ -1,4 +1,7 @@
 .title {
-    /*@apply text-skin-main origin-left font-medium text-base duration-200 w-fit dark:text-darkSkin-main*/
-    @apply origin-left font-bold text-3xl duration-200 w-fit leading-7;
+  @apply origin-left font-bold text-3xl duration-200 w-fit leading-7;
+}
+
+.center {
+  @apply text-center w-full;
 }

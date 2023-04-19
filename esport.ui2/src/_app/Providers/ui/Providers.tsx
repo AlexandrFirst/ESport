@@ -5,9 +5,10 @@ import { ThemeProvider } from "next-themes";
 
 import { StateSchema } from "../config/store/StateSchema";
 
-// import { ThemeProvider } from "./ThemeProvider";
-import { StoreProvider } from "./StoreProvider";
 import { Snackbar } from "@/features/Snackbar";
+
+import { QueryProvider } from "./QueryProvider";
+import { StoreProvider } from "./StoreProvider";
 
 interface ProvidersProps {
   store: Store<CombinedState<StateSchema>>;
@@ -18,7 +19,9 @@ export const Providers: FC<ProvidersProps> = ({ store, children }) => {
   return (
     <StoreProvider store={store}>
       <ThemeProvider storageKey={"e-sport.theme"}>
-        <Snackbar>{children}</Snackbar>
+        <Snackbar>
+          <QueryProvider>{children}</QueryProvider>
+        </Snackbar>
       </ThemeProvider>
     </StoreProvider>
   );
