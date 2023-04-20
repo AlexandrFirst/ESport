@@ -11,7 +11,7 @@ using UserWorkflow.Esport;
 namespace UserWorkflow.Api.Filters
 {
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-    public class AdminAuthFilter : Attribute, IAsyncAuthorizationFilter
+    public class AdminAuthFilter : BaseFilter, IAsyncAuthorizationFilter
     {
         private readonly EsportDataContext dbContext;
         public AdminAuthFilter(EsportDataContext context)
@@ -44,30 +44,20 @@ namespace UserWorkflow.Api.Filters
             if (roles.Any(x => x == "OrgAdmin"))
             {
                 await provideBadResponse(context.HttpContext, "No org admin role is present for the user");
+                return;
             }
             var admin = await dbContext.OrganisationAdministrators.FirstOrDefaultAsync(x => x.UserId == id);
             if (admin == null)
             {
                 await provideBadResponse(context.HttpContext, "Org admin is not found");
+                return;
             }
 
             if (!admin.IsConfirmed)
             {
                 await provideBadResponse(context.HttpContext, "Org admin is not confirmed");
+                return;
             }
-
         }
-
-        private async Task provideBadResponse(HttpContext context, params string[] messages)
-        {
-            var messageBody = new { Messages = messages.ToList() };
-
-            var encodedBody = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(messageBody));
-
-            context.Response.StatusCode = 403;
-            await context.Response.Body.WriteAsync(encodedBody, 0, encodedBody.Length);
-        }
-
-
     }
 }
