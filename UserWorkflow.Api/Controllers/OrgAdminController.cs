@@ -67,6 +67,45 @@ namespace UserWorkflow.Api.Controllers
             }
         }
 
+        [HttpPost("confirmgymadmin/{gymId}")]
+        public async Task<IActionResult> ConfirmGymAdmin(int gymId, [FromBody] ConfirmGymAdmin confirmAdmin)
+        {
+            var started = DateTime.UtcNow;
+            var requestInstanceId = Guid.NewGuid();
+            var methodName = this.ControllerContext.RouteData.Values["action"].ToString();
+            try
+            {
+                logger.LogInformation($"STARTED {methodName} {requestInstanceId} at {started} utc");
+
+                if (confirmAdmin == null) { throw new ArgumentNullException(nameof(confirmAdmin)); }
+
+                var result = await commandBus.ExecuteAsync(User, confirmAdmin);
+
+                if (!result.Succeeded)
+                    return BadRequest(result.Errors);
+
+                return Ok(result.ItemId);
+            }
+            catch (ApplicationException exception)
+            {
+                return BadRequest(new[] { exception.Message });
+            }
+            catch (Exception e)
+            {
+                logger.LogError(e, e.Message);
+                if (e is InvalidOperationException)
+                    return BadRequest(new[] { e.Message });
+
+                return new StatusCodeResult((int)HttpStatusCode.InternalServerError);
+            }
+            finally
+            {
+                var ended = DateTime.UtcNow;
+                logger.LogInformation($"ENDED {methodName} {requestInstanceId} at {ended} utc. Took {ended - started}");
+            }
+        }
+
+
         [HttpPost("create")]
         public async Task<IActionResult> CreateOrganisation() 
         {

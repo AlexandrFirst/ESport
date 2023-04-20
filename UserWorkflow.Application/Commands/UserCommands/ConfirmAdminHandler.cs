@@ -21,7 +21,7 @@ namespace UserWorkflow.Application.Commands.UserCommands
         public async Task<CommandResult> HandleCommandAsync(ConfirmAdmin command)
         {
             var organisationAdministrator = await context.OrganisationAdministrators.FirstOrDefaultAsync(x => x.UserId == command.UserId);
-            if (organisationAdministrator == null) { throw new ApplicationException("No otg admin is found for user id: " + command.UserId); }
+            if (organisationAdministrator == null) { throw new ApplicationException("No org admin is found for user id: " + command.UserId); }
             organisationAdministrator.IsConfirmed = true;
             await context.SaveChangesAsync();
             return new CommandResult(1);

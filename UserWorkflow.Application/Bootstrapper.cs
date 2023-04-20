@@ -24,7 +24,7 @@ namespace UserWorkflow.Application
         public static void RegisterIocContainers(IServiceCollection services, Microsoft.Extensions.Configuration.IConfiguration configuration)
         {
 
-            services.AddHttpClient<IdentityClient>(options => 
+            services.AddHttpClient<IdentityClient>(options =>
             {
                 options.BaseAddress = new Uri(configuration.GetSection("IdentityClient")["Address"]);
             });
@@ -39,7 +39,7 @@ namespace UserWorkflow.Application
             services.AddTransient<IValidateRequest, ValidateRequest>();
 
             services.AddTransient<IUserService, UserService>();
-            
+
             services.AddTransient<IRequestHandler<GetUser, GetUserResult>, GetUserHandler>();
 
             services.AddTransient<ICommandHandler<UpdateAdmin>, UpdateAdminHandler>();
@@ -51,6 +51,8 @@ namespace UserWorkflow.Application
 
 
             services.AddTransient<IRequestHandler<GetPendingAdmins, GetPendingAdminsResult>, GetPendingAdminsHandler>();
+            services.AddTransient<ICommandHandler<ConfirmAdmin>, ConfirmAdminHandler>();
+            services.AddTransient<ICommandHandler<ConfirmGymAdmin>, ConfirmGymAdminHandler>();
 
 
             services.AddScoped<IdentityClient>();
