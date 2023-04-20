@@ -11,6 +11,5 @@ namespace UserWorkflow.Application.Commands.UserCommands
     public class ConfirmAdmin: BaseCommand
     {
         public int UserId { get; set; }
-        public AdminType AdminType { get; set; }
     }
 }

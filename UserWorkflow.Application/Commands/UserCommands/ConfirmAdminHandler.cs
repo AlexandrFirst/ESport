@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,9 +18,13 @@ namespace UserWorkflow.Application.Commands.UserCommands
             this.context = context;
         }
 
-        public Task<CommandResult> HandleCommandAsync(ConfirmAdmin command)
+        public async Task<CommandResult> HandleCommandAsync(ConfirmAdmin command)
         {
-            throw new NotImplementedException();
+            var organisationAdministrator = await context.OrganisationAdministrators.FirstOrDefaultAsync(x => x.UserId == command.UserId);
+            if (organisationAdministrator == null) { throw new ApplicationException("No otg admin is found for user id: " + command.UserId); }
+            organisationAdministrator.IsConfirmed = true;
+            await context.SaveChangesAsync();
+            return new CommandResult(1);
         }
     }
 }
