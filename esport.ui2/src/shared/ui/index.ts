@@ -1,3 +1,6 @@
+export { BrowserView } from "./BrowserView/BrowserView";
+export { MobileView } from "./MobileView/MobileView";
+
 export { Icon } from "./Icon/Icon";
 export type { IconSvg } from "./Icon/Icon";
 
@@ -36,3 +39,5 @@ export { TwoItemsGridContainer } from "./TwoItemsGridContainer/TwoItemsGridConta
 
 export { Avatar, AvatarSize } from "./Avatar/Avatar";
 export type { AvatarProps } from "./Avatar/Avatar";
+
+export { Drawer } from "./Drawer/Drawer";

@@ -1,9 +1,11 @@
 import React, { FC } from "react";
 import styles from "./Sidebar.module.css";
 
+import { BrowserView, MobileView } from "@/shared/ui";
+
 import { SidebarContextProvider } from "../SidebarContext/SidebarContext";
-import { MobileSidebar } from "../MobileSidebar/MobileSidebar";
 import { LargeScreenSidebar } from "../LargeScreenSidebar/LargeScreenSidebar";
+import { MobileSidebar } from "../MobileSidebar/MobileSidebar";
 
 interface SidebarProps {
   isSidebarOpened: boolean;
@@ -16,8 +18,12 @@ export const Sidebar: FC<SidebarProps> = ({
 }) => {
   return (
     <SidebarContextProvider context={{ isSidebarOpened, setIsSidebarOpened }}>
-      <MobileSidebar className={styles.mobile} />
-      <LargeScreenSidebar className={styles.large} />
+      <MobileView>
+        <MobileSidebar className={styles.mobile} />
+      </MobileView>
+      <BrowserView>
+        <LargeScreenSidebar className={styles.large} />
+      </BrowserView>
     </SidebarContextProvider>
   );
 };

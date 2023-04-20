@@ -1,16 +1,21 @@
 import React from "react";
 
-import {GetServerSideProps, NextPage} from "next";
+import { GetServerSideProps, NextPage } from "next";
 
-import {Languages} from "@/shared/constants";
-import {TwoItemsGridContainer} from "@/shared/ui";
+import { Languages } from "@/shared/constants";
+import { TwoItemsGridContainer } from "@/shared/ui";
 
-import {MainLayout} from "@/widgets/MainLayout";
+import { MainLayout } from "@/widgets/MainLayout";
 
-import {AboutInfo, IProfile, OverviewCard, ProfileMainInfo,} from "@/entities/profile";
+import {
+  AboutInfo,
+  IProfile,
+  OverviewCard,
+  ProfileMainInfo,
+} from "@/entities/profile";
 
 // import { ProfilePagesSwitcher } from "@page-widgets/page-profile";
-import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 // import { AppLanguage } from "@shared/enums/app-language";
 
 type ProfileProps = {

@@ -4,9 +4,11 @@ import { StateSchema } from "./StateSchema";
 import { leftSidebarReducer } from "@/widgets/LeftSidebar";
 import { snackbarReducer } from "@/features/Snackbar";
 import { userReducer } from "@/entities/user";
+import { deviceReducer } from "@/shared/model";
 
 export const reducer = combineReducers<StateSchema>({
   leftSidebar: leftSidebarReducer,
   snackbar: snackbarReducer,
   user: userReducer,
+  device: deviceReducer,
 });

@@ -6,10 +6,5 @@ interface ProfileProps {
 }
 
 export const Profile: FC<ProfileProps> = (props) => {
-
-    return (
-        <div className={styles.wrapper}>
-
-        </div>
-    );
+  return <div className={styles.wrapper}></div>;
 };

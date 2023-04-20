@@ -1,12 +1,3 @@
-function withOpacityValue(variable) {
-  return ({ opacityValue }) => {
-    if (opacityValue === undefined) {
-      return `rgb(var(${variable}))`;
-    }
-    return `rgb(var(${variable}) / ${opacityValue})`;
-  };
-}
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class", '[data-mode="dark"]'], // or 'media' or 'class' or false
@@ -35,6 +26,7 @@ module.exports = {
       padding: {
         leftSidebarFull: "var(--left-sidebar-full)",
         leftSidebarCompact: "var(--left-sidebar-compact)",
+        leftSidebarMobile: "var(--left-sidebar-mobile)",
       },
       borderColor: {
         theme: {

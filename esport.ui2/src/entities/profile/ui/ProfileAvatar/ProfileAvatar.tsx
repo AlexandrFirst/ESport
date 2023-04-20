@@ -46,7 +46,6 @@ export const ProfileAvatar: FC<ProfileAvatarProps> = ({
     },
     {
       key: "logout",
-      // itemPadding: ItemPadding.,
       children: () => (
         <div
           className={"flex items-center cursor-auto px-3 py-1.5 cursor-pointer"}
