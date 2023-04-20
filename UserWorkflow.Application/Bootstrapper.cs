@@ -12,6 +12,8 @@ using UserWorkflow.Application.Configs;
 using UserWorkflow.Application.Requests.User;
 using UserWorkflow.Application.Services.Confirmation;
 using UserWorkflow.Application.Services.Users;
+using UserWorkflow.Esport.Models;
+using UserWorkflow.Infrastructure.Paging;
 using UserWorkFlow.Infrastructure.Commands;
 using UserWorkFlow.Infrastructure.Queries;
 
@@ -47,9 +49,16 @@ namespace UserWorkflow.Application
 
             services.AddTransient<ICommandHandler<DeleteUser>, DeleteUserHandler>();
 
+
+            services.AddTransient<IRequestHandler<GetPendingAdmins, GetPendingAdminsResult>, GetPendingAdminsHandler>();
+
+
             services.AddScoped<IdentityClient>();
 
             services.AddSingleton<IConfirmationService, ConfirmationService>();
+
+            services.AddTransient<IPaging<OrganisationAdministrators>, Paging<OrganisationAdministrators>>();
+            services.AddTransient<IPaging<GymAdministrators>, Paging<GymAdministrators>>();
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 

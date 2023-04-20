@@ -10,6 +10,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using UserWorkflow.Api.Dto;
+using UserWorkflow.Api.Filters;
 using UserWorkflow.Application;
 using UserWorkflow.Application.Commands.User;
 using UserWorkflow.Application.Commands.UserCommands;
@@ -162,6 +163,46 @@ namespace UserWorkflow.Api.Controllers
                     return BadRequest(result.Errors);
 
                 return Ok(result.ItemId);
+            }
+            catch (ApplicationException exception)
+            {
+                return BadRequest(new[] { exception.Message });
+            }
+            catch (Exception e)
+            {
+                logger.LogError(e, e.Message);
+                if (e is InvalidOperationException)
+                    return BadRequest(new[] { e.Message });
+
+                return new StatusCodeResult((int)HttpStatusCode.InternalServerError);
+            }
+            finally
+            {
+                var ended = DateTime.UtcNow;
+                logger.LogInformation($"ENDED {methodName} {requestInstanceId} at {ended} utc. Took {ended - started}");
+            }
+        }
+
+        [HttpPost("PendingAdmins")]
+        [TypeFilter(typeof(AdminAuthFilter))]
+        public async Task<IActionResult> GetPendingAdmins([FromBody]GetPendingAdmins request) 
+        {
+            var started = DateTime.UtcNow;
+            var requestInstanceId = Guid.NewGuid();
+            var methodName = this.ControllerContext.RouteData.Values["action"].ToString();
+
+            try
+            {
+                logger.LogInformation($"STARTED {methodName} {requestInstanceId} at {started} utc");
+
+                if (request == null) { throw new ArgumentNullException(nameof(request)); }
+
+                var result = await requestBus.ExecuteAsync<GetPendingAdmins, GetPendingAdminsResult>(User, request);
+                
+                if (!result.Succeeded)
+                    return BadRequest(result.Errors);
+
+                return Ok(result.Data);
             }
             catch (ApplicationException exception)
             {
