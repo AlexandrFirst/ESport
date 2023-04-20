@@ -17,6 +17,7 @@ export interface AvatarProps {
   src?: string;
   alt?: string;
   readOnly?: boolean;
+  onClick?: () => void;
 }
 
 export const Avatar: FC<AvatarProps> = ({
@@ -24,6 +25,7 @@ export const Avatar: FC<AvatarProps> = ({
   size = "md",
   text,
   readOnly = true,
+  onClick,
   alt,
   // src = "https://demos.themeselection.com/marketplace/materio-mui-react-nextjs-admin-template/demo-4/images/avatars/1.png",
   src,
@@ -44,6 +46,7 @@ export const Avatar: FC<AvatarProps> = ({
       className={cn(styles.wrapper, styles[size], className, {
         [styles.readOnly]: readOnly,
       })}
+      onClick={onClick}
     >
       {src ? (
         <Image

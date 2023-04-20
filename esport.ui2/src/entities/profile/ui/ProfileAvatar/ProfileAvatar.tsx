@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 
 import { ArrowLeftOnRectangleIcon } from "@heroicons/react/24/solid";
 
@@ -6,11 +6,15 @@ import {
   Avatar,
   AvatarProps,
   BoldText,
+  BrowserView,
+  DownDrawer,
   Icon,
   ItemPadding,
   Menu,
   MenuList,
+  MobileView,
 } from "@/shared/ui";
+
 import { useAppDispatch } from "@/shared/lib";
 import { userActions } from "@/entities/user";
 
@@ -27,13 +31,21 @@ export const ProfileAvatar: FC<ProfileAvatarProps> = ({
     dispatch(userActions.resetUser());
   };
 
+  const [isDrawerOpened, setIsDrawerOpened] = useState(false);
+
+  const handleCloseDrawer = () => setIsDrawerOpened(false);
+  const handleOpenDrawer = () => setIsDrawerOpened(true);
+
   const list: MenuList = [
     {
       key: "1",
       disabled: true,
       itemPadding: ItemPadding.None,
       children: () => (
-        <div className={"flex items-center cursor-auto px-3 py-1.5 border-b"}>
+        <div
+          key={"1"}
+          className={"flex items-center cursor-auto px-3 py-1.5 border-b"}
+        >
           <div className={"mr-5"}>
             <Avatar {...props} text={userName[0]} />
           </div>
@@ -48,6 +60,7 @@ export const ProfileAvatar: FC<ProfileAvatarProps> = ({
       key: "logout",
       children: () => (
         <div
+          key={"logout"}
           className={"flex items-center cursor-auto px-3 py-1.5 cursor-pointer"}
           onClick={handleLogout}
         >
@@ -59,11 +72,26 @@ export const ProfileAvatar: FC<ProfileAvatarProps> = ({
   ];
 
   return (
-    <Menu
-      menuButton={<Avatar {...props} text={userName[0]} readOnly={false} />}
-      list={list}
-      direction={"bottom left"}
-      bold={false}
-    />
+    <>
+      <BrowserView>
+        <Menu
+          menuButton={<Avatar {...props} text={userName[0]} readOnly={false} />}
+          list={list}
+          direction={"bottom left"}
+          bold={false}
+        />
+      </BrowserView>
+      <MobileView>
+        <Avatar
+          {...props}
+          text={userName[0]}
+          readOnly={false}
+          onClick={handleOpenDrawer}
+        />
+        <DownDrawer onClose={handleCloseDrawer} isOpen={isDrawerOpened}>
+          {list.map(({ children }) => children(() => {}))}
+        </DownDrawer>
+      </MobileView>
+    </>
   );
 };

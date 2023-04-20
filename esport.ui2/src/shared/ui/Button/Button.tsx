@@ -131,22 +131,7 @@ export const Button: FC<ButtonProps> = ({
           initial={{ opacity: 0, y: -4 }}
           animate={doneControls}
           className={styles.checkmarkWrapper}
-        >
-          {/*<svg*/}
-          {/*  className={styles.text}*/}
-          {/*  xmlns="http://www.w3.org/2000/svg"*/}
-          {/*  fill="none"*/}
-          {/*  viewBox="0 0 24 24"*/}
-          {/*  stroke="rgb(255, 2, 102)"*/}
-          {/*>*/}
-          {/*  <path*/}
-          {/*    strokeLinecap="round"*/}
-          {/*    strokeLinejoin="round"*/}
-          {/*    strokeWidth={2}*/}
-          {/*    d="M5 13l4 4L19 7"*/}
-          {/*  />*/}
-          {/*</svg>*/}
-        </motion.div>
+        />
 
         <motion.span initial={{ opacity: 1 }} animate={textControls}>
           {children}

@@ -41,3 +41,4 @@ export { Avatar, AvatarSize } from "./Avatar/Avatar";
 export type { AvatarProps } from "./Avatar/Avatar";
 
 export { Drawer } from "./Drawer/Drawer";
+export { DownDrawer } from "./DownDrawer/DownDrawer";

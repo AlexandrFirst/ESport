@@ -6,8 +6,6 @@ import { Bars3BottomLeftIcon } from "@heroicons/react/24/solid";
 
 import { IconButton } from "@/shared/ui";
 import { useSidebarContext } from "../SidebarContext/SidebarContext";
-import { Drawer } from "@/shared/ui/Drawer/Drawer";
-import { SidebarMenu } from "../SidebarMenu/SidebarMenu";
 
 interface MobileSidebarProps {
   className?: string;
@@ -27,9 +25,9 @@ export const MobileSidebar: FC<MobileSidebarProps> = ({ className }) => {
         onClick={handleSetIsSidebarOpened}
         className={styles.icon}
       />
-      <Drawer isOpen={isSidebarOpened}>
-        <SidebarMenu />
-      </Drawer>
+      {/*<Drawer isOpen={isSidebarOpened}>*/}
+      {/*  <SidebarMenu />*/}
+      {/*</Drawer>*/}
     </div>
   );
 };

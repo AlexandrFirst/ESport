@@ -1,5 +1,4 @@
 import React, { FC } from "react";
-import styles from "./Sidebar.module.css";
 
 import { BrowserView, MobileView } from "@/shared/ui";
 
@@ -19,10 +18,10 @@ export const Sidebar: FC<SidebarProps> = ({
   return (
     <SidebarContextProvider context={{ isSidebarOpened, setIsSidebarOpened }}>
       <MobileView>
-        <MobileSidebar className={styles.mobile} />
+        <MobileSidebar />
       </MobileView>
       <BrowserView>
-        <LargeScreenSidebar className={styles.large} />
+        <LargeScreenSidebar />
       </BrowserView>
     </SidebarContextProvider>
   );
