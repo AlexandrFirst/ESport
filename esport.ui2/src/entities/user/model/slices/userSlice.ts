@@ -1,32 +1,40 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { UserSchema } from '../types/userSchema';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { HYDRATE } from "next-redux-wrapper";
+
+import { StateSchema } from "@/_app/Providers";
+
+import { IUser } from "../types/user";
+import { UserSchema } from "../types/userSchema";
 
 const initialState: UserSchema = {
-    
+  isAuth: true,
+  user: {
+    name: "John Doe",
+    email: "john@doe.com",
+  },
 };
 
 export const userSlice = createSlice({
-    name: 'user',
-    initialState,
-    reducers: {
-        template: (state, action: PayloadAction<string>) => {
-           
-        },
+  name: "user",
+  initialState,
+  reducers: {
+    setUser: (state, action: PayloadAction<IUser>) => {
+      state.isAuth = true;
+      state.user = action.payload;
     },
-    // extraReducers: (builder) => {
-    //     builder
-    //         .addCase(, (state) => {
-    //             state.error = undefined;
-    //             state.isLoading = true;
-    //         })
-    //         .addCase(, (state) => {
-    //             state.isLoading = false;
-    //         })
-    //         .addCase(, (state, action) => {
-    //             state.isLoading = false;
-    //             state.error = action.payload;
-    //         });
-    // },
+    resetUser: (state) => {
+      state.isAuth = false;
+      state.user = null;
+    },
+  },
+  extraReducers: {
+    [HYDRATE]: (state, action: PayloadAction<StateSchema>) => {
+      return {
+        ...state,
+        ...action.payload.user,
+      };
+    },
+  },
 });
 
 export const { actions: userActions } = userSlice;

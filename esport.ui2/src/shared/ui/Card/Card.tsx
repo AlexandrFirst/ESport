@@ -10,7 +10,7 @@ interface CardProps {
 
 export const Card: FC<CardProps> = ({
   className,
-  padding = "none",
+  padding = "lg",
   children,
 }) => {
   return (

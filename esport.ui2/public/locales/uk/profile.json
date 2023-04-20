@@ -1,0 +1,12 @@
+{
+  "about": "Про користувача",
+  "fullName": "Повне ім'я",
+  "level": "Рівень",
+  "country": "Країна",
+  "contacts": "Контакти",
+  "email": "Електронна пошта",
+  "phone": "Телефон",
+  "telegram": "Telegram",
+  "skype": "Skype",
+  "instagram": "Instagram"
+}

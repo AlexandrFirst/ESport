@@ -5,7 +5,12 @@ import { RMQModule } from 'nestjs-rmq';
 
 import { getMongoConfig } from './configs/mongo.config';
 import { getRmqConfig } from './configs/rmq.config';
+
 import { CompetitionModule } from './competition/competition.module';
+import { CategoryModule } from './category/category.module';
+import { FightModule } from './fight/fight.module';
+import { CompetitorModule } from './competitor/competitor.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -16,6 +21,10 @@ import { CompetitionModule } from './competition/competition.module';
     MongooseModule.forRootAsync(getMongoConfig()),
     RMQModule.forRootAsync(getRmqConfig()),
     CompetitionModule,
+    CategoryModule,
+    FightModule,
+    CompetitorModule,
+    UserModule,
   ],
 })
 export class AppModule {}

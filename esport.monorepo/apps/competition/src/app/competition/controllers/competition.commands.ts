@@ -1,7 +1,8 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Logger } from '@nestjs/common';
 import { RMQRoute, RMQValidate } from 'nestjs-rmq';
 
 import { CompetitionCreate } from '@esport.monorepo/contracts';
+import { Category } from '../../category/models/category.model';
 
 import { CompetitionExecutor } from '../service/competition.executor';
 import { CompetitionService } from '../service/competition.service';
@@ -22,20 +23,19 @@ export class CompetitionCommands {
   async createCompetition(
     req: CompetitionCreate.Request
   ): Promise<CompetitionCreate.Response> {
-    // const categories: Category[] = [];
-    // if (req.categoryIds) {
-    //   categories = await this.competitionExecutor.validateCategories(
-    //     req.categoryIds,
-    //   );
-    // }
+    let categories: Category[] = [];
+    if (req.categoryIds) {
+      categories = await this.competitionExecutor.validateCategories(
+        req.categoryIds
+      );
+    }
     // console.log('===categories  ===', categories);
-    const { id } = await this.competitionService.createCompetition({
+    const comp = await this.competitionService.createCompetition({
       ...req,
       dateStart: new Date(req.dateStart),
       dateEnd: req.dateEnd ? new Date(req.dateEnd) : undefined,
-      //TODO: fix this => only for compile
-      categories: [],
+      categories,
     });
-    return { id };
+    return { competition: comp };
   }
 }

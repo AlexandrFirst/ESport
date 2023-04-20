@@ -22,7 +22,6 @@ export class CompetitionEntity implements ICompetition {
     this.title = c.title;
   }
 
-  // public setCategoties(categories: ICategory[]) {
   public setCategoties(categories: ICategory[]) {
     this.categories = categories;
     // this.events.push()

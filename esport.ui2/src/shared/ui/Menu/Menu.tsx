@@ -21,11 +21,20 @@ const mapDirectionClass: Record<DropdownDirection, string> = {
   "top left": styles.optionsTopLeft,
 };
 
+export enum ItemPadding {
+  None = "none",
+  Small = "sm",
+  Medium = "md",
+}
+
+export type MenuList = MenuItem[];
+
 export interface MenuItem {
   key: string;
   disabled?: boolean;
   selected?: boolean;
   children: (close: () => void) => ReactNode;
+  itemPadding?: ItemPadding;
 }
 
 interface MenuProps extends HeadlessMenuProps<ElementType> {
@@ -65,7 +74,7 @@ export const Menu: FC<MenuProps> = ({
               as={"ul"}
               className={cn(styles.list, menuClasses)}
             >
-              {list?.map((item) => (
+              {list?.map(({ itemPadding = ItemPadding.Medium, ...item }) => (
                 <HeadlessMenu.Item
                   key={item.key}
                   disabled={item.disabled}
@@ -73,7 +82,7 @@ export const Menu: FC<MenuProps> = ({
                 >
                   {({ disabled, active }) => (
                     <li
-                      className={cn(styles.listItem, {
+                      className={cn(styles.listItem, styles[itemPadding], {
                         [styles.selected]: item.selected,
                       })}
                       onClick={close}
@@ -85,10 +94,6 @@ export const Menu: FC<MenuProps> = ({
               ))}
             </HeadlessMenu.Items>
           </Transition>
-
-          {/*{open && (*/}
-          {/* */}
-          {/*)}*/}
         </>
       )}
     </HeadlessMenu>

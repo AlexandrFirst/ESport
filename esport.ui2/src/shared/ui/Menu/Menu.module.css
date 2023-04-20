@@ -10,6 +10,18 @@
   @apply headless-active:bg-theme-accent headless-active:text-theme-main cursor-pointer px-7 py-1.5;
 }
 
+.none {
+  @apply px-0;
+}
+
+.sm {
+  @apply px-3;
+}
+
+.md {
+  @apply px-7;
+}
+
 .selected {
   @apply bg-gradient-to-r from-main-from to-main-to text-theme-main;
 }

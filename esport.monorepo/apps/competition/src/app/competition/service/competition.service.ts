@@ -26,13 +26,12 @@ export class CompetitionService {
   async createCompetition(c: ICompetition) {
     const newCompetition = new CompetitionEntity(c);
     const comp = await this.competitionRepo.create(newCompetition);
-    const data = { id: comp.id };
     newCompetition.addEvent({
       topic: CompetitionCreated.topic,
-      data,
+      data: { id: comp.id },
     });
     await this.updateCompetition(newCompetition);
-    return data;
+    return comp;
   }
 
   private async updateCompetition(comp: CompetitionEntity) {
