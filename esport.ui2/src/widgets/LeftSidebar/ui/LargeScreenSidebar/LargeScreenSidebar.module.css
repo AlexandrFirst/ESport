@@ -8,11 +8,11 @@
 }
 
 .closed {
-    @apply w-20 p-2.5;
+    @apply w-20 p-2.5 overflow-hidden;
 }
 
 .iconBtn {
-    @apply absolute top-10 -right-4 transition-colors;
+    @apply absolute top-16 right-0 transition-colors;
 }
 
 .arrow {

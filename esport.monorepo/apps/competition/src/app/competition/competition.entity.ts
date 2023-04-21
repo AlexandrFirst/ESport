@@ -1,14 +1,10 @@
-import {
-  ICategory,
-  ICompetition,
-  IDominEvent,
-} from '@esport.monorepo/interfaces';
+import { ICompetition, IDominEvent } from '@esport.monorepo/interfaces';
 
 export class CompetitionEntity implements ICompetition {
   _id?: string;
-  categories: ICategory[];
-  dateStart: Date;
-  dateEnd?: Date;
+  categories: string[];
+  dateStart: string;
+  dateEnd?: string;
   organizationId: number;
   title: string;
   events: IDominEvent[] = [];
@@ -22,8 +18,7 @@ export class CompetitionEntity implements ICompetition {
     this.title = c.title;
   }
 
-  // public setCategoties(categories: ICategory[]) {
-  public setCategoties(categories: ICategory[]) {
+  public setCategoties(categories: string[]) {
     this.categories = categories;
     // this.events.push()
     return this;

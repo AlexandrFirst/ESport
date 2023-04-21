@@ -1,18 +1,25 @@
-import React, { FC, memo } from "react";
+import React, { FC } from "react";
 import styles from "./Header.module.css";
 
 import cn from "classnames";
+
+import { useAppSelector } from "@/shared/lib";
+
+import { selectIsAuth } from "@/entities/user";
+
+import { ThemeSwitcher } from "@/features/ThemeSwitcher";
 import { Translate } from "@/features/Translate";
 
+import AnonItems from "../AnonItems/AnonItems";
 import { ListItem } from "../ListItem/ListItem";
-import { ThemeSwitcher } from "@/features/ThemeSwitcher";
-import AnonItems from "@/widgets/Header/ui/AnonItems/AnonItems";
+import { AuthItems } from "../AuthItems/AuthItems";
 
 interface HeaderProps {
   className?: string;
 }
 
 export const Header: FC<HeaderProps> = ({ className }) => {
+  const isAuth = useAppSelector(selectIsAuth);
   return (
     <header className={cn(styles.header, className)}>
       <nav className={styles.nav}>
@@ -25,9 +32,7 @@ export const Header: FC<HeaderProps> = ({ className }) => {
             <ThemeSwitcher />
           </ListItem>
 
-          <AnonItems />
-
-          {/*{isAuth ? <AuthItems /> : <AnonItems />}*/}
+          {isAuth ? <AuthItems /> : <AnonItems />}
         </ul>
       </nav>
     </header>

@@ -18,3 +18,7 @@
 .pl_full {
     @apply pl-leftSidebarFull;
 }
+
+.pl_mobile {
+    @apply pl-leftSidebarMobile;
+}

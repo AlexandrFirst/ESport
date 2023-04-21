@@ -1,3 +1,4 @@
+import { ICompetition } from '@esport.monorepo/interfaces';
 import { IsArray, IsNumber, IsOptional, IsString } from 'class-validator';
 
 export namespace CompetitionCreate {
@@ -23,6 +24,6 @@ export namespace CompetitionCreate {
   }
 
   export class Response {
-    id: string;
+    competition: ICompetition;
   }
 }

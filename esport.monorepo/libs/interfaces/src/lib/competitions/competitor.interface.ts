@@ -2,10 +2,10 @@ import { CompatitorType } from '../enums/compatitorType.enum';
 
 export interface ICompetitor {
   _id?: string;
-  userId?: number;
-  teamMemberIds?: number[];
+  userId?: string;
+  teamMemberIds?: string[];
   teamName?: string;
   weight?: number;
   height?: number;
-  type: CompatitorType;
+  competitorType: CompatitorType;
 }

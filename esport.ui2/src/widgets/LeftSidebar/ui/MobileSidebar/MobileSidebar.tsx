@@ -19,30 +19,15 @@ export const MobileSidebar: FC<MobileSidebarProps> = ({ className }) => {
   };
 
   return (
-    <aside className={cn(className)}>
+    <div className={cn(className)}>
       <IconButton
         Svg={Bars3BottomLeftIcon}
         onClick={handleSetIsSidebarOpened}
         className={styles.icon}
       />
-      {/*<SportSwipeableDrawer*/}
-      {/*  open={isSidebarOpened}*/}
-      {/*  onOpen={() => setIsSidebarOpened(true)}*/}
-      {/*  onClose={() => setIsSidebarOpened(false)}*/}
-      {/*  ModalProps={{*/}
-      {/*    keepMounted: true, // Better open performance on mobile.*/}
-      {/*  }}*/}
-      {/*  sx={{*/}
-      {/*    display: { xs: "block", md: "none" },*/}
-      {/*    "& .MuiDrawer-paper": {*/}
-      {/*      boxSizing: "border-box",*/}
-      {/*      width: sidebarOpenedWidth,*/}
-      {/*      zIndex: isSidebarOpened ? 1300 : 0,*/}
-      {/*    },*/}
-      {/*  }}*/}
-      {/*>*/}
-      {/*  <SidebarData />*/}
-      {/*</SportSwipeableDrawer>*/}
-    </aside>
+      {/*<Drawer isOpen={isSidebarOpened}>*/}
+      {/*  <SidebarMenu />*/}
+      {/*</Drawer>*/}
+    </div>
   );
 };

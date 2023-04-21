@@ -1,57 +1,71 @@
 import {
   BeakerIcon,
-  ComputerDesktopIcon,
-  UserCircleIcon,
   BriefcaseIcon,
   CogIcon,
+  ComputerDesktopIcon,
+  UserCircleIcon,
 } from "@heroicons/react/24/solid";
 
 import { routes } from "@/shared/config";
-import { Icon } from "@/shared/ui";
+
+import { useAuth } from "@/entities/user";
 
 import { IMenuItem } from "../../types/menu-item";
+import MenuIcon from "../../ui/MenuIcon/MenuIcon";
 
 export const useMenu = (): IMenuItem[] => {
+  const { user, isAuth, isAdmin } = useAuth();
+
   return [
     {
       title: "Test",
-      icon: <Icon Svg={BeakerIcon} className={"mr-3"} iconSize={"m"} />,
+      icon: <MenuIcon Svg={BeakerIcon} />,
       link: routes.Main,
     },
     {
       title: "Streams",
-      icon: (
-        <Icon Svg={ComputerDesktopIcon} className={"mr-3"} iconSize={"m"} />
-      ),
+      icon: <MenuIcon Svg={ComputerDesktopIcon} />,
       link: routes.Streams,
     },
-    {
-      title: "Profile",
-      icon: <Icon Svg={UserCircleIcon} className={"mr-3"} iconSize={"m"} />,
-      link: routes.User.Profile.Main,
-    },
-    {
-      title: "Competitions",
-      icon: <Icon Svg={BriefcaseIcon} className={"mr-3"} iconSize={"m"} />,
-      gap: true,
-      link: routes.Competition.Main,
-      items: [
-        {
-          title: "Competitions",
-          // icon: <SportsKabaddiIcon className="mr-3" />,
-          link: routes.Competition.Main,
-        },
-        {
-          title: "Create",
-          // icon: <AddIcon className="mr-3" />,
-          link: routes.Competition.Create,
-        },
-      ],
-    },
-    {
-      title: "Settings",
-      icon: <Icon Svg={CogIcon} className={"mr-3"} iconSize={"m"} />,
-      link: "/settings",
-    },
+    ...(isAuth
+      ? [
+          {
+            title: "Profile",
+            icon: <MenuIcon Svg={UserCircleIcon} />,
+            link: routes.User.Profile.Main,
+          },
+        ]
+      : []),
+    ...(isAuth
+      ? [
+          {
+            title: "Competitions",
+            icon: <MenuIcon Svg={BriefcaseIcon} />,
+            gap: true,
+            link: routes.Competition.Main,
+            items: [
+              {
+                title: "Competitions",
+                // icon: <SportsKabaddiIcon className="mr-3" />,
+                link: routes.Competition.Main,
+              },
+              {
+                title: "Create",
+                // icon: <AddIcon className="mr-3" />,
+                link: routes.Competition.Create,
+              },
+            ],
+          },
+        ]
+      : []),
+    ...(isAuth
+      ? [
+          {
+            title: "Settings",
+            icon: <MenuIcon Svg={CogIcon} />,
+            link: "/settings",
+          },
+        ]
+      : []),
   ];
 };

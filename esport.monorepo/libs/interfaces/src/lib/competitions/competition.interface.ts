@@ -1,10 +1,8 @@
-import { ICategory } from './category.interface';
-
 export interface ICompetition {
   _id?: string;
   title: string;
-  dateStart: Date;
-  dateEnd?: Date;
+  dateStart: string;
+  dateEnd?: string;
   organizationId: number;
-  categories: ICategory[];
+  categories: string[];
 }

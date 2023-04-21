@@ -1,9 +1,8 @@
-import { CreateCompetitionForm } from "@/entities/competition/ui/CreateCompetitionForm/CreateCompetitionForm";
-import { CreateCompetitionCard } from "@/features/CreateCompetitionCard";
-import { Card } from "@/shared/ui";
 import React from "react";
 import { GetServerSideProps, NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+
+import { CreateCompetitionCard } from "@/entities/competition";
 
 import { MainLayout } from "@/widgets/MainLayout";
 
@@ -19,12 +18,9 @@ const CreateCompetitionPage: NextPage<Props> = () => {
 
 export default CreateCompetitionPage;
 
-export const getServerSideProps: GetServerSideProps = async ({
-  locale,
-  defaultLocale,
-}) => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const localization = await serverSideTranslations(
-    locale ?? defaultLocale ?? "en",
+    ctx.locale ?? ctx.defaultLocale ?? "en",
     ["common"]
   );
   return {

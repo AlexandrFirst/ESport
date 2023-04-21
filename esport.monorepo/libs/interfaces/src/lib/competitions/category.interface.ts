@@ -1,7 +1,13 @@
-import { IRound } from './round.interface';
+import { IRoundWithFights } from './round.interface';
 
 export interface ICategory {
   _id?: string;
   title: string;
-  rounds: IRound[];
+  rounds: string[];
+}
+
+export interface ICategoryWithRounds {
+  _id?: string;
+  title: string;
+  rounds: IRoundWithFights[];
 }

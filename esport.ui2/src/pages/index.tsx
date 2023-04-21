@@ -16,7 +16,7 @@ type Props = {
   };
 };
 
-export default function Home({ snackbar }: Props) {
+export default function Home({ snackbar, ...props }: Props) {
   const { error, success } = snackbar ?? {};
   const { t } = useTranslation("common");
 
@@ -45,11 +45,13 @@ export const getServerSideProps: GetServerSideProps = async ({
   locale,
   defaultLocale,
   query,
+  req,
 }) => {
   const localization = await serverSideTranslations(
     locale ?? defaultLocale ?? "en",
     ["common"]
   );
+
   return {
     props: {
       ...localization,
