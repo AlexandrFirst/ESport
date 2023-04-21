@@ -1,4 +1,4 @@
-import { Controller, Logger } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { RMQRoute, RMQValidate } from 'nestjs-rmq';
 
 import { CompetitionCreate } from '@esport.monorepo/contracts';
@@ -34,7 +34,7 @@ export class CompetitionCommands {
       ...req,
       dateStart: new Date(req.dateStart),
       dateEnd: req.dateEnd ? new Date(req.dateEnd) : undefined,
-      categories,
+      categories: [],
     });
     return { competition: comp };
   }

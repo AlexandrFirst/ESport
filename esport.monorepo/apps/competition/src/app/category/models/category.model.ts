@@ -2,7 +2,7 @@ import { ICategory } from '@esport.monorepo/interfaces';
 import mongoose, { Document, now } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
-import { Round } from './round.model';
+import { Round } from '../../round/round.model';
 
 @Schema({ timestamps: true })
 export class Category extends Document implements ICategory {
