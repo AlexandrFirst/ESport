@@ -1,5 +1,5 @@
 .wrapper {
-  @apply border-2 border-theme-accent rounded-md w-full;
+  @apply border-2 border-theme-accent rounded-md w-full bg-theme-light;
 }
 
 .pointer {
