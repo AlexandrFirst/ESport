@@ -1,22 +1,13 @@
-import React from "react";
 import { GetServerSideProps, NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
-import { CreateCompetitionCard } from "@/entities/competition";
+type CompetitionPageProps = {};
 
-import { MainLayout } from "@/widgets/MainLayout";
-
-type Props = {};
-
-const CreateCompetitionPage: NextPage<Props> = () => {
-  return (
-    <MainLayout>
-      <CreateCompetitionCard />
-    </MainLayout>
-  );
+const CompetitionPage: NextPage<CompetitionPageProps> = () => {
+  return <div>CompetitionIdPage</div>;
 };
 
-export default CreateCompetitionPage;
+export default CompetitionPage;
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const localization = await serverSideTranslations(

@@ -8,12 +8,14 @@ import { CompetitionRepository } from './competition.repository';
 import { CompetitionService } from './service/competition.service';
 
 import { Competition, CompetitionSchema } from './models/competition.model';
+import { CategoryModule } from '../category/category.module';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
       { name: Competition.name, schema: CompetitionSchema },
     ]),
+    CategoryModule,
   ],
   controllers: [CompetitionQueries, CompetitionCommands],
   providers: [

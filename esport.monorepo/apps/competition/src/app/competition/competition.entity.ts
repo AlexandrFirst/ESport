@@ -3,8 +3,8 @@ import { ICompetition, IDominEvent } from '@esport.monorepo/interfaces';
 export class CompetitionEntity implements ICompetition {
   _id?: string;
   categories: string[];
-  dateStart: Date;
-  dateEnd?: Date;
+  dateStart: string;
+  dateEnd?: string;
   organizationId: number;
   title: string;
   events: IDominEvent[] = [];

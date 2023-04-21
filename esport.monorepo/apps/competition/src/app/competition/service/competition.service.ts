@@ -7,12 +7,14 @@ import { CompetitionEntity } from '../competition.entity';
 import { CompetitionEventEmitter } from '../controllers/competition.event-emitter';
 
 import { CompetitionRepository } from '../competition.repository';
+import { CategoryService } from '../../category/category.service';
 
 @Injectable()
 export class CompetitionService {
   constructor(
     private readonly competitionRepo: CompetitionRepository,
-    private readonly eventEmitter: CompetitionEventEmitter
+    private readonly eventEmitter: CompetitionEventEmitter,
+    private readonly categoryService: CategoryService
   ) {}
 
   async getAll() {
@@ -24,6 +26,17 @@ export class CompetitionService {
   }
 
   async createCompetition(c: ICompetition) {
+    const newCompetition = new CompetitionEntity(c);
+    const comp = await this.competitionRepo.create(newCompetition);
+    newCompetition.addEvent({
+      topic: CompetitionCreated.topic,
+      data: { id: comp.id },
+    });
+    await this.updateCompetition(newCompetition);
+    return comp;
+  }
+
+  async createCompetitionWithCategories(c: ICompetition) {
     const newCompetition = new CompetitionEntity(c);
     const comp = await this.competitionRepo.create(newCompetition);
     newCompetition.addEvent({

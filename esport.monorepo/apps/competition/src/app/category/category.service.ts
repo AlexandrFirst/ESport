@@ -1,17 +1,19 @@
-import { ICategory } from '@esport.monorepo/interfaces';
-import { Injectable } from '@nestjs/common';
+import { ICategory, ICategoryWithRounds } from '@esport.monorepo/interfaces';
+import { Injectable, Logger } from '@nestjs/common';
 
 import { CategoryEntity } from './category.entity';
 import { CategoryEventEmitter } from './category.event-emitter';
 import { CategoryRepository } from './category.repository';
 import { ESportError } from '../error/error';
 import { Err } from '../error/error.enum';
+import { FightService } from '../fight/fight.service';
 
 @Injectable()
 export class CategoryService {
   constructor(
     private readonly categoryRepository: CategoryRepository,
-    private readonly eventEmitter: CategoryEventEmitter
+    private readonly eventEmitter: CategoryEventEmitter,
+    private readonly fightService: FightService
   ) {}
 
   async findManyByIds(ids: string[], projection?: Record<string, unknown>) {
@@ -29,6 +31,17 @@ export class CategoryService {
   async create(c: ICategory) {
     const newCategory = new CategoryEntity(c);
     return this.categoryRepository.create(newCategory);
+  }
+
+  async createWithRounds(c: ICategoryWithRounds) {
+    const fights = c.rounds.map((r) => r.fights).flat();
+    const data = await Promise.all([
+      fights.map((f) => this.fightService.create(f)),
+    ]);
+    Logger.log(data);
+    return data;
+    // const newCategory = new CategoryEntity(c);
+    // return this.categoryRepository.create(newCategory);
   }
 
   async update({ _id, title }: Partial<ICategory>) {

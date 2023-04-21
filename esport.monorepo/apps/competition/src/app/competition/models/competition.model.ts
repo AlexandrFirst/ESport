@@ -10,10 +10,10 @@ export class Competition extends Document implements ICompetition {
   title: string;
 
   @Prop({ required: true })
-  dateStart: Date;
+  dateStart: string;
 
   @Prop({ required: false })
-  dateEnd: Date;
+  dateEnd: string;
 
   @Prop({ required: true })
   organizationId: number;

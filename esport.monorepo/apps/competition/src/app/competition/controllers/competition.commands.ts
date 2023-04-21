@@ -23,19 +23,10 @@ export class CompetitionCommands {
   async createCompetition(
     req: CompetitionCreate.Request
   ): Promise<CompetitionCreate.Response> {
-    let categories: Category[] = [];
-    if (req.categoryIds) {
-      categories = await this.competitionExecutor.validateCategories(
-        req.categoryIds
-      );
-    }
-    // console.log('===categories  ===', categories);
-    const comp = await this.competitionService.createCompetition({
+    const competition = await this.competitionService.createCompetition({
       ...req,
-      dateStart: new Date(req.dateStart),
-      dateEnd: req.dateEnd ? new Date(req.dateEnd) : undefined,
-      categories: [],
+      categories: req.categoryIds,
     });
-    return { competition: comp };
+    return { competition };
   }
 }
