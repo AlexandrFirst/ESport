@@ -6,7 +6,5 @@ export { default as ProfileMainInfo } from "./ui/ProfileMainInfo/ProfileMainInfo
 export { default as AboutInfo } from "./ui/AboutInfo/AboutInfo";
 export { default as OverviewCard } from "./ui/OverviewCard/OverviewCard";
 
-export { ProfileAvatar } from "./ui/ProfileAvatar/ProfileAvatar";
-
 export type { ProfileSchema } from "./model/types/profileSchema";
 export type { IProfile } from "./model/types/profile";

@@ -1,10 +1,12 @@
 import React, { FC, useState } from "react";
+import styles from "./ProfileAvatar.module.css";
 
 import { ArrowLeftOnRectangleIcon } from "@heroicons/react/24/solid";
 
 import {
   Avatar,
   AvatarProps,
+  AvatarSize,
   BoldText,
   BrowserView,
   DownDrawer,
@@ -16,16 +18,14 @@ import {
 } from "@/shared/ui";
 
 import { useAppDispatch } from "@/shared/lib";
-import { userActions } from "@/entities/user";
 
-interface ProfileAvatarProps extends AvatarProps {
-  userName?: string;
-}
+import { useAuth, userActions, UserNameRoleHolder } from "@/entities/user";
 
-export const ProfileAvatar: FC<ProfileAvatarProps> = ({
-  userName = "Profile",
-  ...props
-}) => {
+interface ProfileAvatarProps extends AvatarProps {}
+
+export const ProfileAvatar: FC<ProfileAvatarProps> = ({ ...props }) => {
+  const { user, translatedRole } = useAuth();
+
   const dispatch = useAppDispatch();
   const handleLogout = () => {
     dispatch(userActions.resetUser());
@@ -42,28 +42,21 @@ export const ProfileAvatar: FC<ProfileAvatarProps> = ({
       disabled: true,
       itemPadding: ItemPadding.None,
       children: (
-        <div
-          key={"1"}
-          className={"flex items-center cursor-auto px-3 py-1.5 border-b"}
-        >
-          <div className={"mr-5"}>
-            <Avatar {...props} text={userName[0]} />
-          </div>
-          <div className={"flex flex-col min-w-[100px]"}>
-            <BoldText>{userName}</BoldText>
-            <p>Admin</p>
-          </div>
-        </div>
+        <UserNameRoleHolder
+          {...props}
+          boldText={user?.name ?? ""}
+          regularText={translatedRole}
+          src={user?.avatarUrl ?? ""}
+          avatarText={user?.name[0] ?? ""}
+          size={AvatarSize.Small}
+          className={styles.name_holder}
+        />
       ),
     },
     {
       key: "logout",
       children: (
-        <div
-          key={"logout"}
-          className={"flex items-center cursor-auto px-3 py-1.5 cursor-pointer"}
-          onClick={handleLogout}
-        >
+        <div key={"logout"} className={styles.logout} onClick={handleLogout}>
           <Icon Svg={ArrowLeftOnRectangleIcon} />
           <BoldText className={"ml-3"}>Logout</BoldText>
         </div>
@@ -75,7 +68,14 @@ export const ProfileAvatar: FC<ProfileAvatarProps> = ({
     <>
       <BrowserView>
         <Menu
-          menuButton={<Avatar {...props} text={userName[0]} readOnly={false} />}
+          menuButton={
+            <Avatar
+              {...props}
+              text={user?.name[0] ?? ""}
+              size={AvatarSize.Small}
+              readOnly={false}
+            />
+          }
           list={list}
           direction={"bottom left"}
           bold={false}
@@ -84,7 +84,7 @@ export const ProfileAvatar: FC<ProfileAvatarProps> = ({
       <MobileView>
         <Avatar
           {...props}
-          text={userName[0]}
+          text={user?.name[0] ?? ""}
           readOnly={false}
           onClick={handleOpenDrawer}
         />

@@ -1,11 +1,11 @@
 import React, { FC } from "react";
 import { useAppSelector } from "@/shared/lib";
 
-import { ProfileAvatar } from "@/entities/profile";
 import { selectUser } from "@/entities/user";
 
+import { ProfileAvatar } from "@/features/ProfileAvatar";
+
 import { ListItem } from "../ListItem/ListItem";
-import { AvatarSize } from "@/shared/ui";
 
 export const AuthItems: FC = () => {
   const user = useAppSelector(selectUser);
@@ -13,7 +13,7 @@ export const AuthItems: FC = () => {
 
   return (
     <ListItem className={"!mr-0"}>
-      <ProfileAvatar userName={name} src={avatarUrl} size={AvatarSize.Small} />
+      <ProfileAvatar />
     </ListItem>
   );
 };

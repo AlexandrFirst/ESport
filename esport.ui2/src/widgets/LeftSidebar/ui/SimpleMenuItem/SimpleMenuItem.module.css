@@ -12,3 +12,7 @@
 .not_visible {
     @apply hidden;
 }
+
+.selected {
+    @apply bg-theme-sub;
+}

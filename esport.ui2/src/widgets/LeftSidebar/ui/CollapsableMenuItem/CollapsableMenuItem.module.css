@@ -50,6 +50,9 @@
 }
 
 .inner_list_item_button {
-    /*@apply hover:bg-skin-subsidiary transition-all rounded-md w-full dark:hover:bg-darkSkin-subsidiary font-semibold*/
     @apply transition-all rounded-md w-full font-semibold;
+}
+
+.selected {
+    @apply bg-theme-sub;
 }

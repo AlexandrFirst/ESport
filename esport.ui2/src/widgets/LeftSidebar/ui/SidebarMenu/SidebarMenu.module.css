@@ -11,7 +11,7 @@
 }
 
 .closed {
-  /*@apply w-4/6;*/
+  @apply w-1/2;
 }
 
 .list_item {
