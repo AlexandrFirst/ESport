@@ -32,6 +32,7 @@ module.exports = {
         theme: {
           main: "var(--color-text-main)",
           error: "var(--color-error-main)",
+          accent: "var(--color-bg-accent)",
         },
       },
       gradientColorStops: {

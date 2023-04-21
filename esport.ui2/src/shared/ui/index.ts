@@ -2,7 +2,7 @@ export { BrowserView } from "./BrowserView/BrowserView";
 export { MobileView } from "./MobileView/MobileView";
 
 export { Icon } from "./Icon/Icon";
-export type { IconSvg } from "./Icon/Icon";
+export type { IconSvg, IconProps } from "./Icon/Icon";
 
 export { IconButton } from "./IconButton/IconButton";
 export { default as Logo } from "./Logo/Logo";
@@ -10,8 +10,9 @@ export { default as Title } from "./Title/Title";
 export { default as SubTitle } from "./SubTitle/SubTitle";
 
 export { ListItemButton } from "./ListItemButton/ListItemButton";
-export { Menu, ItemPadding } from "./Menu/Menu";
-export type { DropdownDirection, MenuItem, MenuList } from "./Menu/Menu";
+export { Menu, ItemPadding } from "./Popups/Menu/Menu";
+export type { MenuItem, MenuList } from "./Popups/Menu/Menu";
+export type { DropdownDirection } from "./Popups/types/dropdownDirection";
 
 export { default as UILink } from "./UILink/UILink";
 
@@ -34,6 +35,7 @@ export { default as Overlay } from "./Overlay/Overlay";
 //Text
 export { default as BoldText } from "./Text/BoldText/BoldText";
 export { default as SemiBoldText } from "./Text/SemiBoldText/SemiBoldText";
+export { default as RegularText } from "./Text/RegularText/RegularText";
 
 export { TwoItemsGridContainer } from "./TwoItemsGridContainer/TwoItemsGridContainer";
 

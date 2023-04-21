@@ -44,13 +44,8 @@ export const Translate: FC<TranslateProps> = ({
       }).map(([locale, language]) => ({
         key: locale,
         selected: locale === router.locale,
-        children: (close) => (
-          <UILink
-            href={""}
-            locale={locale}
-            className={styles.link}
-            onClick={close}
-          >
+        children: (
+          <UILink href={""} locale={locale} className={styles.link}>
             {language}
           </UILink>
         ),
@@ -77,7 +72,7 @@ export const Translate: FC<TranslateProps> = ({
         {languageIcon}
         <DownDrawer isOpen={isDrawerOpened} onClose={handleCloseDrawer}>
           {list.map(({ key, children }) => (
-            <div key={key}>{children(() => {})}</div>
+            <div key={key}>{children}</div>
           ))}
         </DownDrawer>
       </MobileView>

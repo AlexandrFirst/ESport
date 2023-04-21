@@ -12,7 +12,7 @@ export const AuthItems: FC = () => {
   const { name, avatarUrl } = user || {};
 
   return (
-    <ListItem className={"mr-0"}>
+    <ListItem className={"!mr-0"}>
       <ProfileAvatar userName={name} src={avatarUrl} size={AvatarSize.Small} />
     </ListItem>
   );

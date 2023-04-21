@@ -41,7 +41,7 @@ export const ProfileAvatar: FC<ProfileAvatarProps> = ({
       key: "1",
       disabled: true,
       itemPadding: ItemPadding.None,
-      children: () => (
+      children: (
         <div
           key={"1"}
           className={"flex items-center cursor-auto px-3 py-1.5 border-b"}
@@ -58,7 +58,7 @@ export const ProfileAvatar: FC<ProfileAvatarProps> = ({
     },
     {
       key: "logout",
-      children: () => (
+      children: (
         <div
           key={"logout"}
           className={"flex items-center cursor-auto px-3 py-1.5 cursor-pointer"}
@@ -89,7 +89,7 @@ export const ProfileAvatar: FC<ProfileAvatarProps> = ({
           onClick={handleOpenDrawer}
         />
         <DownDrawer onClose={handleCloseDrawer} isOpen={isDrawerOpened}>
-          {list.map(({ children }) => children(() => {}))}
+          {list.map(({ children }) => children)}
         </DownDrawer>
       </MobileView>
     </>

@@ -7,7 +7,7 @@ import { UILink } from "@/shared/ui";
 
 const AnonItems: FC = () => {
   return (
-    <ListItem className={"mr-0"}>
+    <ListItem className={"!mr-0"}>
       <UILink href={routes.Login}>Login</UILink>
     </ListItem>
   );

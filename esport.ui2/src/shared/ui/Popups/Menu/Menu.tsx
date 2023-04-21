@@ -1,25 +1,17 @@
 import React, { ElementType, FC, Fragment, ReactNode } from "react";
 import styles from "./Menu.module.css";
+import popupStyles from "../styles/popup.module.css";
+
+import cn from "classnames";
 
 import {
   Menu as HeadlessMenu,
   MenuProps as HeadlessMenuProps,
   Transition,
 } from "@headlessui/react";
-import cn from "classnames";
 
-export type DropdownDirection =
-  | "top left"
-  | "top right"
-  | "bottom left"
-  | "bottom right";
-
-const mapDirectionClass: Record<DropdownDirection, string> = {
-  "bottom left": styles.optionsBottomLeft,
-  "bottom right": styles.optionsBottomRight,
-  "top right": styles.optionsTopRight,
-  "top left": styles.optionsTopLeft,
-};
+import { mapDirectionClass } from "../styles/consts";
+import { DropdownDirection } from "../types/dropdownDirection";
 
 export enum ItemPadding {
   None = "none",
@@ -33,8 +25,10 @@ export interface MenuItem {
   key: string;
   disabled?: boolean;
   selected?: boolean;
-  children: (close: () => void) => ReactNode;
+  children: ReactNode;
   itemPadding?: ItemPadding;
+  className?: string;
+  onClick?: () => void;
 }
 
 interface MenuProps extends HeadlessMenuProps<ElementType> {
@@ -42,6 +36,8 @@ interface MenuProps extends HeadlessMenuProps<ElementType> {
   list?: MenuItem[];
   direction?: DropdownDirection;
   bold?: boolean;
+  buttonClassName?: string;
+  fullWidthList?: boolean;
 }
 
 export const Menu: FC<MenuProps> = ({
@@ -49,6 +45,8 @@ export const Menu: FC<MenuProps> = ({
   list,
   direction = "bottom right",
   bold = true,
+  buttonClassName,
+  fullWidthList,
   ...props
 }) => {
   const menuClasses = [mapDirectionClass[direction]];
@@ -57,11 +55,13 @@ export const Menu: FC<MenuProps> = ({
     <HeadlessMenu
       {...props}
       as={"div"}
-      className={cn(styles.wrapper, { [styles.bold]: bold })}
+      className={cn(popupStyles.popup, { [styles.bold]: bold })}
     >
       {({ close }) => (
         <>
-          <HeadlessMenu.Button>{menuButton}</HeadlessMenu.Button>
+          <HeadlessMenu.Button className={buttonClassName}>
+            {menuButton}
+          </HeadlessMenu.Button>
           <Transition
             enter="transition duration-100 ease-out"
             enterFrom="transform scale-95 opacity-0"
@@ -72,7 +72,9 @@ export const Menu: FC<MenuProps> = ({
           >
             <HeadlessMenu.Items
               as={"ul"}
-              className={cn(styles.list, menuClasses)}
+              className={cn(styles.list, menuClasses, {
+                [styles.fullwidth]: fullWidthList,
+              })}
             >
               {list?.map(({ itemPadding = ItemPadding.Medium, ...item }) => (
                 <HeadlessMenu.Item
@@ -82,12 +84,20 @@ export const Menu: FC<MenuProps> = ({
                 >
                   {({ disabled, active }) => (
                     <li
-                      className={cn(styles.listItem, styles[itemPadding], {
-                        [styles.selected]: item.selected,
-                      })}
-                      onClick={close}
+                      className={cn(
+                        styles.listItem,
+                        item.className,
+                        styles[itemPadding],
+                        {
+                          [styles.selected]: item.selected,
+                        }
+                      )}
+                      onClick={() => {
+                        item.onClick?.();
+                        close();
+                      }}
                     >
-                      {item.children(close)}
+                      {item.children}
                     </li>
                   )}
                 </HeadlessMenu.Item>
