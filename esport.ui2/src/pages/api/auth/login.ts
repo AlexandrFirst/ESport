@@ -28,7 +28,8 @@ export default async function handler(
     );
     setCookie("ESportCookie", data.token, {
       httpOnly: true,
-      // secure: true,
+      expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 7),
+      secure: true,
     });
     console.log('===hasCookie("ESportCookie")===', hasCookie("ESportCookie"));
     return res.status(200).json(data);
