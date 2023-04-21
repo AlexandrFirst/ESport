@@ -11,6 +11,7 @@ import { CategoryModule } from './category/category.module';
 import { FightModule } from './fight/fight.module';
 import { CompetitorModule } from './competitor/competitor.module';
 import { UserModule } from './user/user.module';
+import { RoundModule } from './round/round.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { UserModule } from './user/user.module';
     FightModule,
     CompetitorModule,
     UserModule,
+    RoundModule,
   ],
 })
 export class AppModule {}

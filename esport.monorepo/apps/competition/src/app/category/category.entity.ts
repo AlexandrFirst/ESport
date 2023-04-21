@@ -1,11 +1,11 @@
-import { ICategory, IDominEvent, IRound } from '@esport.monorepo/interfaces';
+import { ICategory, IDominEvent } from '@esport.monorepo/interfaces';
 
 export class CategoryEntity implements ICategory {
   _id: string;
   // fights: IFight[];
   title: string;
   events: IDominEvent[] = [];
-  rounds: IRound[] = [];
+  rounds: string[] = [];
 
   constructor(c: ICategory) {
     this._id = c._id;
@@ -19,7 +19,7 @@ export class CategoryEntity implements ICategory {
     return this;
   }
 
-  setFights(rounds: IRound[]) {
+  setFights(rounds: string[]) {
     this.rounds = rounds;
     return this;
   }

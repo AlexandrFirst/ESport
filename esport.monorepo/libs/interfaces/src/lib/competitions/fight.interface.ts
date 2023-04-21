@@ -5,5 +5,5 @@ export interface IFight {
   isProcessed: boolean;
   winnerId?: string;
   fightNumber: number;
-  competitors: ICompetitor[];
+  competitors: ICompetitor[]; //sub doc
 }

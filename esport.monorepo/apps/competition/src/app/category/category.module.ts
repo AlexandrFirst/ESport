@@ -9,13 +9,11 @@ import { CategoryCommands } from './controllers/category.commands';
 import { CategoryQueries } from './controllers/category.queries';
 
 import { Category, CategorySchema } from './models/category.model';
-import { Round, RoundSchema } from './models/round.model';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
       { name: Category.name, schema: CategorySchema },
-      { name: Round.name, schema: RoundSchema },
     ]),
   ],
   providers: [CategoryService, CategoryRepository, CategoryEventEmitter],

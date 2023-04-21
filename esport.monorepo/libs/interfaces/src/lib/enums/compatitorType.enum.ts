@@ -1,6 +1,6 @@
 export enum CompatitorType {
-  NotDefined,
-  Male,
-  Female,
-  Team,
+  NotDefined = 'NotDefined',
+  Male = 'Male',
+  Female = 'Female',
+  Team = 'Team',
 }

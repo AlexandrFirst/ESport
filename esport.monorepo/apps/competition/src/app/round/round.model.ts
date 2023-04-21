@@ -1,15 +1,15 @@
 import { Document, now } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
-import { IFight, IRound } from '@esport.monorepo/interfaces';
+import { IRound } from '@esport.monorepo/interfaces';
 
 @Schema({ timestamps: true })
 export class Round extends Document implements IRound {
-  @Prop({ default: 0, required: false })
+  @Prop({ required: true })
   roundNumber: number;
 
   @Prop({ default: [], required: false })
-  fights: IFight[];
+  fights: string[];
 
   @Prop({ default: now() })
   createdAt: Date;
