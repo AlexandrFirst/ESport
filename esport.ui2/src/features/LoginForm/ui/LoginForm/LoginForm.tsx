@@ -43,7 +43,7 @@ export const LoginForm: FC<LoginFormProps> = (props) => {
       setIsLoading(true);
       await withErrorAndLoading(authService.login, data, {
         onSuccess: () => {
-          router.push(routes.Test);
+          router.push(routes.Main);
         },
         onError: (err) => {
           showError(err.message || "Something went wrong");

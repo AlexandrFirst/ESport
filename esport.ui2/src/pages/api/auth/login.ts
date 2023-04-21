@@ -4,6 +4,7 @@ import axios from "axios";
 import https from "https";
 import fs from "fs";
 import path from "path";
+import { setCookie } from "cookies-next";
 
 export default async function handler(
   req: NextApiRequest,
@@ -17,7 +18,7 @@ export default async function handler(
       passphrase: process.env.LOGIN_API_PASSPHRASE ?? "",
     });
 
-    const { data } = await axios.post(
+    const { data } = await axios.post<{ token: string }>(
       `${process.env.LOGIN_API_URL}/apiLogin`,
       req.body,
       {
@@ -25,6 +26,10 @@ export default async function handler(
         withCredentials: true,
       }
     );
+    setCookie("ESportCookie", data.token, {
+      httpOnly: true,
+      // secure: true,
+    });
     res.status(200).json(data);
   }
   res.status(200).json({ message: "Hello World" });
