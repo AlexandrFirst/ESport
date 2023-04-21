@@ -1,10 +1,10 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import type { NextApiRequest, NextApiResponse } from "next";
+import type {NextApiRequest, NextApiResponse} from "next";
 import axios from "axios";
 import https from "https";
 import fs from "fs";
 import path from "path";
-import { setCookie } from "cookies-next";
+import {hasCookie, setCookie} from "cookies-next";
 
 export default async function handler(
   req: NextApiRequest,
@@ -30,6 +30,7 @@ export default async function handler(
       httpOnly: true,
       // secure: true,
     });
+    console.log('===hasCookie("ESportCookie")===', hasCookie("ESportCookie"));
     res.status(200).json(data);
   }
   res.status(200).json({ message: "Hello World" });
