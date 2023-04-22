@@ -1,0 +1,15 @@
+.Icon {
+    fill: var(--color-text-main);
+}
+
+.s {
+    @apply w-[15px] h-[15px];
+}
+
+.m {
+    @apply w-[20px] h-[20px];
+}
+
+.l {
+    @apply w-[30px] h-[30px];
+}

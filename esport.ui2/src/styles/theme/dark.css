@@ -1,6 +1,23 @@
-.app_dark_theme {
-    --color-text-main: rgb(68, 64, 88);
+[data-theme='dark'] {
+    --color-text-main: rgb(211, 207, 234);
+    --color-text-accent: rgb(142, 92, 246);
+    --color-text-light: rgb(253, 252, 252);
+
+    --color-error-main: rgb(255, 51, 51);
 
     /*background*/
-    --color-bg-main: rgb(255, 255, 255);
+    --color-bg-main: rgb(40, 36, 61);
+    --color-bg-sub: rgb(64, 59, 95);
+    --color-bg-accent: rgb(142, 92, 246);
+    --color-bg-light: rgb(62, 54, 95);
+
+    /* card background*/
+    --color-card-bg-main: rgb(64, 59, 95);
+
+    /*gradient*/
+    --color-gradient-main-from: #6366f1;
+    --color-gradient-main-to: #a855f7;
+
+    --color-gradient-bg-from: #28243d;
+    --color-gradient-bg-to: #221f34;
 }

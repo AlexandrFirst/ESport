@@ -1,18 +1,35 @@
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import { GetServerSideProps } from "next";
-import { useTranslation } from "next-i18next";
+import { useSnackbar } from "@/features/Snackbar";
+import { Card } from "@/shared/ui";
 
 import styles from "@/styles/Home.module.css";
-import { useTheme } from "@/_app/Providers";
 
 import { MainLayout } from "@/widgets/MainLayout";
+import { GetServerSideProps } from "next";
+import { useTranslation } from "next-i18next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useEffect } from "react";
 
-export default function Home() {
+type Props = {
+  snackbar?: {
+    error?: string;
+    success?: string;
+  };
+};
+
+export default function Home({ snackbar, ...props }: Props) {
+  const { error, success } = snackbar ?? {};
   const { t } = useTranslation("common");
-  const { toggleTheme } = useTheme();
+
+  const { showError, showSuccess } = useSnackbar();
+
+  useEffect(() => {
+    success && showSuccess(success);
+    error && showError(error);
+  }, [showError, showSuccess]);
 
   return (
-    <MainLayout>
+    <MainLayout headProps={{ title: "E-Sport | Main" }}>
+      <Card>Card content</Card>
       <h1>{t("title")}</h1>
       <h1 className={styles.text}>Typography</h1>
       <h2>Typography</h2>
@@ -20,19 +37,28 @@ export default function Home() {
       <h4>Typography</h4>
       <h5>Typography</h5>
       <h6>Typography</h6>
-      <button onClick={toggleTheme}>Toggle</button>
     </MainLayout>
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async ({
+  locale,
+  defaultLocale,
+  query,
+  req,
+}) => {
   const localization = await serverSideTranslations(
-    ctx.locale ?? ctx.defaultLocale ?? "en",
+    locale ?? defaultLocale ?? "en",
     ["common"]
   );
+
   return {
     props: {
       ...localization,
+      snackbar: {
+        error: query?.error ?? "",
+        sucsess: query?.sucsess ?? "",
+      },
     },
   };
 };

@@ -1,0 +1,61 @@
+.input_label {
+  @apply text-theme-main focus:text-theme-main;
+}
+
+.input {
+  @apply text-theme-main rounded-lg;
+}
+
+.root fieldset {
+  @apply border-theme-main;
+}
+
+.focus fieldset {
+  @apply !border-theme-main;
+}
+
+.input svg {
+  @apply text-theme-main;
+}
+
+/*//--------------------------------------------*/
+
+.main_wrapper {
+  @apply transition-all my-7;
+}
+
+.wrapper {
+  @apply relative;
+}
+
+.text {
+  @apply text-theme-main;
+}
+
+.label {
+  @apply absolute top-[25%] left-2.5 focus:top-0 cursor-text font-semibold;
+}
+
+.input_1 {
+  @apply rounded-md bg-theme-main border-[1px] focus:border-2 focus:outline-0 min-h-[45px] border-theme-main w-[100%] px-2.5;
+}
+
+.input_1_error {
+  @apply border-theme-error;
+}
+
+.helper_text {
+  @apply text-left text-sm mb-2;
+}
+
+.error {
+  @apply text-theme-error;
+}
+
+.endIcon {
+  @apply absolute right-2.5 top-[15%] cursor-pointer;
+}
+
+.full_width {
+  @apply w-full;
+}

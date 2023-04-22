@@ -133,7 +133,7 @@ namespace IdentityV2.Infrastructure.Core
                 {
                     token = userToInsert.PendingUser.PendingToken.ToString(),
                     mail = userToInsert.Email,
-                    template = "<p>Click to confirm your account <a href='" + (isHttps ? "https" : "http") + "://" + mailOptions.ConfirmationHost + ":3000/user/confirm/{0}'>Confirm</a></p>"
+                    template = "<p>Click to confirm your account <a href='" + (isHttps ? "https" : "http") + "://" + mailOptions.ConfirmationHost + "/api/auth/confirm?token={0}'>Confirm</a></p>"
                 }, QueueConfigName.MessageConfig);
                 await dataContext.SaveChangesAsync();
 

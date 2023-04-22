@@ -1,0 +1,19 @@
+.wrapper {
+  @apply border-2 border-theme-accent rounded-md w-full bg-theme-light;
+}
+
+.pointer {
+  @apply cursor-pointer;
+}
+
+.fullwidth {
+  @apply w-full;
+}
+
+.text {
+  @apply text-start cursor-pointer;
+}
+
+.item {
+  @apply flex flex-row items-center justify-center;
+}

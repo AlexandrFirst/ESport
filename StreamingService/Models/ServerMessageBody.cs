@@ -2,7 +2,7 @@
 
 namespace StreamingService.Models
 {
-    public enum MessageType { Presenter = 1, Viewer = 2, Stop = 3, onIceCandidate = 4, StartRecording = 5, StopRecording = 6 }
+    public enum MessageType { Presenter = 1, Viewer = 2, Stop = 3, onIceCandidate = 4, StartRecording = 5, StopRecording = 6, ChatMessage = 7 }
 
     public class ServerMessageBody
     {

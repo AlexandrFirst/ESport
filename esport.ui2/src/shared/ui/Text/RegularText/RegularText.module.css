@@ -1,0 +1,3 @@
+.wrapper {
+  @apply leading-none font-medium;
+}

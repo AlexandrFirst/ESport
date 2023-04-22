@@ -6,10 +6,16 @@ import {
 } from "@reduxjs/toolkit";
 import { CombinedState } from "redux";
 
-import { LeftSidebarSliceState } from "../../../../features/LeftSidebar";
+import { UserSchema } from "@/entities/user";
+import { LeftSidebarSliceState } from "@/widgets/LeftSidebar";
+import { SnackbarSchema } from "@/features/Snackbar";
+import { DeviceSliceState } from "@/shared/model";
 
 export interface StateSchema {
   leftSidebar: LeftSidebarSliceState;
+  snackbar: SnackbarSchema;
+  user: UserSchema;
+  device: DeviceSliceState;
 }
 
 export type StateSchemaKey = keyof StateSchema;

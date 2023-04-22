@@ -1,6 +1,6 @@
 .layout {
     /*@apply bg-skin-main transition-all duration-500 dark:bg-darkSkin-main pr-6;*/
-    @apply bg-theme-main transition-all duration-500 pr-6;
+    @apply bg-gradient-to-r from-bg-main-from to-bg-main-to transition-all duration-500 pr-6;
 }
 
 .main {
@@ -17,4 +17,8 @@
 
 .pl_full {
     @apply pl-leftSidebarFull;
+}
+
+.pl_mobile {
+    @apply pl-leftSidebarMobile;
 }

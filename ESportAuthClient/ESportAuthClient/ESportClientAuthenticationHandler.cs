@@ -81,6 +81,7 @@ namespace ESportAuthClient.ESportAuthClient
             else
             {
                 var errorMessage = await authResponse.Content.ReadAsStringAsync();
+                Console.WriteLine("Error message: " + errorMessage);
                 return AuthenticateResult.Fail(errorMessage);
             }
 

@@ -1,0 +1,15 @@
+.form {
+  @apply flex flex-col items-center mx-auto lg:w-1/2;
+}
+
+.input:last-child {
+  @apply mt-8;
+}
+
+.btn_container {
+  @apply w-[100%] mt-5 text-right;
+}
+
+.full_width {
+  @apply w-full;
+}

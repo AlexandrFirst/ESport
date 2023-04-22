@@ -2,21 +2,26 @@ import React, { FC, ReactNode, useCallback } from "react";
 import styles from "./Layout.module.css";
 
 import cn from "classnames";
-import { useAppDispatch, useAppSelector } from "@/shared/lib";
+
+import { Head, HeadProps } from "@/features/Head";
+import { useAppDispatch, useAppSelector, useUserDevice } from "@/shared/lib";
+
+import { Header } from "@/widgets/Header";
 
 import {
   leftSidebarActions,
   selectIsSidebarOpened,
   Sidebar,
-} from "@/features/LeftSidebar";
-import { Header } from "@/features/Header";
+} from "@/widgets/LeftSidebar";
 
-interface LayoutProps {
+interface LayoutProps extends HeadProps {
   className?: string;
   children: ReactNode;
 }
 
-export const Layout: FC<LayoutProps> = ({ className, children }) => {
+export const Layout: FC<LayoutProps> = ({ className, headProps, children }) => {
+  const { isMobile } = useUserDevice();
+
   const isSidebarOpened = useAppSelector(selectIsSidebarOpened) ?? false;
   const dispatch = useAppDispatch();
 
@@ -26,19 +31,17 @@ export const Layout: FC<LayoutProps> = ({ className, children }) => {
     [dispatch]
   );
 
-  const paddingClasses = cn({
-    [styles.pl_compact]: !isSidebarOpened,
-    [styles.pl_full]: isSidebarOpened,
-  });
-  const layoutClassName = cn(
-    styles.layout,
-    styles.width100,
-    // isMobile ? "pl-layout-tablet" : paddingClasses
-    paddingClasses
-  );
+  const paddingClasses = isMobile
+    ? styles.pl_mobile
+    : cn({
+        [styles.pl_compact]: !isSidebarOpened,
+        [styles.pl_full]: isSidebarOpened,
+      });
+  const layoutClassName = cn(styles.layout, styles.width100, paddingClasses);
 
   return (
     <>
+      <Head {...headProps} />
       <Header />
       <main>
         <Sidebar

@@ -39,6 +39,8 @@ export const ThemeProvider: FC<ThemeProviderProps> = (props) => {
   }, [mounted]);
 
   return (
-    <ThemeContext.Provider value={context}>{children}</ThemeContext.Provider>
+    <ThemeContext.Provider value={context}>
+      <main className={theme}>{children}</main>
+    </ThemeContext.Provider>
   );
 };

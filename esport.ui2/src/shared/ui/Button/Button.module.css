@@ -1,0 +1,45 @@
+.contained {
+  @apply bg-theme-accent hover:opacity-80 active:opacity-60 shadow-xl hover:shadow-2xl;
+}
+
+.text svg path {
+  @apply text-theme-accent;
+}
+
+/* NEW BUTTON */
+
+.btnBase {
+  @apply rounded-md transition-all relative;
+}
+
+.btn {
+  @apply px-4 py-1.5 font-semibold rounded-md text-blue-100 transition-all bg-theme-accent min-h-[10px];
+}
+
+.disabled {
+  @apply opacity-60 hover:opacity-60;
+}
+
+.textVariant {
+  @apply text-theme-accent;
+}
+
+.full_width {
+  @apply w-full;
+}
+
+.outlined {
+  @apply text-theme-accent shadow-xl hover:shadow-2xl;
+}
+
+.checkmarkWrapper {
+  @apply absolute top-0 w-full h-full flex items-center justify-start;
+}
+
+.checkmarkWrapper svg {
+  @apply w-[20px] h-[20px];
+}
+
+.loaderWrapper {
+  @apply text-theme-main absolute top-0 left-0 w-full h-full flex items-center justify-center;
+}

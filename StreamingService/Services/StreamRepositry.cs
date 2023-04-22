@@ -1,9 +1,14 @@
 ﻿using Kurento.NET;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
 using StreamingService.DL;
 using StreamingService.DL.Models;
+using StreamingService.Hubs;
+using StreamingService.Models;
 using StreamingService.Models.Responses;
+using StreamingService.ReadModels;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -50,7 +55,8 @@ namespace StreamingService.Services
             else
             {
                 var isConnectionExists = userIdStreams.TryGetValue(streamId, out var connections);
-                if (!isConnectionExists) {
+                if (!isConnectionExists)
+                {
                     throw new Exception($"Stream with id: {streamId} does not exists");
                 }
 
@@ -61,10 +67,10 @@ namespace StreamingService.Services
             }
         }
 
-        public void RemoveStreamByConnectionId(string connectionId, Guid streamId) 
+        public void RemoveStreamByConnectionId(string connectionId, Guid streamId)
         {
             var streamExists = userIdStreams.Keys.Contains(streamId);
-            if (!streamExists) 
+            if (!streamExists)
             {
                 throw new Exception($"Unable to remove connection from unexisting stream with id: {streamId}");
             }
@@ -75,7 +81,7 @@ namespace StreamingService.Services
             }
 
             var connectionDeleted = connections.Remove(connectionId);
-            if (!connectionDeleted) 
+            if (!connectionDeleted)
             {
                 throw new Exception($"No connection with id {connectionId} is exists");
             }
@@ -97,10 +103,10 @@ namespace StreamingService.Services
                 throw new Exception($"Such connection with id {connectionId} is already exists");
             }
         }
-        public void RemoveUserConnectionId(string connectionId) 
+        public void RemoveUserConnectionId(string connectionId)
         {
             var removedConnectionsIdStatus = connectionUserId.TryRemove(connectionId, out var removedUserId);
-            if (!removedConnectionsIdStatus) 
+            if (!removedConnectionsIdStatus)
             {
                 throw new Exception($"Connection with id {connectionId} to remove is not found");
             }
@@ -130,11 +136,11 @@ namespace StreamingService.Services
 
             var streamProvider = scope.ServiceProvider.GetRequiredService<StreamProvider>();
             var isPresenterStarted = streamProviders.TryAdd(stream.EventId, streamProvider);
-            if (!isPresenterStarted) 
+            if (!isPresenterStarted)
             {
                 throw new Exception($"Presenter for stream with event id: {stream.EventId} is not started; such stream exists");
             }
-            
+
             var presenterResponse = await streamProvider.StartPresenter(organiserId.ToString(), sdpOffer);
 
             return presenterResponse;
@@ -204,5 +210,11 @@ namespace StreamingService.Services
             return streamProvider;
         }
 
+        public async Task<bool> SendMessageToStreamChat(Guid streamId, ChatMessageInfo chatMessageInfo)
+        {
+            var streamProvider = await getStreamProvider(streamId);
+            await streamProvider.SendMessage(chatMessageInfo);
+            return true;
+        }
     }
 }

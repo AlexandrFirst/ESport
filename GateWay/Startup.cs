@@ -41,7 +41,7 @@ namespace GateWay
             services.AddCors(options => options.AddPolicy("ESportCors", builder =>
             {
                 builder.WithOrigins("http://localhost:3000", "http://localhost:6005", "http://localhost:4200",
-                    "https://e-sport.cloud", "https://e-sport.cloud:4200")
+                    "https://e-sport.cloud", "https://e-sport.cloud:4201")
                        .AllowAnyMethod()
                        .AllowAnyHeader()
                        .AllowCredentials();
@@ -70,18 +70,20 @@ namespace GateWay
                     {
                         try
                         {
+                            Console.WriteLine("Before: " + context.Request.Path);
                             await next.Invoke();
+                            Console.WriteLine("After: " + context.Request.Path);
                         }
                         catch (Exception ex)
                         {
                             context.Response.StatusCode = 500;
-
                             var messageError = new
                             {
                                 Message = ex.Message
                             };
 
                             await context.Response.BodyWriter.WriteAsync(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(messageError)));
+
                             return;
                         }
                     }

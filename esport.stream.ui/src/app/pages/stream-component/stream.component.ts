@@ -42,6 +42,8 @@ export class StreamComponent implements OnInit {
   private hubConnection: HubConnection;
   private webRtcPeer: kurentoUtils.WebRtcPeer
 
+  public chatMessages: string[] = [];
+
   get videoDevices(): MediaModel[] {
     return this.allMediaDevices.filter(x => x.MediaDeviceType == MediaType.VIDEO);
   }
@@ -256,7 +258,29 @@ export class StreamComponent implements OnInit {
       localVideo: this.videoElement.nativeElement,
       mediaConstraints: constraints,
       configuration: [
-        { "urls": "turn:relay.metered.ca:80", "username": "e76b1e18382eb8485e4ced0f", "credential": "awmeGuNs0IsK0VkM" }
+        {
+          urls: "stun:a.relay.metered.ca:80",
+        },
+        {
+          urls: "turn:a.relay.metered.ca:80",
+          username: "e76b1e18382eb8485e4ced0f",
+          credential: "awmeGuNs0IsK0VkM",
+        },
+        {
+          urls: "turn:a.relay.metered.ca:80?transport=tcp",
+          username: "e76b1e18382eb8485e4ced0f",
+          credential: "awmeGuNs0IsK0VkM",
+        },
+        {
+          urls: "turn:a.relay.metered.ca:443",
+          username: "e76b1e18382eb8485e4ced0f",
+          credential: "awmeGuNs0IsK0VkM",
+        },
+        {
+          urls: "turn:a.relay.metered.ca:443?transport=tcp",
+          username: "e76b1e18382eb8485e4ced0f",
+          credential: "awmeGuNs0IsK0VkM",
+        },
       ],
       onicecandidate: (candidate: any) => {
         const data = {
@@ -272,8 +296,11 @@ export class StreamComponent implements OnInit {
         console.log("[presenter] WebRtcPeerSendonly: ", error);
         return;
       }
-      this.webRtcPeer?.generateOffer((error: any | undefined, sdp: string) => { this.onOfferPresenter(error, sdp) });
+      this.webRtcPeer?.generateOffer((_error: any | undefined, sdp: string) => { 
+         this.onOfferPresenter(_error, sdp) 
+      });
     })
+    console.log('presenter peer connection', this.webRtcPeer)
   }
 
   public viewer() {
@@ -287,7 +314,29 @@ export class StreamComponent implements OnInit {
     var options = {
       remoteVideo: this.videoElement.nativeElement,
       configuration: [
-        { "urls": "turn:relay.metered.ca:80", "username": "e76b1e18382eb8485e4ced0f", "credential": "awmeGuNs0IsK0VkM" }
+        {
+          urls: "stun:a.relay.metered.ca:80",
+        },
+        {
+          urls: "turn:a.relay.metered.ca:80",
+          username: "e76b1e18382eb8485e4ced0f",
+          credential: "awmeGuNs0IsK0VkM",
+        },
+        {
+          urls: "turn:a.relay.metered.ca:80?transport=tcp",
+          username: "e76b1e18382eb8485e4ced0f",
+          credential: "awmeGuNs0IsK0VkM",
+        },
+        {
+          urls: "turn:a.relay.metered.ca:443",
+          username: "e76b1e18382eb8485e4ced0f",
+          credential: "awmeGuNs0IsK0VkM",
+        },
+        {
+          urls: "turn:a.relay.metered.ca:443?transport=tcp",
+          username: "e76b1e18382eb8485e4ced0f",
+          credential: "awmeGuNs0IsK0VkM",
+        },
       ],
       onicecandidate: (candidate: any) => {
         const data = {
@@ -304,8 +353,11 @@ export class StreamComponent implements OnInit {
         console.log("[viewer] WebRtcPeerSendonly: ", error);
         return;
       }
-      this.webRtcPeer?.generateOffer((error: any | undefined, sdp: string) => { this.onOfferViewer(error, sdp) });
+      this.webRtcPeer?.generateOffer((_error: any | undefined, sdp: string) => {
+        setTimeout(() => this.onOfferViewer(_error, sdp), 1000)
+      });
     })
+    console.log('viewer peer connection', this.webRtcPeer)
   }
 
   public stop() {
@@ -351,6 +403,11 @@ export class StreamComponent implements OnInit {
           console.log('Ice candidate: ', parsedMessage);
           this.webRtcPeer?.addIceCandidate(parsedMessage)
           break;
+        case 'ChatMessage':
+          console.log('chatMessage: ', parsedMessage);
+          this.chatMessages.push(parsedMessage.Message);
+          console.log(this.chatMessages)
+          break;
         default:
           console.log('unrecognised message: ', parsedMessage);
       }
@@ -358,9 +415,7 @@ export class StreamComponent implements OnInit {
 
   }
 
-
   private onIceCandidate(candidate: any) {
-    debugger;
     console.log('local candidate: ', candidate);
     var message: ClientMessage = {
       body: JSON.stringify(candidate)
@@ -424,9 +479,29 @@ export class StreamComponent implements OnInit {
       return;
     }
     else {
-      this.webRtcPeer?.processAnswer(parsedMessage.sdpAnswer);
-      this.isCommunicationOn = true;
-      this.isConnecting = false;
+      this.webRtcPeer?.processAnswer(parsedMessage.sdpAnswer, (error: string | undefined) => {
+        if (error) console.error(error)
+        else {
+          console.log('connection is established')
+          this.isCommunicationOn = true;
+          this.isConnecting = false;
+        }
+      });
+    }
+  }
+
+  public sendMessageToChat(inputField: any) {
+    const val = inputField?.value
+    if (val) {
+      const data = {
+        streamId: this.streamId,
+        message: val
+      }
+      var message: ClientMessage = {
+        body: JSON.stringify(data)
+      };
+
+      this.sendMessage(MessageType.ChatMessage, message)
     }
   }
 
@@ -438,18 +513,26 @@ export class StreamComponent implements OnInit {
       return;
     }
     else {
-      this.webRtcPeer?.processAnswer(parsedMessage.sdpAnswer);
-      this.isCommunicationOn = true;
-      this.isConnecting = false;
+      this.webRtcPeer?.processAnswer(parsedMessage.sdpAnswer, (error: string | undefined) => {
+        if (error) { console.error(error) }
+        else {
+          console.log('connection is established')
+          this.isCommunicationOn = true;
+          this.isConnecting = false;
+        }
+      });
     }
   }
 
-  private dispose() {
+  private dispose(message: string = 'ok') {
     if (this.isConnectionSetup) {
       this.webRtcPeer?.dispose();
       this.isCommunicationOn = false;
-
-      //redirect to home page
+      this.router.navigate(["streams"], {
+        queryParams: {
+          "messsage": message
+        }
+      })
     }
   }
 }

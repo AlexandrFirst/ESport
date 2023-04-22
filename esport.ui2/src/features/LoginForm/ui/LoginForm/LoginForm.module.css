@@ -1,0 +1,27 @@
+.form {
+  @apply text-center w-80;
+}
+
+.form_mobile {
+  @apply w-full;
+}
+
+.input {
+  @apply my-10;
+}
+
+.link {
+  @apply float-right;
+}
+
+.btn {
+  @apply w-full my-5;
+}
+
+.text {
+  @apply text-theme-main;
+}
+
+.divider {
+  @apply px-3;
+}

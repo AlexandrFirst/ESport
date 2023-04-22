@@ -204,3 +204,4 @@ services:
       - '5005:80'
     extra_hosts:
       - "host.docker.internal:host-gateway"
+

@@ -1,0 +1,3 @@
+.content {
+    @apply flex bg-theme-main h-full min-h-screen bg-gradient-to-r from-bg-main-from to-bg-main-to;
+}

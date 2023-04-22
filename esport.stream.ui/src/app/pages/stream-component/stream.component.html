@@ -4,35 +4,13 @@
         <div class="row m-auto justify-content-center">
             <div *ngIf="isCommunicationOn" class="col-3"
                 style="display: block; position: relative; background-color: rgba(0, 0, 0, 0.034); overflow-y: scroll; height: 400px;">
-                <div>Some message</div>
-                <div>Some message</div>
-                <div>Some message</div>
-                <div>Some message</div>
-                <div>Some message</div>
-                <div>Some message</div>
-                <div>Some message</div>
-                <div>Some message</div>
-                <div>Some message</div>
-                <div>Some message</div>
-                <div>Some message</div>
-                <div>Some message</div>
-                <div>Some message</div>
-                <div>Some message</div>
-                <div>Some message</div>
-                <div>Some message</div>
-                <div>Some message</div>
-                <div>Some message</div>
-                <div>Some message</div>
-                <div>Some message</div>
-                <div>Some message</div>
-                <div>Some message</div>
-                <div>Some message</div>
-                <div>Some message</div>
+                <div *ngFor="let message of chatMessages">{{message}}</div>
                 <div class="sticky-bottom">
                     <form>
                         <div class="input-group">
-                            <input type="text" class="form-control">
-                            <button class="btn btn-primary">Send message</button>
+                            <input type="text" class="form-control" #messageText>
+                            <button class="btn btn-primary" (click)="sendMessageToChat(messageText)">Send
+                                message</button>
                         </div>
                     </form>
                 </div>
@@ -69,11 +47,14 @@
             </div>
         </div>
         <div class="d-flex justify-content-center mt-3">
-            <button class="btn btn-primary me-2" (click)="presenter()" *ngIf="userInfo.isOrganizer" [disabled]="isCommunicationOn">Start
+            <button class="btn btn-primary me-2" (click)="presenter()" *ngIf="userInfo.isOrganizer"
+                [disabled]="isCommunicationOn">Start
                 stream</button>
-            <button class="btn btn-primary me-2" (click)="viewer()" *ngIf="!userInfo.isOrganizer" [disabled]="!isConnectionSetup">Join
+            <button class="btn btn-primary me-2" (click)="viewer()" *ngIf="!userInfo.isOrganizer"
+                [disabled]="isCommunicationOn">Join
                 stream</button>
-            <button class="btn btn-warning me-2" (click)="record()" *ngIf="userInfo.isOrganizer" [disabled]="!isCommunicationOn">Record
+            <button class="btn btn-warning me-2" (click)="record()" *ngIf="userInfo.isOrganizer"
+                [disabled]="!isCommunicationOn">Record
                 stream</button>
             <button class="btn btn-danger ms-2" (click)="stop()" [disabled]="!isCommunicationOn">
                 <span *ngIf="userInfo.isOrganizer">Stop</span>
