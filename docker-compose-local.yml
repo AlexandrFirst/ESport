@@ -29,9 +29,9 @@ services:
       - '15672:15672'
       - '5672:5672'
   kurrento:
-    image: kurento/kurento-media-server:6.18.0
     container_name: kurento
     restart: on-failure
+    entrypoint: [ "bash", "-c", "echo 'hello world'"]
     environment:
       - KMS_MIN_PORT=5000
       - KMS_MAX_PORT=5050
@@ -42,6 +42,8 @@ services:
       - '8888:8888'
     volumes:
       - ./records:/tmp
+      - ./kconfig:/etc/kurento/
+      - ./certificates:/cerfs
   identity:
     image: diplom_identity
     build:
