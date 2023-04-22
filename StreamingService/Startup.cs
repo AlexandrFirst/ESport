@@ -61,6 +61,7 @@ namespace StreamingService
                        .AllowCredentials();
             }));
 
+        
             services.AddTransient<StreamProvider>();
             services.AddTransient<UploadFileService>();
             services.AddSingleton<StreamRepositry>();
@@ -88,8 +89,7 @@ namespace StreamingService
                 endpoints.MapHub<KurrentoHub>("/kurrento", options =>
                 {
                     options.Transports =
-                       HttpTransportType.WebSockets |
-                       HttpTransportType.LongPolling;
+                       HttpTransportType.WebSockets;
                 });
             });
         }

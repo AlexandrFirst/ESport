@@ -354,7 +354,7 @@ export class StreamComponent implements OnInit {
         return;
       }
       this.webRtcPeer?.generateOffer((_error: any | undefined, sdp: string) => {
-        setTimeout(() => this.onOfferViewer(_error, sdp), 1000)
+        this.onOfferViewer(_error, sdp)
       });
     })
     console.log('viewer peer connection', this.webRtcPeer)
