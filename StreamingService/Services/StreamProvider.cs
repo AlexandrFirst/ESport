@@ -87,7 +87,7 @@ namespace StreamingService.Services
         {
             logger.LogDebug($"Starting presenter with connection id: {userId}");
 
-            clearCandidateQueue(userId);
+            //clearCandidateQueue(userId);
 
             if (presenter != null)
             {
@@ -170,11 +170,13 @@ namespace StreamingService.Services
                 });
             };
 
-
+            Console.WriteLine("Processing presenter offer");
             var sdpAnswer = await webRtcEndPoint.ProcessOfferAsync(sdpOffer);
             presenter.MediaPipeline = mediaPipeline;
             presenter.WebRtcEndpoint = webRtcEndPoint;
 
+
+            Console.WriteLine("Processing presenter answer");
             return new PresenterResponse() { IsSuccess = true, SdpAnswer = sdpAnswer, Endpoint = webRtcEndPoint };
 
         }
@@ -260,7 +262,7 @@ namespace StreamingService.Services
 
         public async Task<ViewerResponse> StartViewer(string userId, string sdpOffer)
         {
-            clearCandidateQueue(userId);
+           // clearCandidateQueue(userId);
             if (presenter == null)
             {
                 await Stop(userId);
@@ -339,8 +341,6 @@ namespace StreamingService.Services
             var sdpAnswer = await webRtcEndPoint.ProcessOfferAsync(sdpOffer);
 
             await presenter.WebRtcEndpoint.ConnectAsync(webRtcEndPoint);
-
-            //await webRtcEndPoint.GatherCandidatesAsync();
 
             return new ViewerResponse() { IsSuccess = true, SdpAnswer = sdpAnswer, Endpoint = webRtcEndPoint };
 

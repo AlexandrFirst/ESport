@@ -82,16 +82,17 @@ namespace StreamingService.Hubs
 
             try
             {
-
+                Console.WriteLine($"Sending request {messageType.ToString()} from user" + userId.ToString() + "| " + messageBody ?? string.Empty);
                 switch (messageType)
                 {
                     case MessageType.Presenter:
                         var presentorRequest = messageBody.GetMessageBody<PresenterRequest>();
+                        Console.WriteLine("Sending presenter request from user" + userId.ToString() + "| " + messageBody);
 
                         var presenterResponse = await streamRepositry.StartStream(presentorRequest.StreamId, userId, presentorRequest.SdpOffer);
                         if (!presenterResponse.IsSuccess)
                         {
-
+                            Console.WriteLine("Sending bad presenter response to user" + userId.ToString());
                             await Clients.Group(userId.ToString()).Send(new ClientMessageBody()
                             {
                                 Id = "presenterResponse",
@@ -101,6 +102,7 @@ namespace StreamingService.Hubs
                         else
                         {
                             streamRepositry.SetStreamByConnectionId(Context.ConnectionId, presentorRequest.StreamId);
+                            Console.WriteLine("Sending good presenter response to user" + userId.ToString());
                             await Clients.Group(userId.ToString()).Send(new ClientMessageBody()
                             {
                                 Id = "presenterResponse",
