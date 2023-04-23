@@ -7,3 +7,4 @@ export { useModal } from "./hooks/useModal";
 export { useUserDevice } from "./hooks/useUserDevice";
 
 export { getDeviceDetect } from "./utils/detect-device";
+export { addMonths } from "./utils/add-month";
