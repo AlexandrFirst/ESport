@@ -31,7 +31,7 @@
             "port": 8433,
             "//": "Path (absolute or relative to this config file) to the",
             "//": "concatenated certificate (chain) file(s) + private key, in PEM format",
-            "certificate": "/cerfs/k.pem",
+            "certificate": "/cerfs/k3.pem",
             "//": "Password for the private key, if one was set when the key was created",
             "password": "1234"
           },
