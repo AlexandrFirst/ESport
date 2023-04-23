@@ -204,4 +204,14 @@ services:
       - '5005:80'
     extra_hosts:
       - "host.docker.internal:host-gateway"
+  nginxlocal:
+    image: 12345flex402/nginxlocal
+    user: root
+    build:
+      context: .
+      dockerfile: ./deploy/UserWorkflow.Dockerfile
+    ports:
+      - '443:443'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 

@@ -38,7 +38,19 @@ namespace GateWay
                        webBuilder.UseStartup<Startup>();
                        webBuilder.UseKestrel(o =>
                        {
-                           o.Listen(IPAddress.Any, 443, opt => opt.UseHttps(".cerfs/key.pfx", "1234"));
+                           o.Listen(IPAddress.Any, 443, opt => 
+                           {
+                               var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+                               if (env == "Local") 
+                               {
+                                   opt.UseHttps(".cerfs/localhost.pfx", "1234");
+                               }
+                               else
+                               {
+
+                                   opt.UseHttps(".cerfs/key.pfx", "1234");
+                               }
+                           });
                            o.Listen(IPAddress.Any, 5002);
                        });
                    });

@@ -183,8 +183,11 @@ namespace StreamingService.Services
 
             }catch(Exception ex)
             {
+                string message = ex.Message + " | " + ex.InnerException.Message;
+                logger.LogError(message);
+
                 await Stop(userId);
-                return new PresenterResponse() { IsSuccess = false, Errors = new List<string>() { ex.Message + " | " + ex.InnerException.Message } };
+                return new PresenterResponse() { IsSuccess = false, Errors = new List<string>() { message } };
             }
 
         }
