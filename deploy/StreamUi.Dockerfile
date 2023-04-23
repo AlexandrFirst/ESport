@@ -6,7 +6,7 @@ RUN npm install
 RUN npm install -g @angular/cli@latest
 
 COPY . /app
-ARG NODE_ENV=production
+ENV NODE_ENV=production
 RUN ng build --configuration=${NODE_ENV} --output-path=dist
 
 FROM nginx:1.16.0-alpine

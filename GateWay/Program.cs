@@ -16,6 +16,8 @@ namespace GateWay
     {
         public static void Main(string[] args)
         {
+            var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            Console.WriteLine("Current environment: " + env);
             CreateHostBuilder(args).Build().Run();
         }
 
@@ -43,6 +45,8 @@ namespace GateWay
                                var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
                                if (env == "Local") 
                                {
+                                   var isKeyFileExists = File.Exists(".cerfs/localhost.pfx");
+                                   if (!isKeyFileExists) { Console.WriteLine("File doesn't exists: " + ".cerfs/localhost.pfx"); }
                                    opt.UseHttps(".cerfs/localhost.pfx", "1234");
                                }
                                else
