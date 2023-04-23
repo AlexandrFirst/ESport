@@ -140,44 +140,52 @@ namespace StreamingService.Services
                 return new PresenterResponse() { IsSuccess = false, Errors = new List<string>() { "Error while creating kurento client" } };
             }
 
-            var mediaPipeline = await kurentoClient.CreateAsync(new MediaPipeline());
-
-            var webRtcEndPoint = await kurentoClient.CreateAsync(new WebRtcEndpoint(mediaPipeline, recvonly: false, sendonly: true, useDataChannels: true));
-
-
-            await webRtcEndPoint.SetMinOutputBitrateAsync(30);
-            await webRtcEndPoint.SetMaxOutputBitrateAsync(100);
-
-            await webRtcEndPoint.SetMinVideoSendBandwidthAsync(30);
-            await webRtcEndPoint.SetMaxVideoSendBandwidthAsync(100);
-
-
-            while (candidateQueue[userId].TryDequeue(out var candidate))
+            try
             {
-                await webRtcEndPoint.AddIceCandidateAsync(candidate.IceCandidate);
-            }
+                var mediaPipeline = await kurentoClient.CreateAsync(new MediaPipeline());
 
-            webRtcEndPoint.IceCandidateFound += (IceCandidateFoundEventArgs obj) =>
-            {
-                using var scope = serviceProvider.CreateScope();
-                var signalHubInstance = scope.ServiceProvider.GetRequiredService<IHubContext<KurrentoHub, IKurentoHubClient>>();
+                var webRtcEndPoint = await kurentoClient.CreateAsync(new WebRtcEndpoint(mediaPipeline, recvonly: false, sendonly: true, useDataChannels: true));
 
-                var cadidate = obj.candidate;
-                signalHubInstance.Clients.Group(userId).Send(new ClientMessageBody()
+
+                await webRtcEndPoint.SetMinOutputBitrateAsync(30);
+                await webRtcEndPoint.SetMaxOutputBitrateAsync(100);
+
+                await webRtcEndPoint.SetMinVideoSendBandwidthAsync(30);
+                await webRtcEndPoint.SetMaxVideoSendBandwidthAsync(100);
+
+
+                while (candidateQueue[userId].TryDequeue(out var candidate))
                 {
-                    Id = "iceCandidate",
-                    Body = JsonConvert.SerializeObject(cadidate)
-                });
-            };
+                    await webRtcEndPoint.AddIceCandidateAsync(candidate.IceCandidate);
+                }
 
-            Console.WriteLine("Processing presenter offer");
-            var sdpAnswer = await webRtcEndPoint.ProcessOfferAsync(sdpOffer);
-            presenter.MediaPipeline = mediaPipeline;
-            presenter.WebRtcEndpoint = webRtcEndPoint;
+                webRtcEndPoint.IceCandidateFound += (IceCandidateFoundEventArgs obj) =>
+                {
+                    using var scope = serviceProvider.CreateScope();
+                    var signalHubInstance = scope.ServiceProvider.GetRequiredService<IHubContext<KurrentoHub, IKurentoHubClient>>();
+
+                    var cadidate = obj.candidate;
+                    signalHubInstance.Clients.Group(userId).Send(new ClientMessageBody()
+                    {
+                        Id = "iceCandidate",
+                        Body = JsonConvert.SerializeObject(cadidate)
+                    });
+                };
+
+                Console.WriteLine("Processing presenter offer");
+                var sdpAnswer = await webRtcEndPoint.ProcessOfferAsync(sdpOffer);
+                presenter.MediaPipeline = mediaPipeline;
+                presenter.WebRtcEndpoint = webRtcEndPoint;
 
 
-            Console.WriteLine("Processing presenter answer");
-            return new PresenterResponse() { IsSuccess = true, SdpAnswer = sdpAnswer, Endpoint = webRtcEndPoint };
+                Console.WriteLine("Processing presenter answer");
+                return new PresenterResponse() { IsSuccess = true, SdpAnswer = sdpAnswer, Endpoint = webRtcEndPoint };
+
+            }catch(Exception ex)
+            {
+                await Stop(userId);
+                return new PresenterResponse() { IsSuccess = false, Errors = new List<string>() { ex.Message + " | " + ex.InnerException.Message } };
+            }
 
         }
 
@@ -414,7 +422,8 @@ namespace StreamingService.Services
 
             try
             {
-                var _kurentoClient = new KurentoClient(kurrentoOptions.WsUri) { };
+                logger.LogDebug("Connecting to kurrento media server: " + kurrentoOptions.WsUri);
+                var _kurentoClient = new KurentoClient(kurrentoOptions.WsUri, logger) { };
                 return _kurentoClient;
             }
             catch (Exception ex)
