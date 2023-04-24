@@ -1,0 +1,32 @@
+﻿{
+  "ReRoutes": [
+    {
+      "DownstreamPathTemplate": "/api/v1/competitions/all",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "host.docker.internal",
+          "Port": 3001
+        }
+      ],
+      "UpstreamPathTemplate": "/api/competitions/all",
+      "UpstreamHttpMethod": [
+        "Get"
+      ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/v1/competitions/create",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "host.docker.internal",
+          "Port": 3001
+        }
+      ],
+      "UpstreamPathTemplate": "/api/competitions/create",
+      "UpstreamHttpMethod": [
+        "Post"
+      ]
+    }
+  ]
+}

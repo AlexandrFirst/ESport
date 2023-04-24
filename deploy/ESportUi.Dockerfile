@@ -3,7 +3,8 @@ WORKDIR /opt/app
 ADD package.json package.json
 RUN npm install --force
 ADD . .
-ENV NODE_ENV production
+ARG NODE_ENV=production
+ENV NODE_ENV=${NODE_ENV}
 RUN npm run build
 RUN #npm prune --production
 CMD ["npm", "start"]
