@@ -60,7 +60,7 @@ services:
     volumes:
       - ./records:/tmp
       - ./certificates:/cerfs
-      - ./kconfig/kurento.conf.json:/etc/kurento/kurento.conf-local.json
+      - ./kconfig/kurento-local.conf.json:/etc/kurento/kurento.conf.json
     extra_hosts:
       - "host.docker.internal:host-gateway"
   identity:
@@ -148,10 +148,8 @@ services:
     container_name: stream-ui
     build:
       context: ./esport.stream.ui
-      dockerfile: ../deploy/StreamUi.Dockerfile
+      dockerfile: ../deploy/StreamUi-local.Dockerfile
     restart: on-failure
-    environment:
-      - NODE_ENV=local
     ports:
       - '4201:443'
       - '4200:80'

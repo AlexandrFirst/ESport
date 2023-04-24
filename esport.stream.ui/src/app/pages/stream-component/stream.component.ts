@@ -259,27 +259,27 @@ export class StreamComponent implements OnInit {
       mediaConstraints: constraints,
       configuration: [
         {
-          urls: "stun:a.relay.metered.ca:80",
+          "urls": "stun:a.relay.metered.ca:80",
         },
         {
-          urls: "turn:a.relay.metered.ca:80",
-          username: "e76b1e18382eb8485e4ced0f",
-          credential: "awmeGuNs0IsK0VkM",
+          "urls": "turn:a.relay.metered.ca:80",
+          "username": "e76b1e18382eb8485e4ced0f",
+          "credential": "awmeGuNs0IsK0VkM",
         },
         {
-          urls: "turn:a.relay.metered.ca:80?transport=tcp",
-          username: "e76b1e18382eb8485e4ced0f",
-          credential: "awmeGuNs0IsK0VkM",
+          "urls": "turn:a.relay.metered.ca:80?transport=tcp",
+          "username": "e76b1e18382eb8485e4ced0f",
+          "credential": "awmeGuNs0IsK0VkM",
         },
         {
-          urls: "turn:a.relay.metered.ca:443",
-          username: "e76b1e18382eb8485e4ced0f",
-          credential: "awmeGuNs0IsK0VkM",
+          "urls": "turn:a.relay.metered.ca:443",
+          "username": "e76b1e18382eb8485e4ced0f",
+          "credential": "awmeGuNs0IsK0VkM",
         },
         {
-          urls: "turn:a.relay.metered.ca:443?transport=tcp",
-          username: "e76b1e18382eb8485e4ced0f",
-          credential: "awmeGuNs0IsK0VkM",
+          "urls": "turn:a.relay.metered.ca:443?transport=tcp",
+          "username": "e76b1e18382eb8485e4ced0f",
+          "credential": "awmeGuNs0IsK0VkM",
         },
       ],
       onicecandidate: (candidate: any) => {
@@ -315,27 +315,27 @@ export class StreamComponent implements OnInit {
       remoteVideo: this.videoElement.nativeElement,
       configuration: [
         {
-          urls: "stun:a.relay.metered.ca:80",
+          "urls": "stun:a.relay.metered.ca:80",
         },
         {
-          urls: "turn:a.relay.metered.ca:80",
-          username: "e76b1e18382eb8485e4ced0f",
-          credential: "awmeGuNs0IsK0VkM",
+          "urls": "turn:a.relay.metered.ca:80",
+          "username": "e76b1e18382eb8485e4ced0f",
+          "credential": "awmeGuNs0IsK0VkM",
         },
         {
-          urls: "turn:a.relay.metered.ca:80?transport=tcp",
-          username: "e76b1e18382eb8485e4ced0f",
-          credential: "awmeGuNs0IsK0VkM",
+          "urls": "turn:a.relay.metered.ca:80?transport=tcp",
+          "username": "e76b1e18382eb8485e4ced0f",
+          "credential": "awmeGuNs0IsK0VkM",
         },
         {
-          urls: "turn:a.relay.metered.ca:443",
-          username: "e76b1e18382eb8485e4ced0f",
-          credential: "awmeGuNs0IsK0VkM",
+          "urls": "turn:a.relay.metered.ca:443",
+          "username": "e76b1e18382eb8485e4ced0f",
+          "credential": "awmeGuNs0IsK0VkM",
         },
         {
-          urls: "turn:a.relay.metered.ca:443?transport=tcp",
-          username: "e76b1e18382eb8485e4ced0f",
-          credential: "awmeGuNs0IsK0VkM",
+          "urls": "turn:a.relay.metered.ca:443?transport=tcp",
+          "username": "e76b1e18382eb8485e4ced0f",
+          "credential": "awmeGuNs0IsK0VkM",
         },
       ],
       onicecandidate: (candidate: any) => {

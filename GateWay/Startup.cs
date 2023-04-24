@@ -41,7 +41,8 @@ namespace GateWay
             services.AddCors(options => options.AddPolicy("ESportCors", builder =>
             {
                 builder.WithOrigins("http://localhost:3000", "http://localhost:6005", "http://localhost:4200",
-                    "https://e-sport.cloud", "https://e-sport.cloud:4201")
+                    "https://e-sport.cloud", "https://e-sport.cloud:4201", "https://localhost", "https://localhost:443", "https://localhost:80",
+                    "https://localhost:4201")
                        .AllowAnyMethod()
                        .AllowAnyHeader()
                        .AllowCredentials();

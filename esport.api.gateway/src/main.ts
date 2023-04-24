@@ -41,7 +41,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.enableCors({
     credentials: true,
-    origin: ["https://e-sport.cloud", "https://e-sport.cloud:4201", "http://localhost", "http://localhost:3001", "http://localhost:3000"],
+    origin: ["https://e-sport.cloud", "https://e-sport.cloud:4201", "http://localhost", "http://localhost:3001", "http://localhost:3000", "https://localhost", "https://localhost:443", "https://localhost:80"],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     optionsSuccessStatus: 204
   });

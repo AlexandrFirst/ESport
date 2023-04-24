@@ -19,7 +19,16 @@
     <Content Update="Configuration\Development\main.ocelot.Development.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Update="Configuration\Local\main.ocelot.Production.json">
+    <Content Update="Configuration\Local\apiGateway.ocelot.Local.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Configuration\Local\main.ocelot.Local.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Configuration\Local\ocelot.global.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Configuration\Local\streaming.ocelot.Local.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Update="Configuration\Production\main.ocelot.Production.json">
