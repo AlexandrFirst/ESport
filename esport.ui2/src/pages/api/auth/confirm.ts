@@ -20,10 +20,10 @@ export default async function handler(
       //   "http://localhost:3001/api/v1/competitions/all"
       // );
       console.log("===data===", data);
-      res.redirect(`${routes.Main}?success=Account activated`);
+      res.redirect(`${routes.Home}?success=Account activated`);
     } catch (e: any) {
       res.redirect(
-        `${routes.Main}?error=${e.message ?? "Something went wrong"}`
+        `${routes.Home}?error=${e.message ?? "Something went wrong"}`
       );
     }
   }

@@ -1,9 +1,7 @@
-import React, { FC, memo, RefObject, useEffect, useRef, useState } from "react";
-import styles from "./SnackbarToast.module.css";
+import React, { FC, useEffect, useRef, useState } from "react";
 import { Toast, ToastProps } from "@/shared/ui";
-import { useAppDispatch, useAppSelector } from "@/shared/lib";
-import { snackbarActions } from "@/features/Snackbar";
-import { selectPosition } from "@/features/Snackbar/model/selectors/selectPosition/selectPosition";
+
+import { useSnackbarActions } from "../../model/slices/SnackbarSlice";
 
 export interface SnackbarToastProps
   extends Omit<ToastProps, "remove" | "progress"> {
@@ -13,14 +11,14 @@ export interface SnackbarToastProps
 export const SnackbarToast: FC<SnackbarToastProps> = (props) => {
   const { id, duration, position, ...other } = props;
 
-  const dispatch = useAppDispatch();
+  const { removeSnack } = useSnackbarActions();
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   const handleRemove = (id: number) => {
     wrapperRef?.current?.classList.add("animate-toastOut");
 
     wrapperRef?.current?.addEventListener("animationend", () => {
-      dispatch(snackbarActions.remove({ toastId: id }));
+      removeSnack({ toastId: id });
     });
   };
 
@@ -31,7 +29,7 @@ export const SnackbarToast: FC<SnackbarToastProps> = (props) => {
       dismissRef.current = setTimeout(() => {
         wrapperRef?.current?.classList.add("animate-toastOut");
         wrapperRef?.current?.addEventListener("animationend", () => {
-          dispatch(snackbarActions.remove({ toastId: id }));
+          removeSnack({ toastId: id });
         });
       }, duration);
     }

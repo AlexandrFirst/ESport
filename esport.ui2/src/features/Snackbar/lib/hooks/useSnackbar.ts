@@ -1,11 +1,10 @@
-import { useAppDispatch } from "@/shared/lib";
-import { ToastPositionType, ToastProps } from "@/shared/ui";
-
-import { snackbarActions } from "../../model/slices/SnackbarSlice";
 import { useCallback } from "react";
+import { ToastProps } from "@/shared/ui";
+
+import { useSnackbarActions } from "../../model/slices/SnackbarSlice";
 
 export const useSnackbar = () => {
-  const dispatch = useAppDispatch();
+  const { addSnack } = useSnackbarActions();
 
   const showSuccess = useCallback(
     (
@@ -13,16 +12,14 @@ export const useSnackbar = () => {
       config?: Pick<Partial<ToastProps>, "position" | "duration">
     ) => {
       const { duration = 3000, position = "bottomLeft" } = config || {};
-      dispatch(
-        snackbarActions.add({
-          message,
-          position,
-          duration,
-          type: "success",
-        })
-      );
+      addSnack({
+        message,
+        position,
+        duration,
+        type: "success",
+      });
     },
-    [dispatch]
+    [addSnack]
   );
 
   const showError = useCallback(
@@ -31,16 +28,15 @@ export const useSnackbar = () => {
       config?: Pick<Partial<ToastProps>, "position" | "duration">
     ) => {
       const { duration = 3000, position = "bottomLeft" } = config || {};
-      dispatch(
-        snackbarActions.add({
-          message,
-          position,
-          duration,
-          type: "error",
-        })
-      );
+
+      addSnack({
+        message,
+        position,
+        duration,
+        type: "error",
+      });
     },
-    [dispatch]
+    [addSnack]
   );
 
   return { showSuccess, showError };

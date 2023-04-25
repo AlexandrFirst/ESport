@@ -1,3 +1,5 @@
-import { StateSchema } from "@/_app/Providers";
+import { buildSelector } from "@/shared/lib";
 
-export const selectPosition = (state: StateSchema) => state.snackbar?.position;
+export const [useSnackPosition, selectPosition] = buildSelector(
+  (state) => state.snackbar?.position
+);

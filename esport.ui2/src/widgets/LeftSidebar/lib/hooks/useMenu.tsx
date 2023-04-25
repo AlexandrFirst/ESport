@@ -20,19 +20,19 @@ export const useMenu = (): IMenuItem[] => {
     {
       title: "Test",
       icon: <MenuIcon Svg={BeakerIcon} />,
-      link: routes.Main,
+      link: routes.Home(),
     },
     {
       title: "Streams",
       icon: <MenuIcon Svg={ComputerDesktopIcon} />,
-      link: routes.Streams,
+      link: routes.Streams(),
     },
     ...(isAuth
       ? [
           {
             title: "Profile",
             icon: <MenuIcon Svg={UserCircleIcon} />,
-            link: routes.User.Profile.Main,
+            link: routes.User.Profile.Home(),
           },
         ]
       : []),
@@ -42,17 +42,17 @@ export const useMenu = (): IMenuItem[] => {
             title: "Competitions",
             icon: <MenuIcon Svg={BriefcaseIcon} />,
             gap: true,
-            link: routes.Competition.Main,
+            link: routes.Competition.Home(),
             items: [
               {
                 title: "Competitions",
                 // icon: <SportsKabaddiIcon className="mr-3" />,
-                link: routes.Competition.Main,
+                link: routes.Competition.Home(),
               },
               {
                 title: "Create",
                 // icon: <AddIcon className="mr-3" />,
-                link: routes.Competition.Create,
+                link: routes.Competition.Create(),
               },
             ],
           },
@@ -63,7 +63,7 @@ export const useMenu = (): IMenuItem[] => {
           {
             title: "Settings",
             icon: <MenuIcon Svg={CogIcon} />,
-            link: "/settings",
+            link: routes.Settings(),
           },
         ]
       : []),
