@@ -1,3 +1,5 @@
-import { StateSchema } from "@/_app/Providers";
+import { buildSelector } from "@/shared/lib";
 
-export const selectToasts = (state: StateSchema) => state.snackbar?.toasts;
+export const [useSnackToasts, selectToasts] = buildSelector(
+  (state) => state.snackbar?.toasts
+);

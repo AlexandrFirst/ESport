@@ -5,7 +5,7 @@ import https from "https";
 import fs from "fs";
 import path from "path";
 import { setCookie } from "cookies-next";
-import { addMonths } from "@/shared/lib/utils/add-months";
+import { addMonths } from "@/shared/lib";
 
 export default async function handler(
   req: NextApiRequest,
