@@ -7,6 +7,7 @@ export * from './queries/categories.get-by-id.query';
 
 //commands
 export * from './commands/create-competition.command';
+export * from './commands/create-competition-with-categories.command';
 
 export * from './commands/create-category.command';
 

@@ -11,6 +11,7 @@ import { RMQService } from 'nestjs-rmq';
 
 import {
   CompetitionCreate,
+  CompetitionCreateWithCategories,
   CompetitionsGetAll,
   CompetitionsGetById,
 } from '@esport.monorepo/contracts';
@@ -54,6 +55,20 @@ export class CompetitionsController {
         CompetitionCreate.Request,
         CompetitionCreate.Response
       >(CompetitionCreate.topic, body)
+    );
+  }
+
+  @HttpCode(HttpStatus.CREATED)
+  @Post('create-with-categories')
+  async createCompetitionWithCategories(
+    @Body()
+    body: CompetitionCreateWithCategories.Request
+  ) {
+    return res(() =>
+      this.rmqService.send<
+        CompetitionCreateWithCategories.Request,
+        CompetitionCreateWithCategories.Response
+      >(CompetitionCreateWithCategories.topic, body)
     );
   }
 }

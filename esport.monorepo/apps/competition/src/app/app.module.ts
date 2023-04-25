@@ -21,12 +21,13 @@ import { RoundModule } from './round/round.module';
     }),
     MongooseModule.forRootAsync(getMongoConfig()),
     RMQModule.forRootAsync(getRmqConfig()),
+
     CompetitionModule,
     CategoryModule,
+    RoundModule,
     FightModule,
     CompetitorModule,
     UserModule,
-    RoundModule,
   ],
 })
 export class AppModule {}

@@ -4,8 +4,9 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Fight, FightSchema } from './fight.model';
 
 import { FightService } from './fight.service';
-import { FightQueries } from './fightQueries';
 import { FightRepository } from './fight.repository';
+
+import { FightQueries } from './fight.queries';
 
 @Module({
   imports: [

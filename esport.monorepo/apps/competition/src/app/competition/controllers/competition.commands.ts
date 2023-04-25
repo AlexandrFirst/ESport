@@ -1,21 +1,24 @@
 import { Controller } from '@nestjs/common';
 import { RMQRoute, RMQValidate } from 'nestjs-rmq';
 
-import { CompetitionCreate } from '@esport.monorepo/contracts';
-import { Category } from '../../category/models/category.model';
+import {
+  CompetitionCreate,
+  CompetitionCreateWithCategories,
+} from '@esport.monorepo/contracts';
 
 import { CompetitionExecutor } from '../service/competition.executor';
 import { CompetitionService } from '../service/competition.service';
+import { CategoryService } from '../../category/category.service';
 
 @Controller()
 export class CompetitionCommands {
   private competitionExecutor: CompetitionExecutor;
 
   constructor(
-    private readonly competitionService: CompetitionService // private readonly categoryService: CategoryService
+    private readonly competitionService: CompetitionService,
+    private readonly categoryService: CategoryService
   ) {
-    // this.competitionExecutor = new CompetitionExecutor(this.categoryService);
-    this.competitionExecutor = new CompetitionExecutor();
+    this.competitionExecutor = new CompetitionExecutor(this.categoryService);
   }
 
   @RMQValidate()
@@ -28,5 +31,13 @@ export class CompetitionCommands {
       categories: req.categoryIds,
     });
     return { competition };
+  }
+
+  @RMQValidate()
+  @RMQRoute(CompetitionCreateWithCategories.topic)
+  async createCompetitionWithCategories(
+    req: CompetitionCreateWithCategories.Request
+  ) {
+    return this.competitionService.createCompetitionWithCategories(req);
   }
 }

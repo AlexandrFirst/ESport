@@ -1,10 +1,12 @@
 import { GetServerSideProps, NextPage } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
+import { MainLayout } from "@/widgets/MainLayout";
+
 type CompetitionPageProps = {};
 
 const CompetitionPage: NextPage<CompetitionPageProps> = () => {
-  return <div>CompetitionIdPage</div>;
+  return <MainLayout>CompetitionIdPage</MainLayout>;
 };
 
 export default CompetitionPage;
