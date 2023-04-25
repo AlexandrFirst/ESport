@@ -9,16 +9,9 @@ export default async function handler(
 ) {
   if (req.method === "GET") {
     try {
-      const { data, headers } = await axios.get(
-        `${process.env.LOGIN_API_URL}/confirm?token=${req.query.token}`,
-        {
-          headers: { host: "localhost:5000" },
-        }
+      await axios.get(
+        `${process.env.LOGIN_API_URL}/confirm?token=${req.query.token}`
       );
-      // const { data } = await axios.get(
-      //   "http://localhost:3001/api/v1/competitions/all"
-      // );
-      console.log("===data===", data);
       res.redirect(`${routes.Home()}?success=Account activated`);
     } catch (e: any) {
       res.redirect(
