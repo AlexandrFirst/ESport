@@ -4,7 +4,8 @@ import axios from "axios";
 import https from "https";
 import fs from "fs";
 import path from "path";
-import { hasCookie, setCookie } from "cookies-next";
+import { setCookie } from "cookies-next";
+import { addMonths } from "@/shared/lib/utils/add-months";
 
 export default async function handler(
   req: NextApiRequest,
@@ -28,14 +29,13 @@ export default async function handler(
     );
     setCookie("ESportCookie", data.token, {
       httpOnly: true,
-      expires: new Date(2024, 3),
+      expires: addMonths(new Date(), 1),
       secure: true,
       sameSite: "none",
-      path: '/',
+      path: "/",
       req,
-      res
+      res,
     });
-    console.log('===hasCookie("ESportCookie")===', hasCookie("ESportCookie"));
     return res.status(200).json(data);
   }
   return res.status(200).json({ message: "Hello World" });

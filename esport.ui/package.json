@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "local":"env-cmd -f .env.local next dev",
     "lint": "next lint",
     "test:unit": "jest --config ./config/jest/jest.config.js",
     "lint:scss": "npx stylelint \"**/*.scss\"",

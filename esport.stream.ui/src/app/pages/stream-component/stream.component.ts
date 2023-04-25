@@ -259,7 +259,7 @@ export class StreamComponent implements OnInit {
       mediaConstraints: constraints,
       configuration: [
         {
-          urls: "stun:a.relay.metered.ca:80",
+          "urls": "stun:a.relay.metered.ca:80",
         },
         {
           "urls": "turn:a.relay.metered.ca:80",
@@ -315,7 +315,7 @@ export class StreamComponent implements OnInit {
       remoteVideo: this.videoElement.nativeElement,
       configuration: [
         {
-          urls: "stun:a.relay.metered.ca:80",
+          "urls": "stun:a.relay.metered.ca:80",
         },
         {
           "urls": "turn:a.relay.metered.ca:80",

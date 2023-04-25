@@ -46,7 +46,7 @@ namespace IdentityV2
             {
                 options.AddPolicy("ESportCors", builder =>
                 {
-                    builder.WithOrigins("http://localhost:3000", "http://localhost:6005", "https://e-sport.cloud")
+                    builder.WithOrigins("http://localhost:3000", "http://localhost:6005", "https://e-sport.cloud", "https://localhost", "https://localhost:443", "https://localhost:80")
                     //builder.AllowAnyOrigin()
                            .AllowAnyMethod()
                            .AllowAnyHeader()
@@ -55,7 +55,7 @@ namespace IdentityV2
 
                 options.AddPolicy("UserFlowPolicy", builder =>
                 {
-                    builder.WithOrigins("http://localhost:5005", "https://e-sport.cloud:5005")
+                    builder.WithOrigins("http://localhost:5005", "https://e-sport.cloud:5005", "https://localhost", "https://localhost:443", "https://localhost:80")
                             .AllowAnyMethod()
                             .AllowAnyHeader()
                             .AllowCredentials();

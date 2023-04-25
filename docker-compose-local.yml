@@ -60,11 +60,11 @@ services:
     volumes:
       - ./records:/tmp
       - ./certificates:/cerfs
-      - ./kconfig/kurento.conf.json:/etc/kurento/kurento.conf.json
+      - ./kconfig/kurento-local.conf.json:/etc/kurento/kurento.conf.json
     extra_hosts:
       - "host.docker.internal:host-gateway"
   identity:
-    image: 12345flex402/esport_identity
+    image: 12345flex402/esport_identity_local
     build:
       context: .
       dockerfile: ./deploy/Identity.Dockerfile
@@ -75,14 +75,14 @@ services:
         condition: service_healthy
     restart: on-failure
     environment:
-      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_ENVIRONMENT=Local
     ports:
       - '5001:5001'
       - '5000:5000'
     extra_hosts:
       - "host.docker.internal:host-gateway"
   gateway:
-    image: 12345flex402/esport-gateway
+    image: 12345flex402/esport-gateway-local
     user: root
     build:
       context: .
@@ -91,13 +91,13 @@ services:
       - identity
     restart: on-failure
     environment:
-      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_ENVIRONMENT=Local
     ports:
       - '5002:443'
     extra_hosts:
       - "host.docker.internal:host-gateway"
   message:
-    image: 12345flex402/esport-message-service
+    image: 12345flex402/esport-message-service-local
     user: root
     build:
       context: ./MessageService
@@ -107,13 +107,13 @@ services:
         condition: service_healthy
     restart: on-failure
     environment:
-      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_ENVIRONMENT=Local
     ports:
       - '5003:80'
     extra_hosts:
       - "host.docker.internal:host-gateway"
   stream:
-    image: 12345flex402/esport-stream-service
+    image: 12345flex402/esport-stream-service-local
     user: root
     build:
       context: .
@@ -125,34 +125,36 @@ services:
       - identity
     restart: on-failure
     environment:
-      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_ENVIRONMENT=Local
     ports:
       - '5004:5004'
       - '5014:5014'
     extra_hosts:
       - "host.docker.internal:host-gateway"
   web:
-    image: 12345flex402/esport-web
+    image: 12345flex402/esport-web-local
     user: root
     container_name: esport-web
     build:
       context: ./esport.ui
       dockerfile: ../deploy/ESportUi.Dockerfile
+    env_file:
+      - ./esport.ui/.env.local
     restart: on-failure
     ports:
       - '3000:3000'
   stream-ui:
-    image: 12345flex402/esport-stream-ui
+    image: 12345flex402/esport-stream-ui-local
     container_name: stream-ui
     build:
       context: ./esport.stream.ui
-      dockerfile: ../deploy/StreamUi.Dockerfile
+      dockerfile: ../deploy/StreamUi-local.Dockerfile
     restart: on-failure
     ports:
       - '4201:443'
       - '4200:80'
   competitions:
-    image: 12345flex402/esport-competitions
+    image: 12345flex402/esport-competitions-local
     user: root
     container_name: esport-competitions
     build:
@@ -164,12 +166,12 @@ services:
       - ./esport.competitions:/usr/src/app
     command: npm run start
     env_file:
-      - ./esport.competitions/.env.production
+      - ./esport.competitions/.env.local
     depends_on:
       - rabbit
       - api-gateway
   api-gateway:
-    image: 12345flex402/esport-gateway-ts
+    image: 12345flex402/esport-gateway-ts-local
     user: root
     build:
       context: ./esport.api.gateway
@@ -181,14 +183,14 @@ services:
       - ./esport.api.gateway:/usr/src/app
     command: npm run start
     env_file:
-      - ./esport.api.gateway/.env.production
+      - ./esport.api.gateway/.env.local
     depends_on:
       - rabbit
     ports:
       - '3001:3001'
       - '3011:3011'
   userworkflow:
-    image: 12345flex402/userworkflow
+    image: 12345flex402/userworkflow_local
     user: root
     build:
       context: .
@@ -199,9 +201,19 @@ services:
       - sqldb
     restart: on-failure
     environment:
-      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_ENVIRONMENT=Local
     ports:
       - '5005:80'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+  nginxlocal:
+    image: 12345flex402/nginxlocal
+    user: root
+    build:
+      context: .
+      dockerfile: ./deploy/LocalNginx.Dockerfile
+    ports:
+      - '443:443'
     extra_hosts:
       - "host.docker.internal:host-gateway"
 

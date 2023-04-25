@@ -61,6 +61,27 @@
               ],
               "outputHashing": "all"
             },
+            "local": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "1mb",
+                  "maximumError": "3mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "./environments/environment.dev.ts",
+                  "with": "./environments/environment.local.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
             "development": {
               "buildOptimizer": false,
               "optimization": false,
@@ -80,6 +101,9 @@
             },
             "development": {
               "browserTarget": "esport.stream.ui:build:development"
+            },
+            "local": {
+              "browserTarget": "esport.stream.ui:build:local"
             }
           },
           "defaultConfiguration": "development"
