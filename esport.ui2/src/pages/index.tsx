@@ -8,6 +8,7 @@ import { GetServerSideProps } from "next";
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { useEffect } from "react";
+import { AppNextPage } from "@/shared/types";
 
 type Props = {
   snackbar?: {
@@ -16,7 +17,7 @@ type Props = {
   };
 };
 
-export default function Home({ snackbar, ...props }: Props) {
+const Home: AppNextPage<Props> = ({ snackbar, ...props }) => {
   const { error, success } = snackbar ?? {};
   const { t } = useTranslation("common");
 
@@ -28,7 +29,7 @@ export default function Home({ snackbar, ...props }: Props) {
   }, [showError, showSuccess]);
 
   return (
-    <MainLayout headProps={{ title: "E-Sport | Main" }}>
+    <>
       <Card>Card content</Card>
       <h1>{t("title")}</h1>
       <h1 className={styles.text}>Typography</h1>
@@ -37,10 +38,17 @@ export default function Home({ snackbar, ...props }: Props) {
       <h4>Typography</h4>
       <h5>Typography</h5>
       <h6>Typography</h6>
-    </MainLayout>
+    </>
   );
-}
+};
 
+Home.getLayout = (page) => {
+  return (
+    <MainLayout headProps={{ title: "E-Sport | Main" }}>{page}</MainLayout>
+  );
+};
+
+export default Home;
 export const getServerSideProps: GetServerSideProps = async ({
   locale,
   defaultLocale,

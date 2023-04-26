@@ -1,36 +1,30 @@
 import "@/styles/globals.css";
 
-import type { AppProps } from "next/app";
 import { Nunito } from "next/font/google";
 import { appWithTranslation } from "next-i18next";
 
 import { Providers, wrapper } from "@/_app/Providers";
 
+import { updateDeviceState } from "@/shared/model";
+import { AppPageProps } from "@/shared/types";
+
 import { updateSidebarState } from "@/widgets/LeftSidebar";
-import { updateDeviceState } from "@/shared/model/helpers/update-device-state";
-import { ReactElement, ReactNode } from "react";
 
 const font = Nunito({
   subsets: ["latin", "cyrillic-ext", "cyrillic"],
   weight: ["300", "600", "700", "900"],
 });
 
-interface Props extends AppProps {
-  Component: AppProps["Component"] & {
-    getLayout: (page: ReactElement) => ReactNode;
-  };
-}
-
-function App({ Component, ...restProps }: Props) {
+function App({ Component, ...restProps }: AppPageProps) {
   const { store, props } = wrapper.useWrappedStore(restProps);
   const { pageProps } = props;
   const getLayout = Component.getLayout ?? ((page) => page);
 
-  return getLayout(
+  const component = getLayout(<Component {...pageProps} />);
+
+  return (
     <Providers store={store}>
-      <main className={font.className}>
-        <Component {...pageProps} />
-      </main>
+      <main className={font.className}>{component}</main>
     </Providers>
   );
 }

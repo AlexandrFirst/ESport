@@ -1,5 +1,9 @@
-import { GetServerSideProps, NextPage } from "next";
+import React from "react";
+import { GetServerSideProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+
+import { Title } from "@/shared/ui";
+import { AppNextPage } from "@/shared/types";
 
 import {
   competitionApi,
@@ -8,13 +12,14 @@ import {
 } from "@/entities/competition";
 
 import { MainLayout } from "@/widgets/MainLayout";
-import { Title } from "@/shared/ui";
 
 type CompetitionPageProps = {
   competition?: ICompetitonWithCategories;
 };
 
-const CompetitionPage: NextPage<CompetitionPageProps> = ({ competition }) => {
+const CompetitionPage: AppNextPage<CompetitionPageProps> = ({
+  competition,
+}) => {
   const tmp = competition?.categories[0];
   return (
     <MainLayout>
@@ -23,6 +28,10 @@ const CompetitionPage: NextPage<CompetitionPageProps> = ({ competition }) => {
       <CompetitionGrid category={tmp} />
     </MainLayout>
   );
+};
+
+CompetitionPage.getLayout = (page) => {
+  return <MainLayout>{page}</MainLayout>;
 };
 
 export default CompetitionPage;
