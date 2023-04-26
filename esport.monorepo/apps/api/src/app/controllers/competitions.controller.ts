@@ -14,6 +14,7 @@ import {
   CompetitionCreateWithCategories,
   CompetitionsGetAll,
   CompetitionsGetById,
+  CompetitionGetPopulatedById,
 } from '@esport.monorepo/contracts';
 
 import { CreateCompetitionDto } from '../dto/competition/create-competition.dto';
@@ -41,6 +42,16 @@ export class CompetitionsController {
         CompetitionsGetById.Request,
         CompetitionsGetById.Response
       >(CompetitionsGetById.topic, { _id })
+    );
+  }
+
+  @Get('populated/:id')
+  async getPopulatedById(@Param('id') _id: string) {
+    return res(() =>
+      this.rmqService.send<
+        CompetitionGetPopulatedById.Request,
+        CompetitionGetPopulatedById.Response
+      >(CompetitionGetPopulatedById.topic, { _id })
     );
   }
 

@@ -1,6 +1,6 @@
 export type Query = Record<string, string | number | undefined>;
 
-export type Parameter = string | number;
+export type Parameter = string | number | undefined;
 
 function injectVariablesIntoUrl(
   url: string,

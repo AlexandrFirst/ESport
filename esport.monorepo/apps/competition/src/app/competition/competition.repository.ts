@@ -51,9 +51,13 @@ export class CompetitionRepository extends EntityRepository<Competition> {
         path: 'categories',
         populate: {
           path: 'rounds',
-          // TODO: solve problem of population fights
           populate: {
             path: 'fights',
+            model: 'Fight',
+            // populate: {
+            // path: 'competitors.userId',
+            // model: 'User',
+            // },
           },
         },
       })
