@@ -13,6 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="Configuration\Development\confirm.ocelot.Development.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Update="Configuration\Development\main.ocelot.Development.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

@@ -25,7 +25,6 @@ namespace UserWorkflow.Api.Controllers
         public OrgAdminController(ICommandBus commandBus, ILogger<OrgAdminController> logger)
         {
             this.commandBus = commandBus;
-            this.requestBus = requestBus;
             this.logger = logger;
         }
 
