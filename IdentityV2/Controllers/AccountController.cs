@@ -1,11 +1,14 @@
-﻿using IdentityV2.Dto.User;
+﻿using Castle.Core.Logging;
+using IdentityV2.Dto.User;
 using IdentityV2.Infrastructure.Core;
 using IdentityV2.Infrastructure.Implementation;
 using IdentityV2.Models.AccountModels;
+using IdentityV2.Models.UserModels;
 using IdentityV2.Utils;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Text;
@@ -19,10 +22,12 @@ namespace IdentityV2.Controllers
     public class AccountController : ControllerBase
     {
         private readonly IAccountService accountService;
+        private readonly ILogger<AccountController> logger;
 
-        public AccountController(IAccountService accountService)
+        public AccountController(IAccountService accountService, ILogger<AccountController> logger)
         {
             this.accountService = accountService;
+            this.logger = logger;
         }
 
         [HttpPost("ApiLogin")]
@@ -60,11 +65,48 @@ namespace IdentityV2.Controllers
         public async Task<IActionResult> ApiLogout() 
         {
             var userIdClaim = User.Claims.FirstOrDefault(x => x.Type == UserClaims.Id);
-            if (userIdClaim == null) { return BadRequest(new { Message = "USer is not logged in" }); }
+            if (userIdClaim == null) { return BadRequest(new { Message = "User is not logged in" }); }
                 
             var userId = int.Parse(userIdClaim.Value);
             await accountService.Logout(userId);
             return Ok();
+        }
+
+        [Authorize]
+        [RequireHttps]
+        [HttpPost("info")]
+        public IActionResult CurrentUserInfo() 
+        {
+            var user = User;
+
+            if (User?.Claims?.Any() != true) 
+            {
+                return BadRequest(new { Message = "Invalid user data" });
+            }
+
+            try
+            {
+                var id = user.Claims.Where(x => x.Type == UserClaims.Id).First();
+                var name = user.Claims.Where(x => x.Type == UserClaims.Name).First();
+                var email = user.Claims.Where(x => x.Type == UserClaims.Email).First();
+                var role = user.Claims.Where(x => x.Type == UserClaims.Role).First();
+
+                var userCredInfo = new UserCredentialInfo() 
+                {
+                    Email = email.Value,
+                    Id = id.Value,
+                    Name= name.Value,
+                    Role=role.Value,
+                };
+
+                
+                return Ok(userCredInfo);
+            }
+            catch (Exception ex) 
+            {
+                logger.LogError(ex.Message + "|" + ex.InnerException.Message);
+                return BadRequest(new { Message = "Unable to get user info" });
+            }
         }
 
         [HttpGet("Confirm")]
