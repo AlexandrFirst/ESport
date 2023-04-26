@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using UserWorkflow.Application.Clients;
+using UserWorkflow.Application.Commands.OrgAdminCommands;
 using UserWorkflow.Application.Commands.User;
 using UserWorkflow.Application.Commands.UserCommands;
 using UserWorkflow.Application.Configs;
@@ -53,6 +54,10 @@ namespace UserWorkflow.Application
             services.AddTransient<IRequestHandler<GetPendingAdmins, GetPendingAdminsResult>, GetPendingAdminsHandler>();
             services.AddTransient<ICommandHandler<ConfirmAdmin>, ConfirmAdminHandler>();
             services.AddTransient<ICommandHandler<ConfirmGymAdmin>, ConfirmGymAdminHandler>();
+
+            services.AddTransient<ICommandHandler<CreateOrganisation>, CreateOrganisationHandler>();
+            services.AddTransient<ICommandHandler<UpdateOrganisation>, UpdateOrganisationHandler>();
+            services.AddTransient<ICommandHandler<DeleteOrganisation>, DeleteOrganisationHandler>();
 
 
             services.AddScoped<IdentityClient>();

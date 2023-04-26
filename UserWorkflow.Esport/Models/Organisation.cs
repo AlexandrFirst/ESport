@@ -1,9 +1,12 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 
 namespace UserWorkflow.Esport.Models
 {
+    [Index(nameof(Name), IsUnique = true)]
     public class Organisation
     {
         public Organisation()
@@ -12,7 +15,8 @@ namespace UserWorkflow.Esport.Models
             OrganisationAdministrators = new List<OrganisationAdministrators>();
         }
 
-        public int Id { get; set; } 
+        public int Id { get; set; }
+
         public string Name { get; set; }
         public string Description { get; set; }
 
