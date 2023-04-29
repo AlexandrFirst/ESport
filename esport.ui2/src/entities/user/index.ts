@@ -2,6 +2,7 @@ export { User } from "./ui/User/User";
 export { default as UserNameRoleHolder } from "./ui/UserNameRoleHolder/UserNameRoleHolder";
 
 export { userReducer, userActions } from "./model/slices/userSlice";
+export { updateStoreUser } from "./lib/helpers/update-store-user";
 export type { UserSchema } from "./model/types/userSchema";
 export type { IUser } from "./model/types/user";
 

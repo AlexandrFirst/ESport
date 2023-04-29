@@ -11,8 +11,10 @@ import { RMQService } from 'nestjs-rmq';
 
 import {
   CompetitionCreate,
+  CompetitionCreateWithCategories,
   CompetitionsGetAll,
   CompetitionsGetById,
+  CompetitionGetPopulatedById,
 } from '@esport.monorepo/contracts';
 
 import { CreateCompetitionDto } from '../dto/competition/create-competition.dto';
@@ -43,6 +45,16 @@ export class CompetitionsController {
     );
   }
 
+  @Get('populated/:id')
+  async getPopulatedById(@Param('id') _id: string) {
+    return res(() =>
+      this.rmqService.send<
+        CompetitionGetPopulatedById.Request,
+        CompetitionGetPopulatedById.Response
+      >(CompetitionGetPopulatedById.topic, { _id })
+    );
+  }
+
   @HttpCode(HttpStatus.CREATED)
   @Post('create')
   async createCompetition(
@@ -54,6 +66,20 @@ export class CompetitionsController {
         CompetitionCreate.Request,
         CompetitionCreate.Response
       >(CompetitionCreate.topic, body)
+    );
+  }
+
+  @HttpCode(HttpStatus.CREATED)
+  @Post('create-with-categories')
+  async createCompetitionWithCategories(
+    @Body()
+    body: CompetitionCreateWithCategories.Request
+  ) {
+    return res(() =>
+      this.rmqService.send<
+        CompetitionCreateWithCategories.Request,
+        CompetitionCreateWithCategories.Response
+      >(CompetitionCreateWithCategories.topic, body)
     );
   }
 }

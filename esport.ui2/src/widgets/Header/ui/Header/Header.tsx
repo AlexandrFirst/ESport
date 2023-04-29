@@ -3,9 +3,7 @@ import styles from "./Header.module.css";
 
 import cn from "classnames";
 
-import { useAppSelector } from "@/shared/lib";
-
-import { selectIsAuth } from "@/entities/user";
+import { useAuth } from "@/entities/user";
 
 import { ThemeSwitcher } from "@/features/ThemeSwitcher";
 import { Translate } from "@/features/Translate";
@@ -19,7 +17,7 @@ interface HeaderProps {
 }
 
 export const Header: FC<HeaderProps> = ({ className }) => {
-  const isAuth = useAppSelector(selectIsAuth);
+  const { isAuth } = useAuth();
   return (
     <header className={cn(styles.header, className)}>
       <nav className={styles.nav}>

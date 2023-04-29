@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
 
 import { CompetitionCreated } from '@esport.monorepo/contracts';
-import { ICompetition } from '@esport.monorepo/interfaces';
+import {
+  ICompetition,
+  ICompetitionWithCategories,
+} from '@esport.monorepo/interfaces';
 
 import { CompetitionEntity } from '../competition.entity';
 import { CompetitionEventEmitter } from '../controllers/competition.event-emitter';
@@ -36,14 +39,24 @@ export class CompetitionService {
     return comp;
   }
 
-  async createCompetitionWithCategories(c: ICompetition) {
-    const newCompetition = new CompetitionEntity(c);
-    const comp = await this.competitionRepo.create(newCompetition);
-    newCompetition.addEvent({
-      topic: CompetitionCreated.topic,
-      data: { id: comp.id },
+  async createCompetitionWithCategories(c: ICompetitionWithCategories) {
+    const categories: string[] = [];
+    for (const cat of c.categories) {
+      const category = await this.categoryService.createWithRounds(cat);
+      categories.push(category._id);
+    }
+    console.log('===categories===', categories);
+    const newCompetition = new CompetitionEntity({
+      ...c,
+      categories,
     });
-    await this.updateCompetition(newCompetition);
+    const newComp = await this.competitionRepo.create(newCompetition);
+    const comp = await this.competitionRepo.findByIdWithPopulate(newComp._id);
+    // newCompetition.addEvent({
+    //   topic: CompetitionCreated.topic,
+    //   data: { id: comp.id },
+    // });
+    // await this.updateCompetition(newCompetition);
     return comp;
   }
 

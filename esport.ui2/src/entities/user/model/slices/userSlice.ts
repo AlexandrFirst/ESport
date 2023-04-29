@@ -11,11 +11,14 @@ import { UserSchema } from "../types/userSchema";
 const initialState: UserSchema = {
   isAuth: true,
   currentRole: UserRole.Admin,
-  user: {
-    name: "John Doe",
-    email: "john@doe.com",
-    roles: [UserRole.Admin],
-  },
+  // user: {
+  //   name: "John Doe",
+  //   email: "john@doe.com",
+  //   roles: [UserRole.Admin],
+  //   role: UserRole.Pupil,
+  //   id: "1",
+  // },
+  user: null,
 };
 
 export const userSlice = createSlice({

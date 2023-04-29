@@ -1,6 +1,8 @@
 import axios from "axios";
 import * as process from "process";
 
+import { IUser } from "../model/types/user";
+
 export interface IRegisterRequest {
   name: string;
   surname: string;
@@ -47,12 +49,11 @@ class AuthService {
     );
   }
 
-  test(): Promise<void> {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve();
-      }, 3000);
-    });
+  getUser() {
+    console.log("WE ARE GETTING USER");
+    return authApi.get<IUser>(
+      `${process.env.NEXT_PUBLIC_LOGIN_API_URL}/user/info`
+    );
   }
 }
 

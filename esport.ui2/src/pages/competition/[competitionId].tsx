@@ -1,22 +1,55 @@
-import { GetServerSideProps, NextPage } from "next";
+import React from "react";
+import { GetServerSideProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
-type CompetitionPageProps = {};
+import { Title } from "@/shared/ui";
+import { AppNextPage } from "@/shared/types";
 
-const CompetitionPage: NextPage<CompetitionPageProps> = () => {
-  return <div>CompetitionIdPage</div>;
+import {
+  competitionApi,
+  CompetitionGrid,
+  ICompetitonWithCategories,
+} from "@/entities/competition";
+
+import { MainLayout } from "@/widgets/MainLayout";
+
+type CompetitionPageProps = {
+  competition?: ICompetitonWithCategories;
+};
+
+const CompetitionPage: AppNextPage<CompetitionPageProps> = ({
+  competition,
+}) => {
+  const tmp = competition?.categories[0];
+  return (
+    <MainLayout>
+      <Title>Categories</Title>
+      {tmp?.title}
+      <CompetitionGrid category={tmp} />
+    </MainLayout>
+  );
+};
+
+CompetitionPage.getLayout = (page) => {
+  return <MainLayout>{page}</MainLayout>;
 };
 
 export default CompetitionPage;
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
+export const getServerSideProps: GetServerSideProps<
+  CompetitionPageProps
+> = async (ctx) => {
   const localization = await serverSideTranslations(
     ctx.locale ?? ctx.defaultLocale ?? "en",
     ["common"]
   );
+  const competitionId = ctx.params?.competitionId as string;
+
+  const { data } = await competitionApi.getCompetition(competitionId);
   return {
     props: {
       ...localization,
+      ...data,
     },
   };
 };

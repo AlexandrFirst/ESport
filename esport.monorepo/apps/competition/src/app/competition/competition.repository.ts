@@ -45,6 +45,22 @@ export class CompetitionRepository extends EntityRepository<Competition> {
     if (!isObjectIdOrHexString(_id)) {
       throw new Error('Invalid id');
     }
-    return this.model.findById(_id, projection).populate('categories').exec();
+    return this.model
+      .findById(_id, projection)
+      .populate({
+        path: 'categories',
+        populate: {
+          path: 'rounds',
+          populate: {
+            path: 'fights',
+            model: 'Fight',
+            // populate: {
+            // path: 'competitors.userId',
+            // model: 'User',
+            // },
+          },
+        },
+      })
+      .exec();
   }
 }

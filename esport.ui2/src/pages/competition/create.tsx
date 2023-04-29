@@ -1,6 +1,8 @@
 import React from "react";
-import { GetServerSideProps, NextPage } from "next";
+import { GetServerSideProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+
+import { AppNextPage } from "@/shared/types";
 
 import { CreateCompetitionCard } from "@/entities/competition";
 
@@ -8,12 +10,12 @@ import { MainLayout } from "@/widgets/MainLayout";
 
 type Props = {};
 
-const CreateCompetitionPage: NextPage<Props> = () => {
-  return (
-    <MainLayout>
-      <CreateCompetitionCard />
-    </MainLayout>
-  );
+const CreateCompetitionPage: AppNextPage<Props> = () => {
+  return <CreateCompetitionCard />;
+};
+
+CreateCompetitionPage.getLayout = (page) => {
+  return <MainLayout>{page}</MainLayout>;
 };
 
 export default CreateCompetitionPage;

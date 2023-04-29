@@ -9,14 +9,15 @@ import { CategoryCommands } from './controllers/category.commands';
 import { CategoryQueries } from './controllers/category.queries';
 
 import { Category, CategorySchema } from './models/category.model';
-import { FightModule } from '../fight/fight.module';
+import { RoundModule } from '../round/round.module';
 
 @Module({
   imports: [
     MongooseModule.forFeature([
       { name: Category.name, schema: CategorySchema },
     ]),
-    FightModule,
+    // FightModule,
+    RoundModule,
   ],
   providers: [CategoryService, CategoryRepository, CategoryEventEmitter],
   exports: [CategoryService],
