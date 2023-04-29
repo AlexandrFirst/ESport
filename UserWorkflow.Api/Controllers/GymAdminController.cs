@@ -1,9 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Net;
+using System;
 using System.Threading.Tasks;
 using UserWorkflow.Api.Filters;
 using UserWorkflow.Application;
+using UserWorkflow.Application.Commands.UserCommands;
+using UserWorkflow.Application.Commands.Gym;
 
 namespace UserWorkflow.Api.Controllers
 {
@@ -25,15 +29,40 @@ namespace UserWorkflow.Api.Controllers
         }
 
         [HttpPost("timetable")]
-        public async Task<IActionResult> AddUpdateTimeTable(int gymId) 
+        public async Task<IActionResult> UpdateTimeTable(int gymId, [FromBody] AddUpdateGymShift command) 
         {
-            return Ok();
-        }
+            var started = DateTime.UtcNow;
+            var requestInstanceId = Guid.NewGuid();
+            var methodName = this.ControllerContext.RouteData.Values["action"].ToString();
+            try
+            {
+                logger.LogInformation($"STARTED {methodName} {requestInstanceId} at {started} utc");
+               
 
-        [HttpDelete("removetimetable/{}")]
-        public async Task<IActionResult> RemoveTimeTable(int gymId) 
-        {
-            return Ok();
+                var result = await commandBus.ExecuteAsync(User, command);
+
+                if (!result.Succeeded)
+                    return BadRequest(result.Errors);
+
+                return Ok(result.ItemId);
+            }
+            catch (ApplicationException exception)
+            {
+                return BadRequest(new[] { exception.Message });
+            }
+            catch (Exception e)
+            {
+                logger.LogError(e, e.Message);
+                if (e is InvalidOperationException)
+                    return BadRequest(new[] { e.Message });
+
+                return new StatusCodeResult((int)HttpStatusCode.InternalServerError);
+            }
+            finally
+            {
+                var ended = DateTime.UtcNow;
+                logger.LogInformation($"ENDED {methodName} {requestInstanceId} at {ended} utc. Took {ended - started}");
+            }
         }
 
         [HttpPost("aproveTrainer")]
@@ -44,6 +73,24 @@ namespace UserWorkflow.Api.Controllers
 
         [HttpPost("declineTrainer")]
         public async Task<IActionResult> DeclineTrainerRequest(int gymId) 
+        {
+            return Ok();
+        }
+
+        [HttpPost("openTrainerRequest")]
+        public async Task<IActionResult> OpenTrainerRequest(int gymId) 
+        {
+            return Ok();
+        }
+
+        [HttpPut("updateTrainerRequest")]
+        public async Task<IActionResult> UpdateTrainerRequest(int gymId)
+        {
+            return Ok();
+        }
+
+        [HttpPost("closeTrainerRequest")]
+        public async Task<IActionResult> CloseTrainerRequest(int gymId)
         {
             return Ok();
         }

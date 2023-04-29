@@ -65,7 +65,7 @@ namespace UserWorkflow.Application.Commands.OrgAdminCommands
 
             esportDataContext.RemoveRange(gymsToDelete);
 
-            var n_gymsToAdd = mapper.Map<List<Gym>>(gymsToAdd);
+            var n_gymsToAdd = mapper.Map<List<UserWorkflow.Esport.Models.Gym>>(gymsToAdd);
             await esportDataContext.AddRangeAsync(n_gymsToAdd);
 
             foreach (var g_info in gymsToUpdate)

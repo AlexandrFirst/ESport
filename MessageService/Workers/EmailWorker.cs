@@ -94,7 +94,7 @@ namespace MessageService.Workers
 
                     var result = await emailService.SendMessagesAsync(new SendMessageRequest()
                     {
-                        Template = String.Format(deserializedMessage.Template, deserializedMessage.Token),
+                        Template = deserializedMessage.Template,
                         ToMail = new System.Collections.Generic.List<string>() { deserializedMessage.Mail}
                     });
                     if(result == 1)
