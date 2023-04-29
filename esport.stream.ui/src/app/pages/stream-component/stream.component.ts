@@ -263,23 +263,23 @@ export class StreamComponent implements OnInit {
         },
         {
           "urls": "turn:a.relay.metered.ca:80",
-          "username": "4a76b2d36b768de5e02d0c1d",
-          "credential": "o5ZlqcKdOBvAvoUb",
+          "username": "e09bb8a5461f1fac9d21804d",
+          "credential": "ERq6ihqJ2FQG8bXk",
         },
         {
           "urls": "turn:a.relay.metered.ca:80?transport=tcp",
-          "username": "4a76b2d36b768de5e02d0c1d",
-          "credential": "o5ZlqcKdOBvAvoUb",
+          "username": "e09bb8a5461f1fac9d21804d",
+          "credential": "ERq6ihqJ2FQG8bXk",
         },
         {
           "urls": "turn:a.relay.metered.ca:443",
-          "username": "4a76b2d36b768de5e02d0c1d",
-          "credential": "o5ZlqcKdOBvAvoUb",
+          "username": "e09bb8a5461f1fac9d21804d",
+          "credential": "ERq6ihqJ2FQG8bXk",
         },
         {
           "urls": "turn:a.relay.metered.ca:443?transport=tcp",
-          "username": "4a76b2d36b768de5e02d0c1d",
-          "credential": "o5ZlqcKdOBvAvoUb",
+          "username": "e09bb8a5461f1fac9d21804d",
+          "credential": "ERq6ihqJ2FQG8bXk",
         },
       ],
       onicecandidate: (candidate: any) => {
@@ -319,23 +319,23 @@ export class StreamComponent implements OnInit {
         },
         {
           "urls": "turn:a.relay.metered.ca:80",
-          "username": "4a76b2d36b768de5e02d0c1d",
-          "credential": "o5ZlqcKdOBvAvoUb",
+          "username": "e09bb8a5461f1fac9d21804d",
+          "credential": "ERq6ihqJ2FQG8bXk",
         },
         {
           "urls": "turn:a.relay.metered.ca:80?transport=tcp",
-          "username": "4a76b2d36b768de5e02d0c1d",
-          "credential": "o5ZlqcKdOBvAvoUb",
+          "username": "e09bb8a5461f1fac9d21804d",
+          "credential": "ERq6ihqJ2FQG8bXk",
         },
         {
           "urls": "turn:a.relay.metered.ca:443",
-          "username": "4a76b2d36b768de5e02d0c1d",
-          "credential": "o5ZlqcKdOBvAvoUb",
+          "username": "e09bb8a5461f1fac9d21804d",
+          "credential": "ERq6ihqJ2FQG8bXk",
         },
         {
           "urls": "turn:a.relay.metered.ca:443?transport=tcp",
-          "username": "4a76b2d36b768de5e02d0c1d",
-          "credential": "o5ZlqcKdOBvAvoUb",
+          "username": "e09bb8a5461f1fac9d21804d",
+          "credential": "ERq6ihqJ2FQG8bXk",
         },
       ],
       onicecandidate: (candidate: any) => {
