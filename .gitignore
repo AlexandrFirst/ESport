@@ -451,3 +451,5 @@ $RECYCLE.BIN/
 /GateWay/ocelot.json
 
 .fleet
+*localhost*.pem
+localhost.pfx
