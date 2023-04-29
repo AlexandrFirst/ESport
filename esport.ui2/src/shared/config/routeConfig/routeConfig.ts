@@ -10,6 +10,7 @@ export const routes = {
   Login: buildPath("/login"),
   ForgotPassword: buildPath("/forgot-password"),
   Test: buildPath("/nigga"),
+  Forbidden: buildPath("/forbidden"),
   Streams: buildPath("/streams"),
   Settings: buildPath("/settings"),
 

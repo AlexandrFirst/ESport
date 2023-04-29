@@ -48,6 +48,8 @@ Home.getLayout = (page) => {
   );
 };
 
+Home.auth = true;
+
 export default Home;
 export const getServerSideProps: GetServerSideProps = async ({
   locale,

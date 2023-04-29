@@ -7,7 +7,9 @@ import { Providers, wrapper } from "@/_app/Providers";
 
 import { updateDeviceState } from "@/shared/model";
 import { AppPageProps } from "@/shared/types";
+import { routes } from "@/shared/config";
 
+import { updateStoreUser } from "@/entities/user";
 import { updateSidebarState } from "@/widgets/LeftSidebar";
 
 const font = Nunito({
@@ -32,18 +34,46 @@ function App({ Component, ...restProps }: AppPageProps) {
 App.getInitialProps = wrapper.getInitialAppProps(
   (store) =>
     async ({ ctx, Component }) => {
+      const pageProps = {
+        ...(Component.getInitialProps
+          ? await Component.getInitialProps({ ...ctx, store })
+          : {}),
+      };
+
       updateSidebarState(store);
       updateDeviceState(
         store,
         ctx.req?.headers["user-agent"] ?? navigator.userAgent
       );
 
+      const { ok, user } = await updateStoreUser(store);
+      console.log("===ok===", ok);
+
+      // @ts-ignore
+      if (Component.auth) {
+        const redirect = {
+          destination: routes.Forbidden(),
+          permanent: false,
+        };
+        if (!ok) {
+          return {
+            pageProps,
+            redirect,
+          };
+        }
+        //@ts-ignore
+        if (Component.auth?.length > 0) {
+          //@ts-ignore
+          if (!Component.auth?.includes(user?.role)) {
+            return {
+              pageProps,
+              redirect,
+            };
+          }
+        }
+      }
       return {
-        pageProps: {
-          ...(Component.getInitialProps
-            ? await Component.getInitialProps({ ...ctx, store })
-            : {}),
-        },
+        pageProps,
       };
     }
 );
