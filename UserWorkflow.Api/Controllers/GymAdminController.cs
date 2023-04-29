@@ -83,6 +83,12 @@ namespace UserWorkflow.Api.Controllers
             return Ok();
         }
 
+        [HttpPost("pendingTrainers")]
+        public async Task<IActionResult> getPendingTrainers(int gymId) 
+        {
+            return Ok();
+        }
+
         [HttpPut("updateTrainerRequest")]
         public async Task<IActionResult> UpdateTrainerRequest(int gymId)
         {

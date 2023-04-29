@@ -13,6 +13,7 @@ namespace UserWorkflow.Esport.Models
             TraineeShedules = new List<TrainerShedule>();
             TrainerSports = new List<TrainerSport>();
             FoodDiets= new List<FoodDiet>();
+            TrainerResponses = new List<TrainerResponse>();
         }
         [Key]
         public int Id { get; set; }
@@ -22,6 +23,7 @@ namespace UserWorkflow.Esport.Models
         public virtual List<TrainerShedule> TraineeShedules { get; set; }
         public virtual List<TrainerSport> TrainerSports { get; set; }
         public virtual List<FoodDiet> FoodDiets { get; set; }
+        public virtual List<TrainerResponse> TrainerResponses { get; set; }
 
         [NotMapped]
         public override UserTypeEntity GetUserType => UserTypeEntity.Trainer;

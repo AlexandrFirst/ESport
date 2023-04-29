@@ -42,6 +42,8 @@ namespace UserWorkflow.Esport
         public virtual DbSet<TrainerShedule> TrainerShedules { get; set; }
         public virtual DbSet<TrainerSport> TrainerSports { get; set; }
         public virtual DbSet<Traumas> Traumas { get; set; }
+        public virtual DbSet<TrainerResponse> TrainerResponses { get; set; }
+        public virtual DbSet<TrainerRequest> GetTrainerRequests { get; set; }
 
 
         public EsportDataContext([NotNull] DbContextOptions<EsportDataContext> options) : base(options)
@@ -83,6 +85,8 @@ namespace UserWorkflow.Esport
             modelBuilder.ApplyConfiguration(new TrainerConfiguration());
             modelBuilder.ApplyConfiguration(new TraineeConfiguration());
             modelBuilder.ApplyConfiguration(new AdministratorConfiguration());
+            modelBuilder.ApplyConfiguration(new TrainerRequestConfiguration());
+            modelBuilder.ApplyConfiguration(new TrainerResponseConfiguration());
         }
     }
 }

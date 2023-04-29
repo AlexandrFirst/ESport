@@ -17,6 +17,7 @@ namespace UserWorkflow.Esport.Models
         public TrainerShedule()
         {
             Lessons = new List<Lesson>();
+            TrainerRequests = new List<TrainerRequest>();
         }
 
         public int Id { get; set; }
@@ -30,6 +31,8 @@ namespace UserWorkflow.Esport.Models
         public TrainerStatus Status { get; set; }
 
         public List<TimeOverride> TimeOverride { get; set; }
+
+        public virtual List<TrainerRequest> TrainerRequests { get; set; }
 
         public virtual List<Lesson> Lessons { get; set; }
     }
