@@ -30,7 +30,7 @@ namespace UserWorkflow.Api.Controllers
             return Ok();
         }
 
-        [HttpDelete("removetimetable")]
+        [HttpDelete("removetimetable/{}")]
         public async Task<IActionResult> RemoveTimeTable(int gymId) 
         {
             return Ok();
