@@ -13,6 +13,7 @@ export { useUserDevice } from "./hooks/useUserDevice";
 //utils
 export { getDeviceDetect } from "./utils/detect-device";
 export { addMonths } from "./utils/add-months";
+export { redirect } from "./utils/redirect";
 
 export { createBuildPath } from "./utils/build-path";
 export type { Query, Parameter } from "./utils/build-path";

@@ -14,7 +14,6 @@ import https from "https";
 import fs from "fs";
 import path from "path";
 import axios from "axios";
-import { getCookie, getCookies } from "cookies-next";
 
 type Props = {
   snackbar?: {
@@ -70,8 +69,6 @@ export const getServerSideProps: GetServerSideProps = async ({
   );
 
   try {
-    const c = getCookie("ESportCookie");
-    console.log("===c===", req.cookies);
     const httpsAgent = new https.Agent({
       rejectUnauthorized: false,
       cert: fs.readFileSync(path.resolve(".cerfs", "localhost.pem")),
@@ -91,9 +88,9 @@ export const getServerSideProps: GetServerSideProps = async ({
         },
       }
     );
-    console.log("===data===", data);
+    // console.log("===data===", data);
   } catch (e) {
-    console.log("===e===", e);
+    // console.log("===e===", e);
     return {
       props: {
         ...localization,

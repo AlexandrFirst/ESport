@@ -1,6 +1,7 @@
-import { Card } from "@/shared/ui";
 import React from "react";
 import styles from "./ProfileMainInfo.module.css";
+
+import { Card } from "@/shared/ui";
 
 import { IProfile } from "../../model/types/profile";
 
@@ -9,7 +10,7 @@ import PhotoBanner from "../PhotoBanner/PhotoBanner";
 import OverviewInfo from "../OverviewInfo/OverviewInfo";
 
 interface ProfileMainInfoProps {
-  profile: IProfile;
+  profile?: IProfile;
   editable?: boolean;
 }
 
@@ -21,7 +22,7 @@ const ProfileMainInfo: React.FC<ProfileMainInfoProps> = ({
     avatarImage = "https://demos.themeselection.com/marketplace/materio-mui-react-nextjs-admin-template/demo-4/images/avatars/1.png",
     bannerImage = "https://demos.themeselection.com/marketplace/materio-mui-react-nextjs-admin-template/demo-4/images/pages/profile-banner.png",
     ...profileInfo
-  } = profile;
+  } = profile || {};
 
   return (
     <Card className={styles.card_content} padding={"lg"}>

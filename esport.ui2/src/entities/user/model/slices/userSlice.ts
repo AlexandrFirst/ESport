@@ -1,7 +1,8 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { PayloadAction } from "@reduxjs/toolkit";
 import { HYDRATE } from "next-redux-wrapper";
 
 import { StateSchema } from "@/_app/Providers";
+import { buildSlice } from "@/shared/lib";
 
 import { UserRole } from "../../constants/user-role";
 
@@ -21,7 +22,7 @@ const initialState: UserSchema = {
   user: null,
 };
 
-export const userSlice = createSlice({
+const userSlice = buildSlice({
   name: "user",
   initialState,
   reducers: {
@@ -47,5 +48,8 @@ export const userSlice = createSlice({
   },
 });
 
-export const { actions: userActions } = userSlice;
-export const { reducer: userReducer } = userSlice;
+export const {
+  actions: userActions,
+  reducer: userReducer,
+  useActions: useUserActions,
+} = userSlice;

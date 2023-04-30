@@ -9,6 +9,7 @@ export const useMappedRoles = (): Record<UserRole, string> => {
       [UserRole.Admin]: "Admin",
       [UserRole.LocalAdmin]: "Local Admin",
       [UserRole.Pupil]: "Pupil",
+      [UserRole.OrgAdmin]: "Organization Admin",
     }),
     []
   );

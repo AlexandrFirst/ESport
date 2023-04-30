@@ -1,6 +1,7 @@
 import React from "react";
 
-import { GetServerSideProps, NextPage } from "next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { GetServerSideProps } from "next";
 
 import { Languages } from "@/shared/constants";
 import { TwoItemsGridContainer } from "@/shared/ui";
@@ -14,15 +15,14 @@ import {
   ProfileMainInfo,
 } from "@/entities/profile";
 
-// import { ProfilePagesSwitcher } from "@page-widgets/page-profile";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-// import { AppLanguage } from "@shared/enums/app-language";
+import { AppNextPage } from "@/shared/types";
+import { UserRole } from "@/entities/user";
 
 type ProfileProps = {
-  profile: IProfile;
+  profile?: IProfile;
 };
 
-const Profile: NextPage<ProfileProps> = ({ profile }) => {
+const Profile: AppNextPage<ProfileProps> = ({ profile }) => {
   return (
     <MainLayout>
       <ProfileMainInfo profile={profile} />
@@ -36,6 +36,8 @@ const Profile: NextPage<ProfileProps> = ({ profile }) => {
 };
 
 export default Profile;
+
+Profile.auth = [UserRole.Admin];
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const localization = await serverSideTranslations(

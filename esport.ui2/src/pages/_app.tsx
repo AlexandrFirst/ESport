@@ -7,9 +7,9 @@ import { Providers, wrapper } from "@/_app/Providers";
 
 import { updateDeviceState } from "@/shared/model";
 import { AppPageProps } from "@/shared/types";
-import { routes } from "@/shared/config";
 
 import { updateSidebarState } from "@/widgets/LeftSidebar";
+import { updateStoreUser } from "@/entities/user";
 
 const font = Nunito({
   subsets: ["latin", "cyrillic-ext", "cyrillic"],
@@ -44,35 +44,32 @@ App.getInitialProps = wrapper.getInitialAppProps(
         store,
         ctx.req?.headers["user-agent"] ?? navigator.userAgent
       );
-      //
-      // const { ok, user } = await updateStoreUser(store);
-      // console.log("===ok===", ok);
 
-      const ok = false;
-
+      if (!!ctx.req) {
+        await updateStoreUser(ctx.req, store);
+      }
       // @ts-ignore
       if (Component.auth) {
-        const redirect = {
-          destination: routes.Forbidden(),
-          permanent: false,
-        };
-        if (!ok) {
+        const user = store.getState().user.user;
+        //TODO: HANDLE REDIRECT USER IF NOT AUTHORIZED
+        if (!user) {
+          // redirect(routes.Forbidden(), ctx?.res);
           return {
             pageProps,
-            redirect,
           };
         }
         //@ts-ignore
         if (Component.auth?.length > 0) {
           //@ts-ignore
           if (!Component.auth?.includes(user?.role)) {
+            // redirect(routes.Forbidden(), ctx?.res);
             return {
               pageProps,
-              redirect,
             };
           }
         }
       }
+
       return {
         pageProps,
       };
