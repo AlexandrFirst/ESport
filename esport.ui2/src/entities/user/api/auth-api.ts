@@ -49,11 +49,17 @@ class AuthService {
     );
   }
 
-  getUser() {
+  async getUser() {
     console.log("WE ARE GETTING USER");
-    return authApi.get<IUser>(
-      `${process.env.NEXT_PUBLIC_LOGIN_API_URL}/user/info`
+    console.log(
+      "===process.env.NEXT_PUBLIC_LOGIN_API_URL===",
+      process.env.NEXT_PUBLIC_LOGIN_API_URL
     );
+    const response = await axios.get<IUser>(
+      `${process.env.NEXT_PUBLIC_LOGIN_API_URL}/info`
+    );
+    console.log("===response===", response);
+    return response;
   }
 }
 

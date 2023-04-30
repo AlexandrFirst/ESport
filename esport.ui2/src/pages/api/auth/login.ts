@@ -12,20 +12,25 @@ export default async function handler(
   res: NextApiResponse
 ) {
   if (req.method === "POST") {
+    process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = "0";
+
     const httpsAgent = new https.Agent({
-      rejectUnauthorized: true,
-      cert: fs.readFileSync(path.resolve(".cerfs", "fullchain.pem")),
-      key: fs.readFileSync(path.resolve(".cerfs", "privkey.pem")),
+      rejectUnauthorized: false,
+      cert: fs.readFileSync(path.resolve(".cerfs", "localhost.pem")),
+      key: fs.readFileSync(path.resolve(".cerfs", "localhost-key.pem")),
       passphrase: process.env.LOGIN_API_PASSPHRASE ?? "",
+      family: 4,
     });
 
-    const { data } = await axios.post<{ token: string }>(
+    const api = axios.create({
+      httpsAgent,
+      withCredentials: true,
+    });
+
+    const { data } = await api.post<{ token: string }>(
       `${process.env.LOGIN_API_URL}/apiLogin`,
       req.body,
-      {
-        httpsAgent,
-        withCredentials: true,
-      }
+      {}
     );
     setCookie("ESportCookie", data.token, {
       httpOnly: true,

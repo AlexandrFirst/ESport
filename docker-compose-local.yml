@@ -8,25 +8,17 @@ services:
       - SA_PASSWORD=2Secure*Password2
       - ACCEPT_EULA=Y
     healthcheck:
-      test:
-        [
-          "CMD",
-          "/opt/mssql-tools/bin/sqlcmd",
-          "-Usa",
-          "-P2Secure*Password2",
-          "-Q",
-          "select 1"
-        ]
+      test: ['CMD', '/opt/mssql-tools/bin/sqlcmd', '-Usa', '-P2Secure*Password2', '-Q', 'select 1']
       interval: 2s
       retries: 20
     ports:
       - '1450:1433'
     volumes:
-      - "./db_volume/_data:/var/opt/mssql/data"
-      - "./db_volume/_log:/var/opt/mssql/log"
-      - "./db_volume/_log:/var/opt/mssql/secrets"
+      - './db_volume/_data:/var/opt/mssql/data'
+      - './db_volume/_log:/var/opt/mssql/log'
+      - './db_volume/_log:/var/opt/mssql/secrets'
     extra_hosts:
-      - "host.docker.internal:host-gateway"
+      - 'host.docker.internal:host-gateway'
   rabbit:
     image: rabbitmq:3-management
     user: root
@@ -42,7 +34,7 @@ services:
       - '15672:15672'
       - '5672:5672'
     extra_hosts:
-      - "host.docker.internal:host-gateway"
+      - 'host.docker.internal:host-gateway'
   kurrento:
     image: kurento/kurento-media-server:latest
     user: root
@@ -62,7 +54,7 @@ services:
       - ./certificates:/cerfs
       - ./kconfig/kurento-local.conf.json:/etc/kurento/kurento.conf.json
     extra_hosts:
-      - "host.docker.internal:host-gateway"
+      - 'host.docker.internal:host-gateway'
   identity:
     image: 12345flex402/esport_identity_local
     build:
@@ -80,7 +72,7 @@ services:
       - '5001:5001'
       - '5000:5000'
     extra_hosts:
-      - "host.docker.internal:host-gateway"
+      - 'host.docker.internal:host-gateway'
   gateway:
     image: 12345flex402/esport-gateway-local
     user: root
@@ -95,7 +87,7 @@ services:
     ports:
       - '5002:443'
     extra_hosts:
-      - "host.docker.internal:host-gateway"
+      - 'host.docker.internal:host-gateway'
   message:
     image: 12345flex402/esport-message-service-local
     user: root
@@ -111,7 +103,7 @@ services:
     ports:
       - '5003:80'
     extra_hosts:
-      - "host.docker.internal:host-gateway"
+      - 'host.docker.internal:host-gateway'
   stream:
     image: 12345flex402/esport-stream-service-local
     user: root
@@ -130,16 +122,16 @@ services:
       - '5004:5004'
       - '5014:5014'
     extra_hosts:
-      - "host.docker.internal:host-gateway"
+      - 'host.docker.internal:host-gateway'
   web:
     image: 12345flex402/esport-web-local
     user: root
     container_name: esport-web
     build:
-      context: ./esport.ui
+      context: ./esport.ui2
       dockerfile: ../deploy/ESportUi.Dockerfile
     env_file:
-      - ./esport.ui/.env.local
+      - ./esport.ui2/.env.local
     restart: on-failure
     ports:
       - '3000:3000'
@@ -205,7 +197,7 @@ services:
     ports:
       - '5005:80'
     extra_hosts:
-      - "host.docker.internal:host-gateway"
+      - 'host.docker.internal:host-gateway'
   nginxlocal:
     image: 12345flex402/nginxlocal
     user: root
@@ -215,5 +207,4 @@ services:
     ports:
       - '443:443'
     extra_hosts:
-      - "host.docker.internal:host-gateway"
-
+      - 'host.docker.internal:host-gateway'

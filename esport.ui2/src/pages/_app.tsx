@@ -9,7 +9,6 @@ import { updateDeviceState } from "@/shared/model";
 import { AppPageProps } from "@/shared/types";
 import { routes } from "@/shared/config";
 
-import { updateStoreUser } from "@/entities/user";
 import { updateSidebarState } from "@/widgets/LeftSidebar";
 
 const font = Nunito({
@@ -45,9 +44,11 @@ App.getInitialProps = wrapper.getInitialAppProps(
         store,
         ctx.req?.headers["user-agent"] ?? navigator.userAgent
       );
+      //
+      // const { ok, user } = await updateStoreUser(store);
+      // console.log("===ok===", ok);
 
-      const { ok, user } = await updateStoreUser(store);
-      console.log("===ok===", ok);
+      const ok = false;
 
       // @ts-ignore
       if (Component.auth) {

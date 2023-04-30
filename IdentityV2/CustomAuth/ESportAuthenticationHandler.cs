@@ -51,6 +51,10 @@ namespace IdentityV2.CustomAuth
             {
                 StringValues authTokens = new StringValues();
                 authDataExists = Request.Headers.TryGetValue("Authorization", out authTokens);
+                if(!authDataExists)
+                {
+                    authDataExists = Request.Headers.TryGetValue("Cookie", out authTokens);
+                }
                 if (authDataExists)
                 {
                     authData = authTokens.FirstOrDefault();

@@ -1,6 +1,8 @@
 import { ToolkitStore } from "@reduxjs/toolkit/dist/configureStore";
 import { CombinedState } from "redux";
 
+import axios from "axios";
+
 import { StateSchema } from "@/_app/Providers";
 
 import { authService } from "../../api/auth-api";
@@ -12,6 +14,8 @@ type UpdateStoreUserResult = {
   user?: IUser | null;
 };
 
+const api = axios.create({ baseURL: "https://localhost/api/auth" });
+
 export const updateStoreUser = async (
   store: ToolkitStore<CombinedState<StateSchema>>
 ): Promise<UpdateStoreUserResult> => {
@@ -19,7 +23,15 @@ export const updateStoreUser = async (
   const { user: userSchema } = getState();
   if (!userSchema.user) {
     try {
-      const { data } = await authService.getUser();
+      // const httpsAgent = new https.Agent({
+      //   rejectUnauthorized: false,
+      //   cert: fs.readFileSync(path.resolve(".cerfs", "localhost.pem")),
+      //   key: fs.readFileSync(path.resolve(".cerfs", "localhost-key.pem")),
+      //   passphrase: process.env.LOGIN_API_PASSPHRASE ?? "",
+      //   family: 4,
+      // });
+
+      const { data } = await api.get<IUser>(`/get-user`);
 
       if (!data) {
         return { ok: false };
@@ -27,6 +39,7 @@ export const updateStoreUser = async (
       dispatch(userActions.setUser(data));
       return { ok: true, user: data };
     } catch (e) {
+      console.log("===e===", e);
       return { ok: false };
     }
   }
