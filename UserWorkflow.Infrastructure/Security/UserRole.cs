@@ -8,16 +8,18 @@ namespace UserWorkflow.Infrastructure.Security
 {
     public class UserRole
     {
-        public static UserRole Trainer = new UserRole("Trainer");
-        public static UserRole Trainee = new UserRole("Trainee");
-        public static UserRole OrgAdmin = new UserRole("OrgAdmin");
-        public static UserRole LocalAdmin = new UserRole("LocalAdmin");
+        public static UserRole Trainer = new UserRole("Trainer", 3);
+        public static UserRole Trainee = new UserRole("Trainee", 4);
+        public static UserRole OrgAdmin = new UserRole("OrgAdmin", 1);
+        public static UserRole LocalAdmin = new UserRole("LocalAdmin", 2);
 
         public string RoleName { get; set; }
+        public int RoleId { get; set; }
 
-        private UserRole(string roleName)
+        private UserRole(string roleName, int roleId)
         {
             RoleName = roleName;
+            RoleId = roleId;
         }
     }
 }

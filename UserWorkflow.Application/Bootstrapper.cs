@@ -10,6 +10,7 @@ using UserWorkflow.Application.Commands.OrgAdminCommands;
 using UserWorkflow.Application.Commands.User;
 using UserWorkflow.Application.Commands.UserCommands;
 using UserWorkflow.Application.Configs;
+using UserWorkflow.Application.Requests.GymAdmin;
 using UserWorkflow.Application.Requests.User;
 using UserWorkflow.Application.Services.Confirmation;
 using UserWorkflow.Application.Services.Users;
@@ -54,6 +55,8 @@ namespace UserWorkflow.Application
             services.AddTransient<IRequestHandler<GetPendingAdmins, GetPendingAdminsResult>, GetPendingAdminsHandler>();
             services.AddTransient<ICommandHandler<ConfirmAdmin>, ConfirmAdminHandler>();
             services.AddTransient<ICommandHandler<ConfirmGymAdmin>, ConfirmGymAdminHandler>();
+            services.AddTransient<IRequestHandler<GetPendingTrainers, GetPendingTrainersResult>, GetPendingTrainersHandler>();
+            services.AddTransient<IRequestHandler<GetGymTimeTable, GetGymTimeTableResponse>, GetGymTimeTableHandler>();
 
             services.AddTransient<ICommandHandler<CreateOrganisation>, CreateOrganisationHandler>();
             services.AddTransient<ICommandHandler<UpdateOrganisation>, UpdateOrganisationHandler>();
@@ -66,6 +69,7 @@ namespace UserWorkflow.Application
 
             services.AddTransient<IPaging<OrganisationAdministrators>, Paging<OrganisationAdministrators>>();
             services.AddTransient<IPaging<GymAdministrators>, Paging<GymAdministrators>>();
+            services.AddTransient<IPaging<TrainerResponse>, Paging<TrainerResponse>>();
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 

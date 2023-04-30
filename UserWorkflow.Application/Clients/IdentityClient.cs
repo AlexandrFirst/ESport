@@ -37,7 +37,7 @@ namespace UserWorkflow.Application.Clients
             throw new Exception(message);
         }
 
-        public async Task<bool> DeleteIdentityClient(int userId) 
+        public async Task<bool> DeleteIdentityClient(int userId)
         {
             var identitytUserResponse = await client.DeleteAsync($"/user/{userId}");
             if (!identitytUserResponse.IsSuccessStatusCode)
@@ -48,5 +48,25 @@ namespace UserWorkflow.Application.Clients
             }
             return true;
         }
+
+        public async Task<bool> UpdateUserProfile(UpdateUserInfo updateUserInfo)
+        {
+            using StringContent jsonContent = new(JsonConvert.SerializeObject(updateUserInfo), 
+                Encoding.UTF8,
+                "application/json");
+
+            var updateUserResponse = await client.PutAsync($"/user/updatemainprofile", jsonContent);
+            if (updateUserResponse.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            else 
+            {
+                string message = $"Error identity request: {updateUserResponse.StatusCode} {updateUserResponse.ReasonPhrase}";
+                logger.LogCritical(message);
+                throw new Exception(message);
+            }
+        }
+
     }
 }

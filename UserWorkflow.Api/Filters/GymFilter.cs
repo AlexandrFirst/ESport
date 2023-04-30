@@ -40,11 +40,15 @@ namespace UserWorkflow.Api.Filters
             var _gymId = int.Parse(gymId.ToString());
             var userId = int.Parse(idClaim.Value.ToString());
             var gymAdmin = await dbContext.GymAdministrators.FirstOrDefaultAsync(x => x.GymId == _gymId && x.Administrators.UserId == userId);
-            if (gymAdmin?.IsConfirmed != true) 
+            if (gymAdmin == null || gymAdmin?.IsConfirmed != true) 
             {
-                await provideBadResponse(context.HttpContext,
-                    $"Gym administrator for gym {_gymId} and user {userId} is not confirmed");
-                return;
+                var orgAdmin = await dbContext.OrganisationAdministrators.FirstOrDefaultAsync(x => x.Organisation.Gyms.Any(k => k.Id == _gymId) && x.Id == userId);
+                if (orgAdmin == null || orgAdmin.IsConfirmed == false) 
+                {
+                    await provideBadResponse(context.HttpContext,
+                    $"Gym or organisation administrator for gym {_gymId} and user {userId} is not confirmed or found");
+                    return;
+                }
             }
 
             await next();
