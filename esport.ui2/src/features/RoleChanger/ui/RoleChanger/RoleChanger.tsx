@@ -4,14 +4,13 @@ import styles from "./RoleChanger.module.css";
 import cn from "classnames";
 
 import { AvatarSize, Menu, MenuList } from "@/shared/ui";
-import { useAppDispatch } from "@/shared/lib";
 
 import {
   useAuth,
   useMappedRoles,
-  userActions,
   UserNameRoleHolder,
   UserRole,
+  useUserActions,
 } from "@/entities/user";
 
 interface CurrentUserRoleChangerProps {
@@ -23,15 +22,13 @@ export const RoleChanger: FC<CurrentUserRoleChangerProps> = ({
   className,
   textClassName,
 }) => {
-  const { isAuth, user, translatedRole, currentRole } = useAuth();
+  const { isAuth, user, translatedRole, role } = useAuth();
   const mappedRoles = useMappedRoles();
-  const dispatch = useAppDispatch();
+  const { setCurrentRole } = useUserActions();
 
   const handleRoleChange = useCallback(
-    (role: UserRole) => {
-      dispatch(userActions.setCurrentRole(role));
-    },
-    [dispatch]
+    (role: UserRole) => setCurrentRole(role),
+    [setCurrentRole]
   );
 
   const list: MenuList = useMemo(
@@ -39,12 +36,12 @@ export const RoleChanger: FC<CurrentUserRoleChangerProps> = ({
       Object.entries(mappedRoles).map(([key, value]) => ({
         key,
         title: value,
-        selected: currentRole === Number(key),
-        onClick: () => handleRoleChange(Number(key)),
+        selected: role === key,
+        onClick: () => handleRoleChange(key as UserRole),
         children: <button>{value}</button>,
         className: styles.item,
       })),
-    [currentRole, handleRoleChange, mappedRoles]
+    [role, handleRoleChange, mappedRoles]
   );
 
   if (!isAuth) return null;

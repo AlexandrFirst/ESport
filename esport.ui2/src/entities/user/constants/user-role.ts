@@ -1,5 +1,6 @@
 export enum UserRole {
-  Admin = 0,
-  LocalAdmin = 1,
-  Pupil = 2,
+  Admin = "Admin",
+  LocalAdmin = "LocalAdmin",
+  OrgAdmin = "OrgAdmin",
+  Pupil = "Pupil",
 }

@@ -26,6 +26,10 @@ export default async function handler(
         {
           httpsAgent,
           withCredentials: true,
+          headers: {
+            // @ts-ignore
+            Cookie: `ESport ${req.cookies["ESportCookie"]}`,
+          },
         }
       );
       return res.status(200).json(data);

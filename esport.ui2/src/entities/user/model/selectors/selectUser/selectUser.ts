@@ -1,3 +1,5 @@
-import { StateSchema } from "@/_app/Providers";
+import { buildSelector } from "@/shared/lib";
 
-export const selectUser = (state: StateSchema) => state.user.user;
+export const [useSelectUser, selectUser] = buildSelector(
+  (state) => state.user.user
+);

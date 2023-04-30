@@ -10,7 +10,7 @@ import {
 import { Icon, Title } from "@/shared/ui";
 
 interface OverviewInfoProps {
-  fullName: string;
+  fullName?: string;
   location?: string;
   level?: string;
   lastLogin?: string;

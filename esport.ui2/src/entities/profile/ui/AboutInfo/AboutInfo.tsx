@@ -15,12 +15,12 @@ import { AboutInfoItem } from "./AboutInfoItem";
 import { AboutContacts } from "./AboutContacts";
 
 interface AboutInfoProps {
-  profile: IProfile;
+  profile?: IProfile;
   className?: string;
 }
 
 const AboutInfo: React.FC<AboutInfoProps> = ({ profile, className }) => {
-  const { fullName, level, country, contacts } = profile;
+  const { fullName, level, country, contacts } = profile || {};
   const { t } = useTranslation("profile");
 
   return (

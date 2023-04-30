@@ -6,5 +6,5 @@ export interface IUser {
   email: string;
   avatarUrl?: string;
   role: UserRole;
-  roles: UserRole[];
+  roles?: UserRole[];
 }
