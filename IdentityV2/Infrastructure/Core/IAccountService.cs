@@ -11,5 +11,6 @@ namespace IdentityV2.Infrastructure.Implementation
         public Task<RegisterResultModel> Register(RegisterModel registerModel);
         public Task<bool> ConfirmRegistration(string token);
         public Task<bool> Logout(int userId);
+        public Task<bool> UpdateUserProfile(UpdateUserProfile userProfile);
     }
 }
