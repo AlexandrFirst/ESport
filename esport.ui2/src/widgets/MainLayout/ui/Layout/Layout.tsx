@@ -14,7 +14,7 @@ import {
   Sidebar,
 } from "@/widgets/LeftSidebar";
 
-interface LayoutProps extends HeadProps {
+export interface LayoutProps extends HeadProps {
   className?: string;
   children: ReactNode;
 }
