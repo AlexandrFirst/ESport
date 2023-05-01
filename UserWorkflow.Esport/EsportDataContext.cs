@@ -43,7 +43,7 @@ namespace UserWorkflow.Esport
         public virtual DbSet<TrainerSport> TrainerSports { get; set; }
         public virtual DbSet<Traumas> Traumas { get; set; }
         public virtual DbSet<TrainerResponse> TrainerResponses { get; set; }
-        public virtual DbSet<TrainerRequest> GetTrainerRequests { get; set; }
+        public virtual DbSet<TrainerRequest> TrainerRequests { get; set; }
 
 
         public EsportDataContext([NotNull] DbContextOptions<EsportDataContext> options) : base(options)

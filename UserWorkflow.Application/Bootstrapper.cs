@@ -59,6 +59,10 @@ namespace UserWorkflow.Application
             services.AddTransient<IRequestHandler<GetPendingTrainers, GetPendingTrainersResult>, GetPendingTrainersHandler>();
             services.AddTransient<IRequestHandler<GetGymTimeTable, GetGymTimeTableResponse>, GetGymTimeTableHandler>();
             services.AddTransient<ICommandHandler<OpenTrainerRequest>, OpenTrainerRequestHandler>();
+            services.AddTransient<ICommandHandler<CloseTrainerRequest>, CloseTrainerRequestHandler>();
+            services.AddTransient<ICommandHandler<UpdateTrainerRequest>, UpdateTrainerRequestHandler>();
+            services.AddTransient<ICommandHandler<ApproveTrainerResponse>, ApproveTrainerResponseHandler>();
+            services.AddTransient<ICommandHandler<DeclineTrainerResponse>, DeclineTrainerResponseHandler>();
 
             services.AddTransient<ICommandHandler<CreateOrganisation>, CreateOrganisationHandler>();
             services.AddTransient<ICommandHandler<UpdateOrganisation>, UpdateOrganisationHandler>();
