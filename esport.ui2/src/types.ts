@@ -7,3 +7,5 @@ type DeepPartial<T> = T extends object
 type OptionalRecord<K extends keyof any, T> = {
   [P in K]?: T;
 };
+
+type Maybe<T> = T | null | undefined;

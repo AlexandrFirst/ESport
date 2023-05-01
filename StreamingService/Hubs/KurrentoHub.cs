@@ -68,7 +68,7 @@ namespace StreamingService.Hubs
         public async Task Message(MessageType messageType, ServerMessageBody messageBody)
         {
             var userIdClaim = Context.User.Claims.FirstOrDefault(x => x.Type == "Id");
-           
+
             if (userIdClaim == null)
             {
                 await Clients.Client(Context.ConnectionId).Send(new ClientMessageBody()
@@ -82,16 +82,17 @@ namespace StreamingService.Hubs
 
             try
             {
-
+                Console.WriteLine($"Sending request {messageType.ToString()} from user" + userId.ToString() + "| " + messageBody ?? string.Empty);
                 switch (messageType)
                 {
                     case MessageType.Presenter:
                         var presentorRequest = messageBody.GetMessageBody<PresenterRequest>();
+                        Console.WriteLine("Sending presenter request from user" + userId.ToString() + "| " + messageBody);
 
                         var presenterResponse = await streamRepositry.StartStream(presentorRequest.StreamId, userId, presentorRequest.SdpOffer);
                         if (!presenterResponse.IsSuccess)
                         {
-
+                            Console.WriteLine("Sending bad presenter response to user" + userId.ToString());
                             await Clients.Group(userId.ToString()).Send(new ClientMessageBody()
                             {
                                 Id = "presenterResponse",
@@ -101,6 +102,7 @@ namespace StreamingService.Hubs
                         else
                         {
                             streamRepositry.SetStreamByConnectionId(Context.ConnectionId, presentorRequest.StreamId);
+                            Console.WriteLine("Sending good presenter response to user" + userId.ToString());
                             await Clients.Group(userId.ToString()).Send(new ClientMessageBody()
                             {
                                 Id = "presenterResponse",
@@ -160,7 +162,7 @@ namespace StreamingService.Hubs
 
                         var userNameClaim = Context.User.Claims.FirstOrDefault(x => x.Type == "Name");
                         string userName = "Uknown";
-                        if (userNameClaim != null) 
+                        if (userNameClaim != null)
                         {
                             userName = userNameClaim.Value;
                         }
@@ -171,7 +173,7 @@ namespace StreamingService.Hubs
                             UserId = userId,
                             UserName = userName
                         });
-                        if (!isMessageSent) 
+                        if (!isMessageSent)
                         {
                             var msg = new ChatMessageResponse() { Message = $"Unable to send message: {messageRequestBody.Message}", IsSuccess = false };
                             await Clients.Client(Context.ConnectionId).Send(new ClientMessageBody()
@@ -189,12 +191,14 @@ namespace StreamingService.Hubs
             }
             catch (Exception ex)
             {
-                await SendErrorResponse(ex.Message, userId.ToString());
+                string error = ex.Message + "|" + ex.InnerException.Message + "|" + ex.StackTrace;
+                await SendErrorResponse(error, userId.ToString());
             }
         }
 
         private async Task SendErrorResponse(string message, string userId)
         {
+            logger.LogError(message);
             await Clients.Group(userId.ToString()).Send(new ClientMessageBody()
             {
                 Id = "error",

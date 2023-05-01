@@ -32,7 +32,7 @@ const Logo: React.FC<SportLogoProps> = ({ showText = false, ...props }) => {
           [styles.show_text]: showText,
         })}
       >
-        <Link href={routes.Main}>E-SPORT</Link>
+        <Link href={routes.Home()}>E-SPORT</Link>
       </Title>
     </div>
   );

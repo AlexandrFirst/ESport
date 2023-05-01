@@ -2,21 +2,26 @@ version: '3.9'
 services:
   sqldb:
     image: mcr.microsoft.com/mssql/server:2019-latest
+    platform: linux
+    user: root
     environment:
       - SA_PASSWORD=2Secure*Password2
       - ACCEPT_EULA=Y
     healthcheck:
-      test: ["CMD", "/opt/mssql-tools/bin/sqlcmd", "-Usa", "-P2Secure*Password2", "-Q", "select 1"]
+      test: ['CMD', '/opt/mssql-tools/bin/sqlcmd', '-Usa', '-P2Secure*Password2', '-Q', 'select 1']
       interval: 2s
       retries: 20
     ports:
       - '1450:1433'
     volumes:
-      - "./db_volume/_data:/var/opt/mssql/data"
-      - "./db_volume/_log:/var/opt/mssql/log"
-      - "./db_volume/_log:/var/opt/mssql/secrets"
+      - './db_volume/_data:/var/opt/mssql/data'
+      - './db_volume/_log:/var/opt/mssql/log'
+      - './db_volume/_log:/var/opt/mssql/secrets'
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
   rabbit:
     image: rabbitmq:3-management
+    user: root
     environment:
       - RABBITMQ_DEFAULT_USER=user
       - RABBITMQ_DEFAULT_PASS=pass
@@ -28,25 +33,33 @@ services:
     ports:
       - '15672:15672'
       - '5672:5672'
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
   kurrento:
-    image: kurento/kurento-media-server:6.18.0
+    image: kurento/kurento-media-server:latest
+    user: root
     container_name: kurento
     restart: on-failure
     environment:
       - KMS_MIN_PORT=5000
       - KMS_MAX_PORT=5050
       - KMS_ICE_TCP=1
-      - KMS_TURN_URL=e76b1e18382eb8485e4ced0f:awmeGuNs0IsK0VkM@216.39.253.11:80
+      - KMS_TURN_URL=e76b1e18382eb8485e4ced0f:awmeGuNs0IsK0VkM@a.relay.metered.ca:443
       - GST_DEBUG="${GST_DEBUG:-2},KurentoUriEndpointImpl:5,uriendpoint:5,playerendpoint:5,kmselement:5,appsrc:4,agnosticbin*:5,uridecodebin:6,rtspsrc:6,souphttpsrc:5,GST_URI:6,*CAPS*:3"
     ports:
       - '8888:8888'
+      - '8433:8433'
     volumes:
       - ./records:/tmp
+      - ./certificates:/cerfs
+      - ./kconfig/kurento-local.conf.json:/etc/kurento/kurento.conf.json
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
   identity:
-    image: diplom_identity
+    image: 12345flex402/esport_identity_local
     build:
-      context: ./IdentityV2
-      dockerfile: ./Dockerfile
+      context: .
+      dockerfile: ./deploy/Identity.Dockerfile
     depends_on:
       sqldb:
         condition: service_healthy
@@ -54,53 +67,49 @@ services:
         condition: service_healthy
     restart: on-failure
     environment:
-      - ASPNETCORE_ENVIRONMENT=Production
-      - ASPNETCORE_URLS="https://+;http://+"
+      - ASPNETCORE_ENVIRONMENT=Local
     ports:
-      - '5001:443'
-      - '5000:80'
+      - '5001:5001'
+      - '5000:5000'
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
   gateway:
-    image: gateway
+    image: 12345flex402/esport-gateway-local
+    user: root
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: ./deploy/Gateway.Dockerfile
     depends_on:
       - identity
     restart: on-failure
     environment:
-      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_ENVIRONMENT=Local
     ports:
-      - '5001:80'
-  userflow:
-    image: userflow
-    build:
-      context: ./UserWorkFlow
-      dockerfile: ./Dockerfile
-    depends_on:
-      - gateway
-    restart: on-failure
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Production
-    ports:
-      - '5002:80'
+      - '5002:443'
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
   message:
-    image: messageservice
+    image: 12345flex402/esport-message-service-local
+    user: root
     build:
       context: ./MessageService
-      dockerfile: ./Dockerfile
+      dockerfile: ../deploy/MessageService.Dockerfile
     depends_on:
       rabbit:
         condition: service_healthy
     restart: on-failure
     environment:
-      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_ENVIRONMENT=Local
     ports:
       - '5003:80'
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
   stream:
-    image: stream-service
+    image: 12345flex402/esport-stream-service-local
+    user: root
     build:
-      context: ./
-      dockerfile: ./StreamService.Dockerfile
+      context: .
+      dockerfile: ./deploy/StreamService.Dockerfile
     depends_on:
       - kurrento
       - sqldb
@@ -108,54 +117,94 @@ services:
       - identity
     restart: on-failure
     environment:
-      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_ENVIRONMENT=Local
     ports:
-      - '5004:80'
+      - '5004:5004'
+      - '5014:5014'
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
   web:
-    image: esport-web
+    image: 12345flex402/esport-web-local
+    user: root
     container_name: esport-web
     build:
-      context: ./esport.ui
-      dockerfile: ./Dockerfile
+      context: ./esport.ui2
+      dockerfile: ../deploy/ESportUi.Dockerfile
+    env_file:
+      - ./esport.ui2/.env.local
     restart: on-failure
     ports:
       - '3000:3000'
   stream-ui:
+    image: 12345flex402/esport-stream-ui-local
     container_name: stream-ui
     build:
       context: ./esport.stream.ui
-      dockerfile: ./Dockerfile
+      dockerfile: ../deploy/StreamUi-local.Dockerfile
     restart: on-failure
     ports:
+      - '4201:443'
       - '4200:80'
   competitions:
+    image: 12345flex402/esport-competitions-local
+    user: root
     container_name: esport-competitions
     build:
       context: ./esport.competitions
-      dockerfile: ./Dockerfile
+      dockerfile: ../deploy/Competitions.Dockerfile
     restart: on-failure
     volumes:
       - /usr/src/app/node_modules
       - ./esport.competitions:/usr/src/app
     command: npm run start
     env_file:
-      - ./esport.competitions/.env.production
+      - ./esport.competitions/.env.local
     depends_on:
       - rabbit
       - api-gateway
   api-gateway:
-    container_name: esport-api-gateway
+    image: 12345flex402/esport-gateway-ts-local
+    user: root
     build:
       context: ./esport.api.gateway
-      dockerfile: ./Dockerfile
+      dockerfile: ../deploy/ApiGateway.Dockerfile
+    container_name: esport-api-gateway
     restart: on-failure
     volumes:
       - /usr/src/app/node_modules
       - ./esport.api.gateway:/usr/src/app
     command: npm run start
     env_file:
-      - ./esport.api.gateway/.env.production
+      - ./esport.api.gateway/.env.local
     depends_on:
       - rabbit
     ports:
       - '3001:3001'
+      - '3011:3011'
+  userworkflow:
+    image: 12345flex402/userworkflow_local
+    user: root
+    build:
+      context: .
+      dockerfile: ./deploy/UserWorkflow.Dockerfile
+    depends_on:
+      - rabbit
+      - gateway
+      - sqldb
+    restart: on-failure
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Local
+    ports:
+      - '5005:80'
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+  nginxlocal:
+    image: 12345flex402/nginxlocal
+    user: root
+    build:
+      context: .
+      dockerfile: ./deploy/LocalNginx.Dockerfile
+    ports:
+      - '443:443'
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'

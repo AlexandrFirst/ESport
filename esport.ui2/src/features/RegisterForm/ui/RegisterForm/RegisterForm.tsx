@@ -114,7 +114,7 @@ export const RegisterForm: FC = () => {
         )}
       </div>
       <span className={styles.text}>Already have an account? </span>
-      <UILink href={routes.Login}>Sign in instead</UILink>
+      <UILink href={routes.Login()}>Sign in instead</UILink>
     </FormWrapper>
   );
 };

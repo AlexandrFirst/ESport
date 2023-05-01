@@ -1,23 +1,28 @@
-import { Button, DatePicker, FormWrapper, Input } from "@/shared/ui";
+import React, { FC } from "react";
+import styles from "./CreateCompetitionForm.module.css";
+
+import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import React, { FC } from "react";
-import { useForm } from "react-hook-form";
+import { Button, DatePicker, FormWrapper, Input } from "@/shared/ui";
+
+import { Prompt } from "@/features/Prompt";
 
 import { useCreateCompetitionValidation } from "../../lib/hooks/use-create-competition-validation";
 import { ICreateCompetitionForm } from "../../model/types/create-competitiom-form";
-import styles from "./CreateCompetitionForm.module.css";
 
 interface CreateCompetitionFormProps {
   loading?: boolean;
   onSubmit?: (data: ICreateCompetitionForm) => void;
   withValidation?: boolean;
+  withPrompt?: boolean;
 }
 
 export const CreateCompetitionForm: FC<CreateCompetitionFormProps> = ({
-  withValidation,
   onSubmit,
   loading,
+  withValidation = true,
+  withPrompt = true,
 }) => {
   const validationSchema = useCreateCompetitionValidation();
 
@@ -36,20 +41,17 @@ export const CreateCompetitionForm: FC<CreateCompetitionFormProps> = ({
         <Input
           name={"title"}
           label={"Title for your next competition"}
-          className={styles.input}
           fullWidth
         />
         <DatePicker
           name={"dateStart"}
           label={"Date start"}
-          className={styles.input}
           // minDate={new Date()}
           // inputProps={{ fullWidth: true }}
         />
         <DatePicker
           name={"dateEnd"}
           label={"Date end"}
-          className={styles.input}
           // minDate={new Date()}
           // inputProps={{ fullWidth: true }}
         />
@@ -59,7 +61,7 @@ export const CreateCompetitionForm: FC<CreateCompetitionFormProps> = ({
           </Button>
         </div>
       </FormWrapper>
-      {/*<SportPrompt shouldConfirmLeave={shouldShowPrompt} />*/}
+      {withPrompt && <Prompt shouldConfirmLeave={shouldShowPrompt} />}
     </>
   );
 };

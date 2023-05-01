@@ -43,7 +43,7 @@ export const LoginForm: FC<LoginFormProps> = (props) => {
       setIsLoading(true);
       await withErrorAndLoading(authService.login, data, {
         onSuccess: () => {
-          router.push(routes.Test);
+          router.push(routes.Home());
         },
         onError: (err) => {
           showError(err.message || "Something went wrong");
@@ -71,14 +71,14 @@ export const LoginForm: FC<LoginFormProps> = (props) => {
         className={styles.input}
         label="Password"
       />
-      <UILink className={styles.link} href={routes.Register}>
+      <UILink className={styles.link} href={routes.Register()}>
         Forgot password?
       </UILink>
       <Button className={styles.btn} onClick={handleSubmit} loading={isLoading}>
         Login
       </Button>
       <span className={styles.text}>New on our platform? </span>
-      <UILink href={routes.Register}>Create an account</UILink>
+      <UILink href={routes.Register()}>Create an account</UILink>
     </FormWrapper>
   );
 };

@@ -21,6 +21,7 @@ export type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   variant?: "outlined" | "standard" | "filled";
   fullWidth?: boolean;
   labelActive?: boolean;
+  marginTop?: "sm" | "md" | "lg" | "none";
 };
 
 export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
@@ -36,6 +37,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     className,
     fullWidth = true,
     labelActive = false,
+    marginTop = "none",
     ...props
   },
   ref

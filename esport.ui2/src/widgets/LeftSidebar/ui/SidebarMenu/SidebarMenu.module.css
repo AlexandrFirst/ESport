@@ -1,24 +1,28 @@
 .logo {
-    @apply cursor-pointer duration-500 mr-5;
+  @apply cursor-pointer duration-500 mr-5;
 }
 
 .nav {
-    @apply absolute top-20;
+  @apply absolute top-20;
 }
 
 .opened {
-    @apply w-10/12;
+  @apply w-10/12;
 }
 
 .closed {
-    @apply w-4/6;
+  @apply w-1/2;
 }
 
 .list_item {
-    /*@apply flex justify-start flex-col rounded-md p-0 cursor-pointer text-skin-main text-sm transition-all duration-500 items-start mt-2*/
-    @apply flex justify-start flex-col rounded-md p-0 cursor-pointer text-sm transition-all duration-500 items-start mt-2;
+  /*@apply flex justify-start flex-col rounded-md p-0 cursor-pointer text-skin-main text-sm transition-all duration-500 items-start mt-2*/
+  @apply flex justify-start flex-col rounded-md p-0 cursor-pointer text-sm transition-all duration-500 items-start mt-2;
 }
 
 .gap {
-    @apply mt-9;
+  @apply mt-9;
+}
+
+.role_changer_wrapper {
+  @apply absolute bottom-2 w-4/5;
 }

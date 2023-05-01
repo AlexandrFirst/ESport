@@ -1,16 +1,14 @@
 import React, { FC, memo } from "react";
-import styles from "./AnonItems.module.css";
-import Link from "next/link";
 
 import { routes } from "@/shared/config";
+import { UILink } from "@/shared/ui";
 
 import { ListItem } from "../ListItem/ListItem";
-import { UILink } from "@/shared/ui";
 
 const AnonItems: FC = () => {
   return (
-    <ListItem>
-      <UILink href={routes.Login}>Login</UILink>
+    <ListItem className={"!mr-0"}>
+      <UILink href={routes.Login()}>Login</UILink>
     </ListItem>
   );
 };

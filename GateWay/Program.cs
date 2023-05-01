@@ -16,6 +16,8 @@ namespace GateWay
     {
         public static void Main(string[] args)
         {
+            var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+            Console.WriteLine("Current environment: " + env);
             CreateHostBuilder(args).Build().Run();
         }
 
@@ -38,7 +40,21 @@ namespace GateWay
                        webBuilder.UseStartup<Startup>();
                        webBuilder.UseKestrel(o =>
                        {
-                           o.Listen(IPAddress.Any, 443, opt => opt.UseHttps(".cerfs/key.pfx", "1234"));
+                           o.Listen(IPAddress.Any, 443, opt => 
+                           {
+                               var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
+                               if (env == "Local") 
+                               {
+                                   var isKeyFileExists = File.Exists(".cerfs/localhost.pfx");
+                                   if (!isKeyFileExists) { Console.WriteLine("File doesn't exists: " + ".cerfs/localhost.pfx"); }
+                                   opt.UseHttps(".cerfs/localhost.pfx", "1234");
+                               }
+                               else
+                               {
+
+                                   opt.UseHttps(".cerfs/key.pfx", "1234");
+                               }
+                           });
                            o.Listen(IPAddress.Any, 5002);
                        });
                    });

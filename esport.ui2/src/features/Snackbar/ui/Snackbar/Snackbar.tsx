@@ -4,10 +4,9 @@ import styles from "./Snackbar.module.css";
 import cn from "classnames";
 
 import { positionClasses } from "@/shared/ui";
-import { useAppSelector } from "@/shared/lib";
 
-import { selectPosition } from "../../model/selectors/selectPosition/selectPosition";
-import { selectToasts } from "../../model/selectors/selectToasts/selectToasts";
+import { useSnackPosition } from "../../model/selectors/selectPosition/selectPosition";
+import { useSnackToasts } from "../../model/selectors/selectToasts/selectToasts";
 
 import { SnackbarToast } from "../SnackbarToast/SnackbarToast";
 
@@ -17,8 +16,8 @@ interface SnackbarProps {
 }
 
 export const Snackbar: FC<SnackbarProps> = ({ className, children }) => {
-  const position = useAppSelector(selectPosition);
-  const toasts = useAppSelector(selectToasts);
+  const position = useSnackPosition();
+  const toasts = useSnackToasts();
 
   return (
     <>

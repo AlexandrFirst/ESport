@@ -1,23 +1,22 @@
-import { RefObject } from "react";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { PayloadAction } from "@reduxjs/toolkit";
 
 import { SnackbarSchema } from "../types/SnackbarSchema";
-import { ToastProps } from "@/shared/ui";
 
 import { SnackbarToastProps } from "../../ui/SnackbarToast/SnackbarToast";
 import { HYDRATE } from "next-redux-wrapper";
 import { StateSchema } from "@/_app/Providers";
+import { buildSlice } from "@/shared/lib";
 
 const initialState: SnackbarSchema = {
   toasts: [],
   position: "topRight",
 };
 
-export const SnackbarSlice = createSlice({
+export const SnackbarSlice = buildSlice({
   name: "Snackbar",
   initialState,
   reducers: {
-    add(
+    addSnack(
       state,
       action: PayloadAction<Omit<SnackbarToastProps, "id" | "remove">>
     ) {
@@ -35,7 +34,7 @@ export const SnackbarSlice = createSlice({
       //   { ...toast, id: Math.random() * 10000 },
       // ]);
     },
-    remove(state, action: PayloadAction<{ toastId: number }>) {
+    removeSnack(state, action: PayloadAction<{ toastId: number }>) {
       const { toastId } = action.payload;
       // ref?.current?.classList.add("animate-toastOut");
       if (state?.toasts) {
@@ -59,5 +58,8 @@ export const SnackbarSlice = createSlice({
   },
 });
 
-export const { actions: snackbarActions } = SnackbarSlice;
-export const { reducer: snackbarReducer } = SnackbarSlice;
+export const {
+  actions: snackbarActions,
+  reducer: snackbarReducer,
+  useActions: useSnackbarActions,
+} = SnackbarSlice;

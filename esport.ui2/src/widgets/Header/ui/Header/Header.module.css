@@ -1,6 +1,6 @@
 .header {
     /*@apply bg-skin-main fixed h-[64px] z-10;*/
-    @apply bg-gradient-to-r from-bg-main-from to-bg-main-to fixed h-[64px] z-10 w-full;
+    @apply bg-gradient-to-r from-bg-main-from to-bg-main-to fixed h-[64px] z-10 w-full px-6;
 }
 
 .nav {

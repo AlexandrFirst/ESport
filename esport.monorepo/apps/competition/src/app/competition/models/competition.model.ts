@@ -1,6 +1,8 @@
 import { ICompetition } from '@esport.monorepo/interfaces';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, now } from 'mongoose';
+import mongoose, { Document, now } from 'mongoose';
+
+import { Category } from '../../category/models/category.model';
 
 @Schema({ timestamps: true })
 export class Competition extends Document implements ICompetition {
@@ -8,20 +10,20 @@ export class Competition extends Document implements ICompetition {
   title: string;
 
   @Prop({ required: true })
-  dateStart: Date;
+  dateStart: string;
 
   @Prop({ required: false })
-  dateEnd: Date;
+  dateEnd: string;
 
   @Prop({ required: true })
   organizationId: number;
 
   @Prop({
     required: true,
-    // type: [{ type: mongoose.Schema.Types.ObjectId, ref: Category.name }],
+    type: [{ type: mongoose.Schema.Types.ObjectId, ref: Category.name }],
   })
   // @Type(() => Category)
-  categories: any[];
+  categories: string[];
 
   @Prop({ default: now() })
   createdAt: Date;

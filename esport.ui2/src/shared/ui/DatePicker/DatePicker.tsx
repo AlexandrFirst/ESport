@@ -6,5 +6,5 @@ interface DatePickerProps extends InputProps {
 }
 
 export const DatePicker: FC<DatePickerProps> = (props) => {
-  return <Input {...props} type="date" />;
+  return <Input {...props} type="date" labelActive />;
 };

@@ -1,4 +1,4 @@
-import { FC, useMemo } from "react";
+import { FC, useMemo, useState } from "react";
 import styles from "./Translate.module.css";
 
 import { useRouter } from "next/router";
@@ -8,10 +8,13 @@ import cn from "classnames";
 import { LanguageIcon } from "@heroicons/react/24/solid";
 
 import {
+  BrowserView,
+  DownDrawer,
   DropdownDirection,
   IconButton,
   Menu,
-  MenuItem,
+  MenuList,
+  MobileView,
   UILink,
 } from "@/shared/ui";
 
@@ -29,7 +32,11 @@ export const Translate: FC<TranslateProps> = ({
   const { t } = useTranslation();
   const router = useRouter();
 
-  const list: MenuItem[] = useMemo(
+  const [isDrawerOpened, setIsDrawerOpened] = useState(false);
+  const handleCloseDrawer = () => setIsDrawerOpened(false);
+  const handleOpenDrawer = () => setIsDrawerOpened(true);
+
+  const list: MenuList = useMemo(
     () =>
       Object.entries({
         [Languages.English]: t("en"),
@@ -37,13 +44,8 @@ export const Translate: FC<TranslateProps> = ({
       }).map(([locale, language]) => ({
         key: locale,
         selected: locale === router.locale,
-        children: (close) => (
-          <UILink
-            href={""}
-            locale={locale}
-            className={styles.link}
-            onClick={close}
-          >
+        children: (
+          <UILink href={""} locale={locale} className={styles.link}>
             {language}
           </UILink>
         ),
@@ -51,20 +53,29 @@ export const Translate: FC<TranslateProps> = ({
     [router.locale, t]
   );
 
+  const languageIcon = (
+    <IconButton
+      onClick={handleOpenDrawer}
+      as={"div"}
+      Svg={LanguageIcon}
+      className={cn(styles.wrapper, className)}
+      iconSize={"l"}
+    />
+  );
+
   return (
     <>
-      <Menu
-        menuButton={
-          <IconButton
-            as={"div"}
-            Svg={LanguageIcon}
-            className={cn(styles.wrapper, className)}
-            iconSize={"l"}
-          />
-        }
-        list={list}
-        direction={direction}
-      />
+      <BrowserView>
+        <Menu menuButton={languageIcon} list={list} direction={direction} />
+      </BrowserView>
+      <MobileView>
+        {languageIcon}
+        <DownDrawer isOpen={isDrawerOpened} onClose={handleCloseDrawer}>
+          {list.map(({ key, children }) => (
+            <div key={key}>{children}</div>
+          ))}
+        </DownDrawer>
+      </MobileView>
     </>
   );
 };

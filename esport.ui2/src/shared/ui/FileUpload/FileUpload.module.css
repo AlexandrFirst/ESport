@@ -1,0 +1,7 @@
+.wrapper {
+  @apply cursor-pointer;
+}
+
+.input {
+  @apply hidden;
+}

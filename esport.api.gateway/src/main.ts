@@ -6,25 +6,42 @@ import * as http from 'http';
 import * as https from 'https';
 import * as express from 'express';
 import { ValidationPipe } from '@nestjs/common';
+import * as dotenv from 'dotenv'
+import { ConfigService } from '@nestjs/config';
+
+dotenv.config()
 
 async function bootstrap() {
 
-  const privateKey = fs.readFileSync('./.cerf/privkey.pem');
-  const certificate = fs.readFileSync('./.cerf/fullchain.pem');
-  const httpsOptions = {key: privateKey, cert: certificate};
-
   const server = express();
 
-  const app = await NestFactory.create(AppModule, 
+  const app = await NestFactory.create(AppModule,
     new ExpressAdapter(server),
   );
+
+  const stage = process.env.STAGE
+  //const configService = app.get(ConfigService);
+  // const REDIS_HOST = configService.get<string>('REDIS_HOST');
+  // const REDIS_PORT = configService.get<number>('REDIS_PORT');
+
+  let privateKey;
+  let certificate;
+  if (stage == 'Production') {
+    privateKey = fs.readFileSync('./.cerf/privkey.pem');
+    certificate = fs.readFileSync('./.cerf/fullchain.pem');
+  } else {
+    privateKey = fs.readFileSync('./.cerf/localhost-key.pem');
+    certificate = fs.readFileSync('./.cerf/localhost.pem');
+  }
+
+  const httpsOptions = { key: privateKey, cert: certificate };
 
 
   app.setGlobalPrefix('api/v1');
   app.useGlobalPipes(new ValidationPipe());
   app.enableCors({
     credentials: true,
-    origin: ["https://e-sport.cloud", "https://e-sport.cloud:4201", "http://localhost", "http://localhost:3001", "http://localhost:3000"],
+    origin: ["https://e-sport.cloud", "https://e-sport.cloud:4201", "http://localhost", "http://localhost:3001", "http://localhost:3000", "https://localhost", "https://localhost:443", "https://localhost:80"],
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
     optionsSuccessStatus: 204
   });

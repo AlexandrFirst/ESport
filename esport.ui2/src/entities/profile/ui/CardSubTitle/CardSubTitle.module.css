@@ -1,0 +1,7 @@
+.subtitle {
+    @apply text-sm uppercase font-black;
+}
+
+.gap {
+    @apply mt-5;
+}

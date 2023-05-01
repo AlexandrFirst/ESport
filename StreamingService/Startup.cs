@@ -55,12 +55,14 @@ namespace StreamingService
 
             services.AddCors(options => options.AddPolicy("ESportCors", builder =>
             {
-                builder.WithOrigins("http://localhost:4200", "http://164.92.190.247:4200", "https://e-sport.cloud:4200")
+                builder.WithOrigins("http://localhost:4200", "http://164.92.190.247:4200", "https://e-sport.cloud:4201", 
+                    "https://localhost", "https://localhost:443", "https://localhost:80", "https://localhost:4201")
                        .AllowAnyMethod()
                        .AllowAnyHeader()
                        .AllowCredentials();
             }));
 
+        
             services.AddTransient<StreamProvider>();
             services.AddTransient<UploadFileService>();
             services.AddSingleton<StreamRepositry>();
@@ -88,8 +90,7 @@ namespace StreamingService
                 endpoints.MapHub<KurrentoHub>("/kurrento", options =>
                 {
                     options.Transports =
-                       HttpTransportType.WebSockets |
-                       HttpTransportType.LongPolling;
+                       HttpTransportType.WebSockets;
                 });
             });
         }

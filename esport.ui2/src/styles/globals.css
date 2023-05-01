@@ -9,6 +9,7 @@
     /* layout */
     --left-sidebar-full: 300px;
     --left-sidebar-compact: 100px;
+    --left-sidebar-mobile: 30px;
 
     --overlay-color: rgba(0 0 0 / 60%);
 

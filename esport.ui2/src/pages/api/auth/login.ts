@@ -4,28 +4,44 @@ import axios from "axios";
 import https from "https";
 import fs from "fs";
 import path from "path";
+import { setCookie } from "cookies-next";
+import { addMonths } from "@/shared/lib";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
   if (req.method === "POST") {
+    process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = "0";
+
     const httpsAgent = new https.Agent({
-      rejectUnauthorized: true,
-      cert: fs.readFileSync(path.resolve(".cerfs", "fullchain.pem")),
-      key: fs.readFileSync(path.resolve(".cerfs", "privkey.pem")),
+      rejectUnauthorized: false,
+      cert: fs.readFileSync(path.resolve(".cerfs", "localhost.pem")),
+      key: fs.readFileSync(path.resolve(".cerfs", "localhost-key.pem")),
       passphrase: process.env.LOGIN_API_PASSPHRASE ?? "",
+      family: 4,
     });
 
-    const { data } = await axios.post(
+    const api = axios.create({
+      httpsAgent,
+      withCredentials: true,
+    });
+
+    const { data } = await api.post<{ token: string }>(
       `${process.env.LOGIN_API_URL}/apiLogin`,
       req.body,
-      {
-        httpsAgent,
-        withCredentials: true,
-      }
+      {}
     );
-    res.status(200).json(data);
+    setCookie("ESportCookie", data.token, {
+      httpOnly: true,
+      expires: addMonths(new Date(), 1),
+      secure: true,
+      sameSite: "none",
+      path: "/",
+      req,
+      res,
+    });
+    return res.status(200).json(data);
   }
-  res.status(200).json({ message: "Hello World" });
+  return res.status(200).json({ message: "Hello World" });
 }

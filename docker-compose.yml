@@ -44,22 +44,23 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
   kurrento:
-    image: kurento/kurento-media-server:6.18.0
+    image: kurento/kurento-media-server:latest
     user: root
     container_name: kurento
     restart: on-failure
     environment:
-      - KMS_MIN_PORT=5000
-      - KMS_MAX_PORT=5050
-      - KMS_ICE_TCP=1
-      - KMS_TURN_URL=e76b1e18382eb8485e4ced0f:awmeGuNs0IsK0VkM@216.39.253.11:80
+      - KMS_MIN_PORT=6000
+      - KMS_MAX_PORT=6050
       - GST_DEBUG="${GST_DEBUG:-2},KurentoUriEndpointImpl:5,uriendpoint:5,playerendpoint:5,kmselement:5,appsrc:4,agnosticbin*:5,uridecodebin:6,rtspsrc:6,souphttpsrc:5,GST_URI:6,*CAPS*:3"
     ports:
       - '8888:8888'
+      - '8433:8433'
+      - '6000-6050:6000-6050/udp'
     volumes:
       - ./records:/tmp
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+      - ./certificates:/cerfs
+      - ./kconfig/kurento.conf.json:/etc/kurento/kurento.conf.json
+      - ./kconfig/WebRtcEndpoint.conf.ini:/etc/kurento/modules/kurento/WebRtcEndpoint.conf.ini
   identity:
     image: 12345flex402/esport_identity
     build:
@@ -75,6 +76,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Production
     ports:
       - '5001:5001'
+      - '5000:5000'
     extra_hosts:
       - "host.docker.internal:host-gateway"
   gateway:
@@ -89,7 +91,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
     ports:
-      - '5002:80'
+      - '5002:443'
     extra_hosts:
       - "host.docker.internal:host-gateway"
   message:
