@@ -14,7 +14,7 @@ import { IMenuItem } from "../../types/menu-item";
 import MenuIcon from "../../ui/MenuIcon/MenuIcon";
 
 export const useMenu = (): IMenuItem[] => {
-  const { user, isAuth, isAdmin } = useAuth();
+  const { user, isAuth } = useAuth();
 
   return [
     {

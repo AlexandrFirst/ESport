@@ -51,7 +51,7 @@ export const updateStoreUser = async (
       dispatch(userActions.setUser(data));
       return { ok: true, user: data };
     } catch (e) {
-      console.log("===e===", e);
+      // console.log("===e===", e);
       return { ok: false };
     }
   }
