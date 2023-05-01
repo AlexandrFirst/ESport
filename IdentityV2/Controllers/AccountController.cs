@@ -123,6 +123,20 @@ namespace IdentityV2.Controllers
             }
         }
 
+        [HttpPut("UpdateMainProfile")]
+        public async Task<IActionResult> UpdateUser([FromBody] UpdateUserProfile updateUserProfile) 
+        {
+            var userAccountUpdated = await accountService.UpdateUserProfile(updateUserProfile);
+            if (userAccountUpdated)
+            {
+                return Ok(new { Message = "User updated successfully" });
+            }
+            else 
+            {
+                return BadRequest(new {Message = "Fail during user update"});
+            }
+        }
+
         [HttpPost("Register")]
         public async Task<IActionResult> Register([FromBody] RegisterModel registerModel)
         {

@@ -13,5 +13,7 @@ namespace UserWorkflow.Esport.Models
 
         public int AdministratorId { get; set; }
         public virtual Administrators Administrators { get; set; }
+
+        public bool IsConfirmed { get; set; } = false;
     }
 }

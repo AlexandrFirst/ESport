@@ -246,7 +246,7 @@ namespace StreamingService.Hubs
 
             await Groups.AddToGroupAsync(connectionId, userId.ToString());
 
-            logger.LogDebug($"User id: {userId} with connectionId: {connectionId} is connected");
+            logger.LogInformation($"User id: {userId} with connectionId: {connectionId} is connected");
 
             await base.OnConnectedAsync();
         }

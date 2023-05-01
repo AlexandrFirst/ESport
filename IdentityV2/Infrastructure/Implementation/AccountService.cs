@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Castle.Core.Logging;
 using IdentityV2.Config;
 using IdentityV2.Data;
 using IdentityV2.Data.Domain;
@@ -12,6 +13,7 @@ using IdentityV2.Utils;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RMQEsportClient;
 using RMQEsportClient.QueueConfigs;
@@ -30,6 +32,7 @@ namespace IdentityV2.Infrastructure.Core
         private readonly IMapper mapper;
         private readonly IMessageProducer messageProducer;
         private readonly IAuthorizationCache authorizationCache;
+        private readonly ILogger<AccountService> logger;
         private readonly MailOption mailOptions;
         private readonly string passwordSecretKey;
 
@@ -40,13 +43,14 @@ namespace IdentityV2.Infrastructure.Core
             IMessageProducer messageProducer,
             IHttpContextAccessor httpContextAccessor,
             IAuthorizationCache authorizationCache,
-            IOptions<MailOption> mailOptions)
+            IOptions<MailOption> mailOptions, ILogger<AccountService> logger)
         {
             this.dataContext = dataContext;
             this.jwtMananager = jwtMananager;
             this.mapper = mapper;
             this.messageProducer = messageProducer;
             this.authorizationCache = authorizationCache;
+            this.logger = logger;
             passwordSecretKey = configuration.GetSection("User")["Key"];
             this.mailOptions = mailOptions.Value;
         }
@@ -127,13 +131,12 @@ namespace IdentityV2.Infrastructure.Core
 
                 dataContext.Users.Add(userToInsert);
 
-                var isHttps = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Production" ? true : false;
+                var isHttps = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development" ? false : true;
 
                 messageProducer.SendMessage(new
                 {
-                    token = userToInsert.PendingUser.PendingToken.ToString(),
                     mail = userToInsert.Email,
-                    template = "<p>Click to confirm your account <a href='" + (isHttps ? "https" : "http") + "://" + mailOptions.ConfirmationHost + "/api/auth/confirm?token={0}'>Confirm</a></p>"
+                    template = "<p>Click to confirm your account <a href='" + (isHttps ? "https" : "http") + "://" + mailOptions.ConfirmationHost + $"/api/auth/confirm?token={userToInsert.PendingUser.PendingToken}'>Confirm</a></p>"
                 }, QueueConfigName.MessageConfig);
                 await dataContext.SaveChangesAsync();
 
@@ -143,6 +146,60 @@ namespace IdentityV2.Infrastructure.Core
             {
                 var errors = validationResults.Select(o => o.ErrorMessage).ToList();
                 return new RegisterResultModel { IsSuccess = false, Error = errors };
+            }
+        }
+
+        public async Task<bool> UpdateUserProfile(UpdateUserProfile userProfile)
+        {
+            var user = await dataContext.Users.FirstOrDefaultAsync(x => x.Id == userProfile.UserId);
+            if (user == null)
+            {
+                logger.LogError($"No account found with id: {userProfile.UserId}");
+                return false;
+            }
+
+           
+            using (var transaction = dataContext.Database.BeginTransaction())
+            {
+                mapper.Map(userProfile, user);
+
+                if (userProfile.RolesToRemove.Any())
+                {
+                    int removedRoles = user.UserRoles.RemoveAll(x => userProfile.RolesToRemove.Any(k => x.RoleId == k));
+                    if (removedRoles != userProfile.RolesToRemove.Count)
+                    {
+                        transaction.Rollback();
+                        logger.LogError("No all roles are removed from list: " + string.Join(',', userProfile.RolesToRemove));
+                        return false;
+                    }
+                }
+
+                if (userProfile.RolesToAdd.Any())
+                {
+                    var rolesToAdd = await dataContext.Roles.Where(x => userProfile.RolesToAdd.Any(k => k == x.Id)).ToListAsync();
+                    if (rolesToAdd.Count() != userProfile.RolesToAdd.Count) 
+                    {
+                        transaction.Rollback();
+                        logger.LogError("No all roles can be added from list: " + string.Join(',', userProfile.RolesToAdd));
+                        return false;
+                    }
+                    var noRoles = rolesToAdd.Where(r => !user.UserRoles.Any(p => p.RoleId == r.Id));
+                    user.UserRoles.AddRange(noRoles.Select(m => new UserRoles() { RoleId = m.Id }));
+                }
+
+                try
+                {
+                    
+                    transaction.Commit();
+                    await dataContext.SaveChangesAsync();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    logger.LogError(ex.Message + "|" + ex.InnerException.Message);
+                    return false;
+                }
             }
         }
     }

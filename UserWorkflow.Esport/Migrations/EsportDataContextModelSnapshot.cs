@@ -17,7 +17,7 @@ namespace UserWorkflow.Esport.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.13")
+                .HasAnnotation("ProductVersion", "6.0.16")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -424,6 +424,9 @@ namespace UserWorkflow.Esport.Migrations
                     b.Property<int>("GymId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsConfirmed")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.HasIndex("AdministratorId");
@@ -528,9 +531,13 @@ namespace UserWorkflow.Esport.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique()
+                        .HasFilter("[Name] IS NOT NULL");
 
                     b.ToTable("Organisations");
                 });
@@ -545,6 +552,9 @@ namespace UserWorkflow.Esport.Migrations
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<bool>("IsConfirmed")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsProfileConfirmed")
                         .HasColumnType("bit");
@@ -812,6 +822,53 @@ namespace UserWorkflow.Esport.Migrations
                     b.ToTable("Trainers");
                 });
 
+            modelBuilder.Entity("UserWorkflow.Esport.Models.TrainerRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TrainerSheduleId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TrainerSheduleId");
+
+                    b.ToTable("TrainerRequests");
+                });
+
+            modelBuilder.Entity("UserWorkflow.Esport.Models.TrainerResponse", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("ApplicationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("TrainerId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TrainerRequestId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TrainerId");
+
+                    b.HasIndex("TrainerRequestId");
+
+                    b.ToTable("TrainerResponses");
+                });
+
             modelBuilder.Entity("UserWorkflow.Esport.Models.TrainerShedule", b =>
                 {
                     b.Property<int>("Id")
@@ -829,7 +886,7 @@ namespace UserWorkflow.Esport.Migrations
                     b.Property<string>("TimeOverride")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TrainerId")
+                    b.Property<int?>("TrainerId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -1214,6 +1271,36 @@ namespace UserWorkflow.Esport.Migrations
                     b.Navigation("TraineeShedule");
                 });
 
+            modelBuilder.Entity("UserWorkflow.Esport.Models.TrainerRequest", b =>
+                {
+                    b.HasOne("UserWorkflow.Esport.Models.TrainerShedule", "TrainerShedule")
+                        .WithMany("TrainerRequests")
+                        .HasForeignKey("TrainerSheduleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("TrainerShedule");
+                });
+
+            modelBuilder.Entity("UserWorkflow.Esport.Models.TrainerResponse", b =>
+                {
+                    b.HasOne("UserWorkflow.Esport.Models.Trainer", "Trainer")
+                        .WithMany("TrainerResponses")
+                        .HasForeignKey("TrainerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("UserWorkflow.Esport.Models.TrainerRequest", "TrainerRequest")
+                        .WithMany("TrainerResponses")
+                        .HasForeignKey("TrainerRequestId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Trainer");
+
+                    b.Navigation("TrainerRequest");
+                });
+
             modelBuilder.Entity("UserWorkflow.Esport.Models.TrainerShedule", b =>
                 {
                     b.HasOne("UserWorkflow.Esport.Models.GymShift", "GymShift")
@@ -1225,8 +1312,7 @@ namespace UserWorkflow.Esport.Migrations
                     b.HasOne("UserWorkflow.Esport.Models.Trainer", "Trainer")
                         .WithMany("TraineeShedules")
                         .HasForeignKey("TrainerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("GymShift");
 
@@ -1363,12 +1449,21 @@ namespace UserWorkflow.Esport.Migrations
 
                     b.Navigation("TraineeShedules");
 
+                    b.Navigation("TrainerResponses");
+
                     b.Navigation("TrainerSports");
+                });
+
+            modelBuilder.Entity("UserWorkflow.Esport.Models.TrainerRequest", b =>
+                {
+                    b.Navigation("TrainerResponses");
                 });
 
             modelBuilder.Entity("UserWorkflow.Esport.Models.TrainerShedule", b =>
                 {
                     b.Navigation("Lessons");
+
+                    b.Navigation("TrainerRequests");
                 });
 
             modelBuilder.Entity("UserWorkflow.Esport.Models.Traumas", b =>

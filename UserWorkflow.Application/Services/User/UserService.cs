@@ -9,6 +9,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UserWorkflow.Application.Clients;
 using UserWorkflow.Application.Extensions;
 using UserWorkflow.Application.Models.Rmq;
 using UserWorkflow.Application.ReadModels.User;
@@ -24,18 +25,19 @@ namespace UserWorkflow.Application.Services.Users
         private readonly IMessageProducer messageProducer;
         private readonly IMapper mapper;
         private readonly ILogger<UserService> logger;
-
+        private readonly IdentityClient identityClient;
         private const string CREATE_ACTION = "Create";
         private const string UPDATE_ACTION = "Update";
         private const string DELETE_ACTION = "Delete";
 
         public UserService(EsportDataContext esportDataContext,
-            IMessageProducer messageProducer, IMapper mapper, ILogger<UserService> logger)
+            IMessageProducer messageProducer, IMapper mapper, ILogger<UserService> logger, IdentityClient identityClient)
         {
             this.esportDataContext = esportDataContext;
             this.messageProducer = messageProducer;
             this.mapper = mapper;
             this.logger = logger;
+            this.identityClient = identityClient;
         }
 
         public async Task<int> CreateOrUpdateAdministrator(User userModel, List<int> gymIds)
@@ -144,6 +146,21 @@ namespace UserWorkflow.Application.Services.Users
 
                 await esportDataContext.Trainers.AddAsync(trainer);
                 action = CREATE_ACTION;
+
+                var identityResponse = await identityClient.UpdateUserProfile(new Models.User.UpdateUserInfo()
+                {
+                    UserId = userModel.UserId,
+                    RolesToAdd = new List<int>()
+                    {
+                        UserRole.Trainer.RoleId
+                    }
+                });
+
+                if (!identityResponse) 
+                {
+                    throw new ApplicationException("Unable to create trainer");
+                }
+
             }
             else
             {

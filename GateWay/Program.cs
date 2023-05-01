@@ -32,7 +32,7 @@ namespace GateWay
                             .AddJsonFile("appsettings.json", true, true)
                             .AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", true, true)
                             .AddOcelotconfigFiles($"./Configuration/{hostingContext.HostingEnvironment.EnvironmentName}",
-                                new[] { "main", "apiGateway", "streaming"}, hostingContext.HostingEnvironment)
+                                new[] { "main", "apiGateway", "streaming", "confirm", "admin"}, hostingContext.HostingEnvironment)
                             .AddEnvironmentVariables();
                     })
                    .ConfigureWebHostDefaults(webBuilder =>

@@ -94,7 +94,7 @@ namespace MessageService.Workers
 
                     var result = await emailService.SendMessagesAsync(new SendMessageRequest()
                     {
-                        Template = String.Format(deserializedMessage.Template, deserializedMessage.Token),
+                        Template = deserializedMessage.Template,
                         ToMail = new System.Collections.Generic.List<string>() { deserializedMessage.Mail}
                     });
                     if(result == 1)
@@ -105,9 +105,9 @@ namespace MessageService.Workers
                     _logger.LogError($"JSON Parse Error: '{message}'.");
                     _channel.BasicNack(ea.DeliveryTag, false, false);
                 }
-                catch (AlreadyClosedException)
+                catch (AlreadyClosedException ex)
                 {
-                    _logger.LogInformation("RabbitMQ is closed!");
+                    _logger.LogError("RabbitMQ is closed! " + ex.Message);
                 }
                 catch (Exception e)
                 {
@@ -126,7 +126,7 @@ namespace MessageService.Workers
         {
             await base.StopAsync(cancellationToken);
             _connection.Close();
-            _logger.LogInformation("RabbitMQ connection is closed.");
+            _logger.LogError("RabbitMQ connection is closed.");
         }
     }
 }

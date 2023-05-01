@@ -47,7 +47,7 @@ namespace StreamingService.Services
 
         public async Task Stop(string userId)
         {
-            logger.LogDebug($"Stopping user translation with id: {userId} ");
+            logger.LogInformation($"Stopping user translation with id: {userId} ");
 
             if (presenter != null && presenter.UserId.ToString().Equals(userId))
             {
@@ -85,7 +85,7 @@ namespace StreamingService.Services
 
         public async Task<PresenterResponse> StartPresenter(string userId, string sdpOffer)
         {
-            logger.LogDebug($"Starting presenter with connection id: {userId}");
+            logger.LogInformation($"Starting presenter with connection id: {userId}");
 
             //clearCandidateQueue(userId);
 
@@ -363,19 +363,19 @@ namespace StreamingService.Services
                 presenter.UserId.ToString().Equals(userId) &&
                 presenter.WebRtcEndpoint != null)
             {
-                logger.LogDebug("Sending presenter candidate");
+                logger.LogInformation("Sending presenter candidate to user with id: " + userId);
                 presenter.WebRtcEndpoint.AddIceCandidateAsync(_candidate);
             }
             else if (viewers.Any(x => x.UserId.ToString().Equals(userId)) &&
                 viewers.First(x => x.UserId.ToString().Equals(userId)).WebRtcEndpoint != null)
             {
-                logger.LogDebug("Sending viewer candidate");
+                logger.LogInformation("Sending viewer candidate to user: " + userId);
                 var viewer = viewers.First(x => x.UserId.ToString().Equals(userId));
                 viewer.WebRtcEndpoint.AddIceCandidateAsync(_candidate);
             }
             else
             {
-                logger.LogDebug("Queueing candidate");
+                logger.LogInformation("Queueing candidate for user: " + userId);
 
                 var connectionExists = candidateQueue.ContainsKey(userId);
                 if (!connectionExists)
@@ -439,7 +439,7 @@ namespace StreamingService.Services
 
         private void clearCandidateQueue(string userId)
         {
-            logger.LogDebug("Clearing candidates queue");
+            logger.LogInformation("Clearing candidates queue for user: " + userId);
             candidateQueue.TryRemove(userId, out var value);
         }
 
