@@ -1,5 +1,4 @@
 import next from "next";
-import express from "express";
 import { createServer } from "https";
 import { parse } from "url";
 import fs from "fs";
@@ -16,12 +15,6 @@ const httpsOptions = {
 };
 
 app.prepare().then(() => {
-  const server = express();
-
-  server.all("*", (req, res) => {
-    return handle(req, res);
-  });
-
   createServer(httpsOptions, (req, res) => {
     const parsedUrl = parse(req.url!, true);
     handle(req, res, parsedUrl);
