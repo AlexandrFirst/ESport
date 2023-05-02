@@ -40,7 +40,11 @@ class AuthService {
   }
 
   login(loginRequest: ILoginRequest): Promise<ILoginResponse> {
-    return authApi.post("/login", loginRequest);
+    // return authApi.post("/login", loginRequest);
+    return axios.post(
+      `${process.env.NEXT_PUBLIC_LOGIN_API_URL}/apiLogin`,
+      loginRequest
+    );
   }
 
   confirm(token: string): Promise<void> {

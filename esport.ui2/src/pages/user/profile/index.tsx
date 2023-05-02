@@ -6,7 +6,7 @@ import { GetServerSideProps } from "next";
 import { Languages } from "@/shared/constants";
 import { TwoItemsGridContainer } from "@/shared/ui";
 
-import { MainLayout } from "@/widgets/MainLayout";
+import { getMainLayout } from "@/widgets/MainLayout";
 
 import {
   AboutInfo,
@@ -24,16 +24,20 @@ type ProfileProps = {
 
 const Profile: AppNextPage<ProfileProps> = ({ profile }) => {
   return (
-    <MainLayout>
+    <>
       <ProfileMainInfo profile={profile} />
       {/*<ProfilePagesSwitcher />*/}
       <TwoItemsGridContainer className={"mt-6"}>
         <AboutInfo profile={profile} />
         <OverviewCard />
       </TwoItemsGridContainer>
-    </MainLayout>
+    </>
   );
 };
+
+Profile.getLayout = getMainLayout({
+  headProps: { title: `Profile | E-Sport` },
+});
 
 export default Profile;
 
