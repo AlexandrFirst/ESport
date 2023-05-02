@@ -1,10 +1,11 @@
 import next from "next";
-import {createServer as HTTPSCreateServer} from "https";
-import {createServer as HTTPCreateServer} from "http";
-import {parse} from "url";
+
+import { createServer as HTTPSCreateServer } from "https";
+import { createServer as HTTPCreateServer } from "http";
+
+import { parse } from "url";
 import fs from "fs";
 import path from "path";
-// import { loadEnvConfig } from "@next/env";
 
 const port = parseInt(process.env.PORT || "3000", 10);
 const dev = process.env.NODE_ENV !== "production";
@@ -12,8 +13,6 @@ const app = next({ dev, port });
 const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
-  console.log("===process.env===", process.env);
-
   const httpsOptions = {
     key: fs.readFileSync(
       path.resolve(".cerfs", process.env.SSL_KEY_NAME ?? "")
