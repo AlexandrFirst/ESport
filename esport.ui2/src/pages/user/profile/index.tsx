@@ -43,13 +43,11 @@ Profile.getLayout = getMainLayout({
 export default Profile;
 
 export const getServerSideProps = getAppServerSideProps(
-  async (ctx, store) => {
+  async (ctx) => {
     const localization = await serverSideTranslations(
       ctx.locale ?? ctx.defaultLocale ?? Languages.English,
       ["common", "profile"]
     );
-
-    console.log("===store===", store);
 
     return {
       props: {
