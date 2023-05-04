@@ -20,5 +20,16 @@ namespace UserWorkflow.Application.Models.User
     {
         public int Id { get; set; }
         public List<GymInfo> UserGyms { get; set; }
+
+
+        public UserAdminInfo(UserIdentityInfo userIdentityInfo): base(userIdentityInfo)
+        {
+
+        }
+
+        public UserAdminInfo()
+        {
+
+        }
     }
 }

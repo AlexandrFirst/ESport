@@ -51,7 +51,7 @@ namespace UserWorkflow.Application.Requests.User
 
         private UserTrainerInfo handleUserTrainerInfo(Trainer trainer)
         {
-            var model = UserIdentityInfo.InitFromDbUser(trainer) as UserTrainerInfo;
+            var model = new UserTrainerInfo(UserIdentityInfo.InitFromDbUser(trainer));
             model.Id = trainer.Id;
             model.Info = trainer.Info;
             return model;
@@ -59,7 +59,7 @@ namespace UserWorkflow.Application.Requests.User
 
         private UserTraineeInfo handleUserTraineeInfo(Trainee trainee)
         {
-            var model = UserIdentityInfo.InitFromDbUser(trainee) as UserTraineeInfo;
+            var model = new UserTraineeInfo(UserIdentityInfo.InitFromDbUser(trainee));
             model.Id = trainee.Id;
             model.Info = trainee.Info;
             return model;
@@ -67,7 +67,7 @@ namespace UserWorkflow.Application.Requests.User
 
         private UserOrganisationAdminInfo handleUserAdminOrgInfo(OrganisationAdministrators organisationAdministrators)
         {
-            var model = UserIdentityInfo.InitFromDbUser(organisationAdministrators) as UserOrganisationAdminInfo;
+            var model = new UserOrganisationAdminInfo(UserIdentityInfo.InitFromDbUser(organisationAdministrators));
             model.Id = organisationAdministrators.Id;
             model.OrganisationName = organisationAdministrators.Organisation?.Name;
             model.GymOrganisationId = organisationAdministrators.Organisation?.Id;
@@ -76,7 +76,7 @@ namespace UserWorkflow.Application.Requests.User
 
         private UserAdminInfo handleAdminInfo(Administrators administrators)
         {
-            var model = UserIdentityInfo.InitFromDbUser(administrators) as UserAdminInfo;
+            var model = new UserAdminInfo(UserIdentityInfo.InitFromDbUser(administrators));
             model.Id = administrators.Id;
             model.UserGyms = administrators.GymAdministrators.Select(x => new GymInfo()
             {

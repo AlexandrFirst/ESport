@@ -4,6 +4,7 @@ using IdentityV2.Dto.User;
 using IdentityV2.Models.UserModels;
 using IdentityV2.Utils;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -26,7 +27,7 @@ namespace IdentityV2.Controllers
         }
 
         [HttpGet("{id}")]
-        [Authorize(Policy = "UserFlowPolicy")]
+        [EnableCors("UserFlowPolicy")]
         public async Task<IActionResult> GetUserInfo(int id)
         {
             if (id < 1)
@@ -53,7 +54,7 @@ namespace IdentityV2.Controllers
         }
 
         [HttpDelete("{id}")]
-        [Authorize(Policy = "UserFlowPolicy")]
+        [EnableCors("UserFlowPolicy")]
         public async Task<IActionResult> DeleteUserInfo(int id) 
         {
             if (id < 1)

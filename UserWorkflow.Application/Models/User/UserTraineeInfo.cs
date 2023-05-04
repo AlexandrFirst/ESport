@@ -10,5 +10,15 @@ namespace UserWorkflow.Application.Models.User
     {
         public int Id { get; set; }
         public string Info { get; set; }
+
+        public UserTraineeInfo(UserIdentityInfo userIdentityInfo): base(userIdentityInfo)
+        {
+
+        }
+
+        public UserTraineeInfo()
+        {
+
+        }
     }
 }

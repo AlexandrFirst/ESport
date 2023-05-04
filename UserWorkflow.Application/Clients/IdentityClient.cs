@@ -16,9 +16,9 @@ namespace UserWorkflow.Application.Clients
         private readonly HttpClient client;
         private readonly ILogger<IdentityClient> logger;
 
-        public IdentityClient(HttpClient client, ILogger<IdentityClient> logger)
+        public IdentityClient(IHttpClientFactory factory, ILogger<IdentityClient> logger)
         {
-            this.client = client;
+            this.client = factory.CreateClient("IdentityClient");
             this.logger = logger;
         }
 

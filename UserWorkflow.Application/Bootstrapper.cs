@@ -26,10 +26,10 @@ namespace UserWorkflow.Application
     {
         public static void RegisterIocContainers(IServiceCollection services, Microsoft.Extensions.Configuration.IConfiguration configuration)
         {
-
-            services.AddHttpClient<IdentityClient>(options =>
+            var authorityUrl = configuration.GetSection("IdentityClient")["Address"];
+            services.AddHttpClient("IdentityClient", options =>
             {
-                options.BaseAddress = new Uri(configuration.GetSection("IdentityClient")["Address"]);
+                options.BaseAddress = new Uri(authorityUrl);
             });
 
             services.AddOptions<RabbitMqOptions>().Bind(configuration.GetSection("RabbitMq"));
