@@ -17,18 +17,17 @@ import {
   MobileView,
 } from "@/shared/ui";
 
-import { useAppDispatch } from "@/shared/lib";
-
-import { useAuth, userActions, UserNameRoleHolder } from "@/entities/user";
+import { useAuth, UserNameRoleHolder } from "@/entities/user";
+import { useLogout } from "@/entities/user/api/hooks/useLogout";
 
 interface ProfileAvatarProps extends AvatarProps {}
 
 export const ProfileAvatar: FC<ProfileAvatarProps> = ({ ...props }) => {
   const { user, translatedRole } = useAuth();
+  const { mutate } = useLogout();
 
-  const dispatch = useAppDispatch();
-  const handleLogout = () => {
-    dispatch(userActions.resetUser());
+  const handleLogout = async () => {
+    await mutate();
   };
 
   const [isDrawerOpened, setIsDrawerOpened] = useState(false);

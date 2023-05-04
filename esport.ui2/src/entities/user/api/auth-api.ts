@@ -59,6 +59,10 @@ export const AuthService = (ctx?: ApiContext) => {
     async getUser() {
       return instance.get<IUser>("/info");
     },
+
+    async logout() {
+      return instance.post("/apiLogout");
+    },
   };
 };
 

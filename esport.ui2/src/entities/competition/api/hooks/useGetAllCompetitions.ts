@@ -1,14 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
-import { competitionApi } from "@/entities/competition";
+import { ApiContext } from "@/shared/types";
+import { CompetitionApi } from "../api";
 
 export const getAllCompetitionsQueryKey = ["getAllCompetitions"] as const;
 
-export const useGetAllCompetitions = () => {
+export const useGetAllCompetitions = (ctx?: ApiContext) => {
   return useQuery({
     queryKey: getAllCompetitionsQueryKey,
     queryFn: async () => {
       try {
-        const { data } = await competitionApi.getAllCompetitions();
+        const { data } = await CompetitionApi(ctx).getAllCompetitions();
         return data;
       } catch (e) {
         throw e;

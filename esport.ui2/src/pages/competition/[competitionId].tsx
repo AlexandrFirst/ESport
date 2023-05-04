@@ -6,7 +6,6 @@ import { Title } from "@/shared/ui";
 import { AppNextPage } from "@/shared/types";
 
 import {
-  competitionApi,
   CompetitionGrid,
   ICompetitonWithCategories,
 } from "@/entities/competition";
@@ -36,20 +35,18 @@ CompetitionPage.getLayout = (page) => {
 
 export default CompetitionPage;
 
-export const getServerSideProps: GetServerSideProps<
-  CompetitionPageProps
-> = async (ctx) => {
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
   const localization = await serverSideTranslations(
     ctx.locale ?? ctx.defaultLocale ?? "en",
     ["common"]
   );
   const competitionId = ctx.params?.competitionId as string;
 
-  const { data } = await competitionApi.getCompetition(competitionId);
+  // const { data } = await competitionApi.getCompetition(competitionId);
   return {
     props: {
       ...localization,
-      ...data,
+      // ...data,
     },
   };
 };

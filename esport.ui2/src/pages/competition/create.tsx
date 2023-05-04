@@ -1,8 +1,8 @@
 import React from "react";
-import { GetServerSideProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import { AppNextPage } from "@/shared/types";
+import { getAppServerSideProps } from "@/shared/lib";
 
 import { CreateCompetitionCard } from "@/entities/competition";
 
@@ -20,14 +20,17 @@ CreateCompetitionPage.getLayout = (page) => {
 
 export default CreateCompetitionPage;
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const localization = await serverSideTranslations(
-    ctx.locale ?? ctx.defaultLocale ?? "en",
-    ["common"]
-  );
-  return {
-    props: {
-      ...localization,
-    },
-  };
-};
+export const getServerSideProps = getAppServerSideProps(
+  async (ctx) => {
+    const localization = await serverSideTranslations(
+      ctx.locale ?? ctx.defaultLocale ?? "en",
+      ["common"]
+    );
+    return {
+      props: {
+        ...localization,
+      },
+    };
+  },
+  { auth: true }
+);

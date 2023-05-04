@@ -4,6 +4,8 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import { Languages } from "@/shared/constants";
 import { TwoItemsGridContainer } from "@/shared/ui";
+import { AppNextPage } from "@/shared/types";
+import { getAppServerSideProps } from "@/shared/lib";
 
 import { getMainLayout } from "@/widgets/MainLayout";
 
@@ -14,16 +16,11 @@ import {
   ProfileMainInfo,
 } from "@/entities/profile";
 
-import { AppNextPage } from "@/shared/types";
-import { UserRole } from "@/entities/user";
-import { getAppServerSideProps } from "@/shared/lib";
-
 type ProfileProps = {
   profile?: IProfile;
 };
 
 const Profile: AppNextPage<ProfileProps> = ({ profile }) => {
-  console.log("===profile===", profile);
   return (
     <>
       <ProfileMainInfo profile={profile} />
@@ -42,45 +39,40 @@ Profile.getLayout = getMainLayout({
 
 export default Profile;
 
-export const getServerSideProps = getAppServerSideProps(
-  async (ctx, store) => {
-    const localization = await serverSideTranslations(
-      ctx.locale ?? ctx.defaultLocale ?? Languages.English,
-      ["common", "profile"]
-    );
+export const getServerSideProps = getAppServerSideProps(async (ctx) => {
+  const localization = await serverSideTranslations(
+    ctx.locale ?? ctx.defaultLocale ?? Languages.English,
+    ["common", "profile"]
+  );
 
-    console.log("===store===", store);
-
-    return {
-      props: {
-        ...localization,
-        profile: {
-          fullName: "Sasha Logvinov",
-          level: "Черный пояс",
-          location: "Київ",
-          lastLogin: new Date().toLocaleDateString(),
-          country: "Україна",
-          contacts: {
-            email: {
-              title: "someemail@a.c",
-              link: "",
-            },
-            telegram: {
-              title: "@someuser",
-              link: "",
-            },
-            phone: {
-              title: "+380000000000",
-              link: "",
-            },
-            instagram: {
-              title: "@someuser",
-              link: "",
-            },
+  return {
+    props: {
+      ...localization,
+      profile: {
+        fullName: "Sasha Logvinov",
+        level: "Черный пояс",
+        location: "Київ",
+        lastLogin: new Date().toLocaleDateString(),
+        country: "Україна",
+        contacts: {
+          email: {
+            title: "someemail@a.c",
+            link: "",
+          },
+          telegram: {
+            title: "@someuser",
+            link: "",
+          },
+          phone: {
+            title: "+380000000000",
+            link: "",
+          },
+          instagram: {
+            title: "@someuser",
+            link: "",
           },
         },
       },
-    };
-  },
-  { roles: [UserRole.Admin] }
-);
+    },
+  };
+});
