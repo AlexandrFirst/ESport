@@ -1,7 +1,6 @@
 import { useMutation, UseMutationOptions } from "@tanstack/react-query";
 import { AxiosError, AxiosResponse } from "axios";
-
-import { useSnackbar } from "@/features/Snackbar";
+import { useSnackbar } from "@/shared/lib";
 
 import { competitionApi } from "../api";
 import { ICreateCompetitionForm } from "../../model/types/create-competitiom-form";

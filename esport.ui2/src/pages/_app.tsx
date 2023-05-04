@@ -6,7 +6,7 @@ import { appWithTranslation } from "next-i18next";
 import { Providers, wrapper } from "@/_app/Providers";
 
 import { updateDeviceState } from "@/shared/model";
-import { AppPageProps } from "@/shared/types";
+import { IAppPageProps } from "@/shared/types";
 
 import { updateSidebarState } from "@/widgets/LeftSidebar";
 import { updateStoreUser } from "@/entities/user";
@@ -16,7 +16,7 @@ const font = Nunito({
   weight: ["300", "600", "700", "900"],
 });
 
-function App({ Component, ...restProps }: AppPageProps) {
+function App({ Component, ...restProps }: IAppPageProps) {
   const { store, props } = wrapper.useWrappedStore(restProps);
   const { pageProps } = props;
   const getLayout = Component.getLayout ?? ((page) => page);
@@ -46,28 +46,7 @@ App.getInitialProps = wrapper.getInitialAppProps(
       );
 
       if (!!ctx.req) {
-        await updateStoreUser(ctx.req, store);
-      }
-      // @ts-ignore
-      if (Component.auth) {
-        const user = store.getState().user.user;
-        //TODO: HANDLE REDIRECT USER IF NOT AUTHORIZED
-        if (!user) {
-          // redirect(routes.Forbidden(), ctx?.res);
-          return {
-            pageProps,
-          };
-        }
-        //@ts-ignore
-        if (Component.auth?.length > 0) {
-          //@ts-ignore
-          if (!Component.auth?.includes(user?.role)) {
-            // redirect(routes.Forbidden(), ctx?.res);
-            return {
-              pageProps,
-            };
-          }
-        }
+        await updateStoreUser(ctx, store);
       }
 
       return {
@@ -76,5 +55,4 @@ App.getInitialProps = wrapper.getInitialAppProps(
     }
 );
 
-// @ts-ignore
 export default appWithTranslation(App);

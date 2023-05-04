@@ -4,8 +4,6 @@ import axios from "axios";
 import https from "https";
 import fs from "fs";
 import path from "path";
-import { setCookie } from "cookies-next";
-import { addMonths } from "@/shared/lib";
 
 export default async function handler(
   req: NextApiRequest,
@@ -32,15 +30,15 @@ export default async function handler(
       req.body,
       {}
     );
-    setCookie("ESportCookie", data.token, {
-      httpOnly: true,
-      expires: addMonths(new Date(), 1),
-      secure: true,
-      sameSite: "none",
-      path: "/",
-      req,
-      res,
-    });
+    // setCookie({req}, "ESportCookie", data.token, {
+    //   httpOnly: true,
+    //   expires: addMonths(new Date(), 1),
+    //   secure: true,
+    //   sameSite: "none",
+    //   path: "/",
+    //   req,
+    //   res,
+    // });
     return res.status(200).json(data);
   }
   return res.status(200).json({ message: "Hello World" });

@@ -9,6 +9,8 @@ export type AppNextPage<P = {}, IP = P> = NextPage<P, IP> & {
   auth?: UserRole[] | boolean;
 };
 
-export interface AppPageProps extends AppProps {
+export interface IAppPageProps extends AppProps {
   Component: AppNextPage;
 }
+
+export type AppPageProps = { [key: string]: any };
