@@ -1,7 +1,7 @@
 import { useCallback } from "react";
 import { ToastProps } from "@/shared/ui";
 
-import { useSnackbarActions } from "../../model/slices/SnackbarSlice";
+import { useSnackbarActions } from "@/features/Snackbar";
 
 export const useSnackbar = () => {
   const { addSnack } = useSnackbarActions();

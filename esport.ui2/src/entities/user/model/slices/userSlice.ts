@@ -19,7 +19,7 @@ const initialState: UserSchema = {
   //   role: UserRole.Pupil,
   //   id: "1",
   // },
-  user: null,
+  data: null,
 };
 
 const userSlice = buildSlice({
@@ -28,11 +28,11 @@ const userSlice = buildSlice({
   reducers: {
     setUser: (state, action: PayloadAction<IUser>) => {
       state.isAuth = true;
-      state.user = action.payload;
+      state.data = action.payload;
     },
     resetUser: (state) => {
       state.isAuth = false;
-      state.user = null;
+      state.data = null;
     },
     setCurrentRole(state, action: PayloadAction<UserRole>) {
       state.currentRole = action.payload;

@@ -26,7 +26,7 @@ export {
 
 export { UserRole } from "./constants/user-role";
 
-export { authService } from "./api/auth-api";
+export { AuthService } from "./api/auth-api";
 
 export { useAuth } from "./lib/hooks/useAuth";
 export { useMappedRoles } from "./lib/hooks/useMappedRoles";

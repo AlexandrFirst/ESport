@@ -9,12 +9,10 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { routes } from "@/shared/config";
-import { useMedia, useWrapApi } from "@/shared/lib";
+import { useMedia, useSnackbar, useWrapApi } from "@/shared/lib";
 import { Button, FormWrapper, Input, PasswordInput, UILink } from "@/shared/ui";
 
-import { authService } from "@/entities/user";
-
-import { useSnackbar } from "@/features/Snackbar";
+import { AuthService } from "@/entities/user";
 
 import { ILoginForm } from "../../model/types/LoginFormSchema";
 import { useValidation } from "../../lib/hooks/useValidation";
@@ -38,23 +36,20 @@ export const LoginForm: FC<LoginFormProps> = (props) => {
   const router = useRouter();
   const withErrorAndLoading = useWrapApi();
 
-  const handleSubmit = methods.handleSubmit(
-    async (data) => {
-      setIsLoading(true);
-      await withErrorAndLoading(authService.login, data, {
-        onSuccess: () => {
-          router.push(routes.Home());
-        },
-        onError: (err) => {
-          showError(err.message || "Something went wrong");
-        },
-        onFinally: () => {
-          setIsLoading(false);
-        },
-      });
-    },
-    (err) => console.log(err)
-  );
+  const handleSubmit = methods.handleSubmit(async (data) => {
+    setIsLoading(true);
+    await withErrorAndLoading(AuthService().login, data, {
+      onSuccess() {
+        router.push(routes.Home());
+      },
+      onError: (err) => {
+        showError(err.message || "Something went wrong");
+      },
+      onFinally: () => {
+        setIsLoading(false);
+      },
+    });
+  }, console.log);
 
   return (
     <FormWrapper

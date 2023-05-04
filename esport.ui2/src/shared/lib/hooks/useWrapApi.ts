@@ -1,5 +1,5 @@
-interface WrapApiConfigParams {
-  onSuccess?: () => void;
+interface WrapApiConfigParams<R> {
+  onSuccess?: (data?: R) => void;
   onError?: (e: any) => void;
   onFinally?: () => void;
 }
@@ -10,12 +10,12 @@ export const useWrapApi = () => {
   return async <R, P>(
     api: (params: P) => Promise<R>,
     params: P,
-    config?: WrapApiConfigParams
+    config?: WrapApiConfigParams<R>
   ) => {
     try {
       // showLoader();
-      await api(params);
-      config?.onSuccess?.();
+      const data = await api(params);
+      config?.onSuccess?.(data);
     } catch (e) {
       config?.onError?.(e);
       throw e;

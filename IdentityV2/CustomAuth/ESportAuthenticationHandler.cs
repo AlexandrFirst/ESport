@@ -47,6 +47,7 @@ namespace IdentityV2.CustomAuth
             bool authDataExists = false;
 
             var authCookieExists = Request.Cookies.TryGetValue("ESportCookie", out authData);
+            
             if (!authDataExists)
             {
                 StringValues authTokens = new StringValues();

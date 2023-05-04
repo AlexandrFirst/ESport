@@ -9,11 +9,10 @@ import { ArrowUturnLeftIcon } from "@heroicons/react/24/solid";
 import cn from "classnames";
 
 import { routes } from "@/shared/config";
-import { useMedia, useWrapApi } from "@/shared/lib";
+import { useMedia, useSnackbar, useWrapApi } from "@/shared/lib";
 import { Button, FormWrapper, IconButton, UILink } from "@/shared/ui";
 
-import { authService } from "@/entities/user";
-import { useSnackbar } from "@/features/Snackbar";
+import { AuthService } from "@/entities/user";
 
 import { useValidation } from "../../lib/hooks/useValidation";
 import { IRegisterForm } from "../../model/types/RegisterFormSchema";
@@ -62,7 +61,7 @@ export const RegisterForm: FC = () => {
   const handleSubmit = methods.handleSubmit((data) => {
     setIsLoading(true);
     withErrorAndLoading(
-      authService.register,
+      AuthService().register,
       {
         ...data,
         name: data.firstName,

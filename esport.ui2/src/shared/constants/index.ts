@@ -9,3 +9,5 @@ export {
 } from "./media-query";
 
 export { Languages } from "./languages";
+
+export { AuthToken } from "./cookie";

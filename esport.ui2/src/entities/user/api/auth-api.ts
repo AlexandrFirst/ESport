@@ -1,5 +1,8 @@
 import axios from "axios";
-import * as process from "process";
+
+import { Api, storageService } from "@/shared/config";
+import { AuthToken } from "@/shared/constants";
+import { ApiContext } from "@/shared/types";
 
 import { IUser } from "../model/types/user";
 
@@ -28,43 +31,35 @@ export interface ILoginResponse {
   token: string;
 }
 
-const headers = {
-  "Sec-Fetch-Site": "same-origin",
-};
-
 const authApi = axios.create({ baseURL: "/api/auth" });
 
-class AuthService {
-  register(registerRequest: IRegisterRequest): Promise<IRegisterResponse> {
-    return authApi.post("/register", registerRequest);
-  }
+export const AuthService = (ctx?: ApiContext) => {
+  const instance = Api({ ctx, baseURL: process.env.NEXT_PUBLIC_LOGIN_API_URL });
 
-  login(loginRequest: ILoginRequest): Promise<ILoginResponse> {
-    // return authApi.post("/login", loginRequest);
-    return axios.post(
-      `${process.env.NEXT_PUBLIC_LOGIN_API_URL}/apiLogin`,
-      loginRequest
-    );
-  }
+  return {
+    register(registerRequest: IRegisterRequest): Promise<IRegisterResponse> {
+      return authApi.post("/register", registerRequest);
+    },
 
-  confirm(token: string): Promise<void> {
-    return authApi.get(
-      `${process.env.NEXT_PUBLIC_LOGIN_API_URL}/confirm?token=${token}`
-    );
-  }
+    async login(loginRequest: ILoginRequest): Promise<ILoginResponse> {
+      const { data } = await instance.post<ILoginResponse>(
+        `/apiLogin`,
+        loginRequest
+      );
+      storageService(ctx).setToken(AuthToken, data.token);
+      return data;
+    },
 
-  async getUser() {
-    console.log("WE ARE GETTING USER");
-    console.log(
-      "===process.env.NEXT_PUBLIC_LOGIN_API_URL===",
-      process.env.NEXT_PUBLIC_LOGIN_API_URL
-    );
-    const response = await axios.get<IUser>(
-      `${process.env.NEXT_PUBLIC_LOGIN_API_URL}/info`
-    );
-    console.log("===response===", response);
-    return response;
-  }
-}
+    confirm(token: string): Promise<void> {
+      return authApi.get(
+        `${process.env.NEXT_PUBLIC_LOGIN_API_URL}/confirm?token=${token}`
+      );
+    },
 
-export const authService = new AuthService();
+    async getUser() {
+      return instance.get<IUser>("/info");
+    },
+  };
+};
+
+// export const authService = AuthService(axios);
