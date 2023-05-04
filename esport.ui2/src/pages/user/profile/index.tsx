@@ -4,6 +4,8 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import { Languages } from "@/shared/constants";
 import { TwoItemsGridContainer } from "@/shared/ui";
+import { AppNextPage } from "@/shared/types";
+import { getAppServerSideProps } from "@/shared/lib";
 
 import { getMainLayout } from "@/widgets/MainLayout";
 
@@ -14,15 +16,11 @@ import {
   ProfileMainInfo,
 } from "@/entities/profile";
 
-import { AppNextPage } from "@/shared/types";
-import { getAppServerSideProps } from "@/shared/lib";
-
 type ProfileProps = {
   profile?: IProfile;
 };
 
 const Profile: AppNextPage<ProfileProps> = ({ profile }) => {
-  console.log("===profile===", profile);
   return (
     <>
       <ProfileMainInfo profile={profile} />

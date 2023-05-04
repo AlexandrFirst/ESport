@@ -60,7 +60,7 @@ namespace IdentityV2.Controllers
 
 
         [Authorize]
-        [RequireHttps]
+        // [RequireHttps]
         [HttpPost("ApiLogout")]
         public async Task<IActionResult> ApiLogout() 
         {

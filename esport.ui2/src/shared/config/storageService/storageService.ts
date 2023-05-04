@@ -1,5 +1,5 @@
 import * as cookie from "cookie";
-import Cookies, { parseCookies, setCookie } from "nookies";
+import Cookies, { destroyCookie, parseCookies, setCookie } from "nookies";
 
 import { ApiContext } from "@/shared/types";
 import { AuthToken } from "@/shared/constants";
@@ -16,6 +16,10 @@ export function storageService(ctx?: ApiContext) {
         path: "/",
         ...options,
       });
+    },
+
+    removeToken(key: string) {
+      destroyCookie(ctx, key);
     },
 
     getCookies() {
