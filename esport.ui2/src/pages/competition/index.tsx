@@ -1,13 +1,14 @@
-import { GetServerSideProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import { Title, UILink } from "@/shared/ui";
 import { routes } from "@/shared/config";
 import { AppNextPage } from "@/shared/types";
+import { getAppServerSideProps } from "@/shared/lib";
 
-import { competitionApi, ICompetiton } from "@/entities/competition";
+import { CompetitionApi, ICompetiton } from "@/entities/competition";
 
-import { MainLayout } from "@/widgets/MainLayout";
+import { getMainLayout } from "@/widgets/MainLayout";
+import { UserRole } from "@/entities/user";
 
 type CompetitionPageProps = {
   competitions?: ICompetiton[];
@@ -30,25 +31,25 @@ const CompetitionPage: AppNextPage<CompetitionPageProps> = ({
   );
 };
 
-CompetitionPage.getLayout = (page) => {
-  return <MainLayout>{page}</MainLayout>;
-};
+CompetitionPage.getLayout = getMainLayout({
+  headProps: { title: "E-Sport | Competitions" },
+});
 
 export default CompetitionPage;
 
-export const getServerSideProps: GetServerSideProps = async ({
-  locale,
-  defaultLocale,
-}) => {
-  const localization = await serverSideTranslations(
-    locale ?? defaultLocale ?? "en",
-    ["common"]
-  );
-  const { data } = await competitionApi.getAllCompetitions();
-  return {
-    props: {
-      ...localization,
-      competitions: data,
-    },
-  };
-};
+export const getServerSideProps = getAppServerSideProps(
+  async (ctx) => {
+    const localization = await serverSideTranslations(
+      ctx.locale ?? ctx.defaultLocale ?? "en",
+      ["common"]
+    );
+    const { data } = await CompetitionApi(ctx).getAllCompetitions();
+    return {
+      props: {
+        ...localization,
+        competitions: data,
+      },
+    };
+  },
+  { roles: [UserRole.OrgAdmin, UserRole.Admin, UserRole.LocalAdmin] }
+);

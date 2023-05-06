@@ -32,7 +32,7 @@ export const getAppServerSideProps = <TProps extends AppPageProps>(
     } catch (e: any) {
       return {
         props: {
-          error: e,
+          error: JSON.stringify(e),
         },
       };
     }

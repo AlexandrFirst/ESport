@@ -4,10 +4,11 @@ import styles from "./SimpleMenuItem.module.css";
 import Link from "next/link";
 import cn from "classnames";
 
+import { ListItemButton } from "@/shared/ui";
+
 import { IMenuItem } from "../../types/menu-item";
 
 import { useSidebarContext } from "../SidebarContext/SidebarContext";
-import { ListItemButton } from "@/shared/ui";
 
 interface SimpleMenuItemProps {
   item: IMenuItem;

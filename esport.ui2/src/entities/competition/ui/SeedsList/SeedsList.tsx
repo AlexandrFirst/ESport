@@ -6,14 +6,6 @@ interface SeedsListProps {
   children?: ReactNode;
 }
 
-export const SeedsList: FC<SeedsListProps> = ({ className, children }) => {
-  // margin: 0;
-  // padding: 0;
-  // display: flex;
-  // flex-direction: column;
-  // flex-flow: row wrap;
-  // justify-content: center;
-  // height: 100%;
-  // list-style: none;
-  return <div className={styles.wrapper}>SeedsList</div>;
+export const SeedsList: FC<SeedsListProps> = ({ children }) => {
+  return <div className={styles.wrapper}>{children}</div>;
 };

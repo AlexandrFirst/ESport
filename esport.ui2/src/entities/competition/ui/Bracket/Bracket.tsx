@@ -1,17 +1,11 @@
-import React, { FC, memo } from "react";
+import React, { FC, ReactNode } from "react";
 import styles from "./Bracket.module.css";
 
 interface BracketProps {
   className?: string;
+  children: ReactNode;
 }
 
-const Bracket: FC<BracketProps> = ({ className }) => {
-  // display: flex;
-  // flex-direction: row;
-  // @media (max-width: ${props.mobileBreakpoint}px) {
-  //   flex-direction: column;
-  // }
-  return <div className={styles.wrapper}>Bracket</div>;
+export const Bracket: FC<BracketProps> = ({ children }) => {
+  return <div className={styles.wrapper}>{children}</div>;
 };
-
-export default memo(Bracket);

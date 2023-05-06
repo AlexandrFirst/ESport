@@ -1,3 +1,15 @@
 .wrapper {
+  flex: 0;
+  /*// min-width:300px;*/
+  display: flex;
+  flex-direction: column;
+  /*@media (max-width: ${props.mobileBreakpoint}px) {*/
+  /*  min-width:0;*/
+  /*}*/
+}
 
+.title {
+  color: #8f8f8f;
+  font-weight: 400;
+  text-align: center;
 }

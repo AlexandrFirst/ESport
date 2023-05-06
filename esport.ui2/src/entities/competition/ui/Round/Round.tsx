@@ -1,17 +1,11 @@
 import React, { FC, ReactNode } from "react";
+import styles from "./Round.module.css";
 
 interface RoundProps {
   className?: string;
   children?: ReactNode;
 }
 
-export const Round: FC<RoundProps> = ({ className }) => {
-  //   flex: 0;
-  //   // min-width:300px;
-  //   display:flex;
-  //   flex-direction:column;
-  // @media (max-width: ${props.mobileBreakpoint}px) {
-  //     min-width:0;
-  //   }
-  return <div>Round</div>;
+export const Round: FC<RoundProps> = ({ className, children }) => {
+  return <div className={styles.wrapper}>{children}</div>;
 };
