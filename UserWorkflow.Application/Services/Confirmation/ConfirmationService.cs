@@ -13,6 +13,7 @@ using System.Threading.Channels;
 using System.Threading.Tasks;
 using UserWorkflow.Application.Configs;
 using UserWorkflow.Application.Models.User;
+using UserWorkflow.Application.Utils;
 using UserWorkflow.Infrastructure.Security;
 
 namespace UserWorkflow.Application.Services.Confirmation
@@ -62,28 +63,26 @@ namespace UserWorkflow.Application.Services.Confirmation
 
         private string generateConfirmationToken(UserRole userRole, UserConfirmationModel confirmationModel)
         {
-            var m_secret = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(confirmationOptions.Secret));
+            var m_secret = confirmationOptions.Secret;
             var m_audience = confirmationOptions.Audience;
             var m_issuer = confirmationOptions.Issuer;
 
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var tokenDescriptor = new SecurityTokenDescriptor
-            {
-                Subject = new ClaimsIdentity(new Claim[]
-                {
-                    new Claim(ClaimTypes.Role, userRole.RoleName),
-                    new Claim(ClaimTypes.Email, confirmationModel.Email),
-                    new Claim("RoleId", confirmationModel.RoleId.ToString()),
-                    new Claim("UserId", confirmationModel.UserId.ToString())
-                }),
-                Expires = DateTime.UtcNow.AddDays(1),
-                Issuer = m_issuer,
-                Audience = m_audience,
-                SigningCredentials = new SigningCredentials(m_secret, SecurityAlgorithms.HmacSha256Signature)
-            };
 
-            var token = tokenHandler.CreateToken(tokenDescriptor);
-            return tokenHandler.WriteToken(token);
+            string token = JwtHelper.EncodeClaims(new JwtOptions()
+            {
+                Audience = m_audience,
+                Issuer = m_issuer,
+                Secret = m_secret
+            }, new List<JwtClaims>()
+            {
+                new JwtClaims(){ Key = ClaimTypes.Role, Value = userRole.RoleName},
+                new JwtClaims(){Key = ClaimTypes.Email, Value = confirmationModel.Email},
+                new JwtClaims(){ Key = "RoleId", Value = confirmationModel.RoleId.ToString()},
+                new JwtClaims(){ Key = "UserId", Value = confirmationModel.UserId.ToString()}
+            });
+
+         
+            return token;
         }
     }
 }

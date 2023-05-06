@@ -183,6 +183,46 @@ namespace UserWorkflow.Api.Controllers
             }
         }
 
+        [HttpPost("Confirm")]
+        public async Task<IActionResult> ConfirmUser([FromBody] ConfirmProfileEmail confirmProfileEmail) 
+        {
+            var started = DateTime.UtcNow;
+            var requestInstanceId = Guid.NewGuid();
+            var methodName = this.ControllerContext.RouteData.Values["action"].ToString();
+
+            try
+            {
+                logger.LogInformation($"STARTED {methodName} {requestInstanceId} at {started} utc");
+
+                var userId = User.Claims.FirstOrDefault(x => x.Type == "Id")?.Value;
+                if (string.IsNullOrEmpty(userId))
+                {
+                    return BadRequest(new[] { $"User Id information is abscent in request {methodName}" });
+                }
+
+                var result = await commandBus.ExecuteAsync(User, confirmProfileEmail);
+
+                return Ok(result.ItemId);
+            }
+            catch (ApplicationException exception)
+            {
+                return BadRequest(new[] { exception.Message });
+            }
+            catch (Exception e)
+            {
+                logger.LogError(e, e.Message);
+                if (e is InvalidOperationException)
+                    return BadRequest(new[] { e.Message });
+
+                return new StatusCodeResult((int)HttpStatusCode.InternalServerError);
+            }
+            finally
+            {
+                var ended = DateTime.UtcNow;
+                logger.LogInformation($"ENDED {methodName} {requestInstanceId} at {ended} utc. Took {ended - started}");
+            }
+        }
+
         [HttpPost("PendingAdmins")]
         [TypeFilter(typeof(AdminAuthFilter))]
         public async Task<IActionResult> GetPendingAdmins([FromBody]GetPendingAdmins request) 

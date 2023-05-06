@@ -58,6 +58,15 @@ namespace UserWorkflow.Application.Services.Users
                 await esportDataContext.Administrators.AddAsync(admin);
 
                 action = CREATE_ACTION;
+
+                var identityResponse = await identityClient.UpdateUserProfile(new Models.User.UpdateUserInfo()
+                {
+                    UserId = userModel.UserId,
+                    RolesToAdd = new List<int>()
+                    {
+                        UserRole.LocalAdmin.RoleId
+                    }
+                });
             }
             else
             {
@@ -95,6 +104,15 @@ namespace UserWorkflow.Application.Services.Users
                 administrator.OrganisationId = organistaionId;
                 await esportDataContext.OrganisationAdministrators.AddAsync(administrator);
                 action = CREATE_ACTION;
+
+                var identityResponse = await identityClient.UpdateUserProfile(new Models.User.UpdateUserInfo()
+                {
+                    UserId = userModel.UserId,
+                    RolesToAdd = new List<int>()
+                    {
+                        UserRole.OrgAdmin.RoleId
+                    }
+                });
             }
             else
             {

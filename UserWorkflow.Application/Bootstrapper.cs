@@ -49,7 +49,7 @@ namespace UserWorkflow.Application
             services.AddTransient<ICommandHandler<UpdateOrganisationAdmin>, UpdateOrganisationAdminHandler>();
             services.AddTransient<ICommandHandler<UpdateTrainee>, UpdateTraineeHandler>();
             services.AddTransient<ICommandHandler<UpdateTrainer>, UpdateTrainerHandler>();
-
+            services.AddTransient<ICommandHandler<ConfirmProfileEmail>, ConfirmProfileEmailHandler>();
             services.AddTransient<ICommandHandler<DeleteUser>, DeleteUserHandler>();
 
 
@@ -72,6 +72,7 @@ namespace UserWorkflow.Application
             services.AddScoped<IdentityClient>();
 
             services.AddSingleton<IConfirmationService, ConfirmationService>();
+            services.AddTransient<IVerifingService, VerifingService>();
 
             services.AddTransient<IPaging<OrganisationAdministrators>, Paging<OrganisationAdministrators>>();
             services.AddTransient<IPaging<GymAdministrators>, Paging<GymAdministrators>>();
