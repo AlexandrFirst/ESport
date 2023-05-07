@@ -38,21 +38,30 @@ namespace UserWorkflow.Application.Commands.User
                 throw new ApplicationException($"User id: {command.UpdateUserInfo.UserId} must be greater than -1");
             }
 
-            var admin = await context.Administrators.FirstOrDefaultAsync(x => x.Email.Equals(command.UpdateUserInfo.Email));
+            var admin = await context.Administrators.FirstOrDefaultAsync(x => x.UserId.Equals(command.UpdateUserInfo.UserId));
+            bool confirmEmail = false;
 
             if (admin == null)
             {
-                admin = createUser<Administrators>(command.UpdateUserInfo, false);
+                confirmEmail = needConfirmation(command.UpdateUserInfo, command.AuthenticatedBy?.Email);
+            }
+            else 
+            {
+                confirmEmail = needConfirmation(command.UpdateUserInfo, admin.Email);
             }
 
-            var adminId = await userService.CreateOrUpdateAdministrator(admin, command.GymIds);
+            admin = createUser<Administrators>(command.UpdateUserInfo, !confirmEmail);
+            var adminId = await userService.CreateOrUpdateAdministrator(admin, command.GymIds, confirmEmail);
 
-            await confirmationService.SendConfirmation(UserRole.LocalAdmin, new Models.User.UserConfirmationModel()
+            if (confirmEmail)
             {
-                Email = command.UpdateUserInfo.Email,
-                RoleId = adminId,
-                UserId = command.UpdateUserInfo.UserId
-            });
+                await confirmationService.SendConfirmation(UserRole.LocalAdmin, new Models.User.UserConfirmationModel()
+                {
+                    Email = command.UpdateUserInfo.Email,
+                    RoleId = adminId,
+                    UserId = command.UpdateUserInfo.UserId
+                });
+            }
 
             return new CommandResult(command.UpdateUserInfo.UserId);
         }

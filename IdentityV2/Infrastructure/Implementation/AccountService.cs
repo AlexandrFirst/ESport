@@ -163,7 +163,7 @@ namespace IdentityV2.Infrastructure.Core
             {
                 mapper.Map(userProfile, user);
 
-                if (userProfile.RolesToRemove.Any())
+                if (userProfile.RolesToRemove?.Any() == true)
                 {
                     int removedRoles = user.UserRoles.RemoveAll(x => userProfile.RolesToRemove.Any(k => x.RoleId == k));
                     if (removedRoles != userProfile.RolesToRemove.Count)
@@ -174,7 +174,7 @@ namespace IdentityV2.Infrastructure.Core
                     }
                 }
 
-                if (userProfile.RolesToAdd.Any())
+                if (userProfile.RolesToAdd?.Any() == true)
                 {
                     var rolesToAdd = await dataContext.Roles.Where(x => userProfile.RolesToAdd.Any(k => k == x.Id)).ToListAsync();
                     if (rolesToAdd.Count() != userProfile.RolesToAdd.Count) 

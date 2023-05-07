@@ -25,14 +25,14 @@ namespace UserWorkflow.Api.Filters
             var requestingGymExists = context.ActionArguments.TryGetValue("gymId", out var gymId);
             if (!requestingGymExists) 
             {
-                await provideBadResponse(context.HttpContext, "Invalid route template data");
+                context.Result = provideBadResponse(context.HttpContext, "Invalid route template data");
                 return;
             }
 
             var idClaim = context.HttpContext.User.Claims.FirstOrDefault(x => x.Value == "Id");
             if (idClaim == null)
             {
-                await provideBadResponse(context.HttpContext,
+                context.Result = provideBadResponse(context.HttpContext,
                     "Unable to authenticate administrator id");
                 return;
             }
@@ -45,7 +45,7 @@ namespace UserWorkflow.Api.Filters
                 var orgAdmin = await dbContext.OrganisationAdministrators.FirstOrDefaultAsync(x => x.Organisation.Gyms.Any(k => k.Id == _gymId) && x.Id == userId);
                 if (orgAdmin == null || orgAdmin.IsConfirmed == false) 
                 {
-                    await provideBadResponse(context.HttpContext,
+                    context.Result = provideBadResponse(context.HttpContext,
                     $"Gym or organisation administrator for gym {_gymId} and user {userId} is not confirmed or found");
                     return;
                 }

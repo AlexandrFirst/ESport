@@ -127,7 +127,7 @@ namespace IdentityV2.Controllers
             }
         }
 
-        [HttpPut("UpdateMainProfile")]
+        [HttpPost("UpdateMainProfile")]
         [EnableCors("UserFlowPolicy")]
         public async Task<IActionResult> UpdateUser([FromBody] UpdateUserProfile updateUserProfile) 
         {

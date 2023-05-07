@@ -23,5 +23,15 @@ namespace UserWorkflow.Application.Commands.User
 
             return administrator;
         }
+
+        protected bool needConfirmation(UpdateUserInfo userInfo, string oldEmail) 
+        {
+            var isCurrentMail = !string.IsNullOrEmpty(userInfo.Email);
+            if (!isCurrentMail) { return false; }
+            var isOldEmail = !string.IsNullOrEmpty(oldEmail);
+            if (!isOldEmail) { return true; }
+
+            return !userInfo.Email.Equals(oldEmail);
+        }
     }
 }

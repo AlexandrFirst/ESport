@@ -99,6 +99,31 @@
         "Name": "Claims[Name] > value > |",
         "Email": "Claims[Email] > value > |"
       }
+    },
+    {
+      "DownstreamPathTemplate": "/User/PendingAdmins",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5005
+        }
+      ],
+      "UpstreamPathTemplate": "/pending-admins",
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "ESport",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "Role": "OrgAdmin,LocalAdmin,Trainer,Trainee"
+      },
+      "AddHeadersToRequest": {
+        "Role": "Claims[Role] > value > |",
+        "Id": "Claims[Id] > value > |",
+        "Name": "Claims[Name] > value > |",
+        "Email": "Claims[Email] > value > |"
+      }
     }
   ]
 }
