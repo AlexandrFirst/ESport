@@ -29,7 +29,7 @@ namespace UserWorkflow.Api.Filters
                 return;
             }
 
-            var idClaim = context.HttpContext.User.Claims.FirstOrDefault(x => x.Value == "Id");
+            var idClaim = context.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "Id");
             if (idClaim == null)
             {
                 context.Result = provideBadResponse(context.HttpContext,

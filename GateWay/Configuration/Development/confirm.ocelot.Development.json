@@ -26,7 +26,7 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/OrgAdmin/confirmgymadmin",
+      "DownstreamPathTemplate": "/OrgAdmin/confirmgymadmin/{gymId}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -34,7 +34,7 @@
           "Port": 5005
         }
       ],
-      "UpstreamPathTemplate": "/confirm-gym-admin",
+      "UpstreamPathTemplate": "/confirm-gym-admin/{gymId}",
       "UpstreamHttpMethod": [ "Post" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "ESport",

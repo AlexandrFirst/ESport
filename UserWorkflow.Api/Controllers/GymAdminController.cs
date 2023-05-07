@@ -80,7 +80,7 @@ namespace UserWorkflow.Api.Controllers
             {
                 logger.LogInformation($"STARTED {methodName} {requestInstanceId} at {started} utc");
 
-                var result = await requestBus.ExecuteAsync<GetGymTimeTable, GetGymTimeTableResponse>(User, 
+                var result = await requestBus.ExecuteAsync<GetGymTimeTable, GetGymTimeTableResponse>(User,
                     new GetGymTimeTable()
                     {
                         DayOfTheWeek = gymTimeTableFilter.GetFiltrationValue(),
@@ -225,7 +225,7 @@ namespace UserWorkflow.Api.Controllers
         }
 
         [HttpPost("pendingTrainers")]
-        public async Task<IActionResult> getPendingTrainers(int gymId, [FromBody] GetPendingTrainers pendingTrainers)
+        public async Task<IActionResult> getPendingTrainers(int gymId, [FromBody] GymPendingUsers pendingTrainers)
         {
             var started = DateTime.UtcNow;
             var requestInstanceId = Guid.NewGuid();
@@ -235,8 +235,13 @@ namespace UserWorkflow.Api.Controllers
             {
                 logger.LogInformation($"STARTED {methodName} {requestInstanceId} at {started} utc");
 
-
-                var result = await requestBus.ExecuteAsync<GetPendingTrainers, GetPendingTrainersResult>(User, pendingTrainers);
+                var result = await requestBus.ExecuteAsync<GetPendingTrainers, GetPendingTrainersResult>(User, new GetPendingTrainers()
+                {
+                    GymId = gymId,
+                    CurrentPage = pendingTrainers.CurrentPage,
+                    PageSize = pendingTrainers.PageSize,
+                    ShiftId = pendingTrainers.ShiftId,
+                });
 
                 if (!result.Succeeded)
                     return BadRequest(result.Errors);

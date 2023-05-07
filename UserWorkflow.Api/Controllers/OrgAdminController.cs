@@ -10,6 +10,7 @@ using UserWorkflow.Application.Commands.UserCommands;
 using UserWorkflow.Application.Requests.User;
 using UserWorkFlow.Infrastructure.Queries;
 using UserWorkflow.Application.Commands.OrgAdminCommands;
+using UserWorkflow.Api.Dto;
 
 namespace UserWorkflow.Api.Controllers
 {
@@ -67,7 +68,7 @@ namespace UserWorkflow.Api.Controllers
         }
 
         [HttpPost("confirmgymadmin/{gymId}")]
-        public async Task<IActionResult> ConfirmGymAdmin(int gymId, [FromBody] ConfirmGymAdmin confirmAdmin)
+        public async Task<IActionResult> ConfirmGymAdmin(int gymId, [FromBody] ConfirmGymAdminDto confirmAdmin)
         {
             var started = DateTime.UtcNow;
             var requestInstanceId = Guid.NewGuid();
@@ -78,7 +79,11 @@ namespace UserWorkflow.Api.Controllers
 
                 if (confirmAdmin == null) { throw new ArgumentNullException(nameof(confirmAdmin)); }
 
-                var result = await commandBus.ExecuteAsync(User, confirmAdmin);
+                var result = await commandBus.ExecuteAsync(User, new ConfirmGymAdmin() 
+                {
+                    GymId = gymId,
+                    UserId = confirmAdmin.UserId
+                });
 
                 if (!result.Succeeded)
                     return BadRequest(result.Errors);
