@@ -3,6 +3,7 @@ import { GetServerSidePropsResult } from "next/types";
 
 import { routes } from "@/shared/config";
 import { AppServerSideConfig, StateSchemaStore } from "@/shared/types";
+import { ReturnUrl } from "@/shared/constants";
 
 import { UserRole } from "@/entities/user";
 
@@ -14,21 +15,28 @@ export const checkUserAndRedirect = <TProps>(
   const { auth, roles } = config || {};
   const user = store.getState().user.data;
 
-  if (auth || roles) {
-    const forbiddenPage = routes.Forbidden();
-    const failedResult = {
-      redirect: {
-        destination: `${forbiddenPage}?returnUrl=${ctx?.resolvedUrl}`,
-        permanent: false,
-      },
-      props: {} as TProps,
-    };
+  const getDestination = (destination: string) => {
+    return `${destination}?${ReturnUrl}=${ctx?.resolvedUrl}`;
+  };
 
-    if (auth && !user) {
-      return failedResult;
+  if (auth || roles) {
+    if (!user) {
+      return {
+        redirect: {
+          destination: getDestination(routes.Login()),
+          permanent: false,
+        },
+        props: {} as TProps,
+      };
     }
-    if (roles && roles.length > 0 && !roles.includes(user?.role as UserRole)) {
-      return failedResult;
+    if (roles && roles.length > 0 && !roles.includes(user.role as UserRole)) {
+      return {
+        redirect: {
+          destination: getDestination(routes.Forbidden()),
+          permanent: false,
+        },
+        props: {} as TProps,
+      };
     }
   }
   return {
