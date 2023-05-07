@@ -1,5 +1,6 @@
 import React from "react";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+
 import { AppNextPage } from "@/shared/types";
 import { getAppServerSideProps } from "@/shared/lib";
 
@@ -22,7 +23,7 @@ const CompetitionPage: AppNextPage<CompetitionPageProps> = ({
   return (
     <>
       {/*<Title>Categories</Title>*/}
-      {tmp?.title}
+      <>{tmp?.title}</>
       <CompetitionGrid category={tmp} />
     </>
   );

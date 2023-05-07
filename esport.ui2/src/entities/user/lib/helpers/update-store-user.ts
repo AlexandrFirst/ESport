@@ -16,7 +16,7 @@ export const updateStoreUser = async (
       const { data } = await AuthService(ctx).getUser();
       dispatch(userActions.setUser(data));
     } catch (e: any) {
-      console.log("===e===", e);
+      // console.log("===e===", e);
     }
   }
 };

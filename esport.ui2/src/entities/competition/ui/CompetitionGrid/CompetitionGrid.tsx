@@ -27,10 +27,18 @@ export const CompetitionGrid: FC<CompetitionGridProps> = ({
     return (
       <Seed>
         <SeedItem>
-          <div>
-            <SeedTeam>{competitors?.[0]?._id || "-----------"}</SeedTeam>
-            <SeedTeam>{competitors?.[1]?._id || "-----------"}</SeedTeam>
-          </div>
+          {/*<div>*/}
+          <SeedTeam>
+            {competitors?.[0]?.teamName ||
+              competitors?.[0]?.userId ||
+              "-----------"}
+          </SeedTeam>
+          <SeedTeam>
+            {competitors?.[1]?.teamName ||
+              competitors?.[1]?.userId ||
+              "-----------"}
+          </SeedTeam>
+          {/*</div>*/}
         </SeedItem>
         <SeedTime>{fightNumber}</SeedTime>
       </Seed>
