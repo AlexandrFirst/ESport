@@ -15,6 +15,7 @@ using UserWorkflow.Application;
 using UserWorkflow.Application.Commands.User;
 using UserWorkflow.Application.Commands.UserCommands;
 using UserWorkflow.Application.Requests;
+using UserWorkflow.Application.Requests.GymAdmin;
 using UserWorkflow.Application.Requests.User;
 using UserWorkFlow.Infrastructure.Commands;
 using UserWorkFlow.Infrastructure.Queries;
@@ -239,6 +240,43 @@ namespace UserWorkflow.Api.Controllers
 
                 var result = await requestBus.ExecuteAsync<GetPendingAdmins, GetPendingAdminsResult>(User, request);
                 
+                if (!result.Succeeded)
+                    return BadRequest(result.Errors);
+
+                return Ok(result.Data);
+            }
+            catch (ApplicationException exception)
+            {
+                return BadRequest(new[] { exception.Message });
+            }
+            catch (Exception e)
+            {
+                logger.LogError(e, e.Message);
+                if (e is InvalidOperationException)
+                    return BadRequest(new[] { e.Message });
+
+                return new StatusCodeResult((int)HttpStatusCode.InternalServerError);
+            }
+            finally
+            {
+                var ended = DateTime.UtcNow;
+                logger.LogInformation($"ENDED {methodName} {requestInstanceId} at {ended} utc. Took {ended - started}");
+            }
+        }
+
+        [HttpPost("TrainerRequests")]
+        public async Task<IActionResult> GetTrainerRequests([FromBody] GetGymRequests request) 
+        {
+            var started = DateTime.UtcNow;
+            var requestInstanceId = Guid.NewGuid();
+            var methodName = this.ControllerContext.RouteData.Values["action"].ToString();
+
+            try
+            {
+                logger.LogInformation($"STARTED {methodName} {requestInstanceId} at {started} utc");
+
+                var result = await requestBus.ExecuteAsync<GetGymRequests, GetGymRequestsResult>(User, request);
+
                 if (!result.Succeeded)
                     return BadRequest(result.Errors);
 

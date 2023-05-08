@@ -92,7 +92,16 @@ namespace UserWorkflow.Application.Commands.Gym
                 }
                 mapper.Map(item._new, item._old);
             }
-            context.AddRange(mapper.Map<List<GymShift>>(shiftsToAdd));
+            context.AddRange(mapper.Map<List<GymShift>>(shiftsToAdd, opt => 
+            {
+                opt.AfterMap((src, dest) =>
+                {
+                    dest.ForEach(k =>
+                    {
+                        k.GymId = command.GymId;
+                    });
+                });
+            }));
 
             
 

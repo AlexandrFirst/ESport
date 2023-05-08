@@ -15,7 +15,7 @@ namespace UserWorkflow.Application.Commands.Gym
 
         public bool IsTimeShiftsAreValid() 
         {
-            return GymShiftInfos.Any(x => !x.IsValidTime());
+            return GymShiftInfos.All(x => x.IsValidTime());
         }
     }
 

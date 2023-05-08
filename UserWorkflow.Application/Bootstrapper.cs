@@ -54,10 +54,12 @@ namespace UserWorkflow.Application
 
 
             services.AddTransient<IRequestHandler<GetPendingAdmins, GetPendingAdminsResult>, GetPendingAdminsHandler>();
+            services.AddTransient<IRequestHandler<GetGymRequests, GetGymRequestsResult>, GetGymRequestsHandler>();
             services.AddTransient<ICommandHandler<ConfirmAdmin>, ConfirmAdminHandler>();
             services.AddTransient<ICommandHandler<ConfirmGymAdmin>, ConfirmGymAdminHandler>();
             services.AddTransient<IRequestHandler<GetPendingTrainers, GetPendingTrainersResult>, GetPendingTrainersHandler>();
             services.AddTransient<IRequestHandler<GetGymTimeTable, GetGymTimeTableResponse>, GetGymTimeTableHandler>();
+            services.AddTransient<ICommandHandler<AddUpdateGymShift>, AddUpdateGymShiftHandler>();
             services.AddTransient<ICommandHandler<OpenTrainerRequest>, OpenTrainerRequestHandler>();
             services.AddTransient<ICommandHandler<CloseTrainerRequest>, CloseTrainerRequestHandler>();
             services.AddTransient<ICommandHandler<UpdateTrainerRequest>, UpdateTrainerRequestHandler>();
@@ -77,6 +79,7 @@ namespace UserWorkflow.Application
             services.AddTransient<IPaging<OrganisationAdministrators>, Paging<OrganisationAdministrators>>();
             services.AddTransient<IPaging<GymAdministrators>, Paging<GymAdministrators>>();
             services.AddTransient<IPaging<TrainerResponse>, Paging<TrainerResponse>>();
+            services.AddTransient<IPaging<TrainerRequest>, Paging<TrainerRequest>>();
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
