@@ -15,6 +15,21 @@ namespace UserWorkflow.Application.Models.User
         public string TelephoneNumber { get; set; }
         public Guid? PhotoId { get; set; }
 
+        public UserIdentityInfo(UserIdentityInfo other)
+        {
+            UserId = other.UserId;
+            Name = other.Name;
+            Surname = other.Surname;
+            Email = other.Email;
+            TelephoneNumber = other.TelephoneNumber;
+            PhotoId = other.PhotoId;
+        }
+
+        public UserIdentityInfo()
+        {
+
+        }
+
         public static UserIdentityInfo InitFromDbUser(UserWorkflow.Esport.Models.User user)
         {
             return new UserIdentityInfo()

@@ -53,6 +53,7 @@ namespace UserWorkflow.Application.Commands.Gym
                     Status = TrainerStatus.Pending,
                     TimeOverride = new List<TimeOverride>() { command.TimeOverride }
                 };
+                await esportDataContext.TrainerShedules.AddAsync(trainerShedule);
             }
 
             var scheduleRequest = new TrainerRequest()

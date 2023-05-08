@@ -53,7 +53,7 @@ namespace UserWorkflow.Application.Workers
                         senderService.SendMessage<MailIncommingModel>(new MailIncommingModel()
                         {
                             Mail = message.Email,
-                            Template = $"<p>To confirm profile creation follow the link <a src='{confirmationOptions.BaseUrl}/confirm/{message.Token}'>Confirm</a></p>"
+                            Template = $"<p>To confirm profile creation follow the link <a href='{confirmationOptions.BaseUrl}/confirm/{message.Token}'>Confirm</a></p>"
                         }, QueueConfigName.MessageConfig);
                     }
                 }, stoppingToken));

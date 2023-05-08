@@ -16,9 +16,9 @@ namespace UserWorkflow.Application.Clients
         private readonly HttpClient client;
         private readonly ILogger<IdentityClient> logger;
 
-        public IdentityClient(HttpClient client, ILogger<IdentityClient> logger)
+        public IdentityClient(IHttpClientFactory factory, ILogger<IdentityClient> logger)
         {
-            this.client = client;
+            this.client = factory.CreateClient("IdentityClient");
             this.logger = logger;
         }
 
@@ -55,7 +55,14 @@ namespace UserWorkflow.Application.Clients
                 Encoding.UTF8,
                 "application/json");
 
-            var updateUserResponse = await client.PutAsync($"/user/updatemainprofile", jsonContent);
+            var requestMessage = new HttpRequestMessage()
+            {
+                Method = HttpMethod.Post,
+                Content = jsonContent,
+                RequestUri = new Uri(client.BaseAddress + "account/UpdateMainProfile"),
+            };
+           
+            var updateUserResponse = await client.SendAsync(requestMessage);
             if (updateUserResponse.IsSuccessStatusCode)
             {
                 return true;

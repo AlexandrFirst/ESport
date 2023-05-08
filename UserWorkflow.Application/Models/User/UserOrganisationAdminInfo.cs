@@ -11,5 +11,15 @@ namespace UserWorkflow.Application.Models.User
         public int Id { get; set; }
         public int? GymOrganisationId { get; set; }
         public string OrganisationName { get; set; }
+
+        public UserOrganisationAdminInfo(UserIdentityInfo userIdentityInfo): base(userIdentityInfo)
+        {
+
+        }
+
+        public UserOrganisationAdminInfo()
+        {
+
+        }
     }
 }

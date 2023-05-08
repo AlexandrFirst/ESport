@@ -7,6 +7,7 @@ using IdentityV2.Models.UserModels;
 using IdentityV2.Utils;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -31,6 +32,7 @@ namespace IdentityV2.Controllers
         }
 
         [HttpPost("ApiLogin")]
+        [EnableCors("ESportCors")]
         public async Task<IActionResult> ApiLogin([FromBody] LoginModel loginModel)
         {
             var loginDto = new UserLoginDto()
@@ -60,8 +62,8 @@ namespace IdentityV2.Controllers
 
 
         [Authorize]
-        // [RequireHttps]
         [HttpPost("ApiLogout")]
+        [EnableCors("ESportCors")]
         public async Task<IActionResult> ApiLogout() 
         {
             var userIdClaim = User.Claims.FirstOrDefault(x => x.Type == UserClaims.Id);
@@ -75,6 +77,7 @@ namespace IdentityV2.Controllers
         [Authorize]
         //[RequireHttps]
         [HttpGet("info")]
+        [EnableCors("ESportCors")]
         public IActionResult CurrentUserInfo() 
         {
             var user = User;
@@ -110,6 +113,7 @@ namespace IdentityV2.Controllers
         }
 
         [HttpGet("Confirm")]
+        [EnableCors("ESportCors")]
         public async Task<IActionResult> ConfirmRegistration(string token)
         {
             var validationResult = await accountService.ConfirmRegistration(token);
@@ -123,7 +127,8 @@ namespace IdentityV2.Controllers
             }
         }
 
-        [HttpPut("UpdateMainProfile")]
+        [HttpPost("UpdateMainProfile")]
+        [EnableCors("UserFlowPolicy")]
         public async Task<IActionResult> UpdateUser([FromBody] UpdateUserProfile updateUserProfile) 
         {
             var userAccountUpdated = await accountService.UpdateUserProfile(updateUserProfile);
@@ -138,6 +143,7 @@ namespace IdentityV2.Controllers
         }
 
         [HttpPost("Register")]
+        [EnableCors("ESportCors")]
         public async Task<IActionResult> Register([FromBody] RegisterModel registerModel)
         {
             var registrationResult = await accountService.Register(registerModel);

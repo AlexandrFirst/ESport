@@ -38,6 +38,14 @@ namespace UserWorkflow.Application.Commands.OrgAdminCommands
                 logger.LogError(errMessage);
                 throw new ApplicationException(errMessage);
             }
+
+            if (!organisationToUpdate.OrganisationAdministrators.Any(x => x.UserId == command.AuthenticatedBy.UserId)) 
+            {
+                string errMessage = $"Organisation with id {command.OrganisationId} is not moderated by user: " + command.AuthenticatedBy.UserId;
+                logger.LogError(errMessage);
+                throw new ApplicationException(errMessage);
+            }
+
             var errors = command.OrganisationInfo.Validate();
             if (errors.Any())
             {
@@ -65,7 +73,12 @@ namespace UserWorkflow.Application.Commands.OrgAdminCommands
 
             esportDataContext.RemoveRange(gymsToDelete);
 
-            var n_gymsToAdd = mapper.Map<List<UserWorkflow.Esport.Models.Gym>>(gymsToAdd);
+            var n_gymsToAdd = mapper.Map<List<UserWorkflow.Esport.Models.Gym>>(gymsToAdd, opt => opt.AfterMap((src, dest) => 
+            {
+                dest.ForEach(x => { 
+                    x.OrganisationId = organisation.Id;
+                });
+            }));
             await esportDataContext.AddRangeAsync(n_gymsToAdd);
 
             foreach (var g_info in gymsToUpdate)

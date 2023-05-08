@@ -17,7 +17,7 @@ namespace UserWorkflow.Api.Dto
             var result = DayOfTheWeeks.Aggregate(0, (x, y) =>
             {
                 if (x == 0) x = 1;
-                x &= (int)y;
+                x |= (int)y;
                 return x;
             });
             return result;

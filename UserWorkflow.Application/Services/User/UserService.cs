@@ -40,7 +40,7 @@ namespace UserWorkflow.Application.Services.Users
             this.identityClient = identityClient;
         }
 
-        public async Task<int> CreateOrUpdateAdministrator(User userModel, List<int> gymIds)
+        public async Task<int> CreateOrUpdateAdministrator(User userModel, List<int> gymIds, bool needConfirmation = false)
         {
             var admin = await esportDataContext.Administrators.FirstOrDefaultAsync(x => x.UserId == userModel.UserId);
             string action = string.Empty;
@@ -58,6 +58,15 @@ namespace UserWorkflow.Application.Services.Users
                 await esportDataContext.Administrators.AddAsync(admin);
 
                 action = CREATE_ACTION;
+
+                var identityResponse = await identityClient.UpdateUserProfile(new Models.User.UpdateUserInfo()
+                {
+                    UserId = userModel.UserId,
+                    RolesToAdd = new List<int>()
+                    {
+                        UserRole.LocalAdmin.RoleId
+                    }
+                });
             }
             else
             {
@@ -72,35 +81,63 @@ namespace UserWorkflow.Application.Services.Users
                 admin.GymAdministrators.RemoveAll(x => gymsToDelete.Any(p => x.Id == p.Id));
                 admin.GymAdministrators.AddRange(gymsToAdd);
                 action = UPDATE_ACTION;
+
+                if (needConfirmation) 
+                {
+                    admin.IsProfileConfirmed = false;
+                }
             }
 
             await saveUser(admin, action, "Error while Create/Updating administrator");
             return admin.Id;
         }
 
-        public async Task<int> CreateOrUpdateOrganisationAdministrator(User userModel, int organistaionId)
+        public async Task<int> CreateOrUpdateOrganisationAdministrator(User userModel, int organistaionId, bool needConfirmation = false)
         {
-            var organistaion = esportDataContext.Organisations.FirstOrDefaultAsync(x => x.Id == organistaionId);
+            var organistaion = await esportDataContext.Organisations.FirstOrDefaultAsync(x => x.Id == organistaionId);
             string action = string.Empty;
 
             if (organistaion == null)
             {
-                throw new Exception($"Organistaion with id: {organistaionId} is not found");
+                organistaion = new Organisation() { Description = "" };
             }
 
             var organisationAdministrator = await esportDataContext.OrganisationAdministrators.FirstOrDefaultAsync(x => x.UserId == userModel.UserId);
             if (organisationAdministrator == null)
             {
-                OrganisationAdministrators administrator = userModel as OrganisationAdministrators;
-                administrator.OrganisationId = organistaionId;
-                await esportDataContext.OrganisationAdministrators.AddAsync(administrator);
+                organisationAdministrator = userModel as OrganisationAdministrators;
+                organisationAdministrator.Organisation = organistaion;
+
+                if (organistaion.Id == 0)
+                {
+                    organisationAdministrator.IsConfirmed = true;
+                }
+
+                await esportDataContext.OrganisationAdministrators.AddAsync(organisationAdministrator);
                 action = CREATE_ACTION;
+
+                var identityResponse = await identityClient.UpdateUserProfile(new Models.User.UpdateUserInfo()
+                {
+                    UserId = userModel.UserId,
+                    RolesToAdd = new List<int>()
+                    {
+                        UserRole.OrgAdmin.RoleId
+                    }
+                });
             }
             else
             {
                 MapUser(userModel, organisationAdministrator);
-                organisationAdministrator.IsProfileConfirmed = false;
-                organisationAdministrator.OrganisationId = organisationAdministrator.OrganisationId;
+                if (organisationAdministrator.OrganisationId != organistaionId)
+                {
+                    organisationAdministrator.IsConfirmed = false;
+                    organisationAdministrator.OrganisationId = organistaionId;
+                }
+
+                if (needConfirmation) 
+                {
+                    organisationAdministrator.IsProfileConfirmed = false;
+                }
                 action = UPDATE_ACTION;
             }
 
@@ -111,7 +148,7 @@ namespace UserWorkflow.Application.Services.Users
             return organisationAdministrator.Id;
         }
 
-        public async Task<int> CreateTrainee(User userModel)
+        public async Task<int> CreateTrainee(User userModel, bool needConfirmation = false)
         {
             var m_trainee = await esportDataContext.Trainees.FirstOrDefaultAsync(x => x.UserId == userModel.UserId);
             string action = string.Empty;
@@ -127,6 +164,10 @@ namespace UserWorkflow.Application.Services.Users
             {
                 MapUser(userModel, m_trainee);
                 action = UPDATE_ACTION;
+                if (needConfirmation) 
+                {
+                    m_trainee.IsProfileConfirmed = false;
+                }
             }
 
             await esportDataContext.SaveChangesAsync();
@@ -136,7 +177,7 @@ namespace UserWorkflow.Application.Services.Users
             return m_trainee.Id;
         }
 
-        public async Task<int> CreateTrainer(User userModel)
+        public async Task<int> CreateTrainer(User userModel, bool needConfirmation = false)
         {
             var trainer = await esportDataContext.Trainers.FirstOrDefaultAsync(x => x.UserId == userModel.UserId);
             string action = string.Empty;
@@ -156,7 +197,7 @@ namespace UserWorkflow.Application.Services.Users
                     }
                 });
 
-                if (!identityResponse) 
+                if (!identityResponse)
                 {
                     throw new ApplicationException("Unable to create trainer");
                 }
@@ -166,10 +207,14 @@ namespace UserWorkflow.Application.Services.Users
             {
                 MapUser(userModel, trainer);
                 action = UPDATE_ACTION;
+                if (needConfirmation) 
+                {
+                    trainer.IsProfileConfirmed= false;
+                }
             }
 
             await saveUser(trainer, action, "Error while Create/Updating Trainer");
-            
+
             return trainer.Id;
         }
 

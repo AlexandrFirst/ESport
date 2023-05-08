@@ -48,7 +48,7 @@ namespace UserWorkflow.Api.Dto
 
                 if (UpdateAdminInfo != null) mode |= UserTypeEntity.Admin;
                 if (UpdateOrganisationAdminInfo != null) mode |= UserTypeEntity.Organisator;
-                if (UpdateTrainerInfo != null) mode |= UserTypeEntity.Trainee;
+                if (UpdateTraineeInfo != null) mode |= UserTypeEntity.Trainee;
                 if (UpdateTrainerInfo != null) mode |= UserTypeEntity.Trainer;
 
                 return mode;

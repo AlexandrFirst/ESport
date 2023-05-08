@@ -6,7 +6,7 @@ namespace UserWorkFlow.Infrastructure.Commands
 {
     public class CommandResult : ICommandResult
     {
-        public bool Succeeded { get; }
+        public bool Succeeded { get; } = true;
 
         public IEnumerable<string> Errors { get; }
 

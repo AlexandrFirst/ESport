@@ -38,7 +38,10 @@ namespace UserWorkflow.Application.Requests.GymAdmin
             foreach (var dow in Enum.GetValues(typeof(DayOfTheWeek)))
             {
                 var currentDay = (DayOfTheWeek)dow;
-                if (currentDay == DayOfTheWeek.ALL) { continue; }
+                if ((DayOfTheWeek)dow == DayOfTheWeek.ALL) { continue; }
+
+                if (request.DayOfTheWeek != null && ((int)currentDay & (int)request.DayOfTheWeek) == 0) { continue; }
+
                 var dayShifts = gymShifts.Where(x => (x.DayOfTheWeeks & (int)currentDay) == (int)currentDay);
                 result.Add(new GymTimeTable()
                 {
