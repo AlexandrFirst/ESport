@@ -1,9 +1,7 @@
-import {ApiContext, StateSchemaStore} from "@/shared/types";
+import { ApiContext, StateSchemaStore } from "@/shared/types";
 
-import {AuthService} from "../../api/auth-api";
-import {userActions} from "../../model/slices/userSlice";
-
-// const api = axios.create({ baseURL: "https://localhost/api/auth" });
+import { AuthService } from "../../api/auth-api";
+import { userActions } from "../../model/slices/userSlice";
 
 export const updateStoreUser = async (
   ctx: ApiContext,
