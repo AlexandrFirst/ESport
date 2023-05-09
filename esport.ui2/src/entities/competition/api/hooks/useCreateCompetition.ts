@@ -3,7 +3,7 @@ import { AxiosError, AxiosResponse } from "axios";
 import { useSnackbar } from "@/shared/lib";
 
 import { ICreateCompetitionForm } from "../../model/types/create-competitiom-form";
-import { CompetitionApi } from "../api";
+import { CompetitionApi } from "../competitionApi";
 
 export const useCreateCompetition = (
   params?: UseMutationOptions<

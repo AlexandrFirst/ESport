@@ -2,7 +2,7 @@ export { Competition } from "./ui/Competition/Competition";
 export { CreateCompetitionCard } from "./ui/CreateCompetitionCard/CreateCompetitionCard";
 export { CompetitionGrid } from "./ui/CompetitionGrid/CompetitionGrid";
 
-export { CompetitionApi } from "./api/api";
+export { CompetitionApi } from "./api/competitionApi";
 export { useCreateCompetition } from "./api/hooks/useCreateCompetition";
 export { useGetAllCompetitions } from "./api/hooks/useGetAllCompetitions";
 

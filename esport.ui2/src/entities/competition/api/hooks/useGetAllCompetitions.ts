@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { ApiContext } from "@/shared/types";
-import { CompetitionApi } from "../api";
+import { CompetitionApi } from "../competitionApi";
 
 export const getAllCompetitionsQueryKey = ["getAllCompetitions"] as const;
 

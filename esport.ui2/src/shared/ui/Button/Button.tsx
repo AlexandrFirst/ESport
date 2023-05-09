@@ -25,7 +25,7 @@ export interface ButtonProps
 
 export const Button: FC<ButtonProps> = ({
   className,
-  loading, //TODO: add loading state
+  loading,
   disabled,
   variant = "contained",
   fullWidth = true,
