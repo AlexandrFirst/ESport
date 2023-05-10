@@ -1,9 +1,9 @@
-import { UserRole } from "../../constants/user-role";
 import { useSelectUser } from "../../model/selectors/selectUser/selectUser";
 import { useSelectCurrentRole } from "../../model/selectors/selectCurrentRole/selectCurrentRole";
 import { useSelectRole } from "../../model/selectors/selectRole/selectRole";
 
 import { useMappedRoles } from "./useMappedRoles";
+import { UserRole } from "@/shared/constants";
 
 export const useAuth = () => {
   const user = useSelectUser();

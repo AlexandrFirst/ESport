@@ -4,10 +4,9 @@ import { HYDRATE } from "next-redux-wrapper";
 import { StateSchema } from "@/_app/Providers";
 import { buildSlice } from "@/shared/lib";
 
-import { UserRole } from "../../constants/user-role";
-
-import { IUser } from "../types/user";
+import { IAccount } from "../types/user";
 import { UserSchema } from "../types/userSchema";
+import { UserRole } from "@/shared/constants";
 
 const initialState: UserSchema = {
   isAuth: true,
@@ -19,20 +18,20 @@ const initialState: UserSchema = {
   //   role: UserRole.Pupil,
   //   id: "1",
   // },
-  data: null,
+  account: null,
 };
 
 const userSlice = buildSlice({
   name: "user",
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<IUser>) => {
+    setUser: (state, action: PayloadAction<IAccount>) => {
       state.isAuth = true;
-      state.data = action.payload;
+      state.account = action.payload;
     },
     resetUser: (state) => {
       state.isAuth = false;
-      state.data = null;
+      state.account = null;
     },
     setCurrentRole(state, action: PayloadAction<UserRole>) {
       state.currentRole = action.payload;

@@ -13,3 +13,4 @@ export { Languages } from "./languages";
 export { AuthToken } from "./cookie";
 
 export { ReturnUrl } from "./routes";
+export { UserRole } from "@/shared/constants/user-role";

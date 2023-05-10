@@ -1,10 +1,12 @@
-import { useModal } from "@/shared/lib";
-import { Overlay } from "@/shared/ui";
-import { Portal } from "@headlessui/react";
-
-import cn from "classnames";
 import React, { ReactNode } from "react";
 import styles from "./Modal.module.css";
+
+import { Portal } from "@headlessui/react";
+
+import { useModal } from "../../lib";
+import Overlay from "../Overlay/Overlay";
+
+import cn from "classnames";
 
 interface ModalProps {
   className?: string;

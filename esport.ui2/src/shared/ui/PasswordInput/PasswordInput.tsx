@@ -1,13 +1,11 @@
 import React, { forwardRef, useState } from "react";
-import styles from "./PasswordInput.module.css";
 
 import { useFormContext } from "react-hook-form";
-import cn from "classnames";
 
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 
 import { Input, InputProps } from "../Input/Input";
-import { IconButton } from "@/shared/ui";
+import { IconButton } from "../IconButton/IconButton";
 
 type PasswordInputProps = InputProps & {
   name: string;

@@ -6,7 +6,7 @@ import React, {
 } from "react";
 import styles from "./IconButton.module.css";
 
-import { Icon, IconProps } from "@/shared/ui/Icon/Icon";
+import { Icon, IconProps } from "../Icon/Icon";
 import cn from "classnames";
 
 type IconButtonProps = IconProps &

@@ -2,8 +2,9 @@ import { ToolkitStore } from "@reduxjs/toolkit/dist/configureStore";
 import { CombinedState } from "redux";
 
 import { StateSchema } from "@/_app/Providers";
-import { deviceActions } from "@/shared/model";
 import { getDeviceDetect } from "@/shared/lib";
+
+import { deviceActions } from "../slices/deviceSlice";
 
 export const updateDeviceState = (
   store: ToolkitStore<CombinedState<StateSchema>>,

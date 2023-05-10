@@ -3,9 +3,7 @@ import { GetServerSidePropsResult } from "next/types";
 
 import { routes } from "@/shared/config";
 import { AppServerSideConfig, StateSchemaStore } from "@/shared/types";
-import { ReturnUrl } from "@/shared/constants";
-
-import { UserRole } from "@/entities/user";
+import { ReturnUrl, UserRole } from "@/shared/constants";
 
 export const checkUserAndRedirect = <TProps>(
   store: StateSchemaStore,
@@ -13,7 +11,7 @@ export const checkUserAndRedirect = <TProps>(
   ctx?: GetServerSidePropsContext
 ): GetServerSidePropsResult<TProps> => {
   const { auth, roles } = config || {};
-  const user = store.getState().user.data;
+  const user = store.getState().user.account;
 
   const getDestination = (destination: string) => {
     return `${destination}?${ReturnUrl}=${ctx?.resolvedUrl}`;

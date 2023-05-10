@@ -4,7 +4,7 @@ import { Api, storageService } from "@/shared/config";
 import { AuthToken } from "@/shared/constants";
 import { ApiContext } from "@/shared/types";
 
-import { IUser } from "../model/types/user";
+import { IAccount } from "../model/types/user";
 
 export interface IRegisterRequest {
   name: string;
@@ -57,7 +57,7 @@ export const AuthService = (ctx?: ApiContext) => {
     },
 
     async getUser() {
-      return instance.get<IUser>("/info");
+      return instance.get<IAccount>("/info");
     },
 
     async logout() {

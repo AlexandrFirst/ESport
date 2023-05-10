@@ -9,7 +9,7 @@ export const updateStoreUser = async (
 ) => {
   const { dispatch, getState } = store;
   const { user } = getState();
-  if (!user.data) {
+  if (!user.account) {
     try {
       const { data } = await AuthService(ctx).getUser();
       dispatch(userActions.setUser(data));

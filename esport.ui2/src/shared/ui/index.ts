@@ -44,3 +44,5 @@ export type { AvatarProps } from "./Avatar/Avatar";
 
 export { Drawer } from "./Drawer/Drawer";
 export { DownDrawer } from "./DownDrawer/DownDrawer";
+
+export { Prompt } from "./Prompt/ui/Prompt/Prompt";

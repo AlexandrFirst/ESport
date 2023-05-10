@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 
-import { UserRole } from "../../constants/user-role";
+import { UserRole } from "@/shared/constants";
 
 export const useMappedRoles = (): Record<UserRole, string> => {
   //TODO: add translations

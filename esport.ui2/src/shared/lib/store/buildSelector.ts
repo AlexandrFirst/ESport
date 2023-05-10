@@ -1,4 +1,4 @@
-import { useAppSelector } from "@/shared/lib";
+import { useAppSelector } from "../hooks/store/useAppSelector";
 import { StateSchema } from "@/_app/Providers";
 
 type Selector<T> = (state: StateSchema) => T;

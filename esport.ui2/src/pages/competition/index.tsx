@@ -8,7 +8,8 @@ import { getAppServerSideProps } from "@/shared/lib";
 import { CompetitionApi, ICompetiton } from "@/entities/competition";
 
 import { getMainLayout } from "@/widgets/MainLayout";
-import { UserRole } from "@/entities/user";
+
+import { UserRole } from "@/shared/constants";
 
 type CompetitionPageProps = {
   competitions?: ICompetiton[];

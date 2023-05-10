@@ -5,7 +5,7 @@ import https from "https";
 import fs from "fs";
 import path from "path";
 
-import { IUser } from "@/entities/user";
+import { IAccount } from "@/entities/user";
 
 export default async function handler(
   req: NextApiRequest,
@@ -21,7 +21,7 @@ export default async function handler(
     });
 
     try {
-      const { data } = await axios.get<IUser>(
+      const { data } = await axios.get<IAccount>(
         `${process.env.LOGIN_API_URL}/info`,
         {
           httpsAgent,

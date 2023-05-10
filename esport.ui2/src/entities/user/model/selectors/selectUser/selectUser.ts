@@ -1,5 +1,5 @@
 import { buildSelector } from "@/shared/lib";
 
 export const [useSelectUser, selectUser] = buildSelector(
-  (state) => state.user.data
+  (state) => state.user.account
 );
