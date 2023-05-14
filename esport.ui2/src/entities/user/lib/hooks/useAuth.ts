@@ -22,11 +22,11 @@ export const useAuth = () => {
     user,
     isAuth: !!user,
     //TODO: REMOVE OR UPDATE
-    role: UserRole.OrgAdmin,
-    translatedRole: getCurrentRoleTranslation(UserRole.OrgAdmin),
+    role: UserRole.OrganisationAdmin,
+    translatedRole: getCurrentRoleTranslation(UserRole.OrganisationAdmin),
 
-    isOrgAdmin: roles?.includes(UserRole.Admin) ?? false,
-    isPupil: roles?.includes(UserRole.Pupil) ?? false,
-    isLocalAdmin: roles?.includes(UserRole.LocalAdmin) ?? false,
+    isOrgAdmin: roles?.includes(UserRole.OrganisationAdmin) ?? false,
+    isPupil: roles?.includes(UserRole.Trainee) ?? false,
+    isLocalAdmin: roles?.includes(UserRole.GymAdmin) ?? false,
   };
 };

@@ -55,7 +55,7 @@ export const RoleChanger: FC<CurrentUserRoleChangerProps> = ({
           <UserNameRoleHolder
             avatarClassName={styles.pointer}
             className={styles.pointer}
-            src={user?.avatarUrl}
+            src={""}
             avatarText={user?.name[0]}
             regularText={translatedRole}
             boldText={user?.name ?? ""}
