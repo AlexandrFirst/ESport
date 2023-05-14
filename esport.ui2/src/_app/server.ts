@@ -13,16 +13,15 @@ const app = next({ dev, port });
 const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
-  const httpsOptions = {
-    key: fs.readFileSync(
-      path.resolve(".cerfs", process.env.SSL_KEY_NAME ?? "")
-    ),
-    cert: fs.readFileSync(
-      path.resolve(".cerfs", process.env.SSL_CERT_NAME ?? "")
-    ),
-  };
-
   if (!dev) {
+    const httpsOptions = {
+      key: fs.readFileSync(
+        path.resolve(".cerfs", process.env.SSL_KEY_NAME ?? "")
+      ),
+      cert: fs.readFileSync(
+        path.resolve(".cerfs", process.env.SSL_CERT_NAME ?? "")
+      ),
+    };
     HTTPSCreateServer(httpsOptions, (req, res) => {
       const parsedUrl = parse(req.url!, true);
       handle(req, res, parsedUrl);

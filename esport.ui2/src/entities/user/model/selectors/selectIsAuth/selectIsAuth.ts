@@ -1,3 +1,6 @@
 import { StateSchema } from "@/_app/Providers";
+import { buildSelector } from "@/shared/lib";
 
-export const selectIsAuth = (state: StateSchema) => state.user.isAuth;
+export const [useSelectIsAuth, selectIsAuth] = buildSelector(
+  (state: StateSchema) => !!state.user?.data
+);

@@ -1,6 +1,6 @@
 export enum UserRole {
-  Admin = "Admin",
-  LocalAdmin = "LocalAdmin",
-  OrgAdmin = "OrgAdmin",
-  Pupil = "Pupil",
+  Trainee = "Trainee",
+  Trainer = "Trainer",
+  GymAdmin = "GymAdmin",
+  OrganisationAdmin = "OrganisationAdmin",
 }

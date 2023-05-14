@@ -3,15 +3,15 @@ import { GetServerSidePropsResult } from "next/types";
 
 import { routes } from "@/shared/config";
 import { AppServerSideConfig, StateSchemaStore } from "@/shared/types";
-import { ReturnUrl, UserRole } from "@/shared/constants";
+import { ReturnUrl } from "@/shared/constants";
 
 export const checkUserAndRedirect = <TProps>(
   store: StateSchemaStore,
-  config?: Pick<AppServerSideConfig, "roles" | "auth">,
+  config?: Pick<AppServerSideConfig, "roles" | "auth" | "forbiddenPath">,
   ctx?: GetServerSidePropsContext
 ): GetServerSidePropsResult<TProps> => {
   const { auth, roles } = config || {};
-  const user = store.getState().user.account;
+  const user = store.getState().user.data;
 
   const getDestination = (destination: string) => {
     return `${destination}?${ReturnUrl}=${ctx?.resolvedUrl}`;
@@ -27,15 +27,21 @@ export const checkUserAndRedirect = <TProps>(
         props: {} as TProps,
       };
     }
-    if (roles && roles.length > 0 && !roles.includes(user.role as UserRole)) {
-      return {
-        redirect: {
-          destination: getDestination(routes.Forbidden()),
-          permanent: false,
-        },
-        props: {} as TProps,
-      };
-    }
+    //TODO: check
+    const hasPermissions =
+      roles?.some((confRole) =>
+        user.roles?.some((userRole) => userRole === confRole)
+      ) ?? false;
+    console.log("===hasPermissions===", hasPermissions);
+    // if (roles && roles.length > 0 && !roles.includes(user. as UserRole)) {
+    //   return {
+    //     redirect: {
+    //       destination: getDestination(config?.forbiddenPath ?? routes.Forbidden()),
+    //       permanent: false,
+    //     },
+    //     props: {} as TProps,
+    //   };
+    // }
   }
   return {
     props: {} as TProps,

@@ -7,20 +7,19 @@ import { useTranslation } from "next-i18next";
 
 import { FireIcon, FlagIcon, UserIcon } from "@heroicons/react/24/solid";
 
-import { IProfile } from "../../model/types/profile";
+import { IProfileInfo } from "../../model/types/profile";
 
 import { CardSubTitle } from "../CardSubTitle/CardSubTitle";
 
 import { AboutInfoItem } from "./AboutInfoItem";
-import { AboutContacts } from "./AboutContacts";
 
 interface AboutInfoProps {
-  profile?: IProfile;
+  profile?: Pick<IProfileInfo, "name" | "surname" | "email" | "info">;
   className?: string;
 }
 
 const AboutInfo: React.FC<AboutInfoProps> = ({ profile, className }) => {
-  const { fullName, level, country, contacts } = profile || {};
+  const { name, info, email, surname } = profile || {};
   const { t } = useTranslation("profile");
 
   return (
@@ -31,19 +30,19 @@ const AboutInfo: React.FC<AboutInfoProps> = ({ profile, className }) => {
           <AboutInfoItem
             icon={UserIcon}
             boldText={t("fullName")}
-            semiBoldText={fullName}
+            semiBoldText={`${name} ${surname}`}
           />
           <AboutInfoItem
             icon={FireIcon}
             boldText={t("level")}
-            semiBoldText={level}
+            semiBoldText={email}
           />
           <AboutInfoItem
             icon={FlagIcon}
             boldText={t("country")}
-            semiBoldText={country}
+            semiBoldText={info ?? ""}
           />
-          <AboutContacts contacts={contacts} />
+          {/*<AboutContacts contacts={contacts} />*/}
         </ul>
       </div>
     </Card>

@@ -3,14 +3,14 @@ import styles from "./ProfileMainInfo.module.css";
 
 import { Card } from "@/shared/ui";
 
-import { IProfile } from "../../model/types/profile";
+import { IOldProfileToRemove } from "../../model/types/profile";
 
 import { EditableProfilePhoto } from "../ProfilePhoto/EditableProfilePhoto";
 import PhotoBanner from "../PhotoBanner/PhotoBanner";
 import OverviewInfo from "../OverviewInfo/OverviewInfo";
 
 interface ProfileMainInfoProps {
-  profile?: IProfile;
+  profile?: IOldProfileToRemove;
   editable?: boolean;
 }
 

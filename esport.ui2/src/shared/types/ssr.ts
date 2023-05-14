@@ -12,6 +12,7 @@ import { UserRole } from "@/shared/constants";
 export type AppServerSideConfig = {
   roles?: UserRole[];
   auth?: true;
+  forbiddenPath?: string;
 };
 
 export type GetServerSidePropsWithStore<

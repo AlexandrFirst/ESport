@@ -1,9 +1,5 @@
-import { IAccount } from "./user";
-
-import { UserRole } from "@/shared/constants";
+import { IUser } from "./user";
 
 export interface UserSchema {
-  isAuth: boolean;
-  currentRole: UserRole | null;
-  account: IAccount | null;
+  data: IUser | null;
 }

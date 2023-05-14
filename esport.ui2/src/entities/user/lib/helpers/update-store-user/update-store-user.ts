@@ -1,7 +1,8 @@
 import { ApiContext, StateSchemaStore } from "@/shared/types";
 
-import { AuthService } from "../../api/auth-api";
-import { userActions } from "../../model/slices/userSlice";
+import { AuthService } from "../../../api/auth-api";
+import { userActions } from "../../../model/slices/userSlice";
+import { getRoleArr } from "../get-role-arr/get-role-arr";
 
 export const updateStoreUser = async (
   ctx: ApiContext,
@@ -9,10 +10,12 @@ export const updateStoreUser = async (
 ) => {
   const { dispatch, getState } = store;
   const { user } = getState();
-  if (!user.account) {
+  if (!user.data) {
     try {
       const { data } = await AuthService(ctx).getUser();
-      dispatch(userActions.setUser(data));
+      const roles = getRoleArr(data.role);
+      console.log("===data, roles===", data, roles);
+      dispatch(userActions.setUser({ ...data, roles }));
     } catch (e: any) {
       // console.log("===e===", e);
     }

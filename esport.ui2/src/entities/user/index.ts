@@ -9,13 +9,13 @@ export {
 } from "./model/slices/userSlice";
 
 //lib
-export { updateStoreUser } from "./lib/helpers/update-store-user";
+export { updateStoreUser } from "./lib/helpers/update-store-user/update-store-user";
 export { useAuth } from "./lib/hooks/useAuth";
 export { useMappedRoles } from "./lib/hooks/useMappedRoles";
 
 //types
 export type { UserSchema } from "./model/types/userSchema";
-export type { IAccount, UserInfo } from "./model/types/user";
+export type { IUser } from "./model/types/user";
 
 //selectors
 export { selectIsAuth } from "./model/selectors/selectIsAuth/selectIsAuth";
@@ -23,14 +23,11 @@ export {
   selectUser,
   useSelectUser,
 } from "./model/selectors/selectUser/selectUser";
+
 export {
-  selectCurrentRole,
-  useSelectCurrentRole,
-} from "./model/selectors/selectCurrentRole/selectCurrentRole";
-export {
-  useSelectRole,
-  selectRole,
-} from "./model/selectors/selectRole/selectRole";
+  useSelectRoles,
+  selectRoles,
+} from "./model/selectors/selectRoles/selectRoles";
 
 //api
 export { AuthService } from "./api/auth-api";
