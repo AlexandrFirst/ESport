@@ -17,8 +17,7 @@ import {
   MobileView,
 } from "@/shared/ui";
 
-import { useAuth, UserNameRoleHolder } from "@/entities/user";
-import { useLogout } from "@/entities/user/api/hooks/useLogout";
+import { useAuth, useLogout, UserNameRoleHolder } from "@/entities/user";
 
 interface ProfileAvatarProps extends AvatarProps {}
 

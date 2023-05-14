@@ -4,9 +4,7 @@ import styles from "./CreateCompetitionForm.module.css";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { Button, DatePicker, FormWrapper, Input } from "@/shared/ui";
-
-import { Prompt } from "@/features/Prompt";
+import { Button, DatePicker, FormWrapper, Input, Prompt } from "@/shared/ui";
 
 import { useCreateCompetitionValidation } from "../../lib/hooks/use-create-competition-validation";
 import { ICreateCompetitionForm } from "../../model/types/create-competitiom-form";

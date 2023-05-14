@@ -9,12 +9,15 @@ import { CombinedState } from "redux";
 import { UserSchema } from "@/entities/user";
 import { LeftSidebarSliceState } from "@/widgets/LeftSidebar";
 import { SnackbarSchema } from "@/features/Snackbar";
+
 import { DeviceSliceState } from "@/shared/model";
+import { ProfileSchema } from "@/entities/profile";
 
 export interface StateSchema {
   leftSidebar: LeftSidebarSliceState;
   snackbar: SnackbarSchema;
   user: UserSchema;
+  profile: ProfileSchema;
   device: DeviceSliceState;
 }
 

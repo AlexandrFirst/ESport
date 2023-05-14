@@ -1,15 +1,15 @@
-import { UserRole } from "../../constants/user-role";
-import { useSelectUser } from "../../model/selectors/selectUser/selectUser";
-import { useSelectCurrentRole } from "../../model/selectors/selectCurrentRole/selectCurrentRole";
-import { useSelectRole } from "../../model/selectors/selectRole/selectRole";
+import { UserRole } from "@/shared/constants";
 
+import { useSelectUser } from "../../model/selectors/selectUser/selectUser";
+
+import { useSelectRoles } from "../../model/selectors/selectRoles/selectRoles";
 import { useMappedRoles } from "./useMappedRoles";
 
 export const useAuth = () => {
   const user = useSelectUser();
   //TODO: check if current role is correct
-  const currentRole = useSelectCurrentRole();
-  const role = useSelectRole();
+  // const currentRole = useSelectCurrentRole();
+  const roles = useSelectRoles();
 
   const mappedRoles = useMappedRoles();
 
@@ -21,10 +21,12 @@ export const useAuth = () => {
   return {
     user,
     isAuth: !!user,
-    role: currentRole,
-    translatedRole: getCurrentRoleTranslation(role),
-    // isAdmin: user?.roles.includes(UserRole.Admin),
-    // isPupil: user?.roles.includes(UserRole.Pupil),
-    // isLocalAdmin: user?.roles.includes(UserRole.LocalAdmin),
+    //TODO: REMOVE OR UPDATE
+    role: UserRole.OrgAdmin,
+    translatedRole: getCurrentRoleTranslation(UserRole.OrgAdmin),
+
+    isOrgAdmin: roles?.includes(UserRole.Admin) ?? false,
+    isPupil: roles?.includes(UserRole.Pupil) ?? false,
+    isLocalAdmin: roles?.includes(UserRole.LocalAdmin) ?? false,
   };
 };

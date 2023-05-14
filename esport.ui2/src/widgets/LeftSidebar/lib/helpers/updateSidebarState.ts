@@ -3,7 +3,7 @@ import { ToolkitStore } from "@reduxjs/toolkit/dist/configureStore";
 
 import { StateSchema } from "@/_app/Providers";
 
-import { leftSidebarActions } from "@/widgets/LeftSidebar";
+import { leftSidebarActions } from "../../model/slices/leftSidebar.slice";
 
 export const updateSidebarState = (
   store: ToolkitStore<CombinedState<StateSchema>>

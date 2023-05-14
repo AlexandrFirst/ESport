@@ -1,7 +1,10 @@
-import { Button, Modal } from "@/shared/ui";
-import { useRouter } from "next/router";
 import { FC, useCallback, useEffect, useState } from "react";
 import styles from "./Prompt.module.css";
+
+import { useRouter } from "next/router";
+
+import { Button } from "../../../Button/Button";
+import { Modal } from "../../../Modal/Modal";
 
 interface PromptProps {
   shouldConfirmLeave: boolean;

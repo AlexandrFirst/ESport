@@ -5,13 +5,14 @@ import {
   PreviewData,
 } from "next/types";
 
-import { StateSchemaStore } from "@/shared/types/store";
+import { StateSchemaStore } from "./store";
 
-import { UserRole } from "@/entities/user";
+import { UserRole } from "@/shared/constants";
 
 export type AppServerSideConfig = {
   roles?: UserRole[];
   auth?: true;
+  forbiddenPath?: string;
 };
 
 export type GetServerSidePropsWithStore<

@@ -3,8 +3,8 @@ import styles from "./DownDrawer.module.css";
 
 import cn from "classnames";
 
-import { Overlay } from "@/shared/ui";
-import { AnimationProvider, useAnimationLibs } from "@/shared/lib/ui";
+import Overlay from "../Overlay/Overlay";
+import { AnimationProvider, useAnimationLibs } from "../../lib/ui";
 import { Portal } from "@headlessui/react";
 
 interface DrawerProps {

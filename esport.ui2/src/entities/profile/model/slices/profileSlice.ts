@@ -1,29 +1,45 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { HYDRATE } from "next-redux-wrapper";
+import { PayloadAction } from "@reduxjs/toolkit";
+
+import { StateSchema } from "@/_app/Providers";
+import { buildSlice } from "@/shared/lib";
+
 import { ProfileSchema } from "../types/profileSchema";
+import { IProfile, IProfileInfo } from "../types/profile";
 
-const initialState: ProfileSchema = {};
+type PayloadByKey = { key: keyof IProfile; data: IProfileInfo | null };
 
-export const profileSlice = createSlice({
+const initialState: ProfileSchema = {
+  data: null,
+};
+
+export const profileSlice = buildSlice({
   name: "profile",
   initialState,
   reducers: {
-    template: (state, action: PayloadAction<string>) => {},
+    setProfile(state, { payload }: PayloadAction<IProfile>) {
+      state.data = payload;
+    },
+    resetProfile(state) {
+      state.data = null;
+    },
+    setProfileByKey(state, { payload }: PayloadAction<PayloadByKey>) {
+      let profileKey = state.data?.[payload.key];
+      profileKey = payload.data;
+    },
   },
-  // extraReducers: (builder) => {
-  //     builder
-  //         .addCase(, (state) => {
-  //             state.error = undefined;
-  //             state.isLoading = true;
-  //         })
-  //         .addCase(, (state) => {
-  //             state.isLoading = false;
-  //         })
-  //         .addCase(, (state, action) => {
-  //             state.isLoading = false;
-  //             state.error = action.payload;
-  //         });
-  // },
+  extraReducers: {
+    [HYDRATE]: (state, action: PayloadAction<StateSchema>) => {
+      return {
+        ...state,
+        ...action.payload.profile,
+      };
+    },
+  },
 });
 
-export const { actions: profileActions } = profileSlice;
-export const { reducer: profileReducer } = profileSlice;
+export const {
+  actions: profileActions,
+  reducer: profileReducer,
+  useActions: useProfileActions,
+} = profileSlice;

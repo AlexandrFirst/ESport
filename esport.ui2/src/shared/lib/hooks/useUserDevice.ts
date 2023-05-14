@@ -1,4 +1,4 @@
-import { useAppSelector } from "@/shared/lib";
+import { useAppSelector } from "../hooks/store/useAppSelector";
 import { selectDevice } from "@/shared/model";
 
 export const useUserDevice = () => {

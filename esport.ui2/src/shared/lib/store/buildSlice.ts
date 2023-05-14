@@ -8,7 +8,7 @@ import {
   SliceCaseReducers,
 } from "@reduxjs/toolkit";
 
-import { useAppDispatch } from "@/shared/lib";
+import { useAppDispatch } from "../hooks/store/useAppDispatch";
 
 export function buildSlice<
   State,

@@ -11,3 +11,7 @@ export interface IAppPageProps extends AppProps {
 }
 
 export type AppPageProps = { [key: string]: any };
+
+export type PageProps = {
+  error?: string;
+};

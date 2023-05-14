@@ -8,7 +8,7 @@ export const makeStore = (preloadedState?: StateSchema) =>
   configureStore({
     reducer,
     preloadedState,
-    devTools: Boolean(process.env.IS_DEV),
+    devTools: process.env.NODE_ENV !== "production",
   });
 
 export const store = makeStore();

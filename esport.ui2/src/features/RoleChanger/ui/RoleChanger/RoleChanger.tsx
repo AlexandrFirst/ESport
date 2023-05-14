@@ -9,9 +9,9 @@ import {
   useAuth,
   useMappedRoles,
   UserNameRoleHolder,
-  UserRole,
   useUserActions,
 } from "@/entities/user";
+import { UserRole } from "@/shared/constants";
 
 interface CurrentUserRoleChangerProps {
   className?: string;

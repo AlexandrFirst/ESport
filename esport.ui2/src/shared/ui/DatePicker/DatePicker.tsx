@@ -1,4 +1,4 @@
-import { Input, InputProps } from "@/shared/ui";
+import { Input, InputProps } from "../Input/Input";
 import React, { FC } from "react";
 
 interface DatePickerProps extends InputProps {

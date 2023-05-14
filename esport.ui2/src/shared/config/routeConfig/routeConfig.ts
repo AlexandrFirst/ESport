@@ -1,6 +1,7 @@
 import { createBuildPath } from "@/shared/lib";
-import { userRoutes } from "@/shared/config/routeConfig/user-routes/userRoutes";
-import { competitionRoutes } from "@/shared/config/routeConfig/competition-routes/competitionRoutes";
+
+import { userRoutes } from "./user-routes/userRoutes";
+import { competitionRoutes } from "./competition-routes/competitionRoutes";
 
 const buildPath = createBuildPath("/");
 

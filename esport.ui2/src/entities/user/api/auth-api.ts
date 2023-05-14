@@ -4,32 +4,9 @@ import { Api, storageService } from "@/shared/config";
 import { AuthToken } from "@/shared/constants";
 import { ApiContext } from "@/shared/types";
 
-import { IUser } from "../model/types/user";
-
-export interface IRegisterRequest {
-  name: string;
-  surname: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  telephoneNumber: string;
-}
-
-export interface IRegisterResponse {
-  isSuccess: boolean;
-  error: string[];
-}
-
-export interface ILoginRequest {
-  mail: string;
-  password: string;
-  remmemberMe?: boolean;
-}
-
-export interface ILoginResponse {
-  refreshToken?: string;
-  token: string;
-}
+import { IRegisterRequest, IRegisterResponse } from "./types/register";
+import { ILoginRequest, ILoginResponse } from "./types/login";
+import { GetUserResponse } from "./types/get-user";
 
 const authApi = axios.create({ baseURL: "/api/auth" });
 
@@ -57,11 +34,11 @@ export const AuthService = (ctx?: ApiContext) => {
     },
 
     async getUser() {
-      return instance.get<IUser>("/info");
+      return instance.get<GetUserResponse>("/info");
     },
 
     async logout() {
-      return instance.post("/apiLogout");
+      return instance.post<void>("/apiLogout");
     },
   };
 };

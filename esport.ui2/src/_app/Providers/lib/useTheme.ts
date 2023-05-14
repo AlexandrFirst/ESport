@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import { SunIcon, MoonIcon, StarIcon } from "@heroicons/react/24/solid";
+import { MoonIcon, StarIcon, SunIcon } from "@heroicons/react/24/solid";
 
-import { IconSvg } from "@/shared/ui";
+import { IconSvg } from "../../../shared/ui/Icon/Icon";
 
 import { LOCAL_STORAGE_THEME_KEY, Theme, ThemeContext } from "./ThemeContext";
 
