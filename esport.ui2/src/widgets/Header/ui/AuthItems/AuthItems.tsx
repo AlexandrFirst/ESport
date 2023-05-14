@@ -9,7 +9,7 @@ import { ListItem } from "../ListItem/ListItem";
 
 export const AuthItems: FC = () => {
   const user = useAppSelector(selectUser);
-  const { name, avatarUrl } = user || {};
+  const { name } = user || {};
 
   return (
     <ListItem className={"!mr-0"}>

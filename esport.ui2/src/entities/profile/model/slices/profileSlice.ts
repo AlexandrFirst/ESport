@@ -25,7 +25,7 @@ export const profileSlice = buildSlice({
     },
     setProfileByKey(state, { payload }: PayloadAction<PayloadByKey>) {
       let profileKey = state.data?.[payload.key];
-      profileKey = payload.data;
+      profileKey = payload.data as any;
     },
   },
   extraReducers: {

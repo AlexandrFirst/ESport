@@ -44,7 +44,7 @@ export const ProfileAvatar: FC<ProfileAvatarProps> = ({ ...props }) => {
           {...props}
           boldText={user?.name ?? ""}
           regularText={translatedRole}
-          src={user?.avatarUrl ?? ""}
+          src={""}
           avatarText={user?.name[0] ?? ""}
           size={AvatarSize.Small}
           className={styles.name_holder}

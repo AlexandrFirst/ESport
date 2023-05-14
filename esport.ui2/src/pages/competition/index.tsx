@@ -9,8 +9,6 @@ import { CompetitionApi, ICompetiton } from "@/entities/competition";
 
 import { getMainLayout } from "@/widgets/MainLayout";
 
-import { UserRole } from "@/shared/constants";
-
 type CompetitionPageProps = {
   competitions?: ICompetiton[];
 };
@@ -38,19 +36,16 @@ CompetitionPage.getLayout = getMainLayout({
 
 export default CompetitionPage;
 
-export const getServerSideProps = getAppServerSideProps(
-  async (ctx) => {
-    const localization = await serverSideTranslations(
-      ctx.locale ?? ctx.defaultLocale ?? "en",
-      ["common"]
-    );
-    const { data } = await CompetitionApi(ctx).getAllCompetitions();
-    return {
-      props: {
-        ...localization,
-        competitions: data,
-      },
-    };
-  },
-  { roles: [UserRole.OrgAdmin, UserRole.Admin, UserRole.LocalAdmin] }
-);
+export const getServerSideProps = getAppServerSideProps(async (ctx) => {
+  const localization = await serverSideTranslations(
+    ctx.locale ?? ctx.defaultLocale ?? "en",
+    ["common"]
+  );
+  const { data } = await CompetitionApi(ctx).getAllCompetitions();
+  return {
+    props: {
+      ...localization,
+      competitions: data,
+    },
+  };
+});
