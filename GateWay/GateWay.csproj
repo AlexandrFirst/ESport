@@ -25,7 +25,13 @@
     <Content Update="Configuration\Development\main.ocelot.Development.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Update="Configuration\Local\admin.ocelot.Local.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Update="Configuration\Local\apiGateway.ocelot.Local.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Update="Configuration\Local\confirm.ocelot.Local.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Update="Configuration\Local\main.ocelot.Local.json">

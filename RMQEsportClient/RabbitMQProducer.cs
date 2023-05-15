@@ -76,20 +76,20 @@ namespace RMQEsportClient
 
                 try
                 {
-                    channel.ExchangeDeclare(queueOptions.ExchangeName, exchangeType);
+                    channel.ExchangeDeclarePassive(queueOptions.ExchangeName);
                 }
                 catch (Exception)
                 {
-                    channel.ExchangeDeclarePassive(queueOptions.ExchangeName);
+                    channel.ExchangeDeclare(queueOptions.ExchangeName, exchangeType, durable: true, autoDelete: false);
                 }
 
                 try
                 {
-                    channel.QueueDeclare(queue: queueOptions.QueueName, durable: true, exclusive: false, autoDelete: false);
+                    channel.QueueDeclarePassive(queueOptions.QueueName);
                 }
                 catch (Exception) 
                 {
-                    channel.QueueDeclarePassive(queueOptions.QueueName);
+                    channel.QueueDeclare(queue: queueOptions.QueueName, durable: true, exclusive: false, autoDelete: false);
                 }
                 
                 channel.QueueBind(queueOptions.QueueName, queueOptions.ExchangeName, queueOptions.RoutingKey, null);

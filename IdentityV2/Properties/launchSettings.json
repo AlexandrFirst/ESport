@@ -1,6 +1,14 @@
 ﻿{
   "profiles": {
-    "IdentityV2": {
+    "IdentityV2.Development": {
+      "commandName": "Project",
+      "launchBrowser": false,
+      "applicationUrl": "http://localhost:5000",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "IdentityV2.Local": {
       "commandName": "Project",
       "launchBrowser": false,
       "applicationUrl": "http://localhost:5000",
