@@ -30,6 +30,7 @@ export const Api = (config?: ApiConfig) => {
     headers: {
       ...headers,
       Authorization: `${AuthToken} ${token}`,
+      Cookie: `${AuthToken} ${token}`,
     },
   });
 };

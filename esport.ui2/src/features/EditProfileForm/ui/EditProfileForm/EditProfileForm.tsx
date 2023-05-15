@@ -23,28 +23,28 @@ export const EditProfileForm: FC<EditProfileFormProps> = ({ profile }) => {
       <FormWrapper methods={methods}>
         <TwoItemsGridContainer className={styles.formContainer}>
           <FormCard
-            profile={profile.userIdentityInfo}
+            profile={profile?.userIdentityInfo}
             namePrefix={"identity"}
             label={"Login data"}
           />
           <FormCard
-            profile={profile.userTraineeInfo}
+            profile={profile?.userTraineeInfo}
             namePrefix={"trainee"}
             label={"Trainee info"}
             fallback={<Button>Become a trainee</Button>}
           />
           <FormCard
-            profile={profile.userTrainerInfo}
+            profile={profile?.userTrainerInfo}
             namePrefix={"trainer"}
             label={"Trainer info"}
           />
           <FormCard
-            profile={profile.userAdminInfo}
+            profile={profile?.userAdminInfo}
             namePrefix={"gymAdmin"}
             label={"Administator of the gym info"}
           />
           <FormCard
-            profile={profile.userOrganisationAdminInfos?.[0]}
+            profile={profile?.userOrganisationAdminInfos?.[0]}
             namePrefix={"organizationAdmin"}
             label={"Administator of organization info"}
           />

@@ -3,7 +3,12 @@ import { getAppServerSideProps } from "@/shared/lib";
 
 import { getMainLayout } from "@/widgets/MainLayout";
 import { routes } from "@/shared/config";
-import { IProfile, IProfileInfo, ProfileMainInfo } from "@/entities/profile";
+import {
+  IProfile,
+  IProfileInfo,
+  ProfileApi,
+  ProfileMainInfo,
+} from "@/entities/profile";
 import { EditProfileForm } from "@/features/EditProfileForm";
 import { Toggle } from "@/shared/ui";
 import { useState } from "react";
@@ -33,8 +38,8 @@ export const getServerSideProps = getAppServerSideProps<{ profile: IProfile }>(
   async (ctx, store) => {
     const userId = ctx.query?.userId as string;
     const { user } = store.getState();
-    // const { data } = await ProfileApi(ctx).getProfileInfo(userId ?? "");
-    // console.log("===data===", data);
+    const { data } = await ProfileApi(ctx).getProfileInfo(userId ?? "");
+    console.log("===data===", data);
 
     if (userId !== user.data?.id) {
       return {

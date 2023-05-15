@@ -9,6 +9,7 @@ import { TwoItemsGridContainer } from "@/shared/ui";
 import {
   IProfile,
   IProfileInfo,
+  ProfileApi,
   ProfileInfo,
   ProfileMainInfo,
 } from "@/entities/profile";
@@ -79,9 +80,9 @@ export const getServerSideProps = getAppServerSideProps<{ profile: IProfile }>(
       ["common", "profile"]
     );
 
-    // const userId = ctx.query?.userId as string;
-    // const { data } = await ProfileApi(ctx).getProfileInfo(userId ?? "");
-    // console.log("===data===", data);
+    const userId = ctx.query?.userId as string;
+    const { data } = await ProfileApi(ctx).getProfileInfo(userId ?? "");
+    console.log("===data===", data);
 
     const profileInfo: IProfileInfo = {
       email: "some@mail.com",
