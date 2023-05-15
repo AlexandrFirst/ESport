@@ -1,11 +1,15 @@
 .card_content {
-    @apply pt-0 px-0;
+  @apply pt-0 px-0 relative;
 }
 
 .profile_info {
-    @apply flex flex-wrap flex-col lg:flex-row;
+  @apply flex flex-wrap flex-col lg:flex-row;
 }
 
 .profile_photo {
-    @apply mx-auto -mt-14 lg:ml-12 lg:mr-6 lg:-mt-10;
+  @apply mx-auto -mt-14 lg:ml-12 lg:mr-6 lg:-mt-10;
+}
+
+.edit_btn_wrapper {
+  @apply absolute right-5 bottom-10;
 }

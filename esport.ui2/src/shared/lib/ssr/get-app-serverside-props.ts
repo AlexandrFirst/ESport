@@ -12,6 +12,7 @@ export const getAppServerSideProps = <TProps extends AppPageProps>(
   cb: GetServerSidePropsWithStore<TProps>,
   config?: AppServerSideConfig
 ) => {
+  //@ts-ignore
   return wrapper.getServerSideProps<TProps>((store) => async (ctx) => {
     try {
       const serverSide = await cb(ctx, store);
@@ -22,6 +23,8 @@ export const getAppServerSideProps = <TProps extends AppPageProps>(
       if (serverSide?.props) {
         return {
           ...checkUserResult,
+          // @ts-ignore
+          redirect: serverSide?.redirect ? serverSide?.redirect : undefined,
           props: {
             // @ts-ignore
             ...serverSide.props,
@@ -30,9 +33,11 @@ export const getAppServerSideProps = <TProps extends AppPageProps>(
       }
       return serverSide;
     } catch (e: any) {
+      console.log("===get-app-serversideProps - e===", e);
+      const isDev = process.env.NODE_ENV !== "production";
       return {
         props: {
-          error: JSON.stringify(e),
+          error: isDev ? e.message : "Something went wrong",
         },
       };
     }

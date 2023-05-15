@@ -1,11 +1,17 @@
 import next from "next";
 
-import { createServer as HTTPSCreateServer } from "https";
+import { createServer as HTTPSCreateServer, ServerOptions } from "https";
 import { createServer as HTTPCreateServer } from "http";
 
 import { parse } from "url";
 import fs from "fs";
 import path from "path";
+
+enum ServerStage {
+  Dev = "Development",
+  Local = "Local",
+  Prod = "Production",
+}
 
 const port = parseInt(process.env.PORT || "3000", 10);
 const dev = process.env.NODE_ENV !== "production";
@@ -13,15 +19,31 @@ const app = next({ dev, port });
 const handle = app.getRequestHandler();
 
 app.prepare().then(() => {
-  if (!dev) {
-    const httpsOptions = {
-      key: fs.readFileSync(
-        path.resolve(".cerfs", process.env.SSL_KEY_NAME ?? "")
-      ),
-      cert: fs.readFileSync(
-        path.resolve(".cerfs", process.env.SSL_CERT_NAME ?? "")
-      ),
+  const stage = (process.env.STAGE ?? ServerStage.Dev) as ServerStage;
+  if (![ServerStage.Dev, ServerStage.Local, ServerStage.Prod].includes(stage)) {
+    throw new Error("Stage is not specified correctly");
+  }
+
+  const isDevStage = stage === ServerStage.Dev;
+  if (!isDevStage) {
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
+    const cert = fs.readFileSync(
+      path.resolve(".cerfs", process.env.SSL_CERT_NAME ?? "")
+    );
+    const key = fs.readFileSync(
+      path.resolve(".cerfs", process.env.SSL_KEY_NAME ?? "")
+    );
+    if (!cert || !key) {
+      throw new Error("Error while reading certificates");
+    }
+    const httpsOptions: ServerOptions = {
+      key,
+      cert,
+      rejectUnauthorized: false,
+      passphrase: process.env.LOGIN_API_PASSPHRASE ?? "",
     };
+
     HTTPSCreateServer(httpsOptions, (req, res) => {
       const parsedUrl = parse(req.url!, true);
       handle(req, res, parsedUrl);
@@ -34,7 +56,7 @@ app.prepare().then(() => {
   }
 
   console.log(
-    dev
+    isDevStage
       ? `> Server listening at http://localhost:${port}`
       : `> Server listening at https://localhost:${port}`
   );

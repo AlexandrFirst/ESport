@@ -1,7 +1,7 @@
 import { useQuery, UseQueryOptions } from "@tanstack/react-query";
+
 import { ProfileApi } from "../profileApi";
 import { IProfile } from "../../model/types/profile";
-import { useSelectProfile } from "../../model/selectors/select-profile/select-profile";
 
 export const getProfileKeys = {
   getProfileById: (userId?: string) => ["get-profile-by-id", userId] as const,
@@ -13,8 +13,6 @@ export const useGetProfileInfo = (
   userId?: string,
   options?: GetProfileOptions
 ) => {
-  const profile = useSelectProfile();
-
   return useQuery({
     queryKey: getProfileKeys.getProfileById(userId),
     queryFn: async () => {
@@ -25,7 +23,7 @@ export const useGetProfileInfo = (
         throw e;
       }
     },
-    enabled: !!userId && !profile,
+    enabled: !!userId,
     ...options,
   });
 };
