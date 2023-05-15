@@ -9,7 +9,12 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 import { routes } from "@/shared/config";
-import { useMedia, useSnackbar, useWrapApi } from "@/shared/lib";
+import {
+  useMedia,
+  useSnackbar,
+  useUrlWithReturnUrl,
+  useWrapApi,
+} from "@/shared/lib";
 import { Button, FormWrapper, Input, PasswordInput, UILink } from "@/shared/ui";
 
 import { AuthService } from "@/entities/user";
@@ -26,6 +31,7 @@ export const LoginForm: FC<LoginFormProps> = (props) => {
 
   const [isLoading, setIsLoading] = useState(false);
   const { showError } = useSnackbar();
+  const registerWithReturnUrl = useUrlWithReturnUrl(routes.Register());
 
   const validationSchema = useValidation();
 
@@ -74,7 +80,7 @@ export const LoginForm: FC<LoginFormProps> = (props) => {
         Login
       </Button>
       <span className={styles.text}>New on our platform? </span>
-      <UILink href={routes.Register()}>Create an account</UILink>
+      <UILink href={registerWithReturnUrl}>Create an account</UILink>
     </FormWrapper>
   );
 };

@@ -14,8 +14,8 @@ export const AuthService = (ctx?: ApiContext) => {
   const instance = Api({ ctx, baseURL: process.env.NEXT_PUBLIC_LOGIN_API_URL });
 
   return {
-    register(registerRequest: IRegisterRequest): Promise<IRegisterResponse> {
-      return authApi.post("/register", registerRequest);
+    register(registerRequest: IRegisterRequest) {
+      return instance.post<IRegisterResponse>("/register", registerRequest);
     },
 
     async login(loginRequest: ILoginRequest): Promise<ILoginResponse> {

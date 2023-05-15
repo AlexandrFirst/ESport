@@ -9,7 +9,7 @@ import { ArrowUturnLeftIcon } from "@heroicons/react/24/solid";
 import cn from "classnames";
 
 import { routes } from "@/shared/config";
-import { useMedia, useSnackbar, useWrapApi } from "@/shared/lib";
+import { useMedia, useSnackbar, useUrlWithReturnUrl } from "@/shared/lib";
 import { Button, FormWrapper, IconButton, UILink } from "@/shared/ui";
 
 import { AuthService } from "@/entities/user";
@@ -21,6 +21,7 @@ import { RegisterSteps } from "../../constants/register-step";
 import { FirstStep } from "../FirstStep/FirstStep";
 import { ThirdStep } from "../ThirdStep/ThirdStep";
 import { SecondStep } from "../SecondStep/SecondStep";
+import { useRouter } from "next/router";
 
 export const RegisterForm: FC = () => {
   const validationSchema = useValidation();
@@ -32,9 +33,10 @@ export const RegisterForm: FC = () => {
   const [currStep, setCurrStep] = useState(RegisterSteps.MainInfo);
   const [isLoading, setIsLoading] = useState(false);
 
+  const router = useRouter();
   const { isMobile } = useMedia();
-  const withErrorAndLoading = useWrapApi();
-  const { showError } = useSnackbar();
+  const { showError, showSuccess } = useSnackbar();
+  const loginWithReturnUrl = useUrlWithReturnUrl(routes.Login());
 
   const isFirstStep = currStep === RegisterSteps.MainInfo;
   const isLastStep = currStep === RegisterSteps.AdditioanalInfo;
@@ -58,24 +60,26 @@ export const RegisterForm: FC = () => {
 
   const handleBack = () => setCurrStep((p) => p - 1);
 
-  const handleSubmit = methods.handleSubmit((data) => {
+  const handleSubmit = methods.handleSubmit(async (registerForm) => {
     setIsLoading(true);
-    withErrorAndLoading(
-      AuthService().register,
-      {
-        ...data,
-        name: data.firstName,
-        surname: data.lastName,
-      },
-      {
-        onError: (e) => {
-          showError(e.message);
-        },
-        onFinally: () => {
-          setIsLoading(false);
-        },
+    try {
+      const { data } = await AuthService().register({
+        ...registerForm,
+        name: registerForm.firstName,
+        surname: registerForm.lastName,
+      });
+      if (!data.isSuccess) {
+        showError(data.error.toString(), { duration: 10000 });
+        return;
       }
-    );
+      showSuccess(
+        "You have successfully registered, please check your email box"
+      );
+    } catch (e: any) {
+      showError(e.message);
+    } finally {
+      setIsLoading(false);
+    }
   });
 
   return (
@@ -113,7 +117,7 @@ export const RegisterForm: FC = () => {
         )}
       </div>
       <span className={styles.text}>Already have an account? </span>
-      <UILink href={routes.Login()}>Sign in instead</UILink>
+      <UILink href={loginWithReturnUrl}>Sign in instead</UILink>
     </FormWrapper>
   );
 };
