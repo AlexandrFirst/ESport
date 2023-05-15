@@ -87,7 +87,8 @@ namespace IdentityV2.Infrastructure.Core
         public async Task<Tokens> Login(UserLoginDto userLoginDto)
         {
             var token = await jwtMananager.AuthenticateAsync(userLoginDto);
-            authorizationCache.AddUserToCache(token.UserId, token.Token);
+            if (token != null)
+                authorizationCache.AddUserToCache(token.UserId, token.Token);
             return token;
         }
 
@@ -158,7 +159,7 @@ namespace IdentityV2.Infrastructure.Core
                 return false;
             }
 
-           
+
             using (var transaction = dataContext.Database.BeginTransaction())
             {
                 mapper.Map(userProfile, user);
@@ -177,7 +178,7 @@ namespace IdentityV2.Infrastructure.Core
                 if (userProfile.RolesToAdd?.Any() == true)
                 {
                     var rolesToAdd = await dataContext.Roles.Where(x => userProfile.RolesToAdd.Any(k => k == x.Id)).ToListAsync();
-                    if (rolesToAdd.Count() != userProfile.RolesToAdd.Count) 
+                    if (rolesToAdd.Count() != userProfile.RolesToAdd.Count)
                     {
                         transaction.Rollback();
                         logger.LogError("No all roles can be added from list: " + string.Join(',', userProfile.RolesToAdd));
@@ -189,7 +190,7 @@ namespace IdentityV2.Infrastructure.Core
 
                 try
                 {
-                    
+
                     transaction.Commit();
                     await dataContext.SaveChangesAsync();
                     return true;

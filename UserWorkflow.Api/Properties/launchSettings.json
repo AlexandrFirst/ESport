@@ -1,13 +1,22 @@
-﻿{
+{
   "$schema": "http://json.schemastore.org/launchsettings.json",
   "profiles": {
-    "UserWorkflow.Api": {
+    "UserWorkflow.Api.Developmet": {
       "commandName": "Project",
       "launchBrowser": false,
       "launchUrl": "weatherforecast",
       "applicationUrl": "http://localhost:5005",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "UserWorkflow.Api.Local": {
+      "commandName": "Project",
+      "launchBrowser": false,
+      "launchUrl": "weatherforecast",
+      "applicationUrl": "http://localhost:5005",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Local"
       }
     }
   }
