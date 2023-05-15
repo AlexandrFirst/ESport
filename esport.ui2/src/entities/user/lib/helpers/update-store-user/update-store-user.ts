@@ -14,10 +14,10 @@ export const updateStoreUser = async (
     try {
       const { data } = await AuthService(ctx).getUser();
       const roles = getRoleArr(data.role);
-      console.log("===data, roles===", data, roles);
+      // console.log("===data, roles===", data, roles);
       dispatch(userActions.setUser({ ...data, roles }));
     } catch (e: any) {
-      console.log("===e===", e);
+      // console.log("===e===", e);
     }
   }
 };

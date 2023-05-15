@@ -15,9 +15,11 @@ import {
   Menu,
   MenuList,
   MobileView,
+  UILink,
 } from "@/shared/ui";
 
 import { useAuth, useLogout, UserNameRoleHolder } from "@/entities/user";
+import { routes } from "@/shared/config";
 
 interface ProfileAvatarProps extends AvatarProps {}
 
@@ -49,6 +51,14 @@ export const ProfileAvatar: FC<ProfileAvatarProps> = ({ ...props }) => {
           size={AvatarSize.Small}
           className={styles.name_holder}
         />
+      ),
+    },
+    {
+      key: "profile page",
+      children: (
+        <UILink href={routes.User.Profile.ProfileId([user?.id])}>
+          Profile
+        </UILink>
       ),
     },
     {

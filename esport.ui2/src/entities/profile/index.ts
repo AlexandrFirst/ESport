@@ -1,10 +1,11 @@
 // export { Profile } from "./ui/Profile/Profile";
 
+export { AboutInfo } from "./ui/AboutInfo/AboutInfo";
+export { default as OverviewCard } from "./ui/OverviewCard/OverviewCard";
+
 export { ProfilePhotoWithWrapper as ProfilePhoto } from "./ui/ProfilePhoto/ProfilePhotoWithWrapper";
 export { EditableProfilePhoto } from "./ui/ProfilePhoto/EditableProfilePhoto";
-export { default as ProfileMainInfo } from "./ui/ProfileMainInfo/ProfileMainInfo";
-export { default as AboutInfo } from "./ui/AboutInfo/AboutInfo";
-export { default as OverviewCard } from "./ui/OverviewCard/OverviewCard";
+export { ProfileMainInfo } from "./ui/ProfileMainInfo/ProfileMainInfo";
 
 //model
 export type { ProfileSchema } from "./model/types/profileSchema";

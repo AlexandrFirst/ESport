@@ -1,14 +1,41 @@
-import { AppNextPage, PageProps } from "@/shared/types";
-import { getMainLayout } from "@/widgets/MainLayout";
-import { getAppServerSideProps } from "@/shared/lib";
-import { IProfile, IProfileInfo } from "@/entities/profile";
+import { useRouter } from "next/router";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+
+import { AppNextPage, PageProps } from "@/shared/types";
+import { getAppServerSideProps } from "@/shared/lib";
 import { Languages } from "@/shared/constants";
+import { TwoItemsGridContainer } from "@/shared/ui";
 
-type ProfileProps = PageProps & {};
+import {
+  AboutInfo,
+  IProfile,
+  IProfileInfo,
+  OverviewCard,
+  ProfileMainInfo,
+} from "@/entities/profile";
 
-const Profile: AppNextPage<ProfileProps> = () => {
-  return <div>UserIdPage</div>;
+import { getMainLayout } from "@/widgets/MainLayout";
+import { useAuth } from "@/entities/user";
+
+type ProfileProps = PageProps & {
+  profile: IProfile;
+};
+
+const Profile: AppNextPage<ProfileProps> = ({ profile }) => {
+  const router = useRouter();
+  const { user } = useAuth();
+
+  const userId = router.query?.userId as string;
+
+  return (
+    <>
+      <ProfileMainInfo profile={profile} editable={userId === user?.id} />
+      <TwoItemsGridContainer className={"mt-6"}>
+        <AboutInfo profile={profile.userIdentityInfo} />
+        <OverviewCard />
+      </TwoItemsGridContainer>
+    </>
+  );
 };
 
 Profile.getLayout = getMainLayout({
@@ -18,15 +45,15 @@ Profile.getLayout = getMainLayout({
 export default Profile;
 
 export const getServerSideProps = getAppServerSideProps<{ profile: IProfile }>(
-  async (ctx, store) => {
+  async (ctx) => {
     const localization = await serverSideTranslations(
       ctx.locale ?? ctx.defaultLocale ?? Languages.English,
       ["common", "profile"]
     );
 
-    // const { getState } = store;
-    // const userData = getState().user.data;
-    // const { data } = await ProfileApi(ctx).getProfileInfo(userData?.id ?? "");
+    // const userId = ctx.query?.userId as string;
+    // const { data } = await ProfileApi(ctx).getProfileInfo(userId ?? "");
+    // console.log("===data===", data);
 
     const profileInfo: IProfileInfo = {
       email: "some@mail.com",
@@ -49,8 +76,5 @@ export const getServerSideProps = getAppServerSideProps<{ profile: IProfile }>(
         },
       },
     };
-  },
-  {
-    // auth: true,
   }
 );

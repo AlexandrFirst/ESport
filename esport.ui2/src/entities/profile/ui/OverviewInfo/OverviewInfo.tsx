@@ -1,55 +1,46 @@
-import React, { memo } from "react";
+import React from "react";
 import styles from "./OverviewInfo.module.css";
 
-import {
-  ArrowRightOnRectangleIcon,
-  FireIcon,
-  MapPinIcon,
-} from "@heroicons/react/24/solid";
+import { AtSymbolIcon, FireIcon, PhoneIcon } from "@heroicons/react/24/solid";
 
 import { Icon, Title } from "@/shared/ui";
 
 interface OverviewInfoProps {
   fullName?: string;
-  location?: string;
-  level?: string;
-  lastLogin?: string;
+  phone?: string;
+  email?: string;
+  additionalInfo?: string;
 }
 
-const OverviewInfo: React.FC<OverviewInfoProps> = ({
+export const OverviewInfo: React.FC<OverviewInfoProps> = ({
   fullName,
-  location,
-  level,
-  lastLogin,
+  phone,
+  email,
+  additionalInfo,
 }) => {
   return (
     <main className={styles.wrapper}>
       <Title className={styles.profile_name}>{fullName}</Title>
       <ul className={styles.lower_info}>
-        {level && (
+        {email && (
+          <li className={styles.lower_info_item}>
+            <Icon Svg={AtSymbolIcon} className={styles.lower_info_icon} />
+            <h5 className={styles.lower_info_text}>{email}</h5>
+          </li>
+        )}
+        {phone && (
+          <li className={styles.lower_info_item}>
+            <Icon Svg={PhoneIcon} className={styles.lower_info_icon} />
+            <h5 className={styles.lower_info_text}>{phone}</h5>
+          </li>
+        )}
+        {additionalInfo && (
           <li className={styles.lower_info_item}>
             <Icon Svg={FireIcon} className={styles.lower_info_icon} />
-            <h5 className={styles.lower_info_text}>{level}</h5>
-          </li>
-        )}
-        {location && (
-          <li className={styles.lower_info_item}>
-            <Icon Svg={MapPinIcon} className={styles.lower_info_icon} />
-            <h5 className={styles.lower_info_text}>{location}</h5>
-          </li>
-        )}
-        {lastLogin && (
-          <li className={styles.lower_info_item}>
-            <Icon
-              Svg={ArrowRightOnRectangleIcon}
-              className={styles.lower_info_icon}
-            />
-            <h5 className={styles.lower_info_text}>{lastLogin}</h5>
+            <h5 className={styles.lower_info_text}>{additionalInfo}</h5>
           </li>
         )}
       </ul>
     </main>
   );
 };
-
-export default memo(OverviewInfo);

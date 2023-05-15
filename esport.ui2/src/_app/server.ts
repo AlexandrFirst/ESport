@@ -21,7 +21,7 @@ const handle = app.getRequestHandler();
 app.prepare().then(() => {
   const stage = (process.env.STAGE ?? ServerStage.Dev) as ServerStage;
   if (![ServerStage.Dev, ServerStage.Local, ServerStage.Prod].includes(stage)) {
-    throw new Error("Stage is not specified");
+    throw new Error("Stage is not specified correctly");
   }
 
   const isDevStage = stage === ServerStage.Dev;

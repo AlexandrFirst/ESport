@@ -30,9 +30,11 @@ export const getAppServerSideProps = <TProps extends AppPageProps>(
       }
       return serverSide;
     } catch (e: any) {
+      console.log("===get-app-serversideProps - e===", e);
+      const isDev = process.env.NODE_ENV !== "production";
       return {
         props: {
-          error: JSON.stringify(e),
+          error: isDev ? e.message : "Something went wrong",
         },
       };
     }

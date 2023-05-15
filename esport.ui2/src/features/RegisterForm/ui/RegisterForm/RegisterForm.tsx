@@ -1,7 +1,6 @@
 import { FC, useState } from "react";
 import styles from "./RegisterForm.module.css";
 
-import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -33,7 +32,6 @@ export const RegisterForm: FC = () => {
   const [currStep, setCurrStep] = useState(RegisterSteps.MainInfo);
   const [isLoading, setIsLoading] = useState(false);
 
-  const router = useRouter();
   const { isMobile } = useMedia();
   const { showError, showSuccess } = useSnackbar();
   const loginWithReturnUrl = useUrlWithReturnUrl(routes.Login());
