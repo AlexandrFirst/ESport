@@ -1,6 +1,7 @@
 import { FC, useState } from "react";
 import styles from "./RegisterForm.module.css";
 
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
@@ -21,7 +22,6 @@ import { RegisterSteps } from "../../constants/register-step";
 import { FirstStep } from "../FirstStep/FirstStep";
 import { ThirdStep } from "../ThirdStep/ThirdStep";
 import { SecondStep } from "../SecondStep/SecondStep";
-import { useRouter } from "next/router";
 
 export const RegisterForm: FC = () => {
   const validationSchema = useValidation();

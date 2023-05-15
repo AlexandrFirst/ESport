@@ -1,6 +1,6 @@
 import next from "next";
 
-import { createServer as HTTPSCreateServer } from "https";
+import { createServer as HTTPSCreateServer, ServerOptions } from "https";
 import { createServer as HTTPCreateServer } from "http";
 
 import { parse } from "url";
@@ -26,6 +26,8 @@ app.prepare().then(() => {
 
   const isDevStage = stage === ServerStage.Dev;
   if (!isDevStage) {
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
     const cert = fs.readFileSync(
       path.resolve(".cerfs", process.env.SSL_CERT_NAME ?? "")
     );
@@ -35,7 +37,12 @@ app.prepare().then(() => {
     if (!cert || !key) {
       throw new Error("Error while reading certificates");
     }
-    const httpsOptions = { key, cert };
+    const httpsOptions: ServerOptions = {
+      key,
+      cert,
+      rejectUnauthorized: false,
+      passphrase: process.env.LOGIN_API_PASSPHRASE ?? "",
+    };
 
     HTTPSCreateServer(httpsOptions, (req, res) => {
       const parsedUrl = parse(req.url!, true);
