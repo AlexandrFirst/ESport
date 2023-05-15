@@ -11,6 +11,7 @@ export { useModal } from "./hooks/useModal";
 export { useUserDevice } from "./hooks/useUserDevice";
 export { useSnackbar } from "./hooks/useSnackbar";
 export { useUrlWithReturnUrl } from "./hooks/router/useUrlWithReturnUrl";
+export { useMappedRoles } from "./hooks/useMappedRoles";
 
 //utils
 export { getDeviceDetect } from "./utils/detect-device";

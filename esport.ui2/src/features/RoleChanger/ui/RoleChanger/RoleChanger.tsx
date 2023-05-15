@@ -5,13 +5,9 @@ import cn from "classnames";
 
 import { AvatarSize, Menu, MenuList } from "@/shared/ui";
 
-import {
-  useAuth,
-  useMappedRoles,
-  UserNameRoleHolder,
-  useUserActions,
-} from "@/entities/user";
+import { useAuth, UserNameRoleHolder, useUserActions } from "@/entities/user";
 import { UserRole } from "@/shared/constants";
+import { useMappedRoles } from "@/shared/lib";
 
 interface CurrentUserRoleChangerProps {
   className?: string;

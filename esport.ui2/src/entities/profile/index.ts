@@ -6,6 +6,9 @@ export { default as OverviewCard } from "./ui/OverviewCard/OverviewCard";
 export { ProfilePhotoWithWrapper as ProfilePhoto } from "./ui/ProfilePhoto/ProfilePhotoWithWrapper";
 export { EditableProfilePhoto } from "./ui/ProfilePhoto/EditableProfilePhoto";
 export { ProfileMainInfo } from "./ui/ProfileMainInfo/ProfileMainInfo";
+export { ProfileInfo } from "./ui/ProfileInfo/ProfileInfo";
+export { ProfileDataForm } from "./ui/ProfileDataForm/ProfileDataForm";
+export type { ProfileDataFormProps } from "./ui/ProfileDataForm/ProfileDataForm";
 
 //model
 export type { ProfileSchema } from "./model/types/profileSchema";

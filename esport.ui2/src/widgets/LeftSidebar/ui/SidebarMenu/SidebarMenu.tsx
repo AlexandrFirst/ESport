@@ -5,8 +5,6 @@ import cn from "classnames";
 import { useRouter } from "next/router";
 import { Logo } from "@/shared/ui";
 
-import { RoleChanger } from "@/features/RoleChanger";
-
 import { useMenu } from "../../lib/hooks/useMenu";
 import { IMenuItem } from "../../types/menu-item";
 
@@ -60,9 +58,9 @@ export const SidebarMenu: FC = () => {
           {/*</SportScrollable>*/}
         </ul>
       </nav>
-      <div className={styles.role_changer_wrapper}>
-        <RoleChanger className={styles.role_changer} />
-      </div>
+      {/*<div className={styles.role_changer_wrapper}>*/}
+      {/*  <RoleChanger className={styles.role_changer} />*/}
+      {/*</div>*/}
     </>
   );
 };

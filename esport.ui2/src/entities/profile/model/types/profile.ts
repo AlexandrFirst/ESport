@@ -22,7 +22,7 @@ export interface IProfile {
 
 export interface IProfileInfo {
   id?: number;
-  userGyms?: any[];
+  userGyms?: number[];
   userId: number;
   name: string;
   surname: string;
@@ -30,6 +30,6 @@ export interface IProfileInfo {
   telephoneNumber: string;
   photoId: null;
   gymOrganisationId?: number;
-  organisationName?: null;
-  info?: null;
+  organisationName?: string;
+  info?: string;
 }

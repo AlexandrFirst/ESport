@@ -2,6 +2,7 @@ import React, {
   ButtonHTMLAttributes,
   DetailedHTMLProps,
   FC,
+  useCallback,
   useEffect,
   useState,
 } from "react";
@@ -12,15 +13,20 @@ import { motion, useAnimation } from "framer-motion";
 import { BeatLoader } from "react-spinners";
 
 export type ButtonVariant = "contained" | "text" | "outlined";
+type ButtonColor = "normal" | "success" | "error";
 
 export interface ButtonProps
-  extends DetailedHTMLProps<
-    ButtonHTMLAttributes<HTMLButtonElement>,
-    HTMLButtonElement
+  extends Omit<
+    DetailedHTMLProps<
+      ButtonHTMLAttributes<HTMLButtonElement>,
+      HTMLButtonElement
+    >,
+    "color"
   > {
   fullWidth?: boolean;
   loading?: boolean;
   variant?: ButtonVariant;
+  color?: ButtonColor;
 }
 
 export const Button: FC<ButtonProps> = ({
@@ -31,6 +37,7 @@ export const Button: FC<ButtonProps> = ({
   fullWidth = true,
   children,
   onClick,
+  color = "normal",
   ...props
 }) => {
   const [isAnimating, setIsAnimating] = useState(false);
@@ -40,7 +47,7 @@ export const Button: FC<ButtonProps> = ({
   const loadingControls = useAnimation();
   const doneControls = useAnimation();
 
-  const animateLoadingStart = async () => {
+  const animateLoadingStart = useCallback(async () => {
     setIsAnimating(true);
     textControls.start({
       opacity: 0,
@@ -53,9 +60,9 @@ export const Button: FC<ButtonProps> = ({
       opacity: 1,
       transition: { duration: 0.3, delay: 0.2 },
     });
-  };
+  }, [loadingControls, textControls]);
 
-  const animateLoadingEnd = async () => {
+  const animateLoadingEnd = useCallback(async () => {
     loadingControls.stop();
     textControls.stop();
     textControls.start({
@@ -97,7 +104,7 @@ export const Button: FC<ButtonProps> = ({
     //   opacity: 0,
     // });
     setIsAnimating(false);
-  };
+  }, [doneControls, loadingControls, textControls]);
 
   useEffect(() => {
     setMounted(true);
@@ -111,20 +118,24 @@ export const Button: FC<ButtonProps> = ({
         animateLoadingEnd();
       }
     }
-  }, [loading]);
+  }, [animateLoadingEnd, animateLoadingStart, isAnimating, loading, mounted]);
 
   return (
     <button
       {...props}
       disabled={disabled || loading || isAnimating}
       onClick={onClick}
-      className={cn(styles.btnBase, styles.btn, className, {
-        [styles.contained]: variant === "contained",
-        [styles.textVariant]: variant === "text",
-        [styles.outlined]: variant === "outlined",
-        [styles.disabled]: loading || disabled || isAnimating,
-        [styles.full_width]: fullWidth,
-      })}
+      className={cn(
+        styles.btnBase,
+        styles.btn,
+        styles[variant],
+        styles[color],
+        className,
+        {
+          [styles.disabled]: loading || disabled || isAnimating,
+          [styles.full_width]: fullWidth,
+        }
+      )}
     >
       <motion.div className="wrapper">
         <motion.div

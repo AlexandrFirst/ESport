@@ -1,7 +1,9 @@
 import React, { FC } from "react";
 import styles from "./ProfileMainInfo.module.css";
 
-import { Card } from "@/shared/ui";
+import { PencilSquareIcon } from "@heroicons/react/24/solid";
+
+import { Card, IconButton } from "@/shared/ui";
 
 import { IProfile } from "../../model/types/profile";
 
@@ -12,11 +14,15 @@ import { OverviewInfo } from "../OverviewInfo/OverviewInfo";
 interface ProfileMainInfoProps {
   profile?: IProfile;
   editable?: boolean;
+  onEditClick?: () => void;
+  withEditBtn?: boolean;
 }
 
 export const ProfileMainInfo: FC<ProfileMainInfoProps> = ({
   profile,
   editable,
+  onEditClick,
+  withEditBtn,
 }) => {
   const { userIdentityInfo } = profile || {};
 
@@ -38,6 +44,15 @@ export const ProfileMainInfo: FC<ProfileMainInfoProps> = ({
           phone={userIdentityInfo?.telephoneNumber}
         />
       </div>
+      {withEditBtn && (
+        <div className={styles.edit_btn_wrapper}>
+          <IconButton
+            Svg={PencilSquareIcon}
+            iconSize={"l"}
+            onClick={onEditClick}
+          />
+        </div>
+      )}
     </Card>
   );
 };

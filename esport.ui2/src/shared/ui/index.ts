@@ -47,3 +47,4 @@ export { Drawer } from "./Drawer/Drawer";
 export { DownDrawer } from "./DownDrawer/DownDrawer";
 
 export { Prompt } from "./Prompt/ui/Prompt/Prompt";
+export { Toggle } from "./Toggle/Toggle";

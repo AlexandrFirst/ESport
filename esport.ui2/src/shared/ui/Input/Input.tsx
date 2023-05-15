@@ -8,7 +8,7 @@ import styles from "./Input.module.css";
 
 import { AnimatePresence, motion } from "framer-motion";
 import cn from "classnames";
-import { Controller, useFormContext } from "react-hook-form";
+import { Controller } from "react-hook-form";
 
 export type Message = { message: string };
 
@@ -42,13 +42,11 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
   },
   ref
 ) {
-  const { control } = useFormContext();
-  const [focused, setFocused] = useState(false);
+  const [focused, setFocused] = useState(Boolean(defaultValue));
 
   return (
     <Controller
       name={name}
-      control={control}
       defaultValue={defaultValue ?? ""}
       render={({ field, fieldState: { error } }) => (
         <div
