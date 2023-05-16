@@ -1,9 +1,9 @@
+import https from "https";
 import axios, { CreateAxiosDefaults } from "axios";
 import Cookies, { parseCookies } from "nookies";
 
 import { AuthToken } from "@/shared/constants";
 import { ApiContext } from "@/shared/types";
-import https from "https";
 
 export const $api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
