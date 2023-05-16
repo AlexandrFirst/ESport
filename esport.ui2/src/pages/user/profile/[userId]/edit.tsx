@@ -39,7 +39,7 @@ export const getServerSideProps = getAppServerSideProps<{ profile: IProfile }>(
     const userId = ctx.query?.userId as string;
     const { user } = store.getState();
     const { data } = await ProfileApi(ctx).getProfileInfo(userId ?? "");
-    console.log("===data===", data);
+    // console.log("===data===", data);
 
     if (userId !== user.data?.id) {
       return {
