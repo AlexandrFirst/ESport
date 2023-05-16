@@ -46,6 +46,7 @@ App.getInitialProps = wrapper.getInitialAppProps(
       );
 
       if (!!ctx.req) {
+        console.log("WE ARE HERE");
         await updateStoreUser(ctx, store);
       }
 

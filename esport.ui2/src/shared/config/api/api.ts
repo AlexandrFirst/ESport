@@ -3,6 +3,7 @@ import Cookies, { parseCookies } from "nookies";
 
 import { AuthToken } from "@/shared/constants";
 import { ApiContext } from "@/shared/types";
+import https from "https";
 
 export const $api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -23,14 +24,20 @@ export const Api = (config?: ApiConfig) => {
   const cookies = ctx ? Cookies.get(ctx) : parseCookies();
   const token = cookies[AuthToken];
 
-  return axios.create({
+  const instance = axios.create({
     ...axiosDefaults,
     baseURL,
     withCredentials: true,
     headers: {
       ...headers,
-      Authorization: `${AuthToken} ${token}`,
+      Authorization: token,
       Cookie: `${AuthToken} ${token}`,
     },
   });
+  if (process.env.STAGE !== "Development") {
+    instance.defaults.httpsAgent = new https.Agent({
+      family: 4,
+    });
+  }
+  return instance;
 };
