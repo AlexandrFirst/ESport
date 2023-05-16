@@ -21,7 +21,9 @@ namespace UserWorkflow.Esport.Models
         public int? OrganisationId { get; set; }
         public virtual Organisation Organisation { get; set; }
 
+
         public virtual List<GymShift> GymShifts { get; set; }
         public virtual List<GymAdministrators> GymAdministrators { get; set; }
+
     }
 }

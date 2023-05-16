@@ -12,8 +12,11 @@ using UserWorkflow.Application.Commands.User;
 using UserWorkflow.Application.Commands.UserCommands;
 using UserWorkflow.Application.Configs;
 using UserWorkflow.Application.Requests.GymAdmin;
+using UserWorkflow.Application.Requests.Organisation;
 using UserWorkflow.Application.Requests.User;
 using UserWorkflow.Application.Services.Confirmation;
+using UserWorkflow.Application.Services.Gym;
+using UserWorkflow.Application.Services.Organisation;
 using UserWorkflow.Application.Services.Users;
 using UserWorkflow.Esport.Models;
 using UserWorkflow.Infrastructure.Paging;
@@ -70,16 +73,22 @@ namespace UserWorkflow.Application
             services.AddTransient<ICommandHandler<UpdateOrganisation>, UpdateOrganisationHandler>();
             services.AddTransient<ICommandHandler<DeleteOrganisation>, DeleteOrganisationHandler>();
 
+            services.AddTransient<IRequestHandler<GetOrganisationListing, GetOrganisationListingResult>, GetOrganisationListingHandler>();
+            services.AddTransient<IRequestHandler<GetGymRequests, GetGymRequestsResult>, GetGymRequestsHandler>();
 
             services.AddScoped<IdentityClient>();
 
             services.AddSingleton<IConfirmationService, ConfirmationService>();
             services.AddTransient<IVerifingService, VerifingService>();
+            services.AddTransient<IGymService, GymService>();
+            services.AddTransient<IOrganisationService, OrganisationService>();
 
             services.AddTransient<IPaging<OrganisationAdministrators>, Paging<OrganisationAdministrators>>();
             services.AddTransient<IPaging<GymAdministrators>, Paging<GymAdministrators>>();
             services.AddTransient<IPaging<TrainerResponse>, Paging<TrainerResponse>>();
             services.AddTransient<IPaging<TrainerRequest>, Paging<TrainerRequest>>();
+            services.AddTransient<IPaging<Gym>, Paging<Gym>>();
+            services.AddTransient<IPaging<Organisation>, Paging<Organisation>>();
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
