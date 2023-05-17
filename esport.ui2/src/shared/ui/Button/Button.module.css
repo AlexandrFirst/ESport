@@ -2,12 +2,6 @@
   @apply bg-theme-accent hover:opacity-80 active:opacity-60 shadow-xl hover:shadow-2xl;
 }
 
-.text svg path {
-  @apply text-theme-accent;
-}
-
-/* NEW BUTTON */
-
 .btnBase {
   @apply rounded-md transition-all relative;
 }
@@ -17,10 +11,10 @@
 }
 
 .disabled {
-  @apply opacity-60 hover:opacity-60;
+  @apply opacity-60 hover:opacity-60 active:opacity-60;
 }
 
-.textVariant {
+.text {
   @apply text-theme-accent;
 }
 
@@ -29,7 +23,7 @@
 }
 
 .outlined {
-  @apply text-theme-accent shadow-xl hover:shadow-2xl;
+  @apply text-theme-accent bg-transparent border border-theme-accent active:opacity-60;
 }
 
 .checkmarkWrapper {
@@ -42,4 +36,8 @@
 
 .loaderWrapper {
   @apply text-theme-main absolute top-0 left-0 w-full h-full flex items-center justify-center;
+}
+
+.error {
+  @apply text-theme-error border-theme-error;
 }

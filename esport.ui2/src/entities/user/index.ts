@@ -11,7 +11,6 @@ export {
 //lib
 export { updateStoreUser } from "./lib/helpers/update-store-user/update-store-user";
 export { useAuth } from "./lib/hooks/useAuth";
-export { useMappedRoles } from "./lib/hooks/useMappedRoles";
 
 //types
 export type { UserSchema } from "./model/types/userSchema";

@@ -1,5 +1,5 @@
 import { Card } from "@/shared/ui";
-import React, { memo } from "react";
+import React from "react";
 import styles from "./AboutInfo.module.css";
 
 import cn from "classnames";
@@ -18,7 +18,7 @@ interface AboutInfoProps {
   className?: string;
 }
 
-const AboutInfo: React.FC<AboutInfoProps> = ({ profile, className }) => {
+export const AboutInfo: React.FC<AboutInfoProps> = ({ profile, className }) => {
   const { name, info, email, surname } = profile || {};
   const { t } = useTranslation("profile");
 
@@ -48,5 +48,3 @@ const AboutInfo: React.FC<AboutInfoProps> = ({ profile, className }) => {
     </Card>
   );
 };
-
-export default memo(AboutInfo);

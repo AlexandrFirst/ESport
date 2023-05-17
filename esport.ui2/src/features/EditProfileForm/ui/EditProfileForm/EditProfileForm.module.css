@@ -1,0 +1,7 @@
+.formContainer {
+  @apply pt-5;
+}
+
+.btn_wrapper {
+  @apply flex justify-end gap-5;
+}

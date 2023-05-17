@@ -4,7 +4,7 @@ import styles from "./ProfilePhoto.module.css";
 import Image from "next/image";
 
 export interface ProfilePhotoProps {
-  src: string;
+  src?: string;
   size?: "sm" | "md" | "lg";
   className?: string;
 }
@@ -14,6 +14,9 @@ export const ProfilePhoto: FC<ProfilePhotoProps> = ({
   size = "md",
   className,
 }) => {
+  const defaultAvatar = "/images/default-avatar.png";
+  const avatarSrc = src ?? defaultAvatar;
+
   const getSize = () => {
     switch (size) {
       case "sm":
@@ -29,8 +32,8 @@ export const ProfilePhoto: FC<ProfilePhotoProps> = ({
     <Image
       width={getSize()}
       height={getSize()}
-      src={src}
-      loader={() => src}
+      src={avatarSrc}
+      loader={() => avatarSrc}
       alt="Profile photo"
       className={styles.img}
     />

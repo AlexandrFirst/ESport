@@ -6,10 +6,10 @@ export const useMappedRoles = (): Record<UserRole, string> => {
   //TODO: add translations
   return useMemo(
     () => ({
-      [UserRole.GymAdmin]: "",
-      [UserRole.Trainee]: "",
-      [UserRole.OrganisationAdmin]: "",
-      [UserRole.Trainer]: "",
+      [UserRole.GymAdmin]: "Administrator of the gym",
+      [UserRole.Trainee]: "Trainee",
+      [UserRole.OrganisationAdmin]: "Organisation administrator",
+      [UserRole.Trainer]: "Trainer",
     }),
     []
   );

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UserWorkflow.Application.Base;
+using UserWorkflow.Application.Models.Base;
 using UserWorkflow.Esport.Models;
 
 namespace UserWorkflow.Application.Requests.GymAdmin
@@ -16,12 +17,9 @@ namespace UserWorkflow.Application.Requests.GymAdmin
         public int PageSize { get; set; }
     }
 
-    public class GetGymRequestsResult
+    public class GetGymRequestsResult: BaseListing
     {
         public List<GymRequestItem> GymRequestItems { get; set; }
-        public int TotalPages { get; set; }
-        public int TotalItems { get; set; }
-        public int Page { get; set; }
     }
 
     public class GymRequestItem

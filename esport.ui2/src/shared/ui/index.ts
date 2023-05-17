@@ -36,6 +36,7 @@ export { default as Overlay } from "./Overlay/Overlay";
 export { default as BoldText } from "./Text/BoldText/BoldText";
 export { default as SemiBoldText } from "./Text/SemiBoldText/SemiBoldText";
 export { default as RegularText } from "./Text/RegularText/RegularText";
+export { default as ErrorText } from "./Text/ErrorText/ErrorText";
 
 export { TwoItemsGridContainer } from "./TwoItemsGridContainer/TwoItemsGridContainer";
 
@@ -46,3 +47,4 @@ export { Drawer } from "./Drawer/Drawer";
 export { DownDrawer } from "./DownDrawer/DownDrawer";
 
 export { Prompt } from "./Prompt/ui/Prompt/Prompt";
+export { Toggle } from "./Toggle/Toggle";
