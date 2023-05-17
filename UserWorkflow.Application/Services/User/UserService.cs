@@ -47,7 +47,7 @@ namespace UserWorkflow.Application.Services.Users
 
             if (admin == null)
             {
-                List<Gym> gyms = await esportDataContext.Gyms.Where(x => gymIds.Any(p => p == x.Id)).ToListAsync();
+                List<Esport.Models.Gym> gyms = await esportDataContext.Gyms.Where(x => gymIds.Any(p => p == x.Id)).ToListAsync();
                 List<GymAdministrators> gymAdministrators = gyms.Select(x => new GymAdministrators()
                 {
                     Gym = x
@@ -99,7 +99,7 @@ namespace UserWorkflow.Application.Services.Users
 
             if (organistaion == null)
             {
-                organistaion = new Organisation() { Description = "" };
+                organistaion = new Esport.Models.Organisation() { Description = "" };
             }
 
             var organisationAdministrator = await esportDataContext.OrganisationAdministrators.FirstOrDefaultAsync(x => x.UserId == userModel.UserId);
