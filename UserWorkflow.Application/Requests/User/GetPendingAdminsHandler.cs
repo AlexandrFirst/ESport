@@ -56,7 +56,7 @@ namespace UserWorkflow.Application.Requests.User
 
                 return new RequestResult<GetPendingAdminsResult>(new GetPendingAdminsResult()
                 {
-                    CurrentPage = result.CurrentPage,
+                    Page = result.CurrentPage,
                     PendingAdminModels = adminListing,
                     TotalItems = result.Total,
                     TotalPages = result.TotalPage
@@ -79,7 +79,7 @@ namespace UserWorkflow.Application.Requests.User
 
                 return new RequestResult<GetPendingAdminsResult>(new GetPendingAdminsResult()
                 {
-                    CurrentPage = result.CurrentPage,
+                    Page = result.CurrentPage,
                     PendingAdminModels = adminListing,
                     TotalItems = result.Total,
                     TotalPages = result.TotalPage

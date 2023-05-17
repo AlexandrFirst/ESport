@@ -185,7 +185,7 @@ namespace UserWorkflow.Api.Controllers
         }
 
         [HttpPost("Confirm")]
-        public async Task<IActionResult> ConfirmUser([FromBody] ConfirmProfileEmail confirmProfileEmail) 
+        public async Task<IActionResult> ConfirmUser([FromBody] ConfirmProfileEmail confirmProfileEmail)
         {
             var started = DateTime.UtcNow;
             var requestInstanceId = Guid.NewGuid();
@@ -226,7 +226,7 @@ namespace UserWorkflow.Api.Controllers
 
         [HttpPost("PendingAdmins")]
         [TypeFilter(typeof(AdminAuthFilter))]
-        public async Task<IActionResult> GetPendingAdmins([FromBody]GetPendingAdmins request) 
+        public async Task<IActionResult> GetPendingAdmins([FromBody] GetPendingAdmins request)
         {
             var started = DateTime.UtcNow;
             var requestInstanceId = Guid.NewGuid();
@@ -239,7 +239,7 @@ namespace UserWorkflow.Api.Controllers
                 if (request == null) { throw new ArgumentNullException(nameof(request)); }
 
                 var result = await requestBus.ExecuteAsync<GetPendingAdmins, GetPendingAdminsResult>(User, request);
-                
+
                 if (!result.Succeeded)
                     return BadRequest(result.Errors);
 
@@ -265,7 +265,7 @@ namespace UserWorkflow.Api.Controllers
         }
 
         [HttpPost("TrainerRequests")]
-        public async Task<IActionResult> GetTrainerRequests([FromBody] GetGymRequests request) 
+        public async Task<IActionResult> GetTrainerRequests([FromBody] GetGymRequests request)
         {
             var started = DateTime.UtcNow;
             var requestInstanceId = Guid.NewGuid();

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UserWorkflow.Application.Base;
+using UserWorkflow.Application.Models.Base;
 using UserWorkflow.Application.Models.User;
 
 namespace UserWorkflow.Application.Requests.User
@@ -16,11 +17,9 @@ namespace UserWorkflow.Application.Requests.User
         public AdminType AdminType { get; set; }
     }
 
-    public class GetPendingAdminsResult
+    public class GetPendingAdminsResult : BaseListing
     {
         public List<PendingAdminModel> PendingAdminModels { get; set; }
-        public int CurrentPage { get; set; }
-        public int TotalPages { get; set; }
-        public int TotalItems { get; set; }
+        
     }
 }
