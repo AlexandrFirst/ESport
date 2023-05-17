@@ -4,10 +4,11 @@ import { useFormContext } from "react-hook-form";
 
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/solid";
 
-import { Input, InputProps } from "../Input/Input";
+import { Input } from "../Input/Input";
+import { InputBaseProps } from "../Input/InputBase";
 import { IconButton } from "../IconButton/IconButton";
 
-type PasswordInputProps = InputProps & {
+type PasswordInputProps = InputBaseProps & {
   name: string;
   className?: string;
 };

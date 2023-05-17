@@ -1,3 +1,11 @@
 .wrapper {
-    @apply text-theme-accent font-bold active:text-theme-main transition-colors;
+  @apply font-bold transition-colors;
+}
+
+.normal {
+  @apply text-theme-accent active:text-theme-main;
+}
+
+.inverted {
+  @apply text-theme-main active:text-theme-light;
 }

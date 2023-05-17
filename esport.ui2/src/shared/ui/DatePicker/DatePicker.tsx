@@ -1,7 +1,8 @@
-import { Input, InputProps } from "../Input/Input";
 import React, { FC } from "react";
+import { Input } from "../Input/Input";
+import { InputBaseProps } from "../Input/InputBase";
 
-interface DatePickerProps extends InputProps {
+interface DatePickerProps extends InputBaseProps {
   className?: string;
 }
 

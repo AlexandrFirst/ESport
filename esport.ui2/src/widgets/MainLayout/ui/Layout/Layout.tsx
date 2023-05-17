@@ -17,9 +17,15 @@ import {
 export interface LayoutProps extends HeadProps {
   className?: string;
   children: ReactNode;
+  withFooter?: boolean;
 }
 
-export const Layout: FC<LayoutProps> = ({ className, headProps, children }) => {
+export const Layout: FC<LayoutProps> = ({
+  className,
+  headProps,
+  withFooter,
+  children,
+}) => {
   const { isMobile } = useUserDevice();
 
   const isSidebarOpened = useAppSelector(selectIsSidebarOpened) ?? false;
@@ -48,7 +54,11 @@ export const Layout: FC<LayoutProps> = ({ className, headProps, children }) => {
           isSidebarOpened={isSidebarOpened}
           setIsSidebarOpened={setIsSidebarOpened}
         />
-        <section className={cn(layoutClassName, styles.content, className)}>
+        <section
+          className={cn(layoutClassName, styles.content, className, {
+            [styles.withFooter]: withFooter,
+          })}
+        >
           {children}
         </section>
       </main>

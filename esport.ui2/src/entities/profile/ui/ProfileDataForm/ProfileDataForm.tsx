@@ -1,7 +1,9 @@
 import React, { FC, ReactNode } from "react";
 import styles from "./ProfileDataForm.module.css";
-import { IProfileInfo } from "../..";
-import { BoldText, Input } from "@/shared/ui";
+
+import { BoldText, Input, InputBase } from "@/shared/ui";
+
+import { IProfileInfo } from "../../model/types/profile";
 
 export interface ProfileDataFormProps {
   profile?: Pick<
@@ -28,10 +30,12 @@ export const ProfileDataForm: FC<ProfileDataFormProps> = ({
     email = "",
   } = profile || {};
 
+  console.log("===profile===", profile);
+
   return (
     <div className={className}>
       {label && <BoldText className={styles.title}>{label}</BoldText>}
-      <Input name={`${namePrefix}_name`} defaultValue={name} label={"Name"} />
+      <InputBase name={`${namePrefix}_name`} label={"Name"} />
       <Input
         name={`${namePrefix}_surname`}
         defaultValue={surname}

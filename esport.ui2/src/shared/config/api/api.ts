@@ -2,7 +2,7 @@ import https from "https";
 import axios, { CreateAxiosDefaults } from "axios";
 import Cookies, { parseCookies } from "nookies";
 
-import { AuthToken } from "@/shared/constants";
+import { AuthToken, ServerStage } from "@/shared/constants";
 import { ApiContext } from "@/shared/types";
 
 export const $api = axios.create({
@@ -31,10 +31,11 @@ export const Api = (config?: ApiConfig) => {
     headers: {
       ...headers,
       Authorization: token,
-      Cookie: `${AuthToken} ${token}`,
+      Cookie: ctx ? `${AuthToken} ${token}` : undefined,
     },
   });
-  if (process.env.STAGE !== "Development") {
+  const stage = process.env.STAGE;
+  if (stage && stage !== ServerStage.Dev) {
     instance.defaults.httpsAgent = new https.Agent({
       family: 4,
     });

@@ -1,0 +1,19 @@
+.wrapper {
+  @apply flex gap-5;
+}
+
+.tab {
+  @apply relative cursor-pointer py-3 px-4 font-bold hover:opacity-80 active:opacity-60 transition-all;
+}
+
+.activeTab {
+  @apply text-theme-light rounded-md shadow-inner hover:opacity-100 active:opacity-100;
+}
+
+.pill {
+  @apply absolute inset-0 rounded-md bg-gradient-to-r from-main-from to-main-to shadow-inner;
+}
+
+.label {
+  @apply text-theme-main relative z-10;
+}

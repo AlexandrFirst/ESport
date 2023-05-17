@@ -10,7 +10,7 @@ import { Card } from "@/shared/ui";
 import { AppNextPage } from "@/shared/types";
 import { useSnackbar } from "@/shared/lib";
 
-import { MainLayout } from "@/widgets/MainLayout";
+import { getMainLayout } from "@/widgets/MainLayout";
 
 type Props = {
   snackbar?: {
@@ -44,13 +44,12 @@ const Home: AppNextPage<Props> = ({ snackbar, ...props }) => {
   );
 };
 
-Home.getLayout = (page) => {
-  return (
-    <MainLayout headProps={{ title: "E-Sport | Main" }}>{page}</MainLayout>
-  );
-};
+Home.getLayout = getMainLayout({
+  headProps: { title: "E-Sport | Main" },
+});
 
 export default Home;
+
 export const getServerSideProps: GetServerSideProps<Props> = async ({
   locale,
   defaultLocale,

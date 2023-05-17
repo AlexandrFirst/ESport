@@ -3,67 +3,35 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import { AppNextPage, PageProps } from "@/shared/types";
 import { getAppServerSideProps } from "@/shared/lib";
-import { Languages, UserRole } from "@/shared/constants";
-import { TwoItemsGridContainer } from "@/shared/ui";
+import { Languages } from "@/shared/constants";
 
-import {
-  IProfile,
-  IProfileInfo,
-  ProfileApi,
-  ProfileInfo,
-  ProfileMainInfo,
-} from "@/entities/profile";
+import { IProfile, IProfileInfo, ProfileApi } from "@/entities/profile";
 
 import { getMainLayout } from "@/widgets/MainLayout";
 import { useAuth } from "@/entities/user";
 import { routes } from "@/shared/config";
+import { ProfileInformation } from "@/widgets/ProfileInformation";
 
 type ProfileProps = PageProps & {
   profile: IProfile;
 };
 
 const Profile: AppNextPage<ProfileProps> = ({ profile }) => {
-  const {
-    userOrganisationAdminInfos,
-    userTrainerInfo,
-    userTraineeInfo,
-    userAdminInfo,
-  } = profile || {};
-
-  const { user } = useAuth();
+  const { isOrgAdmin } = useAuth();
   const router = useRouter();
-
-  const handleEdit = () => {
-    router.push(routes.User.Profile.EditProfileId([user?.id]));
-  };
 
   const userId = router.query?.userId as string;
 
+  const handleEdit = () => {
+    router.push(routes.User.Profile.EditProfileId([userId]));
+  };
+
   return (
-    <>
-      <ProfileMainInfo
-        profile={profile}
-        withEditBtn={userId === user?.id}
-        onEditClick={handleEdit}
-      />
-      <TwoItemsGridContainer className={"mt-6"}>
-        {userTraineeInfo && (
-          <ProfileInfo profileInfo={userTraineeInfo} role={UserRole.Trainee} />
-        )}
-        {userTrainerInfo && (
-          <ProfileInfo profileInfo={userTrainerInfo} role={UserRole.Trainer} />
-        )}
-        {userAdminInfo && (
-          <ProfileInfo profileInfo={userAdminInfo} role={UserRole.GymAdmin} />
-        )}
-        {userOrganisationAdminInfos?.[0] && (
-          <ProfileInfo
-            profileInfo={userOrganisationAdminInfos[0]}
-            role={UserRole.OrganisationAdmin}
-          />
-        )}
-      </TwoItemsGridContainer>
-    </>
+    <ProfileInformation
+      profile={profile}
+      withEditBtn={isOrgAdmin}
+      onEditClick={handleEdit}
+    />
   );
 };
 
@@ -73,7 +41,7 @@ Profile.getLayout = getMainLayout({
 
 export default Profile;
 
-export const getServerSideProps = getAppServerSideProps<{ profile: IProfile }>(
+export const getServerSideProps = getAppServerSideProps<ProfileProps>(
   async (ctx) => {
     const localization = await serverSideTranslations(
       ctx.locale ?? ctx.defaultLocale ?? Languages.English,
@@ -81,8 +49,9 @@ export const getServerSideProps = getAppServerSideProps<{ profile: IProfile }>(
     );
 
     const userId = ctx.query?.userId as string;
-    const { data } = await ProfileApi(ctx).getProfileInfo(userId ?? "");
-    console.log("===data===", data);
+    const { data: profile } = await ProfileApi(ctx).getProfileInfo(
+      userId ?? ""
+    );
 
     const profileInfo: IProfileInfo = {
       email: "some@mail.com",
@@ -100,8 +69,6 @@ export const getServerSideProps = getAppServerSideProps<{ profile: IProfile }>(
           userAdminInfo: profileInfo,
           userIdentityInfo: profileInfo,
           userTraineeInfo: profileInfo,
-          userTrainerInfo: profileInfo,
-          userOrganisationAdminInfos: [profileInfo],
         },
       },
     };

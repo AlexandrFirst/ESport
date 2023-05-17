@@ -1,7 +1,10 @@
 import React, { FC, useState } from "react";
 import styles from "./ProfileAvatar.module.css";
 
-import { ArrowLeftOnRectangleIcon } from "@heroicons/react/24/solid";
+import {
+  ArrowLeftOnRectangleIcon,
+  UserCircleIcon,
+} from "@heroicons/react/24/solid";
 
 import {
   Avatar,
@@ -20,6 +23,7 @@ import {
 
 import { useAuth, useLogout, UserNameRoleHolder } from "@/entities/user";
 import { routes } from "@/shared/config";
+import { useSnackbar } from "@/shared/lib";
 
 interface ProfileAvatarProps extends AvatarProps {}
 
@@ -27,8 +31,14 @@ export const ProfileAvatar: FC<ProfileAvatarProps> = ({ ...props }) => {
   const { user, translatedRole } = useAuth();
   const { mutate } = useLogout();
 
+  const { showError } = useSnackbar();
+
   const handleLogout = async () => {
-    await mutate();
+    try {
+      await mutate();
+    } catch (e: any) {
+      showError(e.message);
+    }
   };
 
   const [isDrawerOpened, setIsDrawerOpened] = useState(false);
@@ -56,9 +66,12 @@ export const ProfileAvatar: FC<ProfileAvatarProps> = ({ ...props }) => {
     {
       key: "profile page",
       children: (
-        <UILink href={routes.User.Profile.ProfileId([user?.id])}>
-          Profile
-        </UILink>
+        <div className={styles.profile_link}>
+          <Icon Svg={UserCircleIcon} />
+          <UILink href={routes.Me()} color={"inverted"}>
+            Profile
+          </UILink>
+        </div>
       ),
     },
     {

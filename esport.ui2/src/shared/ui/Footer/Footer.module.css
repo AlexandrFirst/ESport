@@ -1,0 +1,13 @@
+.wrapper {
+  @apply fixed bottom-0 left-0 transition-all duration-500 w-11/12 mb-3 shadow-xl;
+}
+
+.full {
+  margin-left: var(--left-sidebar-compact);
+  width: calc(100% - var(--left-sidebar-compact) - 25px);
+}
+
+.compact {
+  margin-left: var(--left-sidebar-full);
+  width: calc(100% - var(--left-sidebar-full) - 25px);
+}

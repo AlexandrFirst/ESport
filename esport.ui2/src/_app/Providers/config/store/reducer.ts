@@ -9,6 +9,7 @@ import { profileReducer } from "@/entities/profile";
 import { snackbarReducer } from "@/features/Snackbar";
 
 import { leftSidebarReducer } from "@/widgets/LeftSidebar";
+import { profileInformationReducer } from "@/widgets/ProfileInformation";
 
 export const reducer = combineReducers<StateSchema>({
   leftSidebar: leftSidebarReducer,
@@ -16,4 +17,5 @@ export const reducer = combineReducers<StateSchema>({
   user: userReducer,
   device: deviceReducer,
   profile: profileReducer,
+  profileInformation: profileInformationReducer,
 });
