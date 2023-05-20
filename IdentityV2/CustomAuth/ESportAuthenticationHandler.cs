@@ -44,9 +44,9 @@ namespace IdentityV2.CustomAuth
         protected override Task<AuthenticateResult> HandleAuthenticateAsync()
         {
             string authData = "";
-            bool authDataExists = false;
+            // bool authDataExists = false;
 
-            var authCookieExists = Request.Cookies.TryGetValue("ESportCookie", out authData);
+            var authDataExists = Request.Cookies.TryGetValue("ESportCookie", out authData);
             
             if (!authDataExists)
             {
@@ -66,7 +66,7 @@ namespace IdentityV2.CustomAuth
 
             if (string.IsNullOrEmpty(authData))
             {
-                authCookieExists = false;
+                authDataExists = false;
             }
 
             var endpoint = Context.GetEndpoint();
