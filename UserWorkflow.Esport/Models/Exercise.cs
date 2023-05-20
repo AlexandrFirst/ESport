@@ -20,6 +20,11 @@ namespace UserWorkflow.Esport.Models
         public string Description { get; set; }
         public int? AgeLimit { get; set; }
 
+        public int? ExerciseOwnerId { get; set; }
+        public virtual Trainer ExerciseOwner { get; set; }
+        
+        public bool IsPublic { get; set; }
+
         public virtual List<ExerciseSport> ExerciseSports { get; set; }
         public virtual List<ExerciseTraumas> ExerciseTraumas { get; set; }
         public virtual List<ExerciseTutorial> ExerciseTutorails { get; set; }

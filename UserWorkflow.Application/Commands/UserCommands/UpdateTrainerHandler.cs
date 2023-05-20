@@ -46,8 +46,8 @@ namespace UserWorkflow.Application.Commands.User
                 confirmEmail = needConfirmation(command.UpdateUserInfo, trainer.Email);
             }
 
-            trainer = createUser<Trainer>(command.UpdateUserInfo, !confirmEmail);
-            var traineeId = await userService.CreateTrainer(trainer, confirmEmail);
+            trainer = createUser<UserWorkflow.Esport.Models.Trainer>(command.UpdateUserInfo, !confirmEmail);
+            var traineeId = await userService.CreateTrainer(trainer, command.TrainerSportInfoIds, confirmEmail);
 
 
             if (confirmEmail)

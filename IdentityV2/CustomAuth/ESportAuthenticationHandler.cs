@@ -46,7 +46,7 @@ namespace IdentityV2.CustomAuth
             string authData = "";
             bool authDataExists = false;
 
-            var authCookieExists = Request.Cookies.TryGetValue("ESportCookie", out authData);
+            authDataExists = Request.Cookies.TryGetValue("ESportCookie", out authData);
             
             if (!authDataExists)
             {
@@ -66,7 +66,7 @@ namespace IdentityV2.CustomAuth
 
             if (string.IsNullOrEmpty(authData))
             {
-                authCookieExists = false;
+                authDataExists = false;
             }
 
             var endpoint = Context.GetEndpoint();

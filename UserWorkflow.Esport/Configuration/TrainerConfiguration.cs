@@ -13,6 +13,11 @@ namespace UserWorkflow.Esport.Configuration
         {
             builder.HasKey(x => x.Id);
             builder.HasIndex(x => x.Email).IsUnique();
+
+            builder.HasMany(x => x.Exercise)
+                .WithOne(x => x.ExerciseOwner)
+                .HasForeignKey(x => x.ExerciseOwnerId)
+                .OnDelete(DeleteBehavior.SetNull);
         }
     }
 }
