@@ -8,6 +8,7 @@ using System.Text;
 using UserWorkflow.Application.Clients;
 using UserWorkflow.Application.Commands.Gym;
 using UserWorkflow.Application.Commands.OrgAdminCommands;
+using UserWorkflow.Application.Commands.Trainer;
 using UserWorkflow.Application.Commands.User;
 using UserWorkflow.Application.Commands.UserCommands;
 using UserWorkflow.Application.Configs;
@@ -75,6 +76,8 @@ namespace UserWorkflow.Application
 
             services.AddTransient<IRequestHandler<GetOrganisationListing, GetOrganisationListingResult>, GetOrganisationListingHandler>();
             services.AddTransient<IRequestHandler<GetGymRequests, GetGymRequestsResult>, GetGymRequestsHandler>();
+
+            services.AddTransient<ICommandHandler<ApplyTrainerForTimeSchedule>, ApplyTrainerForTimeScheduleHandler>();
 
             services.AddScoped<IdentityClient>();
 

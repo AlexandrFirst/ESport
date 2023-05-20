@@ -49,12 +49,18 @@ namespace UserWorkflow.Application.Requests.GymAdmin
                     GymId = request.GymId,
                     DayTimeTable = dayShifts.Select(k =>
                     {
+                        var timeTableLessonsQuery = k.TrainerShedules.AsQueryable();
+                        if (request.TrainerId.HasValue)
+                        {
+                            timeTableLessonsQuery = timeTableLessonsQuery.Where(u => request.TrainerId.HasValue && u.TrainerId == request.TrainerId);
+                        }
+
                         return new DayTimeTable()
                         {
                             From = k.FromTime,
                             ShiftId = k.Id,
                             To = k.ToTime,
-                            TimeTableLessons = k.TrainerShedules.SelectMany(l => l.Lessons.Select(j => new TimeTableLesson()
+                            TimeTableLessons = timeTableLessonsQuery.SelectMany(l => l.Lessons.Select(j => new TimeTableLesson()
                             {
                                 LessonId = j.Id,
                                 From = j.FromTime ?? k.FromTime,

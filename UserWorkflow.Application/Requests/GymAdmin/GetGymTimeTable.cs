@@ -11,6 +11,7 @@ namespace UserWorkflow.Application.Requests.GymAdmin
     public class GetGymTimeTable: BaseRequest
     {
         public int? DayOfTheWeek { get; set; }
+        public int? TrainerId { get; set; }
         public int GymId { get; set; }
     }
 

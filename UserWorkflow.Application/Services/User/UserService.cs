@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UserWorkflow.Application.Clients;
+using UserWorkflow.Application.Commands.User;
 using UserWorkflow.Application.Extensions;
 using UserWorkflow.Application.Models.Rmq;
 using UserWorkflow.Application.ReadModels.User;
@@ -82,7 +83,7 @@ namespace UserWorkflow.Application.Services.Users
                 admin.GymAdministrators.AddRange(gymsToAdd);
                 action = UPDATE_ACTION;
 
-                if (needConfirmation) 
+                if (needConfirmation)
                 {
                     admin.IsProfileConfirmed = false;
                 }
@@ -134,7 +135,7 @@ namespace UserWorkflow.Application.Services.Users
                     organisationAdministrator.OrganisationId = organistaionId;
                 }
 
-                if (needConfirmation) 
+                if (needConfirmation)
                 {
                     organisationAdministrator.IsProfileConfirmed = false;
                 }
@@ -164,7 +165,7 @@ namespace UserWorkflow.Application.Services.Users
             {
                 MapUser(userModel, m_trainee);
                 action = UPDATE_ACTION;
-                if (needConfirmation) 
+                if (needConfirmation)
                 {
                     m_trainee.IsProfileConfirmed = false;
                 }
@@ -177,7 +178,7 @@ namespace UserWorkflow.Application.Services.Users
             return m_trainee.Id;
         }
 
-        public async Task<int> CreateTrainer(User userModel, bool needConfirmation = false)
+        public async Task<int> CreateTrainer(User userModel, List<TrainerSportInfo> trainerSportIds, bool needConfirmation = false)
         {
             var trainer = await esportDataContext.Trainers.FirstOrDefaultAsync(x => x.UserId == userModel.UserId);
             string action = string.Empty;
@@ -207,17 +208,44 @@ namespace UserWorkflow.Application.Services.Users
             {
                 MapUser(userModel, trainer);
                 action = UPDATE_ACTION;
-                if (needConfirmation) 
+                if (needConfirmation)
                 {
-                    trainer.IsProfileConfirmed= false;
+                    trainer.IsProfileConfirmed = false;
                 }
             }
+
+            handleTrainerSportsInfo(trainer, trainerSportIds);
 
             await saveUser(trainer, action, "Error while Create/Updating Trainer");
 
             return trainer.Id;
         }
 
+
+        private void handleTrainerSportsInfo(Trainer trainer, List<TrainerSportInfo> trainerSports)
+        {
+            var existingTrainerSports = trainer.TrainerSports.Select(s => s.SportId).ToList();
+
+            var sportsToAdd = trainerSports.Where(x => !existingTrainerSports.Any(p => p == x.SportId)).ToList();
+            var sportsToUpdate = trainerSports.Where(x => existingTrainerSports.Any(p => p == x.SportId)).ToList();
+            var sportIdsToRemove = existingTrainerSports.Where(x => !trainerSports.Any(p => p.SportId == x));
+
+            trainer.TrainerSports.RemoveAll(x => sportIdsToRemove.Any(k => k == x.SportId));
+
+            sportsToAdd.ForEach(sport =>
+            {
+                var trainerSport = mapper.Map<TrainerSport>(sport);
+                trainerSport.IsConfirmed = true;
+                trainer.TrainerSports.Add(trainerSport);
+            });
+
+            for (int i = 0; i < sportsToUpdate.Count; i++) 
+            {
+                var dbSport = trainer.TrainerSports[i];
+                var trainerSport = sportsToUpdate[i];
+                mapper.Map(trainerSport, dbSport);
+            }
+        }
 
         public async Task<List<DeleteUserResult>> DeleteUserProfile(UserTypeEntity userTypeEntity,
             int userId, string userLoggedInMail)

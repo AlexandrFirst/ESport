@@ -19,6 +19,8 @@ namespace UserWorkflow.Esport.Models
         public int LessonId { get; set; }
         public virtual Lesson Lesson { get; set; }
 
+        public bool IsPending { get; set; }
+
         public virtual List<TraineeSheduleTraineeExercise> TraineeSheduleExercises { get; set; }
     }
 }
