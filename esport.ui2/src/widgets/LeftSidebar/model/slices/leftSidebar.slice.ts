@@ -1,15 +1,16 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { PayloadAction } from "@reduxjs/toolkit";
 import { HYDRATE } from "next-redux-wrapper";
 import { StateSchema } from "@/_app/Providers";
 
 import { LeftSidebarSliceState } from "../types/schema";
+import { buildSlice } from "@/shared/lib";
 
 const initialState: LeftSidebarSliceState = {
   isSidebarOpened: null,
   openedSubItems: [],
 };
 
-const leftSidebarSlice = createSlice({
+const leftSidebarSlice = buildSlice({
   name: "leftSidebar",
   initialState,
   reducers: {
@@ -42,5 +43,8 @@ const leftSidebarSlice = createSlice({
   },
 });
 
-export const { actions: leftSidebarActions, reducer: leftSidebarReducer } =
-  leftSidebarSlice;
+export const {
+  useActions: useLeftSidebarActions,
+  actions: leftSidebarActions,
+  reducer: leftSidebarReducer,
+} = leftSidebarSlice;

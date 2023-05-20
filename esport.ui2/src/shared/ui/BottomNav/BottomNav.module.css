@@ -1,0 +1,11 @@
+.wrapper {
+  @apply flex  px-8 py-5 bg-gradient-to-r from-bg-main-from to-bg-main-to border border-theme-main rounded-md;
+}
+
+.withCancel {
+  @apply justify-between;
+}
+
+.noCancel {
+  @apply justify-end;
+}

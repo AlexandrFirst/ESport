@@ -44,9 +44,9 @@ namespace IdentityV2.CustomAuth
         protected override Task<AuthenticateResult> HandleAuthenticateAsync()
         {
             string authData = "";
-            bool authDataExists = false;
+            // bool authDataExists = false;
 
-            authDataExists = Request.Cookies.TryGetValue("ESportCookie", out authData);
+            var authDataExists = Request.Cookies.TryGetValue("ESportCookie", out authData);
             
             if (!authDataExists)
             {

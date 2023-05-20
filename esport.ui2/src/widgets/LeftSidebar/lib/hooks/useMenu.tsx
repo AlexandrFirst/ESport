@@ -3,7 +3,6 @@ import {
   BriefcaseIcon,
   CogIcon,
   ComputerDesktopIcon,
-  UserCircleIcon,
 } from "@heroicons/react/24/solid";
 
 import { routes } from "@/shared/config";
@@ -27,15 +26,6 @@ export const useMenu = (): IMenuItem[] => {
       icon: <MenuIcon Svg={ComputerDesktopIcon} />,
       link: routes.Streams(),
     },
-    ...(isAuth
-      ? [
-          {
-            title: "Profile",
-            icon: <MenuIcon Svg={UserCircleIcon} />,
-            link: routes.User.Profile.Home(),
-          },
-        ]
-      : []),
     ...(isAuth
       ? [
           {
