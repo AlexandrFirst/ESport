@@ -1,0 +1,11 @@
+.wrapper {
+  @apply flex gap-5 flex-col;
+}
+
+.list_item {
+  @apply flex gap-2 text-[20px] mb-2;
+}
+
+.label {
+  @apply font-bold;
+}

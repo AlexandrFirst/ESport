@@ -8,6 +8,8 @@ import { IProfile, IProfileInfo } from "@/entities/profile";
 import { StateSchema } from "@/_app/Providers";
 
 import { ProfileInformationState } from "../types/ProfileInformationState";
+import { defaultValuesForEditableProfile } from "../../constants/defaultValuesForEditableProfile";
+import { getEditableProfile } from "../../lib/helpers/get-editable-profile/get-editable-profile";
 
 export type SetEditableProfileParams = {
   profileKey: keyof IProfile;
@@ -15,24 +17,9 @@ export type SetEditableProfileParams = {
   value: string;
 };
 
-const defaultValuesForProfileInfo: IProfileInfo = {
-  email: "",
-  name: "",
-  photoId: null,
-  surname: "",
-  telephoneNumber: "",
-  userId: 0,
-};
-
 const initialState: ProfileInformationState = {
   currentProfile: null,
-  editableProfile: {
-    userIdentityInfo: defaultValuesForProfileInfo,
-    userTraineeInfo: defaultValuesForProfileInfo,
-    userTrainerInfo: defaultValuesForProfileInfo,
-    userAdminInfo: defaultValuesForProfileInfo,
-    userOrganisationAdminInfos: [defaultValuesForProfileInfo],
-  },
+  editableProfile: defaultValuesForEditableProfile,
   overrideLoginInfo: null,
 };
 
@@ -43,17 +30,15 @@ const profileInformationSlice = buildSlice({
     setCurrentProfile(state, action: PayloadAction<IProfile | null>) {
       state.currentProfile = action.payload;
     },
-    setEditableProfile(state, action: PayloadAction<IProfile>) {
-      state.editableProfile = action.payload;
+    setEditableProfile(state, { payload }: PayloadAction<IProfile>) {
+      state.editableProfile = getEditableProfile(payload);
     },
     setEditableProfileByKey(
       state,
       { payload }: PayloadAction<SetEditableProfileParams>
     ) {
-      console.log("===payload===", payload);
       const { profileKey, profileInfoKey, value } = payload;
       if (!Array.isArray(state.editableProfile[profileKey])) {
-        console.log("In first if");
         // @ts-ignore
         state.editableProfile[profileKey][profileInfoKey] = value;
       } else {
