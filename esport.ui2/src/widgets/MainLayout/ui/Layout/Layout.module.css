@@ -22,3 +22,7 @@
 .pl_mobile {
     @apply pl-leftSidebarMobile;
 }
+
+.withFooter {
+    @apply pb-32;
+}

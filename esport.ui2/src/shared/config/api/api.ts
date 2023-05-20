@@ -1,9 +1,9 @@
 import https from "https";
 import axios, { CreateAxiosDefaults } from "axios";
-import Cookies, { parseCookies } from "nookies";
 
-import { AuthToken } from "@/shared/constants";
+import { AuthToken, ServerStage } from "@/shared/constants";
 import { ApiContext } from "@/shared/types";
+import { storageService } from "..";
 
 export const $api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -21,8 +21,7 @@ export const Api = (config?: ApiConfig) => {
     ...axiosDefaults
   } = config || {};
 
-  const cookies = ctx ? Cookies.get(ctx) : parseCookies();
-  const token = cookies[AuthToken];
+  const token = storageService(ctx).getToken();
 
   const instance = axios.create({
     ...axiosDefaults,
@@ -31,10 +30,11 @@ export const Api = (config?: ApiConfig) => {
     headers: {
       ...headers,
       Authorization: token,
-      Cookie: `${AuthToken} ${token}`,
+      Cookie: ctx ? `${AuthToken} ${token}` : undefined,
     },
   });
-  if (process.env.STAGE !== "Development") {
+  const stage = process.env.STAGE;
+  if (stage && stage !== ServerStage.Dev) {
     instance.defaults.httpsAgent = new https.Agent({
       family: 4,
     });

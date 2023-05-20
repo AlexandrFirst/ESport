@@ -14,6 +14,7 @@ export const routes = {
   Forbidden: buildPath("/forbidden"),
   Streams: buildPath("/streams"),
   Settings: buildPath("/settings"),
+  Me: buildPath("/me"),
 
   User: userRoutes,
   Competition: competitionRoutes,

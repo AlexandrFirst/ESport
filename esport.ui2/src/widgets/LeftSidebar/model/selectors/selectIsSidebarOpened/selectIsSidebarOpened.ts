@@ -1,7 +1,5 @@
-import { createSelector } from "reselect";
-import { StateSchema } from "@/_app/Providers";
+import { buildSelector } from "@/shared/lib";
 
-export const selectIsSidebarOpened = createSelector(
-  (state: StateSchema) => state.leftSidebar,
-  ({ isSidebarOpened }) => isSidebarOpened
+export const [useSelectIsSidebarOpened, selectIsSidebarOpened] = buildSelector(
+  ({ leftSidebar }) => leftSidebar.isSidebarOpened
 );

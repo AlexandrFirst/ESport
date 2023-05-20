@@ -3,9 +3,9 @@ import styles from "./RegisterInput.module.css";
 
 import cn from "classnames";
 
-import { Input, InputProps, PasswordInput } from "@/shared/ui";
+import { Input, InputBaseProps, PasswordInput } from "@/shared/ui";
 
-type RegisterInputProps = InputProps & {
+type RegisterInputProps = InputBaseProps & {
   isHided?: boolean;
   type?: "text" | "password";
 };

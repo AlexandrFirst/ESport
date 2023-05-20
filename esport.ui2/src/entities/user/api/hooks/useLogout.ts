@@ -1,5 +1,8 @@
 import { useMutation, UseMutationOptions } from "@tanstack/react-query";
 
+import { storageService } from "@/shared/config";
+import { AuthToken } from "@/shared/constants";
+
 import { AuthService } from "../../api/auth-api";
 import { useUserActions } from "../../model/slices/userSlice";
 
@@ -17,7 +20,7 @@ export const useLogout = (options?: UseMutationOptions) => {
       try {
         await AuthService().logout();
         resetUser();
-        // storageService().removeToken(AuthToken);
+        storageService().removeToken(AuthToken);
       } catch (e) {
         console.log("===e===", e);
         throw e;

@@ -19,5 +19,9 @@
 }
 
 .logout {
-  @apply flex items-center px-3 py-1.5 cursor-pointer;
+  @apply flex items-center justify-center py-1 cursor-pointer;
+}
+
+.profile_link {
+  @apply flex items-center justify-center gap-3 text-center;
 }
