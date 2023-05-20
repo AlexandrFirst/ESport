@@ -22,6 +22,7 @@ export { Input } from "./Input/Input";
 export { InputBase } from "./Input/InputBase";
 export type { InputBaseProps } from "./Input/InputBase";
 export { PasswordInput } from "./PasswordInput/PasswordInput";
+export { TextArea } from "./TextArea/TextArea";
 
 export { Button } from "./Button/Button";
 export { DatePicker } from "./DatePicker/DatePicker";
@@ -56,3 +57,4 @@ export { Tabs } from "./Tabs/Tabs";
 export type { TabList, TabItem } from "./Tabs/Tabs";
 
 export { Footer } from "./Footer/Footer";
+export { BottomNav } from "./BottomNav/BottomNav";

@@ -1,57 +1,84 @@
 import React, { FC, ReactNode } from "react";
 import styles from "./ProfileDataForm.module.css";
 
-import { BoldText, Input, InputBase } from "@/shared/ui";
-
-import { IProfileInfo } from "../../model/types/profile";
+import { BoldText, InputBase, TextArea } from "@/shared/ui";
 
 export interface ProfileDataFormProps {
-  profile?: Pick<
-    IProfileInfo,
-    "name" | "surname" | "email" | "telephoneNumber"
-  >;
+  name?: string;
+  surname?: string;
+  email?: string;
+  telephoneNumber?: string;
+
+  onChangeName: (name: string) => void;
+  onChangeSurname: (surname: string) => void;
+  onChangeEmail: (email: string) => void;
+  onChangeTelephoneNumber: (telephoneNumber: string) => void;
+  onChangeBio?: (bio: string) => void;
+
+  withBio?: boolean;
   namePrefix?: string;
+
   className?: string;
-  additionalFields?: ReactNode;
+  additionalFieldsBelow?: ReactNode;
+  additionalFieldsAbove?: ReactNode;
   label?: string;
 }
 
 export const ProfileDataForm: FC<ProfileDataFormProps> = ({
   className,
-  namePrefix = "",
-  profile,
-  additionalFields,
+  additionalFieldsBelow,
+  additionalFieldsAbove,
+  namePrefix = "profile",
   label,
+  onChangeTelephoneNumber,
+  onChangeEmail,
+  onChangeName,
+  onChangeSurname,
+  onChangeBio,
+  telephoneNumber = "",
+  email = "",
+  surname = "",
+  name = "",
+  withBio,
 }) => {
-  const {
-    name = "",
-    surname = "",
-    telephoneNumber = "",
-    email = "",
-  } = profile || {};
-
-  console.log("===profile===", profile);
+  const onChange =
+    (cb?: (data: string) => void) =>
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      cb?.(e.target.value);
+    };
 
   return (
     <div className={className}>
       {label && <BoldText className={styles.title}>{label}</BoldText>}
-      <InputBase name={`${namePrefix}_name`} label={"Name"} />
-      <Input
+      {additionalFieldsAbove}
+      <InputBase
+        name={`${namePrefix}_name`}
+        label={"Name"}
+        value={name}
+        onChange={onChange(onChangeName)}
+      />
+      <InputBase
         name={`${namePrefix}_surname`}
-        defaultValue={surname}
+        value={surname}
         label={"Surname"}
+        onChange={onChange(onChangeSurname)}
       />
-      <Input
+      <InputBase
         name={`${namePrefix}_email`}
-        defaultValue={email}
+        value={email}
         label={"Email"}
+        onChange={onChange(onChangeEmail)}
       />
-      <Input
+      <InputBase
         name={`${namePrefix}_telephoneNumber`}
-        defaultValue={telephoneNumber}
+        value={telephoneNumber}
         label={"Telephone number"}
+        onChange={onChange(onChangeTelephoneNumber)}
       />
-      {additionalFields}
+      {withBio && (
+        <TextArea placeholder={"Bio..."} onChange={onChange(onChangeBio)} />
+      )}
+      {additionalFieldsBelow}
     </div>
   );
 };

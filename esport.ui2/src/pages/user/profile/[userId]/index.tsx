@@ -31,6 +31,7 @@ const Profile: AppNextPage<ProfileProps> = ({ profile }) => {
       profile={profile}
       withEditBtn={isOrgAdmin}
       onEditClick={handleEdit}
+      userId={userId}
     />
   );
 };

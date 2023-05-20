@@ -40,11 +40,15 @@ export const InputBase = forwardRef<HTMLInputElement, InputBaseProps>(
       labelActive = false,
       marginTop = "none",
       error,
+      onFocus,
+      onBlur,
+      value,
       ...props
     },
     ref
   ) {
-    const [focused, setFocused] = useState(Boolean(defaultValue));
+    const hasValue = Boolean(defaultValue || value);
+    const [focused, setFocused] = useState(hasValue);
 
     return (
       <div
@@ -71,15 +75,20 @@ export const InputBase = forwardRef<HTMLInputElement, InputBaseProps>(
           )}
           <input
             {...props}
+            ref={ref}
             placeholder={label ? undefined : placeholder}
+            value={value}
             id={name}
             className={cn(styles.input_1, styles.text, {
               [styles.input_1_error]: !!error,
             })}
-            onFocus={() => setFocused(true)}
+            onFocus={(e) => {
+              setFocused(true);
+              onFocus?.(e);
+            }}
             onBlur={(e) => {
-              props.onBlur?.(e);
-              setFocused(!!props.value);
+              setFocused(hasValue);
+              onBlur?.(e);
             }}
           />
           <div className={cn(styles.endIcon, { [styles.error]: !!error })}>

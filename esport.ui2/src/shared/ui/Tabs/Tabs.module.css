@@ -15,5 +15,5 @@
 }
 
 .label {
-  @apply text-theme-main relative z-10;
+  @apply text-theme-main relative;
 }

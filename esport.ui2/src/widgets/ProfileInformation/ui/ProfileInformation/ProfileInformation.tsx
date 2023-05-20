@@ -12,12 +12,14 @@ interface ProfileInformationProps {
   withEditBtn?: boolean;
   onEditClick?: () => void;
   className?: string;
+  userId: string;
 }
 
 export const ProfileInformation: FC<ProfileInformationProps> = ({
   profile,
   onEditClick,
   withEditBtn,
+  userId,
 }) => {
   const [currentTab, setCurrentTab] = useState<ProfileInfoTab>(
     ProfileInfoTab.Indentity
@@ -62,7 +64,7 @@ export const ProfileInformation: FC<ProfileInformationProps> = ({
         onTabChange={setCurrentTab}
         className={styles.tabs}
       />
-      <ProfileInformationContent profile={profile} currentTab={currentTab} />
+      <ProfileInformationContent currentTab={currentTab} userId={userId} />
     </>
   );
 };

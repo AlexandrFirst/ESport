@@ -110,7 +110,9 @@ export const ProfileAvatar: FC<ProfileAvatarProps> = ({ ...props }) => {
           onClick={handleOpenDrawer}
         />
         <DownDrawer onClose={handleCloseDrawer} isOpen={isDrawerOpened}>
-          {list.map(({ children }) => children)}
+          {list.map(({ children, key }) => (
+            <li key={key}>{children}</li>
+          ))}
         </DownDrawer>
       </MobileView>
     </>
