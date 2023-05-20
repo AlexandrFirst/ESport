@@ -1,13 +1,22 @@
 ﻿{
   "$schema": "http://json.schemastore.org/launchsettings.json",
   "profiles": {
-    "GateWay": {
+    "GateWay.Development": {
       "commandName": "Project",
       "launchBrowser": false,
       "launchUrl": "weatherforecast",
       "applicationUrl": "https://localhost:6006;http://localhost:6005",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "GateWay.Local": {
+      "commandName": "Project",
+      "launchBrowser": false,
+      "launchUrl": "weatherforecast",
+      "applicationUrl": "https://localhost:6006;http://localhost:6005",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Local"
       }
     }
   }
