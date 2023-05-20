@@ -54,6 +54,23 @@ namespace UserWorkflow.Application.Requests.User
             var model = new UserTrainerInfo(UserIdentityInfo.InitFromDbUser(trainer));
             model.Id = trainer.Id;
             model.Info = trainer.Info;
+            model.TrainerSportInfos = trainer.TrainerSports.Select(x => new TrainerSportInfo() 
+            {
+                FromDate = x.FromDate,
+                ToDate = x.ToDate ?? DateTime.Now,
+                Level = x.Level,
+                Name = x.Sport.Name
+            }).ToList();
+
+            model.TrainerGymInfo = trainer.TraineeShedules.DistinctBy(j => j.GymShift.GymId).Select(k => new GymInfo()
+            {
+                Address = k.GymShift.Gym.Address,
+                CloseTime = k.GymShift.Gym.CloseTime,
+                GymOrganisationId = k.GymShift.Gym.OrganisationId,
+                Name = k.GymShift.Gym.Name,
+                OpenTime = k.GymShift.Gym.OpenTime,
+                OrganisationName = k.GymShift.Gym.Organisation.Name
+            }).ToList();
             return model;
         }
 
