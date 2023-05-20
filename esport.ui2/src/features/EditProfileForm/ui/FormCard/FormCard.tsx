@@ -1,20 +1,20 @@
 import React, { FC, ReactNode } from "react";
 
 import { Card } from "@/shared/ui";
-import { ProfileDataForm, ProfileDataFormProps } from "@/entities/profile";
+import { ProfileDataFormProps } from "@/entities/profile";
 
 interface FormCardProps extends ProfileDataFormProps {
   fallback?: ReactNode;
 }
 
 export const FormCard: FC<FormCardProps> = ({
-  profile,
+  // profile,
   fallback,
   ...props
 }) => {
   return (
     <Card padding={"md"}>
-      {profile ? <ProfileDataForm {...props} profile={profile} /> : fallback}
+      {/*{profile ? <ProfileDataForm {...props} profile={profile} /> : fallback}*/}
     </Card>
   );
 };
