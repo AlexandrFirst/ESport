@@ -21,6 +21,7 @@ module.exports = {
           accent: "var(--color-text-accent)",
           light: "var(--color-text-light)",
           error: "var(--color-error-main)",
+          success: "var(--color-success-main)",
         },
       },
       padding: {
@@ -33,6 +34,7 @@ module.exports = {
           main: "var(--color-text-main)",
           error: "var(--color-error-main)",
           accent: "var(--color-bg-accent)",
+          success: "var(--color-success-main)",
         },
       },
       gradientColorStops: {

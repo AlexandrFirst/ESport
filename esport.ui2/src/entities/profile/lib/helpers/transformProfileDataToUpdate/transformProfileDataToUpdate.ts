@@ -6,22 +6,33 @@ export const transformProfileDataToUpdate = (
   overrideLoginInfo: keyof IProfile | null
 ): UpdateProfileInfoRequest => {
   return {
-    updateAdmin: {
-      ...data.userAdminInfo,
-      telephone: data.userAdminInfo?.telephoneNumber,
-      overrideIdentityInfo: overrideLoginInfo === "userAdminInfo",
+    updateAdminInfo: data.userAdminInfo && {
+      updateUserInfo: {
+        ...data.userAdminInfo,
+        telephone: data.userAdminInfo?.telephoneNumber,
+        overrideIdentityInfo: overrideLoginInfo === "userAdminInfo",
+      },
+      gymIds: [],
     },
-    updateTrainee: {
-      ...data.userTraineeInfo,
-      overrideIdentityInfo: overrideLoginInfo === "userTraineeInfo",
+    updateTraineeInfo: data.userTraineeInfo && {
+      updateUserInfo: {
+        ...data.userTraineeInfo,
+        overrideIdentityInfo: overrideLoginInfo === "userTraineeInfo",
+      },
     },
-    updateTrainer: {
-      ...data.userTrainerInfo,
-      overrideIdentityInfo: overrideLoginInfo === "userTrainerInfo",
+    updateTrainerInfo: data.userTrainerInfo && {
+      updateUserInfo: {
+        ...data.userTrainerInfo,
+        overrideIdentityInfo: overrideLoginInfo === "userTrainerInfo",
+      },
+      trainerSportInfoIds: [],
     },
-    updateOrganisationAdmin: {
-      ...data.userOrganisationAdminInfos?.[0],
-      overrideIdentityInfo: overrideLoginInfo === "userOrganisationAdminInfos",
+    updateOrganisationAdminInfo: data.userOrganisationAdminInfos?.[0] && {
+      updateUserInfo: {
+        ...data.userOrganisationAdminInfos[0],
+        overrideIdentityInfo:
+          overrideLoginInfo === "userOrganisationAdminInfos",
+      },
       organisationId: 0,
     },
   };

@@ -7,7 +7,7 @@
 }
 
 .activeTab {
-  @apply text-theme-light rounded-md shadow-inner hover:opacity-100 active:opacity-100;
+  @apply text-theme-light rounded-md shadow-inner hover:opacity-100 active:opacity-100 outline-1 transition-all;
 }
 
 .pill {

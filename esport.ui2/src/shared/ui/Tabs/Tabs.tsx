@@ -1,12 +1,14 @@
-import React, { ElementType, ReactNode, useState } from "react";
+import React, { ElementType, Fragment, ReactNode } from "react";
 import styles from "./Tabs.module.css";
 
 import cn from "classnames";
 import { motion } from "framer-motion";
+import { Tab } from "@headlessui/react";
 
 export interface TabItem<T extends number> {
-  children: ReactNode;
+  label: ReactNode;
   value: T;
+  content: ReactNode;
   as?: ElementType;
   className?: string;
 }
@@ -14,7 +16,6 @@ export interface TabItem<T extends number> {
 export type TabList<T extends number> = TabItem<T>[];
 
 interface TabsProps<T extends number> {
-  currentTab: T;
   tabs: TabItem<T>[];
   className?: string;
   as?: ElementType;
@@ -23,38 +24,48 @@ interface TabsProps<T extends number> {
 
 export function Tabs<T extends number>({
   tabs,
-  currentTab,
   className,
   onTabChange,
   as: Component = "ul",
 }: TabsProps<T>) {
-  const [tab, setTab] = useState(currentTab);
-
   const handleTabClick = (tab: T) => () => {
-    setTab(tab);
     onTabChange?.(tab);
   };
 
   return (
-    <Component className={cn(styles.wrapper, className)}>
-      {tabs.map(({ children, value, as: TabComponent = "li", className }) => (
-        <TabComponent
-          key={value}
-          className={cn(styles.tab, className, {
-            [styles.activeTab]: value === tab,
-          })}
-          onClick={handleTabClick(value)}
-        >
-          {value === tab && (
-            <motion.div
-              layoutId="active-pill"
-              className={styles.pill}
-              transition={{ type: "spring", duration: 0.5 }}
-            />
-          )}
-          <div className={cn(styles.label)}>{children}</div>
-        </TabComponent>
-      ))}
-    </Component>
+    <Tab.Group>
+      <Tab.List>
+        <Component className={cn(styles.wrapper, className)}>
+          {tabs.map(({ label, value, as: TabComponent = "li", className }) => (
+            <Tab key={value} as={Fragment}>
+              {({ selected }) => (
+                <TabComponent
+                  className={cn(styles.tab, className, {
+                    [styles.activeTab]: selected,
+                  })}
+                  onClick={handleTabClick(value)}
+                >
+                  {selected && (
+                    <motion.div
+                      layoutId="active-pill"
+                      className={styles.pill}
+                      transition={{ type: "spring", duration: 0.5 }}
+                    />
+                  )}
+                  <div className={cn(styles.label)}>{label}</div>
+                </TabComponent>
+              )}
+            </Tab>
+          ))}
+        </Component>
+      </Tab.List>
+      <Tab.Panels>
+        {tabs.map(({ value, content }) => (
+          <Tab.Panel as={Fragment} key={value}>
+            {content}
+          </Tab.Panel>
+        ))}
+      </Tab.Panels>
+    </Tab.Group>
   );
 }

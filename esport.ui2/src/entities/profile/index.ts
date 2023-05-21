@@ -9,6 +9,7 @@ export { ProfileMainInfo } from "./ui/ProfileMainInfo/ProfileMainInfo";
 export { ProfileInfo } from "./ui/ProfileInfo/ProfileInfo";
 export { ProfileDataForm } from "./ui/ProfileDataForm/ProfileDataForm";
 export type { ProfileDataFormProps } from "./ui/ProfileDataForm/ProfileDataForm";
+export { ReadonlyProfileInfo } from "./ui/ReadonlyProfileInfo/ReadonlyProfileInfo";
 
 //model
 export type { ProfileSchema } from "./model/types/profileSchema";

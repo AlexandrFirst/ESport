@@ -12,7 +12,7 @@ import { EditableProfilePhoto } from "../ProfilePhoto/EditableProfilePhoto";
 import { OverviewInfo } from "../OverviewInfo/OverviewInfo";
 
 interface ProfileMainInfoProps {
-  profile?: IProfile;
+  profile?: IProfile | null;
   editable?: boolean;
   onEditClick?: () => void;
   withEditBtn?: boolean;

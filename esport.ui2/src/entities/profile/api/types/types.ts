@@ -7,8 +7,19 @@ interface UpdateUserInfo {
 }
 
 export interface UpdateProfileInfoRequest {
-  updateAdmin?: UpdateUserInfo & { gymIds?: number[] };
-  updateOrganisationAdmin?: UpdateUserInfo & { organisationId: number };
-  updateTrainee?: UpdateUserInfo;
-  updateTrainer?: UpdateUserInfo;
+  updateAdminInfo?: {
+    updateUserInfo?: UpdateUserInfo;
+    gymIds: number[];
+  };
+  updateOrganisationAdminInfo?: {
+    updateUserInfo?: UpdateUserInfo;
+    organisationId: number;
+  };
+  updateTraineeInfo?: {
+    updateUserInfo?: UpdateUserInfo;
+  };
+  updateTrainerInfo?: {
+    updateUserInfo?: UpdateUserInfo;
+    trainerSportInfoIds: [];
+  };
 }
