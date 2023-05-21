@@ -48,7 +48,9 @@ export const SportApi = (ctx?: ApiContext) => {
   return {
     getAllSports() {
       return new Promise<ISport[]>((resolve) => {
-        resolve(mockedSports);
+        setTimeout(() => {
+          resolve(mockedSports);
+        }, 6000);
       });
     },
   };

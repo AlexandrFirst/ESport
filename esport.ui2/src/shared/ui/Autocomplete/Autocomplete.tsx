@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AutocompleteBase, AutocompleteBaseProps } from "./AutocompleteBase";
 
 export interface AutocompleteProps<T extends {} = {}>
@@ -9,12 +9,13 @@ export interface AutocompleteProps<T extends {} = {}>
 export function Autocomplete<T extends {} = {}>({
   lazy,
   onInputChange,
+  loading,
   ...props
 }: AutocompleteProps<T>) {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(loading);
 
   const handleInputChange = async (value: string) => {
-    if (lazy) {
+    if (lazy && !isLoading) {
       setIsLoading(true);
       await onInputChange?.(value);
       setIsLoading(false);
@@ -23,10 +24,14 @@ export function Autocomplete<T extends {} = {}>({
     }
   };
 
+  useEffect(() => {
+    setIsLoading(loading);
+  }, [loading]);
+
   return (
     <AutocompleteBase
       {...props}
-      onInputChange={handleInputChange}
+      onInputChange={onInputChange ? handleInputChange : undefined}
       loading={isLoading}
     />
   );

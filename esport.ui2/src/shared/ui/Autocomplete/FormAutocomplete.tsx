@@ -4,7 +4,9 @@ import { Controller } from "react-hook-form";
 import { Autocomplete, AutocompleteProps } from "./Autocomplete";
 
 interface FormAutocompleteProps<T extends {} = {}>
-  extends AutocompleteProps<T> {}
+  extends Omit<AutocompleteProps<T>, "name"> {
+  name: string;
+}
 
 export function FormAutocomplete<T extends {} = {}>({
   name,
@@ -12,7 +14,9 @@ export function FormAutocomplete<T extends {} = {}>({
 }: FormAutocompleteProps<T>) {
   return (
     <Controller
-      render={({ field }) => <Autocomplete {...props} {...field} name={name} />}
+      render={({ field, fieldState }) => (
+        <Autocomplete {...props} {...field} {...fieldState} name={name} />
+      )}
       name={name}
     />
   );

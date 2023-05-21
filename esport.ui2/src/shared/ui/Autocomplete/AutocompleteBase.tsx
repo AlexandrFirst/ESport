@@ -1,4 +1,4 @@
-import React, { ChangeEvent, Fragment } from "react";
+import React, { ChangeEvent, Fragment, useState } from "react";
 import styles from "./Autocomplete.module.css";
 
 import cn from "classnames";
@@ -12,17 +12,18 @@ import { InputBase, InputBaseProps } from "../Input/InputBase";
 import { Icon } from "../Icon/Icon";
 
 export interface AutocompleteBaseProps<T extends {} = {}>
-  extends Omit<InputBaseProps, "value" | "onChange" | "list"> {
+  extends Omit<InputBaseProps, "value" | "onChange" | "list" | "name"> {
   value?: T;
   onChange?: (value: T) => void;
   className?: string;
   onInputChange?: (value: string) => void;
-  list: T[];
+  list?: T[];
   displayValue: keyof T;
   displayKey: keyof T;
   label?: string;
   loading?: boolean;
   delayTime?: number;
+  name?: string;
 }
 
 export function AutocompleteBase<T extends {} = {}>({
@@ -36,8 +37,21 @@ export function AutocompleteBase<T extends {} = {}>({
   delayTime = 200,
   ...props
 }: AutocompleteBaseProps<T>) {
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) =>
-    onInputChange?.(e.target.value);
+  const [items, setItems] = useState(() => list);
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value;
+    if (onInputChange) {
+      onInputChange(inputValue);
+    } else {
+      const filteredItems = list?.filter((item) =>
+        String(item[displayValue])
+          .toLowerCase()
+          .includes(inputValue.toLowerCase())
+      );
+      setItems(filteredItems);
+    }
+  };
 
   const debouncedHandleInputChange = useDebounce(handleInputChange, delayTime);
 
@@ -76,7 +90,7 @@ export function AutocompleteBase<T extends {} = {}>({
                   <BeatLoader color={"#b2c9df"} />
                 </div>
               ) : (
-                list.map((item) => (
+                items?.map((item) => (
                   <Combobox.Option
                     key={String(item[displayKey])}
                     value={item}

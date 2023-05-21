@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import styles from "./ProfileInformation.module.css";
 
-import { BottomNav, TabList, Tabs } from "@/shared/ui";
+import { Autocomplete, BottomNav, TabList, Tabs } from "@/shared/ui";
 import { useSnackbar } from "@/shared/lib";
 
 import {
@@ -10,13 +10,11 @@ import {
   transformProfileDataToUpdate,
   useUpdateProfileInfo,
 } from "@/entities/profile";
+import { useGetAllSports } from "@/entities/sport";
 
 import { ProfileInfoTab } from "../../constants/profile-info-tab";
 
-import {
-  SetEditableProfileParams,
-  useProfileInformationActions,
-} from "../../model/slices/ProfileInformationSlice";
+import { useProfileInformationActions } from "../../model/slices/ProfileInformationSlice";
 import { useSelectEditableProfile } from "../../model/selectors/selectEditableProfile/selectEditableProfile";
 import { useSelectOverrideLoginInfo } from "../../model/selectors/selectOverrideLoginInfo/selectOverrideLoginInfo";
 import { useSelectCurrentProfile } from "../../model/selectors/selectCurrentProfile/selectCurrentProfile";
@@ -35,11 +33,11 @@ export const ProfileInformation: FC<ProfileInformationProps> = ({
   withEditBtn,
   userId,
 }) => {
-  const { setEditableProfileByKey, setCurrentProfile } =
-    useProfileInformationActions();
+  const { setCurrentProfile } = useProfileInformationActions();
   const profile = useSelectCurrentProfile();
   const editableProfile = useSelectEditableProfile();
   const overrideLoginInfo = useSelectOverrideLoginInfo();
+  const { data: sports, isLoading: isSportsLoading } = useGetAllSports();
 
   const { showError, showSuccess } = useSnackbar();
 
@@ -53,18 +51,6 @@ export const ProfileInformation: FC<ProfileInformationProps> = ({
       setCurrentProfile(profile);
     },
   });
-
-  const {
-    userIdentityInfo,
-    userTrainerInfo,
-    userAdminInfo,
-    userOrganisationAdminInfos,
-    userTraineeInfo,
-  } = editableProfile;
-
-  const handleChange =
-    (params: Omit<SetEditableProfileParams, "value">) => (value: string) =>
-      setEditableProfileByKey({ ...params, value });
 
   const handleSave = async () => {
     console.log(
@@ -104,6 +90,18 @@ export const ProfileInformation: FC<ProfileInformationProps> = ({
           profileKey={"userTrainerInfo"}
           additionalFieldsAbove={
             <SetLoginDataToggle currentProfile={"userTrainerInfo"} />
+          }
+          additionalFieldsBelow={
+            <>
+              <Autocomplete
+                list={sports}
+                displayKey={"id"}
+                displayValue={"name"}
+                loading={isSportsLoading}
+                label={"Sports"}
+                lazy
+              />
+            </>
           }
         />
       ),

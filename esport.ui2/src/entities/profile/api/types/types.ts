@@ -1,3 +1,5 @@
+import { ISport } from "@/entities/sport";
+
 interface UpdateUserInfo {
   name?: string;
   surname?: string;
@@ -20,6 +22,6 @@ export interface UpdateProfileInfoRequest {
   };
   updateTrainerInfo?: {
     updateUserInfo?: UpdateUserInfo;
-    trainerSportInfoIds: [];
+    trainerSportInfoIds: ISport[];
   };
 }

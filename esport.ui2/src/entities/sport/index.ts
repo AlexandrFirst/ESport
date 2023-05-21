@@ -9,3 +9,7 @@ export { SportType } from "./constants/sport-type";
 
 //api
 export { SportApi } from "./api/sportApi";
+export {
+  useGetAllSports,
+  useGetAllSportsKeys,
+} from "./api/hooks/useGetAllSports";

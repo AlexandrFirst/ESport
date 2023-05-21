@@ -12,7 +12,7 @@ import { AnimatePresence, motion } from "framer-motion";
 export type Message = { message?: string };
 
 export type InputBaseProps = InputHTMLAttributes<HTMLInputElement> & {
-  name: string;
+  name?: string;
   errors?: Record<string, Message>;
   callbackOnChange?: (value: string) => void;
   label?: ReactNode;
