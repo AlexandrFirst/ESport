@@ -44,7 +44,6 @@ export function AutocompleteBase<T extends {} = {}>({
     onInputChange,
     loading,
   });
-
   const debouncedHandleInputChange = useDebounce(handleInputChange, delayTime);
 
   return (

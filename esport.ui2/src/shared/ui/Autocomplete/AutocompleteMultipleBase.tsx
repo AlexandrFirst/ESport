@@ -40,10 +40,11 @@ export function AutocompleteMultipleBase<T extends {} = {}>({
   delayTime = 200,
   ...props
 }: AutocompleteMultipleBaseProps<T>) {
-  const { items, getLoadingOrEmpty } = useAutocomplete({
+  const { items, getLoadingOrEmpty, handleInputChange } = useAutocomplete({
     list,
     displayValue,
     loading,
+    withFilter: false,
   });
 
   return (
@@ -55,6 +56,7 @@ export function AutocompleteMultipleBase<T extends {} = {}>({
             displayValue={(items: T[]) =>
               items.map((item) => item[displayValue]).join(", ")
             }
+            onChange={handleInputChange}
           >
             <InputBase
               {...props}

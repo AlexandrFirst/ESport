@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import styles from "./Autocomplete.module.css";
 
 import { BeatLoader } from "react-spinners";
@@ -8,6 +8,7 @@ interface UseAutocompleteParams<T extends {} = {}> {
   displayValue: keyof T;
   onInputChange?: (value: string) => void;
   loading?: boolean;
+  withFilter?: boolean;
 }
 
 export function useAutocomplete<T extends {} = {}>({
@@ -15,6 +16,7 @@ export function useAutocomplete<T extends {} = {}>({
   onInputChange,
   displayValue,
   loading,
+  withFilter = true,
 }: UseAutocompleteParams<T>) {
   const [items, setItems] = useState(() => list);
 
@@ -23,12 +25,14 @@ export function useAutocomplete<T extends {} = {}>({
     if (onInputChange) {
       onInputChange(inputValue);
     } else {
-      const filteredItems = list?.filter((item) =>
-        String(item[displayValue])
-          .toLowerCase()
-          .includes(inputValue.toLowerCase())
-      );
-      setItems(filteredItems);
+      if (withFilter) {
+        const filteredItems = list?.filter((item) =>
+          String(item[displayValue])
+            .toLowerCase()
+            .includes(inputValue.toLowerCase())
+        );
+        setItems(filteredItems);
+      }
     }
   };
 
@@ -49,6 +53,10 @@ export function useAutocomplete<T extends {} = {}>({
     }
     return null;
   };
+
+  useEffect(() => {
+    setItems(() => list);
+  }, [list]);
 
   return {
     items,
