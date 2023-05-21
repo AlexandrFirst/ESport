@@ -87,6 +87,7 @@ namespace UserWorkflow.Esport
             modelBuilder.ApplyConfiguration(new AdministratorConfiguration());
             modelBuilder.ApplyConfiguration(new TrainerRequestConfiguration());
             modelBuilder.ApplyConfiguration(new TrainerResponseConfiguration());
+            modelBuilder.ApplyConfiguration(new SportConfiguration());
         }
     }
 }

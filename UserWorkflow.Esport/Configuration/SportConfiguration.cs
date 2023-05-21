@@ -15,40 +15,46 @@ namespace UserWorkflow.Esport.Configuration
         {
             builder.HasData(new Sport()
             {
+                Id = 1,
                 Name = "Swimming",
                 Type = SportType.Strength,
                 Description = "Suitable for everyone"
             },
             new Sport()
             {
+                Id = 2,
                 Name = "Karate",
                 Type = SportType.Fighting,
                 Description = "Suitable for everyone"
             },
             new Sport()
             {
+                Id = 3,
                 Name = "Powerlifting",
                 Type = SportType.Strength,
                 Description = "Suitable for everyone"
             },
             new Sport()
             {
+                Id = 4,
                 Name = "Car racing",
                 Type = SportType.Endurance,
                 Description = "Suitable for everyone"
             },
-             new Sport()
-             {
-                 Name = "Football",
-                 Type = SportType.Endurance,
-                 Description = "Suitable for everyone"
-             },
-               new Sport()
-               {
-                   Name = "Basketball",
-                   Type = SportType.Endurance,
-                   Description = "Suitable for everyone"
-               });
+            new Sport()
+            {
+                Id = 5,
+                Name = "Football",
+                Type = SportType.Endurance,
+                Description = "Suitable for everyone"
+            },
+            new Sport()
+            {
+                Id = 6,
+                Name = "Basketball",
+                Type = SportType.Endurance,
+                Description = "Suitable for everyone"
+            });
         }
     }
 }
