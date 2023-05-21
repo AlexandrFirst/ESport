@@ -55,6 +55,7 @@ namespace UserWorkflow.Application.Requests.GymAdmin
                     Name = x.Trainer.Name,
                     TrainerSportInfos = x.Trainer.TrainerSports.Select(k => new TrainerSportInfo()
                     {
+                        SportId= k.Id,
                         FromDate = k.FromDate,
                         Name = k.Sport.Name,
                         Level = k.Level,

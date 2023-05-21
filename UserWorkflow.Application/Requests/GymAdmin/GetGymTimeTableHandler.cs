@@ -22,16 +22,16 @@ namespace UserWorkflow.Application.Requests.GymAdmin
 
         public async Task<RequestResult<GetGymTimeTableResponse>> HandleQueryAsync(GetGymTimeTable request)
         {
-            var gymInfo = await context.Gyms.FirstOrDefaultAsync(x => x.Id == request.GymId);
+            var gymInfo = await context.Gyms.Where(x => request.GymId.Any(p => p == x.Id)).ToListAsync(); ;
             if (gymInfo == null)
             {
                 throw new ApplicationException($"Unable to find gym with id: {request.GymId}");
             }
 
-            var gymShifts = gymInfo.GymShifts;
+            var gymShifts = gymInfo.SelectMany(x => x.GymShifts);
             if (request.DayOfTheWeek != null && request.DayOfTheWeek > 0)
             {
-                gymShifts = gymInfo.GymShifts.Where(x => (x.DayOfTheWeeks & request.DayOfTheWeek) != 0).ToList();
+                gymShifts = gymInfo.SelectMany(x => x.GymShifts).Where(x => (x.DayOfTheWeeks & request.DayOfTheWeek) != 0).ToList();
             }
 
             var result = new List<GymTimeTable>();
@@ -43,35 +43,41 @@ namespace UserWorkflow.Application.Requests.GymAdmin
                 if (request.DayOfTheWeek != null && ((int)currentDay & (int)request.DayOfTheWeek) == 0) { continue; }
 
                 var dayShifts = gymShifts.Where(x => (x.DayOfTheWeeks & (int)currentDay) == (int)currentDay);
-                result.Add(new GymTimeTable()
-                {
-                    DayOfTheWeek = currentDay,
-                    GymId = request.GymId,
-                    DayTimeTable = dayShifts.Select(k =>
-                    {
-                        var timeTableLessonsQuery = k.TrainerShedules.AsQueryable();
-                        if (request.TrainerId.HasValue)
-                        {
-                            timeTableLessonsQuery = timeTableLessonsQuery.Where(u => request.TrainerId.HasValue && u.TrainerId == request.TrainerId);
-                        }
 
-                        return new DayTimeTable()
+                foreach (var dayShift in dayShifts)
+                {
+                    result.Add(new GymTimeTable()
+                    {
+                        DayOfTheWeek = currentDay,
+                        GymId = dayShift.GymId,
+                        DayTimeTable = dayShifts.Where(g => g.GymId == dayShift.GymId).Select(k =>
                         {
-                            From = k.FromTime,
-                            ShiftId = k.Id,
-                            To = k.ToTime,
-                            TimeTableLessons = timeTableLessonsQuery.SelectMany(l => l.Lessons.Select(j => new TimeTableLesson()
+                            var timeTableLessonsQuery = k.TrainerShedules.AsQueryable();
+                            if (request.TrainerId.HasValue)
                             {
-                                LessonId = j.Id,
-                                From = j.FromTime ?? k.FromTime,
-                                To = j.ToTime ?? k.ToTime,
-                                LessonType = j.LessonType,
-                                TrainerId = l.TrainerId.Value,
-                                TrainerName = l.Trainer.Name
-                            })).OrderBy(i => i.From).ToList(),
-                        };
-                    }).OrderBy(a => a.From).ToList(),
-                });
+                                timeTableLessonsQuery = timeTableLessonsQuery.Where(u => request.TrainerId.HasValue && u.TrainerId == request.TrainerId);
+                            }
+
+                            return new DayTimeTable()
+                            {
+                                From = k.FromTime,
+                                ShiftId = k.Id,
+                                To = k.ToTime,
+                                TimeTableLessons = timeTableLessonsQuery.SelectMany(l => l.Lessons.Select(j => new TimeTableLesson()
+                                {
+                                    LessonId = j.Id,
+                                    From = j.FromTime ?? k.FromTime,
+                                    To = j.ToTime ?? k.ToTime,
+                                    LessonType = j.LessonType,
+                                    TrainerId = l.TrainerId.Value,
+                                    TrainerName = l.Trainer.Name
+                                })).OrderBy(i => i.From).ToList(),
+                            };
+                        }).OrderBy(a => a.From).ToList(),
+                    });
+                }
+
+                
             }
             var orderedResult = result.OrderBy(p => p.DayOfTheWeek).ToList();
 

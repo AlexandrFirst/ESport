@@ -1,21 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UserWorkflow.Application.Base;
 using UserWorkflow.Application.Models.Gym;
 
-namespace UserWorkflow.Application.Requests.GymAdmin
+namespace UserWorkflow.Application.Requests.Trainer
 {
-    public class GetGymTimeTable: BaseRequest
+    public class GetTrainerTimeTable: BaseRequest
     {
+        [Required]
+        public int TrainerId { get; set; }
+        public int? GymId { get; set; }
         public int? DayOfTheWeek { get; set; }
-        public int? TrainerId { get; set; }
-        public List<int> GymId { get; set; }
     }
 
-    public class GetGymTimeTableResponse 
+    public class GetTrainerTimeTableResult 
     {
         public List<GymTimeTable> GymTimeTable { get; set; }
     }

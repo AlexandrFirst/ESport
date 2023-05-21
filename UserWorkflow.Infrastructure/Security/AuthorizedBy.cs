@@ -1,12 +1,15 @@
 ﻿using OcelotAuthClient;
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Text;
 
 namespace UserWorkFlow.Infrastructure.Security
 {
     public class AuthorizedBy
     {
+        public ClaimsPrincipal User { get; private set; }
+
         public AuthorizedBy()
         {
 
@@ -19,7 +22,12 @@ namespace UserWorkFlow.Infrastructure.Security
             Email = email;
         }
 
-        public void SetAuthProperty(AuthRequestData authRequestData, string value) 
+        public void SetClaimsPrinciple(ClaimsPrincipal principal)
+        {
+            User = principal;
+        }
+
+        public void SetAuthProperty(AuthRequestData authRequestData, string value)
         {
             switch (authRequestData.authClaims)
             {
