@@ -1,15 +1,24 @@
 import React, { useEffect, useState } from "react";
 import { AutocompleteBase, AutocompleteBaseProps } from "./AutocompleteBase";
+import {
+  AutocompleteMultipleBase,
+  AutocompleteMultipleBaseProps,
+} from "./AutocompleteMultipleBase";
 
-export interface AutocompleteProps<T extends {} = {}>
-  extends AutocompleteBaseProps<T> {
+export type AutocompleteProps<T extends {} = {}> = (
+  | AutocompleteBaseProps<T>
+  | AutocompleteMultipleBaseProps<T>
+) & {
   lazy?: boolean;
-}
+};
 
 export function Autocomplete<T extends {} = {}>({
   lazy,
   onInputChange,
   loading,
+  multiple,
+  value,
+  onChange,
   ...props
 }: AutocompleteProps<T>) {
   const [isLoading, setIsLoading] = useState(loading);
@@ -28,11 +37,28 @@ export function Autocomplete<T extends {} = {}>({
     setIsLoading(loading);
   }, [loading]);
 
+  const inputChangeHandler = onInputChange ? handleInputChange : undefined;
+
+  if (!multiple) {
+    return (
+      <AutocompleteBase
+        {...props}
+        onChange={onChange}
+        value={value}
+        onInputChange={inputChangeHandler}
+        loading={isLoading}
+      />
+    );
+  }
+
   return (
-    <AutocompleteBase
+    <AutocompleteMultipleBase
       {...props}
-      onInputChange={onInputChange ? handleInputChange : undefined}
-      loading={isLoading}
+      value={value}
+      onChange={onChange}
+      multiple
+      onInputChange={inputChangeHandler}
+      loading={loading}
     />
   );
 }

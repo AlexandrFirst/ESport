@@ -17,3 +17,11 @@
 .selected {
   @apply bg-gradient-to-r from-main-from to-main-to text-theme-light;
 }
+
+.text_wrapper {
+  @apply text-center py-4;
+}
+
+.text {
+  @apply text-theme-main sm:text-sm;
+}

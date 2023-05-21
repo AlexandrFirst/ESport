@@ -3,58 +3,58 @@ import styles from "./Autocomplete.module.css";
 
 import cn from "classnames";
 import { Combobox } from "@headlessui/react";
-import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
-
-import { useDebounce } from "@/shared/lib";
+import {
+  CheckIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
+} from "@heroicons/react/24/solid";
 
 import { InputBase, InputBaseProps } from "../Input/InputBase";
 import { Icon } from "../Icon/Icon";
+
 import { useAutocomplete } from "./useAutocomplete";
 import { AutocompleteTransition } from "./AutocompleteTransition";
 
-export interface AutocompleteBaseProps<T extends {} = {}>
+export interface AutocompleteMultipleBaseProps<T extends {} = {}>
   extends Omit<InputBaseProps, "value" | "onChange" | "list" | "name"> {
-  value?: T;
-  onChange?: (value: T) => void;
+  value?: T[];
+  onChange?: (value: T[]) => void;
   className?: string;
-  onInputChange?: (value: string) => void;
   list?: T[];
-  displayValue: keyof T;
-  displayKey: keyof T;
   loading?: boolean;
   delayTime?: number;
   name?: string;
-  multiple?: false;
+  displayValue: keyof T;
+  displayKey: keyof T;
+  onInputChange?: (value: string) => void;
+  multiple: true;
 }
 
-export function AutocompleteBase<T extends {} = {}>({
+export function AutocompleteMultipleBase<T extends {} = {}>({
   value,
   onChange,
-  onInputChange,
-  list,
   displayValue,
   displayKey,
+  list,
   loading,
   delayTime = 200,
   ...props
-}: AutocompleteBaseProps<T>) {
-  const { items, handleInputChange, getLoadingOrEmpty } = useAutocomplete({
+}: AutocompleteMultipleBaseProps<T>) {
+  const { items, getLoadingOrEmpty } = useAutocomplete({
     list,
     displayValue,
-    onInputChange,
     loading,
   });
 
-  const debouncedHandleInputChange = useDebounce(handleInputChange, delayTime);
-
   return (
-    <Combobox value={value} onChange={onChange} nullable>
-      {({ open, activeOption }) => (
+    <Combobox value={value} onChange={onChange} nullable multiple>
+      {({ open }) => (
         <div className={styles.wrapper}>
           <Combobox.Input
             as={Fragment}
-            onChange={debouncedHandleInputChange}
-            displayValue={(item: T) => String(item?.[displayValue] ?? "")}
+            displayValue={(items: T[]) =>
+              items.map((item) => item[displayValue]).join(", ")
+            }
           >
             <InputBase
               {...props}
@@ -78,14 +78,15 @@ export function AutocompleteBase<T extends {} = {}>({
                     key={String(item[displayKey])}
                     value={item}
                     className={({ active }) =>
-                      cn(styles.option, {
-                        [styles.selected]: active,
-                        [styles.selected]:
-                          activeOption?.[displayKey] === item[displayKey],
-                      })
+                      cn(styles.option, { [styles.selected]: active })
                     }
                   >
-                    {String(item[displayValue])}
+                    {({ selected }) => (
+                      <div className={"flex gap-3"}>
+                        {selected && <Icon Svg={CheckIcon} />}
+                        <span>{String(item[displayValue])}</span>
+                      </div>
+                    )}
                   </Combobox.Option>
                 ))}
             </Combobox.Options>

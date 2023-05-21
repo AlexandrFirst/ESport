@@ -79,7 +79,7 @@ export const InputBase = forwardRef<HTMLInputElement, InputBaseProps>(
           <input
             {...props}
             ref={ref}
-            placeholder={label ? undefined : placeholder}
+            placeholder={label && !labelActive ? undefined : placeholder}
             value={value}
             id={name}
             className={cn(styles.input_1, styles.text, {

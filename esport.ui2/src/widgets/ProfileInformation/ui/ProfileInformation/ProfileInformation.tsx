@@ -37,6 +37,7 @@ export const ProfileInformation: FC<ProfileInformationProps> = ({
   const profile = useSelectCurrentProfile();
   const editableProfile = useSelectEditableProfile();
   const overrideLoginInfo = useSelectOverrideLoginInfo();
+
   const { data: sports, isLoading: isSportsLoading } = useGetAllSports();
 
   const { showError, showSuccess } = useSnackbar();
@@ -92,16 +93,17 @@ export const ProfileInformation: FC<ProfileInformationProps> = ({
             <SetLoginDataToggle currentProfile={"userTrainerInfo"} />
           }
           additionalFieldsBelow={
-            <>
-              <Autocomplete
-                list={sports}
-                displayKey={"id"}
-                displayValue={"name"}
-                loading={isSportsLoading}
-                label={"Sports"}
-                lazy
-              />
-            </>
+            <Autocomplete
+              name={"sports"}
+              list={sports}
+              displayKey={"id"}
+              displayValue={"name"}
+              loading={isSportsLoading}
+              label={"Sports"}
+              lazy
+              multiple
+              placeholder={"[Swimming, Karate]"}
+            />
           }
         />
       ),
