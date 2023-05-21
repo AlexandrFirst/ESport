@@ -22,6 +22,7 @@ namespace UserWorkflow.Esport.Models
         public virtual TrainerShedule TrainerShedule { get; set; }
 
         public bool OverrideTrainerShedule { get; set; }
+
         public TimeSpan? FromTime { get; set; }
         public TimeSpan? ToTime { get; set; }
         public int? DayOfTheWeek { get; set; }

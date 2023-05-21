@@ -31,6 +31,7 @@ namespace UserWorkflow.Application.Models.User
 
     public class TrainerSportInfo 
     {
+        public int SportId { get; set; }
         public string Name { get; set; }
         public string Level { get; set; }
         public DateTime FromDate { get; set; }
