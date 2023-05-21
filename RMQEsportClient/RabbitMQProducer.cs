@@ -80,6 +80,7 @@ namespace RMQEsportClient
                 }
                 catch (Exception)
                 {
+                    channel = _connection.CreateModel();
                     channel.ExchangeDeclare(queueOptions.ExchangeName, exchangeType, durable: true, autoDelete: false);
                 }
 
@@ -89,6 +90,7 @@ namespace RMQEsportClient
                 }
                 catch (Exception) 
                 {
+                    channel = _connection.CreateModel();
                     channel.QueueDeclare(queue: queueOptions.QueueName, durable: true, exclusive: false, autoDelete: false);
                 }
                 

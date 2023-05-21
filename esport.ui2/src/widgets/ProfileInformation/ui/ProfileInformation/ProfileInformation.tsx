@@ -6,6 +6,7 @@ import { useSnackbar } from "@/shared/lib";
 
 import {
   IProfile,
+  ProfileApi,
   ProfileMainInfo,
   transformProfileDataToUpdate,
   useUpdateProfileInfo,
@@ -20,22 +21,23 @@ import { useSelectEditableProfile } from "../../model/selectors/selectEditablePr
 import { useSelectOverrideLoginInfo } from "../../model/selectors/selectOverrideLoginInfo/selectOverrideLoginInfo";
 import { ProfileInfoWithCard } from "../ProfileInfoWithCard/ProfileInfoWithCard";
 import { SetLoginDataToggle } from "../SetLoginDataToggle/SetLoginDataToggle";
+import { useSelectCurrentProfile } from "../../model/selectors/selectCurrentProfile/selectCurrentProfile";
 
 interface ProfileInformationProps {
-  profile: IProfile;
+  userId: string;
   withEditBtn?: boolean;
   onEditClick?: () => void;
   className?: string;
-  userId: string;
 }
 
 export const ProfileInformation: FC<ProfileInformationProps> = ({
-  profile,
   onEditClick,
   withEditBtn,
   userId,
 }) => {
-  const { setEditableProfileByKey } = useProfileInformationActions();
+  const { setEditableProfileByKey, setCurrentProfile } =
+    useProfileInformationActions();
+  const profile = useSelectCurrentProfile();
   const editableProfile = useSelectEditableProfile();
   const overrideLoginInfo = useSelectOverrideLoginInfo();
 
@@ -45,8 +47,10 @@ export const ProfileInformation: FC<ProfileInformationProps> = ({
     onError(e: any) {
       showError(e.message);
     },
-    onSuccess() {
+    async onSuccess() {
       showSuccess("Profile updated successfully");
+      const { data: profile } = await ProfileApi().getProfileInfo(userId);
+      setCurrentProfile(profile);
     },
   });
 
@@ -83,6 +87,7 @@ export const ProfileInformation: FC<ProfileInformationProps> = ({
       value: ProfileInfoTab.Indentity,
       content: (
         <ProfileInfoWithCard
+          name={"userIdentityInfo"}
           key={"userIdentityInfo"}
           profileInfo={userIdentityInfo}
           editable={false}
@@ -110,6 +115,7 @@ export const ProfileInformation: FC<ProfileInformationProps> = ({
       value: ProfileInfoTab.Trainee,
       content: (
         <ProfileInfoWithCard
+          name={"userTraineeInfo"}
           key={"userTraineeInfo"}
           profileInfo={userTraineeInfo}
           onChangeName={handleChange({
@@ -144,6 +150,7 @@ export const ProfileInformation: FC<ProfileInformationProps> = ({
       value: ProfileInfoTab.Trainer,
       content: (
         <ProfileInfoWithCard
+          name={"userTrainerInfo"}
           key={"userTrainerInfo"}
           profileInfo={userTrainerInfo}
           onChangeName={handleChange({
@@ -178,6 +185,7 @@ export const ProfileInformation: FC<ProfileInformationProps> = ({
       value: ProfileInfoTab.GymAdmin,
       content: (
         <ProfileInfoWithCard
+          name={"userAdminInfo"}
           key={"userAdminInfo"}
           profileInfo={userAdminInfo}
           onChangeName={handleChange({
@@ -212,6 +220,7 @@ export const ProfileInformation: FC<ProfileInformationProps> = ({
       value: ProfileInfoTab.OrganizationAdmin,
       content: (
         <ProfileInfoWithCard
+          name={"userOrganisationAdminInfos"}
           key={"userOrganisationAdminInfos"}
           profileInfo={userOrganisationAdminInfos?.[0]}
           onChangeName={handleChange({

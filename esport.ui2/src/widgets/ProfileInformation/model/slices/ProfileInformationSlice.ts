@@ -9,7 +9,6 @@ import { StateSchema } from "@/_app/Providers";
 
 import { ProfileInformationState } from "../types/ProfileInformationState";
 import { defaultValuesForEditableProfile } from "../../constants/defaultValuesForEditableProfile";
-import { getEditableProfile } from "../../lib/helpers/get-editable-profile/get-editable-profile";
 
 export type SetEditableProfileParams = {
   profileKey: keyof IProfile;
@@ -31,7 +30,15 @@ const profileInformationSlice = buildSlice({
       state.currentProfile = action.payload;
     },
     setEditableProfile(state, { payload }: PayloadAction<IProfile>) {
-      state.editableProfile = getEditableProfile(payload);
+      // state.editableProfile = getEditableProfile(payload);
+      state.editableProfile = payload;
+    },
+    setEditableProfileNotToNull(
+      state,
+      { payload }: PayloadAction<keyof IProfile>
+    ) {
+      // @ts-ignore
+      state.editableProfile[payload] = defaultValuesForEditableProfile[payload];
     },
     setEditableProfileByKey(
       state,
