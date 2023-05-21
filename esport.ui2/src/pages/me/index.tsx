@@ -41,7 +41,6 @@ export const getServerSideProps = getAppServerSideProps(
     const { data: profile } = await ProfileApi(ctx).getProfileInfo(
       user.data?.id ?? ""
     );
-    console.log("===profile===", profile);
     store.dispatch(profileInformationActions.setCurrentProfile(profile));
     store.dispatch(profileInformationActions.setEditableProfile(profile));
 
