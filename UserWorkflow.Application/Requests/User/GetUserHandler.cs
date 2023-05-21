@@ -49,7 +49,7 @@ namespace UserWorkflow.Application.Requests.User
             return new RequestResult<GetUserResult>(userInfo);
         }
 
-        private UserTrainerInfo handleUserTrainerInfo(Trainer trainer)
+        private UserTrainerInfo handleUserTrainerInfo(UserWorkflow.Esport.Models.Trainer trainer)
         {
             var model = new UserTrainerInfo(UserIdentityInfo.InitFromDbUser(trainer));
             model.Id = trainer.Id;

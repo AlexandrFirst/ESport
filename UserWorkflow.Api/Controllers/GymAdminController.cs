@@ -12,6 +12,7 @@ using UserWorkflow.Application.Requests.User;
 using UserWorkflow.Application.Requests.GymAdmin;
 using UserWorkflow.Api.Dto;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using System.Collections.Generic;
 
 namespace UserWorkflow.Api.Controllers
 {
@@ -84,7 +85,7 @@ namespace UserWorkflow.Api.Controllers
                     new GetGymTimeTable()
                     {
                         DayOfTheWeek = gymTimeTableFilter.GetFiltrationValue(),
-                        GymId = gymId
+                        GymId = new List<int> { gymId }
                     });
 
                 if (!result.Succeeded)
