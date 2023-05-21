@@ -5,7 +5,6 @@ import { BottomNav, TabList, Tabs } from "@/shared/ui";
 import { useSnackbar } from "@/shared/lib";
 
 import {
-  IProfile,
   ProfileApi,
   ProfileMainInfo,
   transformProfileDataToUpdate,
@@ -13,15 +12,17 @@ import {
 } from "@/entities/profile";
 
 import { ProfileInfoTab } from "../../constants/profile-info-tab";
+
 import {
   SetEditableProfileParams,
   useProfileInformationActions,
 } from "../../model/slices/ProfileInformationSlice";
 import { useSelectEditableProfile } from "../../model/selectors/selectEditableProfile/selectEditableProfile";
 import { useSelectOverrideLoginInfo } from "../../model/selectors/selectOverrideLoginInfo/selectOverrideLoginInfo";
+import { useSelectCurrentProfile } from "../../model/selectors/selectCurrentProfile/selectCurrentProfile";
+
 import { ProfileInfoWithCard } from "../ProfileInfoWithCard/ProfileInfoWithCard";
 import { SetLoginDataToggle } from "../SetLoginDataToggle/SetLoginDataToggle";
-import { useSelectCurrentProfile } from "../../model/selectors/selectCurrentProfile/selectCurrentProfile";
 
 interface ProfileInformationProps {
   userId: string;

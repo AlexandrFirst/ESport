@@ -4,7 +4,7 @@ import { AppNextPage, PageProps } from "@/shared/types";
 import { getAppServerSideProps } from "@/shared/lib";
 import { ErrorText } from "@/shared/ui";
 
-import { IProfile, ProfileApi } from "@/entities/profile";
+import { ProfileApi } from "@/entities/profile";
 import { useAuth } from "@/entities/user";
 
 import { getMainLayout } from "@/widgets/MainLayout";
@@ -14,9 +14,7 @@ import {
   profileInformationActions,
 } from "@/widgets/ProfileInformation";
 
-type MeProps = PageProps & {
-  profile: IProfile;
-};
+type MeProps = PageProps;
 
 const Me: AppNextPage<MeProps> = ({ error }) => {
   const { user } = useAuth();
@@ -32,7 +30,7 @@ Me.getLayout = getMainLayout({
 
 export default Me;
 
-export const getServerSideProps = getAppServerSideProps<MeProps>(
+export const getServerSideProps = getAppServerSideProps(
   async (ctx, store) => {
     const localization = await serverSideTranslations(
       ctx.locale ?? ctx.defaultLocale ?? "en",
