@@ -12,7 +12,10 @@ import { SnackbarSchema } from "@/features/Snackbar";
 
 import { DeviceSliceState } from "@/shared/model";
 import { ProfileSchema } from "@/entities/profile";
-import { ProfileInformationState } from "@/widgets/ProfileInformation";
+import {
+  ProfileInformationState,
+  TrainerProfileInformationState,
+} from "@/widgets/ProfileInformation";
 
 export interface StateSchema {
   leftSidebar: LeftSidebarSliceState;
@@ -21,6 +24,7 @@ export interface StateSchema {
   profile: ProfileSchema;
   device: DeviceSliceState;
   profileInformation: ProfileInformationState;
+  trainerProfileInformation: TrainerProfileInformationState;
 }
 
 export type StateSchemaKey = keyof StateSchema;

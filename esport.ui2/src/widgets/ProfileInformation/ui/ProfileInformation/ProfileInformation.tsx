@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import styles from "./ProfileInformation.module.css";
 
-import { Autocomplete, BottomNav, TabList, Tabs } from "@/shared/ui";
+import { BottomNav, TabList, Tabs } from "@/shared/ui";
 import { useSnackbar } from "@/shared/lib";
 
 import {
@@ -10,7 +10,6 @@ import {
   transformProfileDataToUpdate,
   useUpdateProfileInfo,
 } from "@/entities/profile";
-import { useGetAllSports } from "@/entities/sport";
 
 import { ProfileInfoTab } from "../../constants/profile-info-tab";
 
@@ -20,6 +19,7 @@ import { useSelectOverrideLoginInfo } from "../../model/selectors/selectOverride
 import { useSelectCurrentProfile } from "../../model/selectors/selectCurrentProfile/selectCurrentProfile";
 import { SetLoginDataToggle } from "../SetLoginDataToggle/SetLoginDataToggle";
 import { ProfileInfoPerRole } from "../ProfileInfoPerRole/ProfileInfoPerRole";
+import { TrainerProfileInformation } from "../TrainerProfileInformation/TrainerProfileInformation";
 
 interface ProfileInformationProps {
   userId: string;
@@ -37,8 +37,6 @@ export const ProfileInformation: FC<ProfileInformationProps> = ({
   const profile = useSelectCurrentProfile();
   const editableProfile = useSelectEditableProfile();
   const overrideLoginInfo = useSelectOverrideLoginInfo();
-
-  const { data: sports, isLoading: isSportsLoading } = useGetAllSports();
 
   const { showError, showSuccess } = useSnackbar();
 
@@ -86,27 +84,7 @@ export const ProfileInformation: FC<ProfileInformationProps> = ({
     {
       label: "Trainer",
       value: ProfileInfoTab.Trainer,
-      content: (
-        <ProfileInfoPerRole
-          profileKey={"userTrainerInfo"}
-          additionalFieldsAbove={
-            <SetLoginDataToggle currentProfile={"userTrainerInfo"} />
-          }
-          additionalFieldsBelow={
-            <Autocomplete
-              name={"sports"}
-              list={sports}
-              displayKey={"id"}
-              displayValue={"name"}
-              loading={isSportsLoading}
-              label={"Sports"}
-              lazy
-              multiple
-              placeholder={"[Swimming, Karate]"}
-            />
-          }
-        />
-      ),
+      content: <TrainerProfileInformation />,
     },
     {
       label: "Gym Admin",

@@ -39,3 +39,4 @@ export { transformProfileDataToUpdate } from "./lib/helpers/transformProfileData
 
 //types
 export type { IProfile, IProfileInfo } from "./model/types/profile";
+export type { ITrainerSportInfo } from "./model/types/trainer-sport-info";
