@@ -12,6 +12,7 @@ export { useUserDevice } from "./hooks/useUserDevice";
 export { useSnackbar } from "./hooks/useSnackbar";
 export { useUrlWithReturnUrl } from "./hooks/router/useUrlWithReturnUrl";
 export { useMappedRoles } from "./hooks/useMappedRoles";
+export { useDebounce } from "./hooks/useDebounce";
 
 //utils
 export { getDeviceDetect } from "./utils/detect-device";

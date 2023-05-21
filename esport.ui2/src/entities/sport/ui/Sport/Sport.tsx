@@ -6,10 +6,5 @@ interface SportProps {
 }
 
 export const Sport: FC<SportProps> = (props) => {
-
-    return (
-        <div className={styles.wrapper}>
-
-        </div>
-    );
+  return <div className={styles.wrapper}></div>;
 };

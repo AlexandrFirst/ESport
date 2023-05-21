@@ -21,6 +21,7 @@ export type InputBaseProps = InputHTMLAttributes<HTMLInputElement> & {
   fullWidth?: boolean;
   labelActive?: boolean;
   marginTop?: "sm" | "md" | "lg" | "none";
+  endIconClassName?: string;
   error?: Message;
 };
 
@@ -43,6 +44,7 @@ export const InputBase = forwardRef<HTMLInputElement, InputBaseProps>(
       onFocus,
       onBlur,
       value,
+      endIconClassName,
       ...props
     },
     ref
@@ -54,6 +56,7 @@ export const InputBase = forwardRef<HTMLInputElement, InputBaseProps>(
       <div
         className={cn(styles.main_wrapper, className, {
           [styles.full_width]: fullWidth,
+          [styles.initial_width]: !fullWidth,
         })}
       >
         <div className={cn(styles.wrapper)}>
@@ -91,7 +94,11 @@ export const InputBase = forwardRef<HTMLInputElement, InputBaseProps>(
               onBlur?.(e);
             }}
           />
-          <div className={cn(styles.endIcon, { [styles.error]: !!error })}>
+          <div
+            className={cn(styles.endIcon, endIconClassName, {
+              [styles.error]: !!error,
+            })}
+          >
             {endIcon}
           </div>
         </div>

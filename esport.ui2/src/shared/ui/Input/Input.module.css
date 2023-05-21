@@ -37,7 +37,7 @@
 }
 
 .input_1 {
-  @apply rounded-md bg-theme-main border-[1px] focus:border-2 focus:outline-0 min-h-[45px] border-theme-main w-[100%] px-2.5;
+  @apply rounded-md bg-theme-main border-[1px] focus:border-2 focus:outline-0 min-h-[45px] border-theme-main w-full px-2.5;
 }
 
 .input_1_error {
@@ -58,4 +58,8 @@
 
 .full_width {
   @apply w-full;
+}
+
+.initial_width {
+  @apply w-[fit-content];
 }
