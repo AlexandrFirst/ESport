@@ -14,6 +14,7 @@ using UserWorkflow.Application.Commands.UserCommands;
 using UserWorkflow.Application.Configs;
 using UserWorkflow.Application.Requests.GymAdmin;
 using UserWorkflow.Application.Requests.Organisation;
+using UserWorkflow.Application.Requests.Trainer;
 using UserWorkflow.Application.Requests.User;
 using UserWorkflow.Application.Services.Confirmation;
 using UserWorkflow.Application.Services.Gym;
@@ -77,7 +78,9 @@ namespace UserWorkflow.Application
             services.AddTransient<IRequestHandler<GetOrganisationListing, GetOrganisationListingResult>, GetOrganisationListingHandler>();
             services.AddTransient<IRequestHandler<GetGymRequests, GetGymRequestsResult>, GetGymRequestsHandler>();
 
+            services.AddTransient<ICommandHandler<CreateLesson>, CreateLessonHandler>();
             services.AddTransient<ICommandHandler<ApplyTrainerForTimeSchedule>, ApplyTrainerForTimeScheduleHandler>();
+            services.AddTransient<IRequestHandler<GetTrainerTimeTable, GetTrainerTimeTableResult>, GetTrainerTimeTableHandler>();
 
             services.AddScoped<IdentityClient>();
 

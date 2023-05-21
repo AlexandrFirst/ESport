@@ -14,6 +14,7 @@ namespace UserWorkflow.Application.Extensions
         {
             var claimListToRetrieve = new List<AuthRequestData>() { AuthRequestData.Id, AuthRequestData.Name, AuthRequestData.Email, AuthRequestData.Role };
             authorizedBy = new AuthorizedBy();
+            authorizedBy.SetClaimsPrinciple(userPrincipal);
             foreach (var claim in claimListToRetrieve)
             {
                 var isClaimExists = tryGetClaimValue(userPrincipal.Claims, claim, out var value);
