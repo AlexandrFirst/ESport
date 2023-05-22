@@ -6,10 +6,5 @@ interface GymProps {
 }
 
 export const Gym: FC<GymProps> = (props) => {
-
-    return (
-        <div className={styles.wrapper}>
-
-        </div>
-    );
+  return <div className={styles.wrapper}></div>;
 };

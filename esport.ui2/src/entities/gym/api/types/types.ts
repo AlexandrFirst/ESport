@@ -7,8 +7,8 @@ export interface IGymFiltrationModel {
   address?: string;
   openHour?: Date;
   closeHour?: Date;
-  page?: number;
-  pageSize?: number;
+  page: number;
+  pageSize: number;
 }
 
 export interface IGymListingRequest {

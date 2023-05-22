@@ -1,4 +1,4 @@
-import {MutableRefObject, useCallback, useRef} from "react";
+import { MutableRefObject, useCallback, useRef } from "react";
 
 /**
  * Хук, который позволяет отменять предыдущий вызов функции пока не истечет delay

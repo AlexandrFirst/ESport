@@ -26,11 +26,14 @@ const profileInformationSlice = buildSlice({
   name: "profileInformation",
   initialState,
   reducers: {
+    setInitialData(state, action: PayloadAction<IProfile>) {
+      state.currentProfile = action.payload;
+      state.editableProfile = action.payload;
+    },
     setCurrentProfile(state, action: PayloadAction<IProfile | null>) {
       state.currentProfile = action.payload;
     },
     setEditableProfile(state, { payload }: PayloadAction<IProfile>) {
-      // state.editableProfile = getEditableProfile(payload);
       state.editableProfile = payload;
     },
     setEditableProfileNotToNull(
@@ -49,7 +52,6 @@ const profileInformationSlice = buildSlice({
         // @ts-ignore
         state.editableProfile[profileKey][profileInfoKey] = value;
       } else {
-        console.log("In else");
         // @ts-ignore
         state.editableProfile[profileKey][0][profileInfoKey] = value;
       }

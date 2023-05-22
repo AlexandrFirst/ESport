@@ -1,23 +1,17 @@
-import {ProfileContacts} from "./profile-contacts";
-
-//TODO: remove
-export interface IOldProfileToRemove {
-  bannerImage?: string;
-  avatarImage?: string;
-  fullName: string;
-  level?: string;
-  location?: string;
-  lastLogin?: string;
-  country?: string;
-  contacts?: ProfileContacts;
-}
+import { ITrainerSportInfo } from "../../model/types/trainer-sport-info";
+import { IGymInfo } from "@/entities/gym";
 
 export interface IProfile {
   userIdentityInfo?: IProfileInfo;
   userTraineeInfo?: IProfileInfo;
-  userTrainerInfo?: IProfileInfo;
+  userTrainerInfo?: ITrainerInfo;
   userAdminInfo?: IProfileInfo;
   userOrganisationAdminInfos?: IProfileInfo[];
+}
+
+export interface ITrainerInfo extends IProfileInfo {
+  trainerSportInfos: ITrainerSportInfo[];
+  trainerGymInfo: IGymInfo[];
 }
 
 export interface IProfileInfo {

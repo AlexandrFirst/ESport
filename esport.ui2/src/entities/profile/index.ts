@@ -13,7 +13,6 @@ export { ReadonlyProfileInfo } from "./ui/ReadonlyProfileInfo/ReadonlyProfileInf
 
 //model
 export type { ProfileSchema } from "./model/types/profileSchema";
-export type { IOldProfileToRemove } from "./model/types/profile";
 export {
   useProfileActions,
   profileActions,

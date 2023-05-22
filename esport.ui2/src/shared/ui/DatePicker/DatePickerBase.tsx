@@ -5,6 +5,6 @@ interface DatePickerProps extends InputBaseProps {
   className?: string;
 }
 
-export const DatePickerBase: FC<DatePickerProps> = (props) => {
-  return <InputBase {...props} type="date" labelActive />;
+export const DatePickerBase: FC<DatePickerProps> = ({ value, ...props }) => {
+  return <InputBase {...props} value={value} type="date" labelActive />;
 };

@@ -2,6 +2,7 @@ import React, { FC } from "react";
 
 import { ProfileInfoPerRole } from "../ProfileInfoPerRole/ProfileInfoPerRole";
 import { SetLoginDataToggle } from "../SetLoginDataToggle/SetLoginDataToggle";
+import { useGetGyms } from "@/entities/gym";
 
 interface GymAdminProfileInformationProps {
   className?: string;
@@ -10,6 +11,12 @@ interface GymAdminProfileInformationProps {
 export const GymAdminProfileInformation: FC<
   GymAdminProfileInformationProps
 > = ({ className }) => {
+  const { data: gyms, isLoading: isGymsLoading } = useGetGyms({
+    gymFiltrationModel: {
+      page: 1,
+      pageSize: 100,
+    },
+  });
   return (
     <ProfileInfoPerRole
       profileKey={"userAdminInfo"}
