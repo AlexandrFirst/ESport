@@ -12,6 +12,7 @@ using UserWorkflow.Application.Commands.Trainer;
 using UserWorkflow.Application.Commands.User;
 using UserWorkflow.Application.Commands.UserCommands;
 using UserWorkflow.Application.Configs;
+using UserWorkflow.Application.Requests.Gym;
 using UserWorkflow.Application.Requests.GymAdmin;
 using UserWorkflow.Application.Requests.Organisation;
 using UserWorkflow.Application.Requests.Trainer;
@@ -60,6 +61,8 @@ namespace UserWorkflow.Application
 
             services.AddTransient<IRequestHandler<GetPendingAdmins, GetPendingAdminsResult>, GetPendingAdminsHandler>();
             services.AddTransient<IRequestHandler<GetGymRequests, GetGymRequestsResult>, GetGymRequestsHandler>();
+            services.AddTransient<IRequestHandler<GetGymListing, GetGymListingResult>, GetGymListingHandler>();
+
             services.AddTransient<ICommandHandler<ConfirmAdmin>, ConfirmAdminHandler>();
             services.AddTransient<ICommandHandler<ConfirmGymAdmin>, ConfirmGymAdminHandler>();
             services.AddTransient<IRequestHandler<GetPendingTrainers, GetPendingTrainersResult>, GetPendingTrainersHandler>();
