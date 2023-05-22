@@ -1,3 +1,10 @@
+export interface TrainerSportInfoToUpdate {
+  sportId: number;
+  from: Date;
+  to?: Date;
+  level: string;
+}
+
 interface UpdateUserInfo {
   name?: string;
   surname?: string;
@@ -11,15 +18,15 @@ export interface UpdateProfileInfoRequest {
     updateUserInfo?: UpdateUserInfo;
     gymIds: number[];
   };
-  updateOrganisationAdminInfo?: {
+  updateOrganisationAdminInfo?: Maybe<{
     updateUserInfo?: UpdateUserInfo;
     organisationId: number;
-  };
+  }>;
   updateTraineeInfo?: {
     updateUserInfo?: UpdateUserInfo;
   };
   updateTrainerInfo?: {
     updateUserInfo?: UpdateUserInfo;
-    trainerSportInfoIds: [];
+    trainerSportInfoIds: TrainerSportInfoToUpdate[];
   };
 }

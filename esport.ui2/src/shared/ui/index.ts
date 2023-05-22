@@ -23,9 +23,14 @@ export { InputBase } from "./Input/InputBase";
 export type { InputBaseProps } from "./Input/InputBase";
 export { PasswordInput } from "./PasswordInput/PasswordInput";
 export { TextArea } from "./TextArea/TextArea";
+export { Autocomplete } from "./Autocomplete/Autocomplete";
+export type { AutocompleteProps } from "./Autocomplete/Autocomplete";
+export { AutocompleteBase } from "./Autocomplete/AutocompleteBase";
+export type { AutocompleteBaseProps } from "./Autocomplete/AutocompleteBase";
 
 export { Button } from "./Button/Button";
 export { DatePicker } from "./DatePicker/DatePicker";
+export { DatePickerBase } from "./DatePicker/DatePickerBase";
 export { FileUpload } from "./FileUpload/FileUpload";
 
 export { Toast } from "./Toast/Toast";

@@ -8,10 +8,9 @@ import {
   ProfileDataFormProps,
   ReadonlyProfileInfo,
 } from "@/entities/profile";
-import { useSelectEditableProfile } from "../../model/selectors/selectEditableProfile/selectEditableProfile";
 import { useProfileInformationActions } from "../..";
 
-interface ProfileInfoWithCardProps extends ProfileDataFormProps {
+export interface ProfileInfoWithCardProps extends ProfileDataFormProps {
   profileInfo?: IProfileInfo;
   name: keyof IProfile;
   editable?: boolean;

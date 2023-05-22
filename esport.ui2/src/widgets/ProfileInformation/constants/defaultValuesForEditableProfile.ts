@@ -1,4 +1,4 @@
-import { IProfileInfo } from "@/entities/profile";
+import { IProfile, IProfileInfo } from "@/entities/profile";
 
 export const defaultValuesForProfileInfo: IProfileInfo = {
   email: "",
@@ -9,10 +9,14 @@ export const defaultValuesForProfileInfo: IProfileInfo = {
   userId: 0,
 };
 
-export const defaultValuesForEditableProfile = {
+export const defaultValuesForEditableProfile: IProfile = {
   userIdentityInfo: defaultValuesForProfileInfo,
   userTraineeInfo: defaultValuesForProfileInfo,
-  userTrainerInfo: defaultValuesForProfileInfo,
+  userTrainerInfo: {
+    ...defaultValuesForProfileInfo,
+    trainerGymInfo: [],
+    trainerSportInfos: [],
+  },
   userAdminInfo: defaultValuesForProfileInfo,
   userOrganisationAdminInfos: [defaultValuesForProfileInfo],
 };

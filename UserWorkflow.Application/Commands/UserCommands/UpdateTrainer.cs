@@ -18,8 +18,8 @@ namespace UserWorkflow.Application.Commands.User
     public class TrainerSportInfo 
     {
         public int SportId { get; set; }
-        public DateTime From { get; set; }
-        public DateTime To { get; set; }
+        public DateTime From { get; set; }  
+        public DateTime? To { get; set; }
         public string Level { get; set; }
     }
 }

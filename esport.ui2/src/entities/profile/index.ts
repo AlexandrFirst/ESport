@@ -13,7 +13,6 @@ export { ReadonlyProfileInfo } from "./ui/ReadonlyProfileInfo/ReadonlyProfileInf
 
 //model
 export type { ProfileSchema } from "./model/types/profileSchema";
-export type { IOldProfileToRemove } from "./model/types/profile";
 export {
   useProfileActions,
   profileActions,
@@ -39,3 +38,4 @@ export { transformProfileDataToUpdate } from "./lib/helpers/transformProfileData
 
 //types
 export type { IProfile, IProfileInfo } from "./model/types/profile";
+export type { ITrainerSportInfo } from "./model/types/trainer-sport-info";

@@ -1,3 +1,11 @@
 .title {
-    @apply pb-4 text-xl;
+  @apply pb-4 text-xl;
+}
+
+.name_wrapper {
+  @apply flex gap-6;
+}
+
+.input {
+  @apply mb-1;
 }

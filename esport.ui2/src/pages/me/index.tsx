@@ -12,6 +12,7 @@ import { getMainLayout } from "@/widgets/MainLayout";
 import {
   ProfileInformation,
   profileInformationActions,
+  trainerProfileInformationActions,
 } from "@/widgets/ProfileInformation";
 
 type MeProps = PageProps;
@@ -41,9 +42,12 @@ export const getServerSideProps = getAppServerSideProps(
     const { data: profile } = await ProfileApi(ctx).getProfileInfo(
       user.data?.id ?? ""
     );
-    console.log("===profile===", profile);
-    store.dispatch(profileInformationActions.setCurrentProfile(profile));
-    store.dispatch(profileInformationActions.setEditableProfile(profile));
+    store.dispatch(profileInformationActions.setInitialData(profile));
+    store.dispatch(
+      trainerProfileInformationActions.setTrainerSports(
+        profile.userTrainerInfo?.trainerSportInfos ?? []
+      )
+    );
 
     return {
       props: {

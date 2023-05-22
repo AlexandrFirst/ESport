@@ -51,18 +51,22 @@ export const ProfileDataForm: FC<ProfileDataFormProps> = ({
     <div className={className}>
       {label && <BoldText className={styles.title}>{label}</BoldText>}
       {additionalFieldsAbove}
-      <InputBase
-        name={`${namePrefix}_name`}
-        label={"Name"}
-        value={name}
-        onChange={onChange(onChangeName)}
-      />
-      <InputBase
-        name={`${namePrefix}_surname`}
-        value={surname}
-        label={"Surname"}
-        onChange={onChange(onChangeSurname)}
-      />
+      <div className={styles.name_wrapper}>
+        <InputBase
+          name={`${namePrefix}_name`}
+          label={"Name"}
+          value={name}
+          onChange={onChange(onChangeName)}
+          className={styles.input}
+        />
+        <InputBase
+          name={`${namePrefix}_surname`}
+          value={surname}
+          label={"Surname"}
+          onChange={onChange(onChangeSurname)}
+          className={styles.input}
+        />
+      </div>
       <InputBase
         name={`${namePrefix}_email`}
         value={email}

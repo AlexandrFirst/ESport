@@ -1,0 +1,27 @@
+.wrapper {
+  @apply relative;
+}
+
+.end_icon {
+  @apply !top-[30%];
+}
+
+.options {
+  @apply absolute max-h-60 w-full overflow-auto rounded-md bg-theme-card-main py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-modal;
+}
+
+.option {
+  @apply relative cursor-default select-none py-2 pl-3 pr-4 text-theme-main;
+}
+
+.selected {
+  @apply bg-gradient-to-r from-main-from to-main-to text-theme-light;
+}
+
+.text_wrapper {
+  @apply text-center py-4;
+}
+
+.text {
+  @apply text-theme-main sm:text-sm;
+}

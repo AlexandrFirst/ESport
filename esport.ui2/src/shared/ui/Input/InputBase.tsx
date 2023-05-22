@@ -12,7 +12,7 @@ import { AnimatePresence, motion } from "framer-motion";
 export type Message = { message?: string };
 
 export type InputBaseProps = InputHTMLAttributes<HTMLInputElement> & {
-  name: string;
+  name?: string;
   errors?: Record<string, Message>;
   callbackOnChange?: (value: string) => void;
   label?: ReactNode;
@@ -21,6 +21,7 @@ export type InputBaseProps = InputHTMLAttributes<HTMLInputElement> & {
   fullWidth?: boolean;
   labelActive?: boolean;
   marginTop?: "sm" | "md" | "lg" | "none";
+  endIconClassName?: string;
   error?: Message;
 };
 
@@ -43,6 +44,7 @@ export const InputBase = forwardRef<HTMLInputElement, InputBaseProps>(
       onFocus,
       onBlur,
       value,
+      endIconClassName,
       ...props
     },
     ref
@@ -54,6 +56,7 @@ export const InputBase = forwardRef<HTMLInputElement, InputBaseProps>(
       <div
         className={cn(styles.main_wrapper, className, {
           [styles.full_width]: fullWidth,
+          [styles.initial_width]: !fullWidth,
         })}
       >
         <div className={cn(styles.wrapper)}>
@@ -76,7 +79,7 @@ export const InputBase = forwardRef<HTMLInputElement, InputBaseProps>(
           <input
             {...props}
             ref={ref}
-            placeholder={label ? undefined : placeholder}
+            placeholder={label && !labelActive ? undefined : placeholder}
             value={value}
             id={name}
             className={cn(styles.input_1, styles.text, {
@@ -91,7 +94,11 @@ export const InputBase = forwardRef<HTMLInputElement, InputBaseProps>(
               onBlur?.(e);
             }}
           />
-          <div className={cn(styles.endIcon, { [styles.error]: !!error })}>
+          <div
+            className={cn(styles.endIcon, endIconClassName, {
+              [styles.error]: !!error,
+            })}
+          >
             {endIcon}
           </div>
         </div>
