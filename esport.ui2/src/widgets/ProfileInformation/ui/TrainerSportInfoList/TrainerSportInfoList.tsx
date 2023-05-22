@@ -14,10 +14,11 @@ export const TrainerSportInfoList: FC<TrainerSportInfoProps> = ({
 
   return (
     <ul>
-      {trainerSports.map((trainerSport) => (
+      {trainerSports.map((trainerSport, index) => (
         <TrainerSportInfoListItem
           key={trainerSport.sportId}
           trainerSport={trainerSport}
+          index={index}
         />
       ))}
     </ul>

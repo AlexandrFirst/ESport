@@ -1,3 +1,7 @@
-.wrapper {
+.title {
+  @apply mb-2;
+}
 
+.form {
+  @apply flex gap-5;
 }

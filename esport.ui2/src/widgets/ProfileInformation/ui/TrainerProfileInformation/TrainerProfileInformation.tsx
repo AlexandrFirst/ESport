@@ -1,13 +1,15 @@
 import React, { FC } from "react";
 
 import { Autocomplete } from "@/shared/ui";
-import { useGetAllSports } from "@/entities/sport";
+import { ISport, useGetAllSports } from "@/entities/sport";
 
 import { ProfileInfoPerRole } from "../ProfileInfoPerRole/ProfileInfoPerRole";
 import { SetLoginDataToggle } from "../SetLoginDataToggle/SetLoginDataToggle";
 
 import { useTrainerProfileInformationActions } from "../../model/slices/trainerProfileInformationSlice";
 import { useSelectTrainerSports } from "../../model/selectors/selectTrainerSports/selectTrainerSports";
+import { TrainerSportInfoList } from "../TrainerSportInfoList/TrainerSportInfoList";
+import { transformTrainerSportInfoToSport } from "../../lib/helpers/transformTrainerSportInfoToSport/transformTrainerSportInfoToSport";
 
 interface TrainerProfileInformationProps {
   className?: string;
@@ -20,7 +22,6 @@ export const TrainerProfileInformation: FC<TrainerProfileInformationProps> = ({
 
   const { setTrainerSportsBySports } = useTrainerProfileInformationActions();
   const trainerSports = useSelectTrainerSports();
-  console.log("===trainerSports===", trainerSports);
 
   return (
     <>
@@ -30,17 +31,21 @@ export const TrainerProfileInformation: FC<TrainerProfileInformationProps> = ({
           <SetLoginDataToggle currentProfile={"userTrainerInfo"} />
         }
         additionalFieldsBelow={
-          <Autocomplete
-            list={sports}
-            displayKey={"id"}
-            displayValue={"name"}
-            loading={isSportsLoading}
-            label={"Sports"}
-            lazy
-            multiple
-            placeholder={"[Swimming, Karate]"}
-            onChange={setTrainerSportsBySports}
-          />
+          <>
+            <Autocomplete<ISport>
+              list={sports}
+              value={transformTrainerSportInfoToSport(trainerSports)}
+              displayKey={"id"}
+              displayValue={"name"}
+              loading={isSportsLoading}
+              label={"Sports"}
+              lazy
+              multiple
+              placeholder={"[Swimming, Karate]"}
+              onChange={setTrainerSportsBySports}
+            />
+            <TrainerSportInfoList />
+          </>
         }
       />
     </>

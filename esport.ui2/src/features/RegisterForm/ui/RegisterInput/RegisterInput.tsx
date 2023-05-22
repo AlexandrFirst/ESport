@@ -5,7 +5,8 @@ import cn from "classnames";
 
 import { Input, InputBaseProps, PasswordInput } from "@/shared/ui";
 
-type RegisterInputProps = InputBaseProps & {
+type RegisterInputProps = Omit<InputBaseProps, "name"> & {
+  name: string;
   isHided?: boolean;
   type?: "text" | "password";
 };

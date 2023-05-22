@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useCallback } from "react";
 import styles from "./Autocomplete.module.css";
 
 import cn from "classnames";
@@ -14,6 +14,7 @@ import { Icon } from "../Icon/Icon";
 
 import { useAutocomplete } from "./useAutocomplete";
 import { AutocompleteTransition } from "./AutocompleteTransition";
+import { ByComparator } from "@headlessui/react/dist/types";
 
 export interface AutocompleteMultipleBaseProps<T extends {} = {}>
   extends Omit<InputBaseProps, "value" | "onChange" | "list" | "name"> {
@@ -47,8 +48,14 @@ export function AutocompleteMultipleBase<T extends {} = {}>({
     withFilter: false,
   });
 
+  const compare: ByComparator<T> = useCallback(
+    (a: T, b: T) => a[displayKey] === b[displayKey],
+    [displayKey]
+  );
+
   return (
-    <Combobox value={value} onChange={onChange} nullable multiple>
+    //@ts-ignore
+    <Combobox value={value} onChange={onChange} nullable multiple by={compare}>
       {({ open }) => (
         <div className={styles.wrapper}>
           <Combobox.Input

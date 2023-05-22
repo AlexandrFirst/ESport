@@ -30,6 +30,7 @@ export type { AutocompleteBaseProps } from "./Autocomplete/AutocompleteBase";
 
 export { Button } from "./Button/Button";
 export { DatePicker } from "./DatePicker/DatePicker";
+export { DatePickerBase } from "./DatePicker/DatePickerBase";
 export { FileUpload } from "./FileUpload/FileUpload";
 
 export { Toast } from "./Toast/Toast";
