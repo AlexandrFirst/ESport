@@ -56,6 +56,7 @@ namespace UserWorkflow.Application.Requests.User
             model.Info = trainer.Info;
             model.TrainerSportInfos = trainer.TrainerSports.Select(x => new TrainerSportInfo() 
             {
+                SportId = x.SportId,
                 FromDate = x.FromDate,
                 ToDate = x.ToDate ?? DateTime.Now,
                 Level = x.Level,
