@@ -21,6 +21,7 @@ import { SetLoginDataToggle } from "../SetLoginDataToggle/SetLoginDataToggle";
 import { ProfileInfoPerRole } from "../ProfileInfoPerRole/ProfileInfoPerRole";
 import { TrainerProfileInformation } from "../TrainerProfileInformation/TrainerProfileInformation";
 import { useSelectTrainerSports } from "../../model/selectors/selectTrainerSports/selectTrainerSports";
+import { GymAdminProfileInformation } from "../GymAdminProfileInformation/GymAdminProfileInformation";
 
 interface ProfileInformationProps {
   userId: string;
@@ -99,14 +100,7 @@ export const ProfileInformation: FC<ProfileInformationProps> = ({
     {
       label: "Gym Admin",
       value: ProfileInfoTab.GymAdmin,
-      content: (
-        <ProfileInfoPerRole
-          profileKey={"userAdminInfo"}
-          additionalFieldsAbove={
-            <SetLoginDataToggle currentProfile={"userAdminInfo"} />
-          }
-        />
-      ),
+      content: <GymAdminProfileInformation />,
     },
     {
       label: "Organization Admin",
