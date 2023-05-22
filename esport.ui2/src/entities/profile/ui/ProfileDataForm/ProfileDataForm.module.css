@@ -5,3 +5,7 @@
 .name_wrapper {
   @apply flex gap-6;
 }
+
+.input {
+  @apply mb-1;
+}

@@ -57,12 +57,14 @@ export const ProfileDataForm: FC<ProfileDataFormProps> = ({
           label={"Name"}
           value={name}
           onChange={onChange(onChangeName)}
+          className={styles.input}
         />
         <InputBase
           name={`${namePrefix}_surname`}
           value={surname}
           label={"Surname"}
           onChange={onChange(onChangeSurname)}
+          className={styles.input}
         />
       </div>
       <InputBase
