@@ -1,7 +1,7 @@
-interface TrainerSportInfo {
+export interface TrainerSportInfoToUpdate {
   sportId: number;
   from: Date;
-  to: Date;
+  to?: Date;
   level: string;
 }
 
@@ -18,15 +18,15 @@ export interface UpdateProfileInfoRequest {
     updateUserInfo?: UpdateUserInfo;
     gymIds: number[];
   };
-  updateOrganisationAdminInfo?: {
+  updateOrganisationAdminInfo?: Maybe<{
     updateUserInfo?: UpdateUserInfo;
     organisationId: number;
-  };
+  }>;
   updateTraineeInfo?: {
     updateUserInfo?: UpdateUserInfo;
   };
   updateTrainerInfo?: {
     updateUserInfo?: UpdateUserInfo;
-    trainerSportInfoIds: TrainerSportInfo[];
+    trainerSportInfoIds: TrainerSportInfoToUpdate[];
   };
 }

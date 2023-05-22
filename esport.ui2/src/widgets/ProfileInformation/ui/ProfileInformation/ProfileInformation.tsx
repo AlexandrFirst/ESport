@@ -20,6 +20,7 @@ import { useSelectCurrentProfile } from "../../model/selectors/selectCurrentProf
 import { SetLoginDataToggle } from "../SetLoginDataToggle/SetLoginDataToggle";
 import { ProfileInfoPerRole } from "../ProfileInfoPerRole/ProfileInfoPerRole";
 import { TrainerProfileInformation } from "../TrainerProfileInformation/TrainerProfileInformation";
+import { useSelectTrainerSports } from "../../model/selectors/selectTrainerSports/selectTrainerSports";
 
 interface ProfileInformationProps {
   userId: string;
@@ -37,6 +38,7 @@ export const ProfileInformation: FC<ProfileInformationProps> = ({
   const profile = useSelectCurrentProfile();
   const editableProfile = useSelectEditableProfile();
   const overrideLoginInfo = useSelectOverrideLoginInfo();
+  const trainerSports = useSelectTrainerSports();
 
   const { showError, showSuccess } = useSnackbar();
 
@@ -54,10 +56,18 @@ export const ProfileInformation: FC<ProfileInformationProps> = ({
   const handleSave = async () => {
     console.log(
       "===transformProfileDataToUpdate(editableProfile, overrideLoginInfo)===",
-      transformProfileDataToUpdate(editableProfile, overrideLoginInfo)
+      transformProfileDataToUpdate({
+        data: editableProfile,
+        overrideLoginInfo,
+        trainerSports,
+      })
     );
     await mutate(
-      transformProfileDataToUpdate(editableProfile, overrideLoginInfo)
+      transformProfileDataToUpdate({
+        data: editableProfile,
+        overrideLoginInfo,
+        trainerSports,
+      })
     );
   };
 

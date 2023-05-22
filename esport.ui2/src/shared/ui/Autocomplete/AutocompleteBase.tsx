@@ -9,6 +9,7 @@ import { useDebounce } from "@/shared/lib";
 
 import { InputBase, InputBaseProps } from "../Input/InputBase";
 import { Icon } from "../Icon/Icon";
+
 import { useAutocomplete } from "./useAutocomplete";
 import { AutocompleteTransition } from "./AutocompleteTransition";
 

@@ -23,8 +23,20 @@ const trainerProfileInformationSlice = buildSlice({
       state.trainerSports = action.payload;
     },
     setTrainerSportsBySports(state, action: PayloadAction<ISport[]>) {
-      console.log("We are in setTrainerSportsBySports");
       state.trainerSports = transformSportToTrainerSportInfo(action.payload);
+    },
+    setTrainerSportsByIndex(
+      state,
+      action: PayloadAction<{
+        index: number;
+        key: keyof ITrainerSportInfo;
+        value: string | number;
+      }>
+    ) {
+      const { key, value, index } = action.payload;
+      console.log("===value, key===", value, key);
+      // @ts-ignore
+      state.trainerSports[index][key] = value;
     },
   },
   extraReducers: {

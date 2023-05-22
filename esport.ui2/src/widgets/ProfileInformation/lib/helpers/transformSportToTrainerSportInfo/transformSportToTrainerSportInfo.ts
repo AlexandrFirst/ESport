@@ -7,7 +7,7 @@ export const transformSportToTrainerSportInfo = (
   return sports.map((sport) => ({
     sportId: sport.id,
     name: sport.name,
-    fromDate: new Date(),
+    fromDate: "",
     level: "",
   }));
 };
