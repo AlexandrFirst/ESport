@@ -13,10 +13,12 @@ namespace UserWorkflow.Esport.Models
         }
 
         public int Id { get; set; }
-        public int BodyPart { get; set; }
-        public int Name { get; set; }
-        public int Description { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
         public string HealDescription { get; set; }
+        
+        public int? BodyPartId { get; set; }
+        public virtual BodyParts BodyParts { get; set; }
 
         public virtual List<ExerciseTraumas> ExerciseTraumas { get; set; }
         public virtual List<AnswerTraumas> AnswerTraumas { get; set; }
