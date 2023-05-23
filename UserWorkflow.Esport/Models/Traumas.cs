@@ -20,6 +20,8 @@ namespace UserWorkflow.Esport.Models
         public int? BodyPartId { get; set; }
         public virtual BodyParts BodyParts { get; set; }
 
+        public TimeSpan TimeToRecover { get; set; }
+
         public virtual List<ExerciseTraumas> ExerciseTraumas { get; set; }
         public virtual List<AnswerTraumas> AnswerTraumas { get; set; }
     }

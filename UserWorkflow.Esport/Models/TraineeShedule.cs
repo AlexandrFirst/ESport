@@ -13,7 +13,7 @@ namespace UserWorkflow.Esport.Models
 
         public int Id { get; set; }
         
-        public int TraineeId { get; set; }
+        public int? TraineeId { get; set; }
         public virtual Trainee Trainee { get; set; }
 
         public int LessonId { get; set; }

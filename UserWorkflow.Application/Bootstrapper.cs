@@ -15,6 +15,7 @@ using UserWorkflow.Application.Configs;
 using UserWorkflow.Application.Requests.Gym;
 using UserWorkflow.Application.Requests.GymAdmin;
 using UserWorkflow.Application.Requests.Organisation;
+using UserWorkflow.Application.Requests.Trainee;
 using UserWorkflow.Application.Requests.Trainer;
 using UserWorkflow.Application.Requests.User;
 using UserWorkflow.Application.Services.Confirmation;
@@ -85,6 +86,8 @@ namespace UserWorkflow.Application
             services.AddTransient<ICommandHandler<ApplyTrainerForTimeSchedule>, ApplyTrainerForTimeScheduleHandler>();
             services.AddTransient<IRequestHandler<GetTrainerTimeTable, GetTrainerTimeTableResult>, GetTrainerTimeTableHandler>();
 
+            services.AddTransient<IRequestHandler<GetTraineeRecommedation, GetTraineeRecommedationResult>, GetTraineeRecommedationHandler>();
+
             services.AddScoped<IdentityClient>();
 
             services.AddSingleton<IConfirmationService, ConfirmationService>();
@@ -98,6 +101,7 @@ namespace UserWorkflow.Application
             services.AddTransient<IPaging<TrainerRequest>, Paging<TrainerRequest>>();
             services.AddTransient<IPaging<Gym>, Paging<Gym>>();
             services.AddTransient<IPaging<Organisation>, Paging<Organisation>>();
+            services.AddTransient<IPaging<Lesson>, Paging<Lesson>>();
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
