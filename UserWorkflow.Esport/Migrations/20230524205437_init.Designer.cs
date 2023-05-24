@@ -12,8 +12,8 @@ using UserWorkflow.Esport;
 namespace UserWorkflow.Esport.Migrations
 {
     [DbContext(typeof(EsportDataContext))]
-    [Migration("20230501082042_change trainer request table name")]
-    partial class changetrainerrequesttablename
+    [Migration("20230524205437_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -181,6 +181,86 @@ namespace UserWorkflow.Esport.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("BodyParts");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Some shoulder description",
+                            Name = "Shoulder"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Some neck description",
+                            Name = "Neck"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Some backbone description",
+                            Name = "Backbone"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Some lumbar description",
+                            Name = "Lumbar"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Description = "Some arm description",
+                            Name = "Arm"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Description = "Some arm description",
+                            Name = "Forearm"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Description = "Some elbow description",
+                            Name = "Elbow"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Description = "Some wrist description",
+                            Name = "Wrist"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Description = "Some leg description",
+                            Name = "Leg"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Description = "Some foot description",
+                            Name = "Foot"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Description = "Some ankle description",
+                            Name = "Ankle"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Description = "Some nose description",
+                            Name = "Nose"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Description = "Some tendon description",
+                            Name = "tendon "
+                        });
                 });
 
             modelBuilder.Entity("UserWorkflow.Esport.Models.Exercise", b =>
@@ -197,10 +277,18 @@ namespace UserWorkflow.Esport.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("ExerciseOwnerId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsPublic")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ExerciseOwnerId");
 
                     b.ToTable("Exercises");
                 });
@@ -598,6 +686,15 @@ namespace UserWorkflow.Esport.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<int>("AnswerType")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ParentQuestionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("QuestionStage")
+                        .HasColumnType("int");
+
                     b.Property<string>("QuestionText")
                         .HasColumnType("nvarchar(max)");
 
@@ -605,6 +702,8 @@ namespace UserWorkflow.Esport.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ParentQuestionId");
 
                     b.ToTable("Questions");
                 });
@@ -629,6 +728,50 @@ namespace UserWorkflow.Esport.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Sports");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Suitable for everyone",
+                            Name = "Swimming",
+                            Type = 2
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Suitable for everyone",
+                            Name = "Karate",
+                            Type = 0
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Suitable for everyone",
+                            Name = "Powerlifting",
+                            Type = 2
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "Suitable for everyone",
+                            Name = "Car racing",
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Description = "Suitable for everyone",
+                            Name = "Football",
+                            Type = 1
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Description = "Suitable for everyone",
+                            Name = "Basketball",
+                            Type = 1
+                        });
                 });
 
             modelBuilder.Entity("UserWorkflow.Esport.Models.Trainee", b =>
@@ -739,10 +882,13 @@ namespace UserWorkflow.Esport.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<bool>("IsPending")
+                        .HasColumnType("bit");
+
                     b.Property<int>("LessonId")
                         .HasColumnType("int");
 
-                    b.Property<int>("TraineeId")
+                    b.Property<int?>("TraineeId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -792,7 +938,7 @@ namespace UserWorkflow.Esport.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Email")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Info")
                         .HasColumnType("nvarchar(max)");
@@ -816,10 +962,6 @@ namespace UserWorkflow.Esport.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Email")
-                        .IsUnique()
-                        .HasFilter("[Email] IS NOT NULL");
 
                     b.ToTable("Trainers");
                 });
@@ -943,21 +1085,91 @@ namespace UserWorkflow.Esport.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("BodyPart")
+                    b.Property<int?>("BodyPartId")
                         .HasColumnType("int");
 
-                    b.Property<int>("Description")
-                        .HasColumnType("int");
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("HealDescription")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Name")
-                        .HasColumnType("int");
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("TimeToRecover")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("BodyPartId");
+
                     b.ToTable("Traumas");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            BodyPartId = 11,
+                            Description = "very painful trauma",
+                            HealDescription = "Drink tea",
+                            Name = "ankle fracture",
+                            TimeToRecover = 8640000000000L
+                        },
+                        new
+                        {
+                            Id = 2,
+                            BodyPartId = 4,
+                            Description = "very painful trauma",
+                            HealDescription = "Drink tea",
+                            Name = "pain in the lumbar",
+                            TimeToRecover = 17280000000000L
+                        },
+                        new
+                        {
+                            Id = 3,
+                            BodyPartId = 12,
+                            Description = "very painful trauma",
+                            HealDescription = "Drink tea",
+                            Name = "Blood from nose",
+                            TimeToRecover = 12960000000000L
+                        },
+                        new
+                        {
+                            Id = 4,
+                            BodyPartId = 4,
+                            Description = "very painful trauma",
+                            HealDescription = "Drink tea",
+                            Name = "Fracture of the lumbar spine",
+                            TimeToRecover = 13824000000000L
+                        },
+                        new
+                        {
+                            Id = 5,
+                            BodyPartId = 13,
+                            Description = "very painful trauma",
+                            HealDescription = "Drink tea",
+                            Name = "Achilles tendon sprain or tear",
+                            TimeToRecover = 25920000000000L
+                        },
+                        new
+                        {
+                            Id = 6,
+                            BodyPartId = 11,
+                            Description = "very painful trauma",
+                            HealDescription = "Drink tea",
+                            Name = "Ankle sprains",
+                            TimeToRecover = 20736000000000L
+                        },
+                        new
+                        {
+                            Id = 7,
+                            BodyPartId = 8,
+                            Description = "very painful trauma",
+                            HealDescription = "Drink tea",
+                            Name = "Pain in the wrist",
+                            TimeToRecover = 34560000000000L
+                        });
                 });
 
             modelBuilder.Entity("UserWorkflow.Esport.Models.AnswerBodyParts", b =>
@@ -1026,6 +1238,16 @@ namespace UserWorkflow.Esport.Migrations
                     b.Navigation("Answers");
 
                     b.Navigation("Traumas");
+                });
+
+            modelBuilder.Entity("UserWorkflow.Esport.Models.Exercise", b =>
+                {
+                    b.HasOne("UserWorkflow.Esport.Models.Trainer", "ExerciseOwner")
+                        .WithMany("Exercise")
+                        .HasForeignKey("ExerciseOwnerId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("ExerciseOwner");
                 });
 
             modelBuilder.Entity("UserWorkflow.Esport.Models.ExerciseBodyPart", b =>
@@ -1205,6 +1427,16 @@ namespace UserWorkflow.Esport.Migrations
                     b.Navigation("Organisation");
                 });
 
+            modelBuilder.Entity("UserWorkflow.Esport.Models.Question", b =>
+                {
+                    b.HasOne("UserWorkflow.Esport.Models.Question", "ParentQuestion")
+                        .WithMany("SubQuestion")
+                        .HasForeignKey("ParentQuestionId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("ParentQuestion");
+                });
+
             modelBuilder.Entity("UserWorkflow.Esport.Models.TraineeAnswers", b =>
                 {
                     b.HasOne("UserWorkflow.Esport.Models.Answers", "Answers")
@@ -1246,8 +1478,7 @@ namespace UserWorkflow.Esport.Migrations
                     b.HasOne("UserWorkflow.Esport.Models.Trainee", "Trainee")
                         .WithMany("TraineeShedules")
                         .HasForeignKey("TraineeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Lesson");
 
@@ -1340,6 +1571,16 @@ namespace UserWorkflow.Esport.Migrations
                     b.Navigation("Trainer");
                 });
 
+            modelBuilder.Entity("UserWorkflow.Esport.Models.Traumas", b =>
+                {
+                    b.HasOne("UserWorkflow.Esport.Models.BodyParts", "BodyParts")
+                        .WithMany("RelatedTraumas")
+                        .HasForeignKey("BodyPartId")
+                        .OnDelete(DeleteBehavior.SetNull);
+
+                    b.Navigation("BodyParts");
+                });
+
             modelBuilder.Entity("UserWorkflow.Esport.Models.Administrators", b =>
                 {
                     b.Navigation("GymAdministrators");
@@ -1361,6 +1602,8 @@ namespace UserWorkflow.Esport.Migrations
                     b.Navigation("AnswerBodyParts");
 
                     b.Navigation("ExerciseBodyParts");
+
+                    b.Navigation("RelatedTraumas");
                 });
 
             modelBuilder.Entity("UserWorkflow.Esport.Models.Exercise", b =>
@@ -1417,6 +1660,8 @@ namespace UserWorkflow.Esport.Migrations
             modelBuilder.Entity("UserWorkflow.Esport.Models.Question", b =>
                 {
                     b.Navigation("Answers");
+
+                    b.Navigation("SubQuestion");
                 });
 
             modelBuilder.Entity("UserWorkflow.Esport.Models.Sport", b =>
@@ -1447,6 +1692,8 @@ namespace UserWorkflow.Esport.Migrations
 
             modelBuilder.Entity("UserWorkflow.Esport.Models.Trainer", b =>
                 {
+                    b.Navigation("Exercise");
+
                     b.Navigation("FoodDiets");
 
                     b.Navigation("TraineeShedules");

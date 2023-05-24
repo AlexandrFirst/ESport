@@ -84,7 +84,9 @@ namespace UserWorkflow.Application
 
             services.AddTransient<ICommandHandler<CreateLesson>, CreateLessonHandler>();
             services.AddTransient<ICommandHandler<ApplyTrainerForTimeSchedule>, ApplyTrainerForTimeScheduleHandler>();
+            services.AddTransient<ICommandHandler<ExerciseCreate>, ExerciseCreateHandler>();
             services.AddTransient<IRequestHandler<GetTrainerTimeTable, GetTrainerTimeTableResult>, GetTrainerTimeTableHandler>();
+
 
             services.AddTransient<IRequestHandler<GetTraineeRecommedation, GetTraineeRecommedationResult>, GetTraineeRecommedationHandler>();
 
@@ -104,6 +106,8 @@ namespace UserWorkflow.Application
             services.AddTransient<IPaging<Lesson>, Paging<Lesson>>();
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+            MediaClient.Bootstrapper.RegisterIocContainers(services, configuration);
 
             Esport.Bootstrapper.RegisterIocContainers(services, configuration);
             Images.Bootstrapper.RegisterIocContainers(services, configuration);

@@ -886,7 +886,7 @@ namespace UserWorkflow.Esport.Migrations
                     b.Property<int>("LessonId")
                         .HasColumnType("int");
 
-                    b.Property<int>("TraineeId")
+                    b.Property<int?>("TraineeId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -1476,8 +1476,7 @@ namespace UserWorkflow.Esport.Migrations
                     b.HasOne("UserWorkflow.Esport.Models.Trainee", "Trainee")
                         .WithMany("TraineeShedules")
                         .HasForeignKey("TraineeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Lesson");
 

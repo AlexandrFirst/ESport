@@ -1,9 +1,11 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
+#nullable disable
+
 namespace UserWorkflow.Esport.Migrations
 {
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,10 +13,15 @@ namespace UserWorkflow.Esport.Migrations
                 name: "Administrators",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(nullable: false),
-                    PhotoId = table.Column<Guid>(nullable: true)
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    TelephoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhotoId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IsProfileConfirmed = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -25,11 +32,11 @@ namespace UserWorkflow.Esport.Migrations
                 name: "BodyParts",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    ImageId = table.Column<Guid>(nullable: true),
-                    Description = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImageId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -37,31 +44,16 @@ namespace UserWorkflow.Esport.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Exercises",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    AgeLimit = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Exercises", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Foods",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Proteins = table.Column<float>(nullable: false),
-                    Fats = table.Column<float>(nullable: false),
-                    Carbohydrates = table.Column<float>(nullable: false),
-                    Caloric = table.Column<float>(nullable: false),
-                    Water = table.Column<float>(nullable: false)
+                    Proteins = table.Column<float>(type: "real", nullable: false),
+                    Fats = table.Column<float>(type: "real", nullable: false),
+                    Carbohydrates = table.Column<float>(type: "real", nullable: false),
+                    Caloric = table.Column<float>(type: "real", nullable: false),
+                    Water = table.Column<float>(type: "real", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -72,10 +64,10 @@ namespace UserWorkflow.Esport.Migrations
                 name: "Organisations",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -86,25 +78,33 @@ namespace UserWorkflow.Esport.Migrations
                 name: "Questions",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    QuestionText = table.Column<string>(nullable: true),
-                    QuestionType = table.Column<int>(nullable: false)
+                    QuestionText = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    QuestionType = table.Column<int>(type: "int", nullable: false),
+                    AnswerType = table.Column<int>(type: "int", nullable: false),
+                    QuestionStage = table.Column<int>(type: "int", nullable: false),
+                    ParentQuestionId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Questions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Questions_Questions_ParentQuestionId",
+                        column: x => x.ParentQuestionId,
+                        principalTable: "Questions",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
                 name: "Sports",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Type = table.Column<int>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true)
+                    Type = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -115,11 +115,16 @@ namespace UserWorkflow.Esport.Migrations
                 name: "Trainees",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(nullable: false),
-                    Info = table.Column<string>(nullable: true),
-                    PhotoId = table.Column<Guid>(nullable: true)
+                    Info = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    TelephoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhotoId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IsProfileConfirmed = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -130,12 +135,16 @@ namespace UserWorkflow.Esport.Migrations
                 name: "Trainers",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(nullable: true),
-                    Status = table.Column<int>(nullable: false),
-                    PhotoId = table.Column<Guid>(nullable: true),
-                    Info = table.Column<string>(nullable: true)
+                    Info = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TelephoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhotoId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IsProfileConfirmed = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -146,101 +155,36 @@ namespace UserWorkflow.Esport.Migrations
                 name: "Traumas",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    BodyPart = table.Column<int>(nullable: false),
-                    Name = table.Column<int>(nullable: false),
-                    Description = table.Column<int>(nullable: false),
-                    HealDescription = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    HealDescription = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    BodyPartId = table.Column<int>(type: "int", nullable: true),
+                    TimeToRecover = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Traumas", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ExerciseBodyParts",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ExerciseId = table.Column<int>(nullable: false),
-                    BodyPartId = table.Column<int>(nullable: false),
-                    Description = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ExerciseBodyParts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ExerciseBodyParts_BodyParts_BodyPartId",
+                        name: "FK_Traumas_BodyParts_BodyPartId",
                         column: x => x.BodyPartId,
                         principalTable: "BodyParts",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ExerciseBodyParts_Exercises_ExerciseId",
-                        column: x => x.ExerciseId,
-                        principalTable: "Exercises",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ExerciseTutorials",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ExerciseId = table.Column<int>(nullable: true),
-                    Link = table.Column<string>(nullable: true),
-                    PublicId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ExerciseTutorials", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ExerciseTutorials_Exercises_ExerciseId",
-                        column: x => x.ExerciseId,
-                        principalTable: "Exercises",
-                        principalColumn: "Id",
                         onDelete: ReferentialAction.SetNull);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TraineeExercises",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ExerciseId = table.Column<int>(nullable: false),
-                    DescriptionOverride = table.Column<string>(nullable: true),
-                    ExerciseType = table.Column<int>(nullable: false),
-                    IsRecommended = table.Column<bool>(nullable: false),
-                    ExerciseStatus = table.Column<int>(nullable: false),
-                    StatusReason = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TraineeExercises", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_TraineeExercises_Exercises_ExerciseId",
-                        column: x => x.ExerciseId,
-                        principalTable: "Exercises",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Gyms",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    Address = table.Column<string>(nullable: true),
-                    OpenTime = table.Column<TimeSpan>(nullable: false),
-                    CloseTime = table.Column<TimeSpan>(nullable: false),
-                    OrganisationId = table.Column<int>(nullable: true)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    OpenTime = table.Column<TimeSpan>(type: "time", nullable: false),
+                    CloseTime = table.Column<TimeSpan>(type: "time", nullable: false),
+                    OrganisationId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -257,10 +201,17 @@ namespace UserWorkflow.Esport.Migrations
                 name: "OrganisationAdministrators",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<int>(nullable: false),
-                    OrganisationId = table.Column<int>(nullable: false)
+                    OrganisationId = table.Column<int>(type: "int", nullable: false),
+                    IsConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Surname = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    TelephoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhotoId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    IsProfileConfirmed = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -277,10 +228,10 @@ namespace UserWorkflow.Esport.Migrations
                 name: "Answers",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Answer = table.Column<string>(nullable: true),
-                    QuestionId = table.Column<int>(nullable: false)
+                    Answer = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    QuestionId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -294,40 +245,37 @@ namespace UserWorkflow.Esport.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ExerciseSports",
+                name: "Exercises",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    SportId = table.Column<int>(nullable: false),
-                    ExerciseId = table.Column<int>(nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AgeLimit = table.Column<int>(type: "int", nullable: true),
+                    ExerciseOwnerId = table.Column<int>(type: "int", nullable: true),
+                    IsPublic = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ExerciseSports", x => x.Id);
+                    table.PrimaryKey("PK_Exercises", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ExerciseSports_Exercises_ExerciseId",
-                        column: x => x.ExerciseId,
-                        principalTable: "Exercises",
+                        name: "FK_Exercises_Trainers_ExerciseOwnerId",
+                        column: x => x.ExerciseOwnerId,
+                        principalTable: "Trainers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ExerciseSports_Sports_SportId",
-                        column: x => x.SportId,
-                        principalTable: "Sports",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.SetNull);
                 });
 
             migrationBuilder.CreateTable(
                 name: "FoodDiets",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TrainerId = table.Column<int>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true)
+                    TrainerId = table.Column<int>(type: "int", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -344,14 +292,14 @@ namespace UserWorkflow.Esport.Migrations
                 name: "TrainerSports",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TrainerId = table.Column<int>(nullable: false),
-                    SportId = table.Column<int>(nullable: false),
-                    IsConfirmed = table.Column<bool>(nullable: false),
-                    FromDate = table.Column<DateTime>(nullable: false),
-                    ToDate = table.Column<DateTime>(nullable: true),
-                    Level = table.Column<string>(nullable: true)
+                    TrainerId = table.Column<int>(type: "int", nullable: false),
+                    SportId = table.Column<int>(type: "int", nullable: false),
+                    IsConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    FromDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ToDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Level = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -371,39 +319,14 @@ namespace UserWorkflow.Esport.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ExerciseTraumas",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    TraumaId = table.Column<int>(nullable: false),
-                    ExerciseId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ExerciseTraumas", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ExerciseTraumas_Exercises_ExerciseId",
-                        column: x => x.ExerciseId,
-                        principalTable: "Exercises",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ExerciseTraumas_Traumas_TraumaId",
-                        column: x => x.TraumaId,
-                        principalTable: "Traumas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "GymAdministrators",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    GymId = table.Column<int>(nullable: false),
-                    AdministratorId = table.Column<int>(nullable: false)
+                    GymId = table.Column<int>(type: "int", nullable: false),
+                    AdministratorId = table.Column<int>(type: "int", nullable: false),
+                    IsConfirmed = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -426,12 +349,12 @@ namespace UserWorkflow.Esport.Migrations
                 name: "GymShifts",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    GymId = table.Column<int>(nullable: false),
-                    FromTime = table.Column<TimeSpan>(nullable: false),
-                    ToTime = table.Column<TimeSpan>(nullable: false),
-                    DayOfTheWeeks = table.Column<int>(nullable: false)
+                    GymId = table.Column<int>(type: "int", nullable: false),
+                    FromTime = table.Column<TimeSpan>(type: "time", nullable: false),
+                    ToTime = table.Column<TimeSpan>(type: "time", nullable: false),
+                    DayOfTheWeeks = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -448,11 +371,11 @@ namespace UserWorkflow.Esport.Migrations
                 name: "AnswerBodyParts",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    BodyPartId = table.Column<int>(nullable: false),
-                    AnswerId = table.Column<int>(nullable: false),
-                    IsPositive = table.Column<bool>(nullable: true)
+                    BodyPartId = table.Column<int>(type: "int", nullable: false),
+                    AnswerId = table.Column<int>(type: "int", nullable: false),
+                    IsPositive = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -475,11 +398,11 @@ namespace UserWorkflow.Esport.Migrations
                 name: "AnswerSports",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AnswerId = table.Column<int>(nullable: false),
-                    SportId = table.Column<int>(nullable: false),
-                    IsPositive = table.Column<bool>(nullable: true)
+                    AnswerId = table.Column<int>(type: "int", nullable: false),
+                    SportId = table.Column<int>(type: "int", nullable: false),
+                    IsPositive = table.Column<bool>(type: "bit", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -502,10 +425,10 @@ namespace UserWorkflow.Esport.Migrations
                 name: "AnswerTraumas",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TraumaId = table.Column<int>(nullable: false),
-                    AnswerId = table.Column<int>(nullable: false)
+                    TraumaId = table.Column<int>(type: "int", nullable: false),
+                    AnswerId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -528,10 +451,10 @@ namespace UserWorkflow.Esport.Migrations
                 name: "TraineeAnswers",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AnswerId = table.Column<int>(nullable: false),
-                    TraineeId = table.Column<int>(nullable: false)
+                    AnswerId = table.Column<int>(type: "int", nullable: false),
+                    TraineeId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -551,27 +474,151 @@ namespace UserWorkflow.Esport.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "GetFood_FoodDiets",
+                name: "ExerciseBodyParts",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FoodId = table.Column<int>(nullable: false),
-                    DietId = table.Column<int>(nullable: false),
-                    Description = table.Column<string>(nullable: true),
-                    Amount = table.Column<float>(nullable: false)
+                    ExerciseId = table.Column<int>(type: "int", nullable: false),
+                    BodyPartId = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_GetFood_FoodDiets", x => x.Id);
+                    table.PrimaryKey("PK_ExerciseBodyParts", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_GetFood_FoodDiets_FoodDiets_DietId",
+                        name: "FK_ExerciseBodyParts_BodyParts_BodyPartId",
+                        column: x => x.BodyPartId,
+                        principalTable: "BodyParts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ExerciseBodyParts_Exercises_ExerciseId",
+                        column: x => x.ExerciseId,
+                        principalTable: "Exercises",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ExerciseSports",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    SportId = table.Column<int>(type: "int", nullable: false),
+                    ExerciseId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ExerciseSports", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ExerciseSports_Exercises_ExerciseId",
+                        column: x => x.ExerciseId,
+                        principalTable: "Exercises",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ExerciseSports_Sports_SportId",
+                        column: x => x.SportId,
+                        principalTable: "Sports",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ExerciseTraumas",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TraumaId = table.Column<int>(type: "int", nullable: false),
+                    ExerciseId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ExerciseTraumas", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ExerciseTraumas_Exercises_ExerciseId",
+                        column: x => x.ExerciseId,
+                        principalTable: "Exercises",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ExerciseTraumas_Traumas_TraumaId",
+                        column: x => x.TraumaId,
+                        principalTable: "Traumas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ExerciseTutorials",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ExerciseId = table.Column<int>(type: "int", nullable: true),
+                    Link = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PublicId = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ExerciseTutorials", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ExerciseTutorials_Exercises_ExerciseId",
+                        column: x => x.ExerciseId,
+                        principalTable: "Exercises",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.SetNull);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TraineeExercises",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ExerciseId = table.Column<int>(type: "int", nullable: false),
+                    DescriptionOverride = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ExerciseType = table.Column<int>(type: "int", nullable: false),
+                    IsRecommended = table.Column<bool>(type: "bit", nullable: false),
+                    ExerciseStatus = table.Column<int>(type: "int", nullable: false),
+                    StatusReason = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TraineeExercises", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TraineeExercises_Exercises_ExerciseId",
+                        column: x => x.ExerciseId,
+                        principalTable: "Exercises",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Food_FoodDiets",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    FoodId = table.Column<int>(type: "int", nullable: false),
+                    DietId = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Amount = table.Column<float>(type: "real", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Food_FoodDiets", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Food_FoodDiets_FoodDiets_DietId",
                         column: x => x.DietId,
                         principalTable: "FoodDiets",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_GetFood_FoodDiets_Foods_FoodId",
+                        name: "FK_Food_FoodDiets_Foods_FoodId",
                         column: x => x.FoodId,
                         principalTable: "Foods",
                         principalColumn: "Id",
@@ -582,10 +629,11 @@ namespace UserWorkflow.Esport.Migrations
                 name: "TrainerShedules",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ShiftId = table.Column<int>(nullable: false),
-                    TrainerId = table.Column<int>(nullable: false),
+                    ShiftId = table.Column<int>(type: "int", nullable: false),
+                    TrainerId = table.Column<int>(type: "int", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false),
                     TimeOverride = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
@@ -609,14 +657,14 @@ namespace UserWorkflow.Esport.Migrations
                 name: "Lessons",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    LessonType = table.Column<int>(nullable: false),
-                    TrainerSheduleId = table.Column<int>(nullable: false),
-                    OverrideTrainerShedule = table.Column<bool>(nullable: false),
-                    FromTime = table.Column<TimeSpan>(nullable: true),
-                    ToTime = table.Column<TimeSpan>(nullable: true),
-                    DayOfTheWeek = table.Column<int>(nullable: true)
+                    LessonType = table.Column<int>(type: "int", nullable: false),
+                    TrainerSheduleId = table.Column<int>(type: "int", nullable: false),
+                    OverrideTrainerShedule = table.Column<bool>(type: "bit", nullable: false),
+                    FromTime = table.Column<TimeSpan>(type: "time", nullable: true),
+                    ToTime = table.Column<TimeSpan>(type: "time", nullable: true),
+                    DayOfTheWeek = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -630,13 +678,33 @@ namespace UserWorkflow.Esport.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TrainerRequests",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TrainerSheduleId = table.Column<int>(type: "int", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TrainerRequests", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TrainerRequests_TrainerShedules_TrainerSheduleId",
+                        column: x => x.TrainerSheduleId,
+                        principalTable: "TrainerShedules",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Lesson_FoodsDiets",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    LessonId = table.Column<int>(nullable: false),
-                    FoodDietId = table.Column<int>(nullable: false)
+                    LessonId = table.Column<int>(type: "int", nullable: false),
+                    FoodDietId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -659,10 +727,11 @@ namespace UserWorkflow.Esport.Migrations
                 name: "TraineeShedules",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TraineeId = table.Column<int>(nullable: false),
-                    LessonId = table.Column<int>(nullable: false)
+                    TraineeId = table.Column<int>(type: "int", nullable: true),
+                    LessonId = table.Column<int>(type: "int", nullable: false),
+                    IsPending = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -682,15 +751,42 @@ namespace UserWorkflow.Esport.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TrainerResponses",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    TrainerRequestId = table.Column<int>(type: "int", nullable: false),
+                    TrainerId = table.Column<int>(type: "int", nullable: false),
+                    ApplicationTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TrainerResponses", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TrainerResponses_TrainerRequests_TrainerRequestId",
+                        column: x => x.TrainerRequestId,
+                        principalTable: "TrainerRequests",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TrainerResponses_Trainers_TrainerId",
+                        column: x => x.TrainerId,
+                        principalTable: "Trainers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TraineeSheduleTraineeExercises",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TraineeSheduleId = table.Column<int>(nullable: false),
-                    TraineeExerciseId = table.Column<int>(nullable: false),
-                    Order = table.Column<int>(nullable: false),
-                    Notes = table.Column<string>(nullable: true)
+                    TraineeSheduleId = table.Column<int>(type: "int", nullable: false),
+                    TraineeExerciseId = table.Column<int>(type: "int", nullable: false),
+                    Order = table.Column<int>(type: "int", nullable: false),
+                    Notes = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -708,6 +804,66 @@ namespace UserWorkflow.Esport.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.InsertData(
+                table: "BodyParts",
+                columns: new[] { "Id", "Description", "ImageId", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Some shoulder description", null, "Shoulder" },
+                    { 2, "Some neck description", null, "Neck" },
+                    { 3, "Some backbone description", null, "Backbone" },
+                    { 4, "Some lumbar description", null, "Lumbar" },
+                    { 5, "Some arm description", null, "Arm" },
+                    { 6, "Some arm description", null, "Forearm" },
+                    { 7, "Some elbow description", null, "Elbow" },
+                    { 8, "Some wrist description", null, "Wrist" },
+                    { 9, "Some leg description", null, "Leg" },
+                    { 10, "Some foot description", null, "Foot" },
+                    { 11, "Some ankle description", null, "Ankle" },
+                    { 12, "Some nose description", null, "Nose" },
+                    { 13, "Some tendon description", null, "tendon " }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Sports",
+                columns: new[] { "Id", "Description", "Name", "Type" },
+                values: new object[,]
+                {
+                    { 1, "Suitable for everyone", "Swimming", 2 },
+                    { 2, "Suitable for everyone", "Karate", 0 },
+                    { 3, "Suitable for everyone", "Powerlifting", 2 },
+                    { 4, "Suitable for everyone", "Car racing", 1 },
+                    { 5, "Suitable for everyone", "Football", 1 },
+                    { 6, "Suitable for everyone", "Basketball", 1 }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Traumas",
+                columns: new[] { "Id", "BodyPartId", "Description", "HealDescription", "Name", "TimeToRecover" },
+                values: new object[,]
+                {
+                    { 1, 11, "very painful trauma", "Drink tea", "ankle fracture", 8640000000000L },
+                    { 2, 4, "very painful trauma", "Drink tea", "pain in the lumbar", 17280000000000L },
+                    { 3, 12, "very painful trauma", "Drink tea", "Blood from nose", 12960000000000L },
+                    { 4, 4, "very painful trauma", "Drink tea", "Fracture of the lumbar spine", 13824000000000L },
+                    { 5, 13, "very painful trauma", "Drink tea", "Achilles tendon sprain or tear", 25920000000000L },
+                    { 6, 11, "very painful trauma", "Drink tea", "Ankle sprains", 20736000000000L },
+                    { 7, 8, "very painful trauma", "Drink tea", "Pain in the wrist", 34560000000000L }
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Administrators_Email",
+                table: "Administrators",
+                column: "Email",
+                unique: true,
+                filter: "[Email] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Administrators_UserId",
+                table: "Administrators",
+                column: "UserId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_AnswerBodyParts_AnswerId",
@@ -755,6 +911,11 @@ namespace UserWorkflow.Esport.Migrations
                 column: "ExerciseId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Exercises_ExerciseOwnerId",
+                table: "Exercises",
+                column: "ExerciseOwnerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ExerciseSports_ExerciseId",
                 table: "ExerciseSports",
                 column: "ExerciseId");
@@ -780,19 +941,19 @@ namespace UserWorkflow.Esport.Migrations
                 column: "ExerciseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FoodDiets_TrainerId",
-                table: "FoodDiets",
-                column: "TrainerId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_GetFood_FoodDiets_DietId",
-                table: "GetFood_FoodDiets",
+                name: "IX_Food_FoodDiets_DietId",
+                table: "Food_FoodDiets",
                 column: "DietId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_GetFood_FoodDiets_FoodId",
-                table: "GetFood_FoodDiets",
+                name: "IX_Food_FoodDiets_FoodId",
+                table: "Food_FoodDiets",
                 column: "FoodId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FoodDiets_TrainerId",
+                table: "FoodDiets",
+                column: "TrainerId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GymAdministrators_AdministratorId",
@@ -830,9 +991,28 @@ namespace UserWorkflow.Esport.Migrations
                 column: "TrainerSheduleId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_OrganisationAdministrators_Email",
+                table: "OrganisationAdministrators",
+                column: "Email",
+                unique: true,
+                filter: "[Email] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_OrganisationAdministrators_OrganisationId",
                 table: "OrganisationAdministrators",
                 column: "OrganisationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Organisations_Name",
+                table: "Organisations",
+                column: "Name",
+                unique: true,
+                filter: "[Name] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Questions_ParentQuestionId",
+                table: "Questions",
+                column: "ParentQuestionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TraineeAnswers_AnswerId",
@@ -848,6 +1028,19 @@ namespace UserWorkflow.Esport.Migrations
                 name: "IX_TraineeExercises_ExerciseId",
                 table: "TraineeExercises",
                 column: "ExerciseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Trainees_Email",
+                table: "Trainees",
+                column: "Email",
+                unique: true,
+                filter: "[Email] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Trainees_UserId",
+                table: "Trainees",
+                column: "UserId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_TraineeShedules_LessonId",
@@ -870,6 +1063,21 @@ namespace UserWorkflow.Esport.Migrations
                 column: "TraineeSheduleId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TrainerRequests_TrainerSheduleId",
+                table: "TrainerRequests",
+                column: "TrainerSheduleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TrainerResponses_TrainerId",
+                table: "TrainerResponses",
+                column: "TrainerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TrainerResponses_TrainerRequestId",
+                table: "TrainerResponses",
+                column: "TrainerRequestId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TrainerShedules_ShiftId",
                 table: "TrainerShedules",
                 column: "ShiftId");
@@ -888,6 +1096,11 @@ namespace UserWorkflow.Esport.Migrations
                 name: "IX_TrainerSports_TrainerId",
                 table: "TrainerSports",
                 column: "TrainerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Traumas_BodyPartId",
+                table: "Traumas",
+                column: "BodyPartId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -914,7 +1127,7 @@ namespace UserWorkflow.Esport.Migrations
                 name: "ExerciseTutorials");
 
             migrationBuilder.DropTable(
-                name: "GetFood_FoodDiets");
+                name: "Food_FoodDiets");
 
             migrationBuilder.DropTable(
                 name: "GymAdministrators");
@@ -932,10 +1145,10 @@ namespace UserWorkflow.Esport.Migrations
                 name: "TraineeSheduleTraineeExercises");
 
             migrationBuilder.DropTable(
-                name: "TrainerSports");
+                name: "TrainerResponses");
 
             migrationBuilder.DropTable(
-                name: "BodyParts");
+                name: "TrainerSports");
 
             migrationBuilder.DropTable(
                 name: "Traumas");
@@ -959,7 +1172,13 @@ namespace UserWorkflow.Esport.Migrations
                 name: "TraineeShedules");
 
             migrationBuilder.DropTable(
+                name: "TrainerRequests");
+
+            migrationBuilder.DropTable(
                 name: "Sports");
+
+            migrationBuilder.DropTable(
+                name: "BodyParts");
 
             migrationBuilder.DropTable(
                 name: "Questions");
