@@ -1,0 +1,7 @@
+.header {
+  @apply py-2 flex items-center justify-between;
+}
+
+.date {
+  @apply ml-4 text-xl text-theme-main font-bold;
+}

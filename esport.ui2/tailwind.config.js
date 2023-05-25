@@ -13,6 +13,7 @@ module.exports = {
           card: {
             main: "var(--color-card-bg-main)",
           },
+          scroll: "var(--color-bg-scroll)",
         },
       },
       textColor: {

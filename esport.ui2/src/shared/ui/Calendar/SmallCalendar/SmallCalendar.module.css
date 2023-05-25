@@ -1,0 +1,51 @@
+.wrapper {
+  @apply max-w-[230px];
+}
+
+.header {
+  @apply flex justify-between items-center gap-3 mb-3;
+}
+
+.icon {
+  @apply cursor-pointer;
+}
+
+.date {
+  @apply text-theme-main font-bold;
+}
+
+.btn_wrapper {
+  @apply flex gap-4;
+}
+
+.current_day {
+  @apply bg-gradient-to-r from-main-from to-main-to rounded-full font-bold;
+}
+
+.current_day_text {
+  @apply !text-white;
+}
+
+.not_current_month_text {
+  @apply opacity-60;
+}
+
+.day_grid {
+  @apply grid grid-cols-7 grid-rows-6;
+}
+
+.week_day {
+  @apply text-sm py-1 text-center;
+}
+
+.day_wrapper {
+  @apply py-1 w-full;
+}
+
+.day_text {
+  @apply text-sm text-theme-main hover:opacity-80 active:opacity-60 transition-colors transition-opacity;
+}
+
+.selected_day {
+  @apply bg-theme-accent bg-opacity-80 rounded-full font-bold transition-all opacity-80;
+}

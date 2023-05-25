@@ -11,9 +11,7 @@ export interface IGymFiltrationModel {
   pageSize: number;
 }
 
-export interface IGymListingRequest {
-  gymFiltrationModel: IGymFiltrationModel;
-}
+export type IGymListingRequest = IGymFiltrationModel;
 
 export interface IGymListingResponse {
   gymReadInfos: IGymReadInfo[];

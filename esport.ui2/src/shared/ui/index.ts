@@ -63,3 +63,7 @@ export type { TabList, TabItem } from "./Tabs/Tabs";
 
 export { Footer } from "./Footer/Footer";
 export { BottomNav } from "./BottomNav/BottomNav";
+
+// calendar
+export { Calendar } from "./Calendar/Calendar";
+export { SmallCalendar } from "./Calendar/SmallCalendar/SmallCalendar";
