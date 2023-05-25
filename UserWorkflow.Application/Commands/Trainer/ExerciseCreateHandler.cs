@@ -102,9 +102,9 @@ namespace UserWorkflow.Application.Commands.Trainer
             exercise.ExerciseTraumas.RemoveAll(x => traumasToRemove.Contains(x.TraumaId));
         }
 
-        private async Task handleExerciseTutorials(Exercise exercise, List<ExerciseInfo> exerciseTutorialInfo)
+        private async Task handleExerciseTutorials(Exercise exercise, List<ExerciseTutorialInfo> exerciseTutorialInfo)
         {
-            exerciseTutorialInfo ??= new List<ExerciseInfo>();
+            exerciseTutorialInfo ??= new List<ExerciseTutorialInfo>();
 
             var tutorialToAdd = exerciseTutorialInfo.Where(x => !exercise.ExerciseTutorails.Any(s => s.Link == x.ExerciseId)).ToList();
             var tutorialToRemove = exercise.ExerciseTutorails.Where(x => !exerciseTutorialInfo.Any(s => s.ExerciseId == x.Link)).ToList();

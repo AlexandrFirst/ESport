@@ -21,7 +21,7 @@ namespace UserWorkflow.Application.Commands.Trainer
 
         public bool IsPublic { get; set; }
 
-        public List<ExerciseInfo> exerciseInfos { get; set; }
+        public List<ExerciseTutorialInfo> exerciseInfos { get; set; }
         
         public List<int> SportIds { get; set; }
         public List<int> BodyPartIds { get; set; }
