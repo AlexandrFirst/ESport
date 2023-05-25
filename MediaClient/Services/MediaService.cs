@@ -1,6 +1,8 @@
-﻿using Google.Cloud.Storage.V1;
+﻿using Google.Apis.Logging;
+using Google.Cloud.Storage.V1;
 using MediaClient.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
@@ -14,13 +16,15 @@ namespace MediaClient.Services
     public class MediaService : IMediaService
     {
         private readonly GoogleAuthOptions googleOptions;
+        private readonly ILogger<MediaService> logger;
 
-        public MediaService(IOptions<GoogleAuthOptions> googleOptions)
+        public MediaService(IOptions<GoogleAuthOptions> googleOptions, ILogger<MediaService> logger)
         {
             this.googleOptions = googleOptions.Value;
+            this.logger = logger;
         }
 
-        public async Task<UploadResult> UploadFile(string bucketName, IFormFile fileToUpload) 
+        public async Task<UploadResult> UploadFile(string bucketName, IFormFile fileToUpload)
         {
             var byteFile = getBytesFormIFile(fileToUpload);
             return await UploadFile(bucketName, byteFile, fileToUpload.ContentType ?? string.Empty);
@@ -54,7 +58,7 @@ namespace MediaClient.Services
             return source.ToArray();
         }
 
-        private byte[] getBytesFormIFile(IFormFile formFile) 
+        private byte[] getBytesFormIFile(IFormFile formFile)
         {
             long length = formFile.Length;
             if (length < 0)
@@ -80,10 +84,22 @@ namespace MediaClient.Services
             }
             catch
             {
+                logger.LogError("bucket with name: " + bucketName + " is not found; creating new one");
                 await storage.CreateBucketAsync(projectId, bucketName);
             }
         }
 
-
+        public async Task RemoveFile(string bucketName, string Link)
+        {
+            var storage = StorageClient.Create();
+            try
+            {
+                await storage.DeleteObjectAsync(bucketName, Link);
+            }
+            catch
+            {
+                logger.LogError($"unable to delete object: {Link} in bucket: {bucketName}");
+            }
+        }
     }
 }

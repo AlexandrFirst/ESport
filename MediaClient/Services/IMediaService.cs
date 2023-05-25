@@ -10,8 +10,9 @@ namespace MediaClient.Services
 {
     public interface IMediaService
     {
-        public Task<UploadResult> UploadFile(string bucketName, byte[] fileToUpload, string contentType);
-        public Task<byte[]> DownloadFile(string bucketname, string fileId);
+        Task<UploadResult> UploadFile(string bucketName, byte[] fileToUpload, string contentType);
+        Task<byte[]> DownloadFile(string bucketname, string fileId);
         Task<UploadResult> UploadFile(string bucketName, IFormFile fileToUpload);
+        Task RemoveFile(string bucketname, string Link);
     }
 }

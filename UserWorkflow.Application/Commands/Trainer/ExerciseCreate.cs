@@ -6,11 +6,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UserWorkflow.Application.Base;
+using UserWorkflow.Application.Models.Exercise;
 
 namespace UserWorkflow.Application.Commands.Trainer
 {
     public class ExerciseCreate: BaseCommand
     {
+        public int ExerciseId { get; set; }
+
         [Required]
         public string Name { get; set; }
         public string Description { get; set; }
@@ -18,7 +21,8 @@ namespace UserWorkflow.Application.Commands.Trainer
 
         public bool IsPublic { get; set; }
 
-        public IFormFile VideoExerciseExample { get; set; }
+        public List<ExerciseInfo> exerciseInfos { get; set; }
+        
         public List<int> SportIds { get; set; }
         public List<int> BodyPartIds { get; set; }
         public List<int> TraumaIds { get; set; }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UserWorkflow.Application.Models.Exercise;
 using UserWorkflow.Esport;
 using UserWorkflow.Esport.Models;
 using UserWorkFlow.Infrastructure.Commands;
@@ -15,6 +16,8 @@ namespace UserWorkflow.Application.Commands.Trainer
     {
         private readonly EsportDataContext esportDataContext;
         private readonly IMediaService mediaService;
+
+        private readonly string bucketName = "exercise_tutorials";
 
         public ExerciseCreateHandler(EsportDataContext esportDataContext,
             IMediaService mediaService)
@@ -32,31 +35,83 @@ namespace UserWorkflow.Application.Commands.Trainer
                 throw new Exception("No trainer with user id: " + userId);
             }
 
-            var exercise = new Exercise();
+            var exercise = trainer.Exercise.FirstOrDefault(x => x.Id == command.ExerciseId);
+            if (exercise == null)
+            {
+                exercise = new Exercise();
+            }
+
             exercise.Name = command.Name;
             exercise.Description = command.Description;
             exercise.AgeLimit = command.AgeLimit;
 
             exercise.IsPublic = command.IsPublic;
 
-            command.SportIds.ForEach(sportId =>
+            handleSportInfos(exercise, command.SportIds);
+            handleBodyParts(exercise, command.BodyPartIds);
+            handleTraumasInfo(exercise, command.TraumaIds);
+
+            await handleExerciseTutorials(exercise, command.exerciseInfos);
+
+            await esportDataContext.SaveChangesAsync();
+
+            return new CommandResult(exercise.Id);
+        }
+
+        private void handleSportInfos(Exercise exercise, List<int> sportIds)
+        {
+            sportIds ??= new List<int>();
+
+            var sportToAdd = sportIds.Where(x => !exercise.ExerciseSports.Any(s => s.SportId == x)).ToList();
+            var sportsToRemove = exercise.ExerciseSports.Where(x => sportIds.Any(p => p == x.SportId)).Select(x => x.SportId).ToList();
+
+            sportToAdd.ForEach(sportId =>
             {
                 exercise.ExerciseSports.Add(new ExerciseSport() { SportId = sportId });
             });
 
-            command.BodyPartIds.ForEach(bodyPartId =>
+            exercise.ExerciseSports.RemoveAll(x => sportsToRemove.Contains(x.SportId));
+        }
+
+        private void handleBodyParts(Exercise exercise, List<int> bodyPartsIds)
+        {
+            bodyPartsIds ??= new List<int>();
+            var bodyPartToAdd = bodyPartsIds.Where(x => !exercise.BodyParts.Any(s => s.BodyPartId == x)).ToList();
+            var bodyPartToRemove = exercise.BodyParts.Where(x => bodyPartsIds.Any(p => p == x.BodyPartId)).Select(x => x.BodyPartId).ToList();
+
+            bodyPartToAdd.ForEach(bodyPartId =>
             {
                 exercise.BodyParts.Add(new ExerciseBodyPart() { BodyPartId = bodyPartId });
             });
 
-            command.TraumaIds.ForEach(traumaId =>
+            exercise.BodyParts.RemoveAll(x => bodyPartToRemove.Contains(x.BodyPartId));
+        }
+
+        private void handleTraumasInfo(Exercise exercise, List<int> traumaIds)
+        {
+            traumaIds ??= new List<int>();
+
+            var traumasToAdd = traumaIds.Where(x => !exercise.ExerciseTraumas.Any(s => s.TraumaId == x)).ToList();
+            var traumasToRemove = exercise.ExerciseTraumas.Where(x => traumaIds.Any(p => p == x.TraumaId)).Select(x => x.TraumaId).ToList();
+
+            traumasToAdd.ForEach(traumaId =>
             {
                 exercise.ExerciseTraumas.Add(new ExerciseTraumas() { TraumaId = traumaId });
             });
 
-            if (command.VideoExerciseExample != null) {
+            exercise.ExerciseTraumas.RemoveAll(x => traumasToRemove.Contains(x.TraumaId));
+        }
 
-                var uploadResult = await mediaService.UploadFile("exercise_tutorials", command.VideoExerciseExample);
+        private async Task handleExerciseTutorials(Exercise exercise, List<ExerciseInfo> exerciseTutorialInfo)
+        {
+            exerciseTutorialInfo ??= new List<ExerciseInfo>();
+
+            var tutorialToAdd = exerciseTutorialInfo.Where(x => !exercise.ExerciseTutorails.Any(s => s.Link == x.ExerciseId)).ToList();
+            var tutorialToRemove = exercise.ExerciseTutorails.Where(x => !exerciseTutorialInfo.Any(s => s.ExerciseId == x.Link)).ToList();
+
+            foreach (var tutorial in tutorialToAdd)
+            {
+                var uploadResult = await mediaService.UploadFile(bucketName, tutorial.VideoExerciseExample);
 
                 var exerciseTutorial = new ExerciseTutorial()
                 {
@@ -67,10 +122,12 @@ namespace UserWorkflow.Application.Commands.Trainer
                 exercise.ExerciseTutorails.Add(exerciseTutorial);
             }
 
-            trainer.Exercise.Add(exercise);
-            await esportDataContext.SaveChangesAsync();
-
-            return new CommandResult(exercise.Id);
+            foreach (var tutorial in tutorialToRemove)
+            {
+                await mediaService.RemoveFile(bucketName, tutorial.Link);
+                exercise.ExerciseTutorails.RemoveAll(l => l.Link == tutorial.Link);
+            }
         }
+
     }
 }

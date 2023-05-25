@@ -99,6 +99,31 @@
         "Name": "Claims[Name] > value > |",
         "Email": "Claims[Email] > value > |"
       }
+    },
+    {
+      "DownstreamPathTemplate": "/Trainer/ExerciseListing",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "host.docker.internal",
+          "Port": 5005
+        }
+      ],
+      "UpstreamPathTemplate": "/trainer-exercise-listing",
+      "UpstreamHttpMethod": [ "POST" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "ESport",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "Role": "Pupil,LocalAdmin,OrgAdmin"
+      },
+      "AddHeadersToRequest": {
+        "Role": "Claims[Role] > value > |",
+        "Id": "Claims[Id] > value > |",
+        "Name": "Claims[Name] > value > |",
+        "Email": "Claims[Email] > value > |"
+      }
     }
   ]
 }

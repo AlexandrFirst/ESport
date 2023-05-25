@@ -86,7 +86,7 @@ namespace UserWorkflow.Application
             services.AddTransient<ICommandHandler<ApplyTrainerForTimeSchedule>, ApplyTrainerForTimeScheduleHandler>();
             services.AddTransient<ICommandHandler<ExerciseCreate>, ExerciseCreateHandler>();
             services.AddTransient<IRequestHandler<GetTrainerTimeTable, GetTrainerTimeTableResult>, GetTrainerTimeTableHandler>();
-
+            services.AddTransient<IRequestHandler<GetExerciseTrainerListing, GetExerciseTrainerListingResult>, GetExerciseTrainerListingHandler>();
 
             services.AddTransient<IRequestHandler<GetTraineeRecommedation, GetTraineeRecommedationResult>, GetTraineeRecommedationHandler>();
 
@@ -104,6 +104,7 @@ namespace UserWorkflow.Application
             services.AddTransient<IPaging<Gym>, Paging<Gym>>();
             services.AddTransient<IPaging<Organisation>, Paging<Organisation>>();
             services.AddTransient<IPaging<Lesson>, Paging<Lesson>>();
+            services.AddTransient<IPaging<Exercise>, Paging<Exercise>>();
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
 
