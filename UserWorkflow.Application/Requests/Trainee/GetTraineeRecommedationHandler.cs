@@ -33,6 +33,19 @@ namespace UserWorkflow.Application.Requests.Trainee
         public async Task<RequestResult<GetTraineeRecommedationResult>> HandleQueryAsync(GetTraineeRecommedation request)
         {
             var lessonQuery = esportDataContext.Lessons.AsQueryable();
+
+            var userId = request.AuthenticatedBy.UserId;
+            var trainee = await esportDataContext.Trainees.FirstOrDefaultAsync(x => x.UserId == userId);
+            if (trainee == null) 
+            {
+                throw new ApplicationException("Unable to find trainee with user id: " + userId);
+            }
+
+            var existingTraineeLessons = trainee.TraineeShedules.Select(x => x.LessonId);
+            lessonQuery = lessonQuery.Where(x => !existingTraineeLessons.Any(p => p == x.Id));
+
+            //exclude lessons with taken timetable units
+
             if (request.TrainerIds.Any())
             {
                 List<Expression<Func<Lesson, bool>>> trainersPredicates = new List<Expression<Func<Lesson, bool>>>();
