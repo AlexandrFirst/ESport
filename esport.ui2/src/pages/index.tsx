@@ -1,16 +1,17 @@
-import { useEffect } from "react";
-import styles from "@/styles/Home.module.css";
+import { useCallback, useEffect } from "react";
 
 import { GetServerSideProps } from "next";
 
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
-import { Card } from "@/shared/ui";
+import { SubTitle, Title } from "@/shared/ui";
 import { AppNextPage } from "@/shared/types";
 import { useSnackbar } from "@/shared/lib";
 
 import { getMainLayout } from "@/widgets/MainLayout";
+import { useRouter } from "next/router";
+import { routes } from "@/shared/config";
 
 type Props = {
   snackbar?: {
@@ -19,27 +20,28 @@ type Props = {
   };
 };
 
-const Home: AppNextPage<Props> = ({ snackbar, ...props }) => {
+const Home: AppNextPage<Props> = ({ snackbar }) => {
   const { error, success } = snackbar ?? {};
   const { t } = useTranslation("common");
 
+  const router = useRouter();
+
   const { showError, showSuccess } = useSnackbar();
+
+  const removeSearchParams = useCallback(() => {
+    router.push(routes.Home(), undefined, { shallow: true });
+  }, [router]);
 
   useEffect(() => {
     success && showSuccess(success);
     error && showError(error);
+    removeSearchParams();
   }, [showError, showSuccess]);
 
   return (
     <>
-      <Card>Card content</Card>
-      <h1>{t("title")}</h1>
-      <h1 className={styles.text}>Typography</h1>
-      <h2>Typography</h2>
-      <h3>Typography</h3>
-      <h4>Typography</h4>
-      <h5>Typography</h5>
-      <h6>Typography</h6>
+      <Title center>{t("title")}</Title>
+      <SubTitle className={"mt-5"}>It is main page of really cool app</SubTitle>
     </>
   );
 };
