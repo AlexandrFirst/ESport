@@ -26,12 +26,14 @@ namespace UserWorkflow.Application.Services.Gym
             var gymQuery = esportDataContext.Gyms.AsQueryable();
             if (gymFiltrattionModel.GymIds.Any())
             {
-                gymQuery = gymQuery.Where(x => gymFiltrattionModel.GymIds.Any(y => y == x.Id));
+                var gymIds = gymFiltrattionModel.GymIds;
+                gymQuery = gymQuery.Where(x => gymIds.Any(y => y == x.Id));
             }
 
             if (gymFiltrattionModel.OrganisationIds.Any())
             {
-                gymQuery = gymQuery.Where(x => gymFiltrattionModel.OrganisationIds.Any(y => y == x.OrganisationId));
+                var organisationIds = gymFiltrattionModel.OrganisationIds;
+                gymQuery = gymQuery.Where(x => x.OrganisationId.HasValue && organisationIds.Contains(x.OrganisationId.Value));
             }
 
             if (gymFiltrattionModel.OpenHour.HasValue)

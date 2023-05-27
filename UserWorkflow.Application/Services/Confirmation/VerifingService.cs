@@ -57,6 +57,12 @@ namespace UserWorkflow.Application.Services.Confirmation
                     if (trainer == null) { throw new ApplicationException("Unable to get org admin with id: " + userId); }
                     trainer.IsProfileConfirmed = true;
                 }
+                else if (roleName.Equals("Trainee")) 
+                {
+                    var trainee = await esportDataContext.Trainees.FirstOrDefaultAsync(x => x.UserId == userId);
+                    if (trainee == null) { throw new ApplicationException("Unable to get trainee with id: " + userId); }
+                    trainee.IsProfileConfirmed = true;
+                }
                 else
                 {
                     throw new ApplicationException("The role: " + roleName + " can not be updated");

@@ -291,7 +291,26 @@ namespace UserWorkflow.Application.Services.Users
 
             await esportDataContext.SaveChangesAsync();
 
-            var isNotified = notifyCompetitionService(user, role: UserRole.LocalAdmin.RoleName, action: action);
+            var userRole = UserRole.Trainee;
+            switch (user.GetUserType)
+            {
+                case UserTypeEntity.Trainee:
+                    userRole= UserRole.Trainee;
+                    break;
+                case UserTypeEntity.Trainer:
+                    userRole = UserRole.Trainer;
+                    break;
+                case UserTypeEntity.Organisator:
+                    userRole = UserRole.OrgAdmin;
+                    break;
+                case UserTypeEntity.Admin:
+                    userRole = UserRole.LocalAdmin;
+                    break;
+                default:
+                    throw new ApplicationException("can not save user with type: " + user.GetUserType.ToString());
+            }
+
+            var isNotified = notifyCompetitionService(user, role: userRole.RoleName, action: action);
             if (!isNotified)
             {
                 await transacaction.RollbackAsync();

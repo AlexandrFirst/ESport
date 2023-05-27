@@ -52,7 +52,7 @@ namespace UserWorkflow.Application.Commands.User
 
             if (confirmEmail)
             {
-                await confirmationService.SendConfirmation(UserRole.LocalAdmin, new Models.User.UserConfirmationModel()
+                await confirmationService.SendConfirmation(UserRole.Trainee, new Models.User.UserConfirmationModel()
                 {
                     Email = command.UpdateUserInfo.Email,
                     RoleId = traineeId,
