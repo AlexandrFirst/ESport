@@ -9,9 +9,10 @@ namespace UserWorkflow.Esport.Models
         MONDAY = 1,
         TUESDAY = 2,
         WEDNESDAY = 4,
-        FRIDAY = 8,
-        SATURDAY = 16,
-        SUNDAY = 32,
-        ALL = 64
+        THURSDAY = 8,
+        FRIDAY = 16,
+        SATURDAY = 32,
+        SUNDAY = 64,
+        ALL = 128
     }
 }
