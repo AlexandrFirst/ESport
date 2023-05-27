@@ -77,7 +77,9 @@ namespace UserWorkflow.Application.Services.Organisation
             return new OrganisationInfoListing()
             {
                 OrganisatationInfoListing = organisationQueryListing,
-                Page = organisationQueryResult.CurrentPage
+                Page = organisationQueryResult.CurrentPage,
+                TotalItems = organisationQueryResult.Total,
+                TotalPages = organisationQueryResult.TotalPage,
             };
 
         }

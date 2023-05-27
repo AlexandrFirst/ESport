@@ -51,6 +51,31 @@
       }
     },
     {
+      "DownstreamPathTemplate": "/User/SetProfileAsLogin",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5005
+        }
+      ],
+      "UpstreamPathTemplate": "/update-user-login",
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "ESport",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "Role": "OrgAdmin,LocalAdmin,Trainer,Trainee"
+      },
+      "AddHeadersToRequest": {
+        "Role": "Claims[Role] > value > |",
+        "Id": "Claims[Id] > value > |",
+        "Name": "Claims[Name] > value > |",
+        "Email": "Claims[Email] > value > |"
+      }
+    },
+    {
       "DownstreamPathTemplate": "/User/Confirm",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [

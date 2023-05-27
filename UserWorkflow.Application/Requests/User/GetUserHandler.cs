@@ -88,7 +88,8 @@ namespace UserWorkflow.Application.Requests.User
             var model = new UserOrganisationAdminInfo(UserIdentityInfo.InitFromDbUser(organisationAdministrators));
             model.Id = organisationAdministrators.Id;
             model.OrganisationName = organisationAdministrators.Organisation?.Name;
-            model.GymOrganisationId = organisationAdministrators.Organisation?.Id;
+            model.OrganisationId = organisationAdministrators.Organisation?.Id;
+            model.IsConfirmed= organisationAdministrators.IsConfirmed;
             return model;
         }
 
