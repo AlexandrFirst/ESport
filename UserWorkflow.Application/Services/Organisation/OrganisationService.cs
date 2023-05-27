@@ -47,6 +47,7 @@ namespace UserWorkflow.Application.Services.Organisation
                 var gymOrganisation = await gymService.GetGymInfoListing(new GymFiltrattionModel()
                 {
                     OrganisationIds = new List<int>() { organisationId },
+                    GymIds = new List<int>(),
                     Page = 1,
                     PageSize = 10
                 });

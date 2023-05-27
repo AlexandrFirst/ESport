@@ -22,6 +22,7 @@ export { Input } from "./Input/Input";
 export { InputBase } from "./Input/InputBase";
 export type { InputBaseProps } from "./Input/InputBase";
 export { PasswordInput } from "./PasswordInput/PasswordInput";
+export { TextAreaBase } from "./TextArea/TextAreaBase";
 export { TextArea } from "./TextArea/TextArea";
 export { Autocomplete } from "./Autocomplete/Autocomplete";
 export type { AutocompleteProps } from "./Autocomplete/Autocomplete";
@@ -63,3 +64,7 @@ export type { TabList, TabItem } from "./Tabs/Tabs";
 
 export { Footer } from "./Footer/Footer";
 export { BottomNav } from "./BottomNav/BottomNav";
+
+// calendar
+export { Calendar } from "./Calendar/Calendar";
+export { SmallCalendar } from "./Calendar/SmallCalendar/SmallCalendar";

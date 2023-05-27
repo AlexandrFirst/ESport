@@ -7,7 +7,11 @@
 }
 
 .activeTab {
-  @apply text-theme-light rounded-md shadow-inner hover:opacity-100 active:opacity-100 outline-1 transition-all;
+  @apply rounded-md shadow-inner hover:opacity-100 active:opacity-100 outline-1 transition-all;
+}
+
+.selected_text {
+  @apply !text-theme-light;
 }
 
 .pill {

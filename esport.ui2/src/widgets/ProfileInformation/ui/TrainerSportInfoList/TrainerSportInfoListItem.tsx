@@ -4,7 +4,7 @@ import styles from "./TrainerSportInfoList.module.css";
 import { BoldText, DatePickerBase, InputBase } from "@/shared/ui";
 
 import { ITrainerSportInfo } from "@/entities/profile";
-import { useTrainerProfileInformationActions } from "../..";
+import { useRoleProfileInformationActions } from "../../model/slices/roleProfileInformationSlice";
 import { useSelectTrainerSports } from "../../model/selectors/selectTrainerSports/selectTrainerSports";
 
 interface TrainerSportInfoListItemProps {
@@ -18,7 +18,7 @@ export const TrainerSportInfoListItem: FC<TrainerSportInfoListItemProps> = ({
   index,
   trainerSport,
 }) => {
-  const { setTrainerSportsByIndex } = useTrainerProfileInformationActions();
+  const { setTrainerSportsByIndex } = useRoleProfileInformationActions();
   const trainerSports = useSelectTrainerSports();
 
   const handleChange =

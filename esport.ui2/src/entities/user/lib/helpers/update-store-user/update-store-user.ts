@@ -15,7 +15,7 @@ export const updateStoreUser = async (
       const { data } = await AuthService(ctx).getUser();
       const roles = getRoleArr(data.role);
       // console.log("===data, roles===", data, roles);
-      dispatch(userActions.setUser({ ...data, roles }));
+      dispatch(userActions.setUser({ ...data, id: Number(data.id), roles }));
     } catch (e: any) {
       // console.log("===e===", e);
     }

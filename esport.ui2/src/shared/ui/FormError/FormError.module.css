@@ -1,0 +1,7 @@
+.error {
+  @apply text-theme-error;
+}
+
+.helper_text {
+  @apply text-left text-sm mb-2;
+}

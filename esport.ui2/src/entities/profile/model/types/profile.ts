@@ -5,7 +5,7 @@ export interface IProfile {
   userIdentityInfo?: IProfileInfo;
   userTraineeInfo?: IProfileInfo;
   userTrainerInfo?: ITrainerInfo;
-  userAdminInfo?: IProfileInfo;
+  userAdminInfo?: IGymAdminInfo;
   userOrganisationAdminInfos?: IProfileInfo[];
 }
 
@@ -14,9 +14,12 @@ export interface ITrainerInfo extends IProfileInfo {
   trainerGymInfo: IGymInfo[];
 }
 
+export interface IGymAdminInfo extends IProfileInfo {
+  userGyms: IGymInfo[];
+}
+
 export interface IProfileInfo {
   id?: number;
-  userGyms?: number[];
   userId: number;
   name: string;
   surname: string;

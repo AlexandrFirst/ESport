@@ -6,7 +6,7 @@ import { ISport, useGetAllSports } from "@/entities/sport";
 import { ProfileInfoPerRole } from "../ProfileInfoPerRole/ProfileInfoPerRole";
 import { SetLoginDataToggle } from "../SetLoginDataToggle/SetLoginDataToggle";
 
-import { useTrainerProfileInformationActions } from "../../model/slices/trainerProfileInformationSlice";
+import { useRoleProfileInformationActions } from "../../model/slices/roleProfileInformationSlice";
 import { useSelectTrainerSports } from "../../model/selectors/selectTrainerSports/selectTrainerSports";
 import { TrainerSportInfoList } from "../TrainerSportInfoList/TrainerSportInfoList";
 import { transformTrainerSportInfoToSport } from "../../lib/helpers/transformTrainerSportInfoToSport/transformTrainerSportInfoToSport";
@@ -20,7 +20,7 @@ export const TrainerProfileInformation: FC<TrainerProfileInformationProps> = ({
 }) => {
   const { data: sports, isLoading: isSportsLoading } = useGetAllSports();
 
-  const { setTrainerSportsBySports } = useTrainerProfileInformationActions();
+  const { setTrainerSportsBySports } = useRoleProfileInformationActions();
   const trainerSports = useSelectTrainerSports();
 
   return (

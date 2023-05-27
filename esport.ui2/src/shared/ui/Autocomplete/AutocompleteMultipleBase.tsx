@@ -3,32 +3,26 @@ import styles from "./Autocomplete.module.css";
 
 import cn from "classnames";
 import { Combobox } from "@headlessui/react";
+import { ByComparator } from "@headlessui/react/dist/types";
+
 import {
   CheckIcon,
   ChevronDownIcon,
   ChevronUpIcon,
 } from "@heroicons/react/24/solid";
 
-import { InputBase, InputBaseProps } from "../Input/InputBase";
+import { InputBase } from "../Input/InputBase";
 import { Icon } from "../Icon/Icon";
 
 import { useAutocomplete } from "./useAutocomplete";
 import { AutocompleteTransition } from "./AutocompleteTransition";
-import { ByComparator } from "@headlessui/react/dist/types";
+import { AutocompleteCommonProps } from "./AutocompeleteCommonProps";
 
 export interface AutocompleteMultipleBaseProps<T extends {} = {}>
-  extends Omit<InputBaseProps, "value" | "onChange" | "list" | "name"> {
+  extends AutocompleteCommonProps<T> {
+  multiple: true;
   value?: T[];
   onChange?: (value: T[]) => void;
-  className?: string;
-  list?: T[];
-  loading?: boolean;
-  delayTime?: number;
-  name?: string;
-  displayValue: keyof T;
-  displayKey: keyof T;
-  onInputChange?: (value: string) => void;
-  multiple: true;
 }
 
 export function AutocompleteMultipleBase<T extends {} = {}>({
@@ -39,6 +33,7 @@ export function AutocompleteMultipleBase<T extends {} = {}>({
   list,
   loading,
   delayTime = 200,
+  additionalOptions,
   ...props
 }: AutocompleteMultipleBaseProps<T>) {
   const { items, getLoadingOrEmpty, handleInputChange } = useAutocomplete({
@@ -46,6 +41,7 @@ export function AutocompleteMultipleBase<T extends {} = {}>({
     displayValue,
     loading,
     withFilter: false,
+    additionalOptions,
   });
 
   const compare: ByComparator<T> = useCallback(

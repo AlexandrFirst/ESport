@@ -1,0 +1,39 @@
+.wrapper {
+  @apply border border-theme-main flex flex-col min-h-[150px] max-h-[170px] overflow-y-auto bg-theme-card-main;
+}
+
+.wrapper::-webkit-scrollbar-track {
+  @apply border border-theme-main py-2;
+}
+
+.wrapper::-webkit-scrollbar {
+  @apply w-2;
+}
+
+.wrapper::-webkit-scrollbar-thumb {
+  @apply rounded-md shadow-inner bg-theme-scroll border border-theme-main;
+}
+
+.header {
+  @apply flex flex-col items-center;
+}
+
+.day_text {
+  @apply text-sm mt-1;
+}
+
+.date_text {
+  @apply text-sm p-1 my-1 text-center;
+}
+
+.day {
+  @apply flex-1 cursor-pointer;
+}
+
+.current_day {
+  @apply bg-gradient-to-r from-main-from to-main-to text-white rounded-full w-7 font-bold;
+}
+
+.not_current_month {
+  @apply opacity-60 bg-theme-sub;
+}

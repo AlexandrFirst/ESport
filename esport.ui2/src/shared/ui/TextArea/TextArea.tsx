@@ -1,23 +1,24 @@
-import { FC, TextareaHTMLAttributes } from "react";
-import styles from "./TextArea.module.css";
+import React, { FC } from "react";
+import { Controller } from "react-hook-form";
 
-import cn from "classnames";
+import { TextAreaBase, TextAreaBaseProps } from "./TextAreaBase";
 
-interface TextAreaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
-  fullWidth?: boolean;
+interface TextAreaProps extends TextAreaBaseProps {
+  name: string;
 }
 
 export const TextArea: FC<TextAreaProps> = ({
-  className,
-  fullWidth = true,
+  name,
+  defaultValue,
   ...props
 }) => {
   return (
-    <textarea
-      {...props}
-      className={cn(styles.wrapper, className, {
-        [styles.full_width]: fullWidth,
-      })}
+    <Controller
+      name={name}
+      defaultValue={defaultValue ?? ""}
+      render={({ field, fieldState }) => (
+        <TextAreaBase {...props} {...field} {...fieldState} />
+      )}
     />
   );
 };

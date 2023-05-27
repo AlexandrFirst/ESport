@@ -7,7 +7,8 @@ import React, {
 import styles from "./Input.module.css";
 
 import cn from "classnames";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
+import { FormError } from "../FormError/FormError";
 
 export type Message = { message?: string };
 
@@ -102,18 +103,19 @@ export const InputBase = forwardRef<HTMLInputElement, InputBaseProps>(
             {endIcon}
           </div>
         </div>
-        <AnimatePresence initial={false}>
-          {error && (
-            <motion.p
-              initial={{ opacity: 0, scale: 0 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0 }}
-              className={cn(styles.error, styles.helper_text)}
-            >
-              {error.message}
-            </motion.p>
-          )}
-        </AnimatePresence>
+        {/*<AnimatePresence initial={false}>*/}
+        {/*  {error && (*/}
+        {/*    <motion.p*/}
+        {/*      initial={{ opacity: 0, scale: 0 }}*/}
+        {/*      animate={{ opacity: 1, scale: 1 }}*/}
+        {/*      exit={{ opacity: 0, scale: 0 }}*/}
+        {/*      className={cn(styles.error, styles.helper_text)}*/}
+        {/*    >*/}
+        {/*      {error.message}*/}
+        {/*    </motion.p>*/}
+        {/*  )}*/}
+        {/*</AnimatePresence>*/}
+        <FormError error={error} />
       </div>
     );
   }

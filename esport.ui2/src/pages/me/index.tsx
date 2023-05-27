@@ -12,7 +12,7 @@ import { getMainLayout } from "@/widgets/MainLayout";
 import {
   ProfileInformation,
   profileInformationActions,
-  trainerProfileInformationActions,
+  roleProfileInformationActions,
 } from "@/widgets/ProfileInformation";
 
 type MeProps = PageProps;
@@ -21,7 +21,7 @@ const Me: AppNextPage<MeProps> = ({ error }) => {
   const { user } = useAuth();
 
   if (error) return <ErrorText>{error}</ErrorText>;
-  return <ProfileInformation userId={user?.id ?? ""} />;
+  return <ProfileInformation userId={user?.id ?? 0} />;
 };
 
 Me.getLayout = getMainLayout({
@@ -40,13 +40,14 @@ export const getServerSideProps = getAppServerSideProps(
 
     const { user } = store.getState();
     const { data: profile } = await ProfileApi(ctx).getProfileInfo(
-      user.data?.id ?? ""
+      user.data?.id ?? 0
     );
     store.dispatch(profileInformationActions.setInitialData(profile));
     store.dispatch(
-      trainerProfileInformationActions.setTrainerSports(
-        profile.userTrainerInfo?.trainerSportInfos ?? []
-      )
+      roleProfileInformationActions.setInitialData({
+        trainerSports: profile.userTrainerInfo?.trainerSportInfos ?? [],
+        gymAdminGyms: profile.userAdminInfo?.userGyms ?? [],
+      })
     );
 
     return {

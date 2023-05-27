@@ -7,11 +7,12 @@ import { userReducer } from "@/entities/user";
 import { profileReducer } from "@/entities/profile";
 
 import { snackbarReducer } from "@/features/Snackbar";
+import { GymsFiltersReducer } from "@/features/GymsFilters";
 
 import { leftSidebarReducer } from "@/widgets/LeftSidebar";
 import {
   profileInformationReducer,
-  trainerProfileInformationReducer,
+  roleProfileInformationReducer,
 } from "@/widgets/ProfileInformation";
 
 export const reducer = combineReducers<StateSchema>({
@@ -21,5 +22,6 @@ export const reducer = combineReducers<StateSchema>({
   device: deviceReducer,
   profile: profileReducer,
   profileInformation: profileInformationReducer,
-  trainerProfileInformation: trainerProfileInformationReducer,
+  roleProfileInformation: roleProfileInformationReducer,
+  gymsFilters: GymsFiltersReducer,
 });

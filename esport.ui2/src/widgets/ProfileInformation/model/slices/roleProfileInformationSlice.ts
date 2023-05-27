@@ -6,19 +6,25 @@ import { buildSlice } from "@/shared/lib";
 import { ITrainerSportInfo } from "@/entities/profile";
 
 import { StateSchema } from "@/_app/Providers";
-
-import { TrainerProfileInformationState } from "../../model/types/trainerProfileInformationState";
 import { ISport } from "@/entities/sport";
-import { transformSportToTrainerSportInfo } from "../../lib/helpers/transformSportToTrainerSportInfo/transformSportToTrainerSportInfo";
 
-const initialState: TrainerProfileInformationState = {
+import { RoleProfileInformationState } from "../types/roleProfileInformationState";
+import { transformSportToTrainerSportInfo } from "../../lib/helpers/transformSportToTrainerSportInfo/transformSportToTrainerSportInfo";
+import { IGymInfo } from "@/entities/gym";
+
+const initialState: RoleProfileInformationState = {
   trainerSports: [],
+  gymAdminGyms: [],
 };
 
-const trainerProfileInformationSlice = buildSlice({
+const roleProfileInformationSlice = buildSlice({
   name: "trainerProfileInformation",
   initialState,
   reducers: {
+    setInitialData(state, action: PayloadAction<RoleProfileInformationState>) {
+      state.trainerSports = action.payload.trainerSports;
+      state.gymAdminGyms = action.payload.gymAdminGyms;
+    },
     setTrainerSports(state, action: PayloadAction<ITrainerSportInfo[]>) {
       state.trainerSports = action.payload;
     },
@@ -38,17 +44,20 @@ const trainerProfileInformationSlice = buildSlice({
       // @ts-ignore
       state.trainerSports[index][key] = value;
     },
+    setGymAdminGyms(state, action: PayloadAction<IGymInfo[]>) {
+      state.gymAdminGyms = action.payload;
+    },
   },
   extraReducers: {
     [HYDRATE]: (state, action: PayloadAction<StateSchema>) => ({
       ...state,
-      ...action.payload.trainerProfileInformation,
+      ...action.payload.roleProfileInformation,
     }),
   },
 });
 
 export const {
-  useActions: useTrainerProfileInformationActions,
-  reducer: trainerProfileInformationReducer,
-  actions: trainerProfileInformationActions,
-} = trainerProfileInformationSlice;
+  useActions: useRoleProfileInformationActions,
+  reducer: roleProfileInformationReducer,
+  actions: roleProfileInformationActions,
+} = roleProfileInformationSlice;

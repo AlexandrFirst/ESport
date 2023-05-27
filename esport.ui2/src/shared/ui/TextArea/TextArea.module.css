@@ -1,7 +1,15 @@
 .wrapper {
+  @apply relative;
+}
+
+.text_area {
   @apply bg-theme-main border border-theme-main rounded-md p-2;
 }
 
 .full_width {
   @apply w-full;
+}
+
+.error {
+  @apply text-theme-error border-theme-error;
 }

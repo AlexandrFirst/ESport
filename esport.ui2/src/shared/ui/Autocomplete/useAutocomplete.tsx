@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, ReactNode, useEffect, useState } from "react";
 import styles from "./Autocomplete.module.css";
 
 import { BeatLoader } from "react-spinners";
@@ -9,6 +9,7 @@ interface UseAutocompleteParams<T extends {} = {}> {
   onInputChange?: (value: string) => void;
   loading?: boolean;
   withFilter?: boolean;
+  additionalOptions?: ReactNode[];
 }
 
 export function useAutocomplete<T extends {} = {}>({
@@ -17,6 +18,7 @@ export function useAutocomplete<T extends {} = {}>({
   displayValue,
   loading,
   withFilter = true,
+  additionalOptions,
 }: UseAutocompleteParams<T>) {
   const [items, setItems] = useState(() => list);
 
@@ -39,16 +41,22 @@ export function useAutocomplete<T extends {} = {}>({
   const getLoadingOrEmpty = () => {
     if (loading) {
       return (
-        <div className={styles.text_wrapper}>
-          <BeatLoader color={"#b2c9df"} />
-        </div>
+        <>
+          <div className={styles.text_wrapper}>
+            <BeatLoader color={"#b2c9df"} />
+          </div>
+          {additionalOptions}
+        </>
       );
     }
     if (!items?.length) {
       return (
-        <div className={styles.text_wrapper}>
-          <span className={styles.text}>No results found</span>
-        </div>
+        <>
+          <div className={styles.text_wrapper}>
+            <span className={styles.text}>No results found</span>
+          </div>
+          {additionalOptions}
+        </>
       );
     }
     return null;

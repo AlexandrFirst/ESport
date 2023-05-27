@@ -31,7 +31,7 @@ const Profile: AppNextPage<ProfileProps> = ({ profile }) => {
       // profile={profile}
       withEditBtn={isOrgAdmin}
       onEditClick={handleEdit}
-      userId={userId}
+      userId={Number(userId)}
     />
   );
 };
@@ -42,36 +42,34 @@ Profile.getLayout = getMainLayout({
 
 export default Profile;
 
-export const getServerSideProps = getAppServerSideProps<ProfileProps>(
-  async (ctx) => {
-    const localization = await serverSideTranslations(
-      ctx.locale ?? ctx.defaultLocale ?? Languages.English,
-      ["common", "profile"]
-    );
+export const getServerSideProps = getAppServerSideProps(async (ctx) => {
+  const localization = await serverSideTranslations(
+    ctx.locale ?? ctx.defaultLocale ?? Languages.English,
+    ["common", "profile"]
+  );
 
-    const userId = ctx.query?.userId as string;
-    const { data: profile } = await ProfileApi(ctx).getProfileInfo(
-      userId ?? ""
-    );
+  const userId = ctx.query?.userId as string;
+  const { data: profile } = await ProfileApi(ctx).getProfileInfo(
+    Number(userId ?? 0)
+  );
 
-    const profileInfo: IProfileInfo = {
-      email: "some@mail.com",
-      name: "Alex",
-      surname: "Logvinov",
-      userId: 12,
-      telephoneNumber: "+380500321255",
-      photoId: null,
-    };
+  const profileInfo: IProfileInfo = {
+    email: "some@mail.com",
+    name: "Alex",
+    surname: "Logvinov",
+    userId: 12,
+    telephoneNumber: "+380500321255",
+    photoId: null,
+  };
 
-    return {
-      ...localization,
-      props: {
-        profile: {
-          userAdminInfo: profileInfo,
-          userIdentityInfo: profileInfo,
-          userTraineeInfo: profileInfo,
-        },
+  return {
+    ...localization,
+    props: {
+      profile: {
+        userAdminInfo: profileInfo,
+        userIdentityInfo: profileInfo,
+        userTraineeInfo: profileInfo,
       },
-    };
-  }
-);
+    },
+  };
+});
