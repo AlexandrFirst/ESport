@@ -4,14 +4,16 @@ import styles from "./GymsFilters.module.css";
 import cn from "classnames";
 
 import { DatePickerBase, InputBase, SubTitle } from "@/shared/ui";
+import { useGetOrganisations } from "@/entities/organisation";
 
 interface GymsFiltersProps {
   className?: string;
 }
 
 export const GymsFilters: FC<GymsFiltersProps> = ({ className }) => {
-  // const { data: organisationListing, isLoading: areOrganizationsLoading } =
-  //   useGetOrganisations({ name: "", organisationIds: [] });
+  const { data: organisationListing, isLoading: areOrganizationsLoading } =
+    useGetOrganisations({ name: "", organisationIds: [] });
+
   return (
     <div className={cn(styles.wrapper, className)}>
       <SubTitle>Filters</SubTitle>

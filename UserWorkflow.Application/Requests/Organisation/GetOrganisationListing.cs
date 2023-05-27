@@ -13,7 +13,7 @@ namespace UserWorkflow.Application.Requests.Organisation
         public OrganisationInfoFiltration OrganisationFiltration { get; set; }
     }
 
-    public class GetOrganisationListingResult 
+    public class GetOrganisationListingResult
     {
         public OrganisationInfoListing OrganisationInfoListing { get; set; }
     }

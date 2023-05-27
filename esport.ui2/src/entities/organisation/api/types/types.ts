@@ -8,7 +8,5 @@ export interface GetOrganisationListingRequest {
 }
 
 export interface GetOrganisationListingResult extends BaseListingResult {
-  organisationInfoListing: {
-    organisatationInfoListing: IOrganizationInfoRead[];
-  };
+  organisatationInfoListing: IOrganizationInfoRead[];
 }
