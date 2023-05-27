@@ -3,6 +3,7 @@
     <TargetFramework>net6.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\MediaClient\MediaClient.csproj" />
     <ProjectReference Include="..\RMQEsportClient\RMQEsportClient.csproj" />
     <ProjectReference Include="..\UserWorkflow.Esport\UserWorkflow.Esport.csproj" />
     <ProjectReference Include="..\UserWorkflow.Images\UserWorkflow.Images.csproj" />

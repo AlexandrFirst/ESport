@@ -75,7 +75,7 @@ namespace UserWorkflow.Application.Requests.User
             return model;
         }
 
-        private UserTraineeInfo handleUserTraineeInfo(Trainee trainee)
+        private UserTraineeInfo handleUserTraineeInfo(Esport.Models.Trainee trainee)
         {
             var model = new UserTraineeInfo(UserIdentityInfo.InitFromDbUser(trainee));
             model.Id = trainee.Id;

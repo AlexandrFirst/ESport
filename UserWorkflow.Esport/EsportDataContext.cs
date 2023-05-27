@@ -88,6 +88,9 @@ namespace UserWorkflow.Esport
             modelBuilder.ApplyConfiguration(new TrainerRequestConfiguration());
             modelBuilder.ApplyConfiguration(new TrainerResponseConfiguration());
             modelBuilder.ApplyConfiguration(new SportConfiguration());
+            modelBuilder.ApplyConfiguration(new BodyPartConfiguration());
+            modelBuilder.ApplyConfiguration(new QuestionConfiguration());
+            modelBuilder.ApplyConfiguration(new TraumaConfiguration());
         }
     }
 }
