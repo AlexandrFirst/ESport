@@ -1,0 +1,29 @@
+{
+  "ReRoutes": [
+    {
+      "DownstreamPathTemplate": "/Trainee/lessonRecomendation",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5005
+        }
+      ],
+      "UpstreamPathTemplate": "/trainee-lesson-recomendation",
+      "UpstreamHttpMethod": [ "POST"],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "ESport",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "Role": "Pupil,LocalAdmin,OrgAdmin"
+      },
+      "AddHeadersToRequest": {
+        "Role": "Claims[Role] > value > |",
+        "Id": "Claims[Id] > value > |",
+        "Name": "Claims[Name] > value > |",
+        "Email": "Claims[Email] > value > |"
+      }
+    }
+  ]
+}

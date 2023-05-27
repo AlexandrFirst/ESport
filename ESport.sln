@@ -34,9 +34,13 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.3.Data", "5.3.Data", "{AA5D3245-1071-47A7-8439-B9CD15F2DBA5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserWorkflow.Api", "UserWorkflow.Api\UserWorkflow.Api.csproj", "{BFACD5A5-AF64-4519-B0F2-8F8C33CD0D99}"
+	ProjectSection(ProjectDependencies) = postProject
+		{B287D05E-DE43-44EE-96B9-BAC14C3123C9} = {B287D05E-DE43-44EE-96B9-BAC14C3123C9}
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserWorkflow.Application", "UserWorkflow.Application\UserWorkflow.Application.csproj", "{EB9FB4B1-E058-4675-805D-6358DD478CB6}"
 	ProjectSection(ProjectDependencies) = postProject
+		{B287D05E-DE43-44EE-96B9-BAC14C3123C9} = {B287D05E-DE43-44EE-96B9-BAC14C3123C9}
 		{F7F5AA64-117E-4A03-B6C8-7640FA71394B} = {F7F5AA64-117E-4A03-B6C8-7640FA71394B}
 	EndProjectSection
 EndProject
@@ -49,6 +53,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserWorkflow.Infrastructure", "UserWorkflow.Infrastructure\UserWorkflow.Infrastructure.csproj", "{DFCDC305-25F9-4F83-8E13-EC07C6AB3C0C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserWorkflow.Esport", "UserWorkflow.Esport\UserWorkflow.Esport.csproj", "{C4D1B500-A052-4C2A-A455-C3A71A8BD19F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaClient", "MediaClient\MediaClient.csproj", "{B287D05E-DE43-44EE-96B9-BAC14C3123C9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -104,6 +110,10 @@ Global
 		{C4D1B500-A052-4C2A-A455-C3A71A8BD19F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4D1B500-A052-4C2A-A455-C3A71A8BD19F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4D1B500-A052-4C2A-A455-C3A71A8BD19F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B287D05E-DE43-44EE-96B9-BAC14C3123C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B287D05E-DE43-44EE-96B9-BAC14C3123C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B287D05E-DE43-44EE-96B9-BAC14C3123C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B287D05E-DE43-44EE-96B9-BAC14C3123C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -125,6 +135,7 @@ Global
 		{45448F28-CA9B-48B6-A74C-5B7CF7C7F108} = {CEACC709-AAB5-4BB0-96F0-7566E7D820CD}
 		{DFCDC305-25F9-4F83-8E13-EC07C6AB3C0C} = {9960B713-6F2A-488D-BD2A-200D7B2833DA}
 		{C4D1B500-A052-4C2A-A455-C3A71A8BD19F} = {AA5D3245-1071-47A7-8439-B9CD15F2DBA5}
+		{B287D05E-DE43-44EE-96B9-BAC14C3123C9} = {CEACC709-AAB5-4BB0-96F0-7566E7D820CD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C6DC7AF7-5CCE-4874-926A-1B4521D4B7F5}

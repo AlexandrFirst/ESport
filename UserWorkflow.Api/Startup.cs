@@ -1,3 +1,4 @@
+using MediaClient.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -36,6 +37,7 @@ namespace UserWorkflow.Api
            .AddScheme<OcelotAuthOptions, OcelotAuthHandler>("EStream", o => { });
 
             Application.Bootstrapper.RegisterIocContainers(services, Configuration);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,10 +48,13 @@ namespace UserWorkflow.Api
                 app.UseDeveloperExceptionPage();
             }
 
+            app.UseCustomMediaClient();
+
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
+
 
             app.UseEndpoints(endpoints =>
             {

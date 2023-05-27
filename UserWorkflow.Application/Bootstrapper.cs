@@ -15,10 +15,12 @@ using UserWorkflow.Application.Configs;
 using UserWorkflow.Application.Requests.Gym;
 using UserWorkflow.Application.Requests.GymAdmin;
 using UserWorkflow.Application.Requests.Organisation;
+using UserWorkflow.Application.Requests.Trainee;
 using UserWorkflow.Application.Requests.Trainer;
 using UserWorkflow.Application.Requests.User;
 using UserWorkflow.Application.Services.Confirmation;
 using UserWorkflow.Application.Services.Gym;
+using UserWorkflow.Application.Services.Lesson;
 using UserWorkflow.Application.Services.Organisation;
 using UserWorkflow.Application.Services.Users;
 using UserWorkflow.Esport.Models;
@@ -48,6 +50,7 @@ namespace UserWorkflow.Application
             services.AddTransient<IValidateRequest, ValidateRequest>();
 
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<ILessonService, LessonService>();
 
             services.AddTransient<IRequestHandler<GetUser, GetUserResult>, GetUserHandler>();
 
@@ -83,7 +86,11 @@ namespace UserWorkflow.Application
 
             services.AddTransient<ICommandHandler<CreateLesson>, CreateLessonHandler>();
             services.AddTransient<ICommandHandler<ApplyTrainerForTimeSchedule>, ApplyTrainerForTimeScheduleHandler>();
+            services.AddTransient<ICommandHandler<ExerciseCreate>, ExerciseCreateHandler>();
             services.AddTransient<IRequestHandler<GetTrainerTimeTable, GetTrainerTimeTableResult>, GetTrainerTimeTableHandler>();
+            services.AddTransient<IRequestHandler<GetExerciseTrainerListing, GetExerciseTrainerListingResult>, GetExerciseTrainerListingHandler>();
+
+            services.AddTransient<IRequestHandler<GetTraineeRecommedation, GetTraineeRecommedationResult>, GetTraineeRecommedationHandler>();
 
             services.AddScoped<IdentityClient>();
 
@@ -98,8 +105,12 @@ namespace UserWorkflow.Application
             services.AddTransient<IPaging<TrainerRequest>, Paging<TrainerRequest>>();
             services.AddTransient<IPaging<Gym>, Paging<Gym>>();
             services.AddTransient<IPaging<Organisation>, Paging<Organisation>>();
+            services.AddTransient<IPaging<Lesson>, Paging<Lesson>>();
+            services.AddTransient<IPaging<Exercise>, Paging<Exercise>>();
 
             services.AddAutoMapper(Assembly.GetExecutingAssembly());
+
+            MediaClient.Bootstrapper.RegisterIocContainers(services, configuration);
 
             Esport.Bootstrapper.RegisterIocContainers(services, configuration);
             Images.Bootstrapper.RegisterIocContainers(services, configuration);

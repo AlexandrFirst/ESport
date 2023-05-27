@@ -10,6 +10,7 @@ namespace UserWorkflow.Esport.Models
         {
             AnswerBodyParts = new List<AnswerBodyParts>();
             ExerciseBodyParts = new List<ExerciseBodyPart>();
+            RelatedTraumas = new List<Traumas>();
         }
 
         public int Id { get; set; } 
@@ -19,5 +20,6 @@ namespace UserWorkflow.Esport.Models
 
         public virtual List<AnswerBodyParts> AnswerBodyParts { get; set; }
         public virtual List<ExerciseBodyPart> ExerciseBodyParts { get; set; }
+        public virtual List<Traumas> RelatedTraumas { get; set; }
     }
 }

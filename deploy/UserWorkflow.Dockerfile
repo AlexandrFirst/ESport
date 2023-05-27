@@ -11,6 +11,7 @@ COPY ["./UserWorkflow.Infrastructure/UserWorkflow.Infrastructure.csproj", "UserW
 COPY ["./ESportAuthClient/ESportAuthClient.csproj", "ESportAuthClient/"]
 COPY ["./RMQEsportClient/RMQEsportClient.csproj", "RMQEsportClient/"]
 COPY ["./OcelotAuthClient/OcelotAuthClient.csproj", "OcelotAuthClient/"]
+COPY ["./MediaClient/MediaClient.csproj", "MediaClient/"]
 
 
 RUN dotnet restore UserWorkflow.Api/UserWorkflow.Api.csproj
@@ -23,6 +24,7 @@ COPY ./UserWorkflow.Infrastructure/. ./UserWorkflow.Infrastructure
 COPY ./ESportAuthClient/. ./ESportAuthClient
 COPY ./RMQEsportClient/. ./RMQEsportClient
 COPY ./OcelotAuthClient/. ./OcelotAuthClient
+COPY ./MediaClient/. ./MediaClient
 
 RUN dotnet publish UserWorkflow.Api/UserWorkflow.Api.csproj -c Release -o out
 
