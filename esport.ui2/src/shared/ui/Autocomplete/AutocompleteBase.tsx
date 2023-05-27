@@ -7,24 +7,17 @@ import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
 
 import { useDebounce } from "@/shared/lib";
 
-import { InputBase, InputBaseProps } from "../Input/InputBase";
+import { InputBase } from "../Input/InputBase";
 import { Icon } from "../Icon/Icon";
 
 import { useAutocomplete } from "./useAutocomplete";
 import { AutocompleteTransition } from "./AutocompleteTransition";
+import { AutocompleteCommonProps } from "./AutocompeleteCommonProps";
 
 export interface AutocompleteBaseProps<T extends {} = {}>
-  extends Omit<InputBaseProps, "value" | "onChange" | "list" | "name"> {
+  extends AutocompleteCommonProps<T> {
   value?: T;
   onChange?: (value: T) => void;
-  className?: string;
-  onInputChange?: (value: string) => void;
-  list?: T[];
-  displayValue: keyof T;
-  displayKey: keyof T;
-  loading?: boolean;
-  delayTime?: number;
-  name?: string;
   multiple?: false;
 }
 
@@ -37,6 +30,7 @@ export function AutocompleteBase<T extends {} = {}>({
   displayKey,
   loading,
   delayTime = 200,
+  additionalOptions,
   ...props
 }: AutocompleteBaseProps<T>) {
   const { items, handleInputChange, getLoadingOrEmpty } = useAutocomplete({
@@ -44,6 +38,7 @@ export function AutocompleteBase<T extends {} = {}>({
     displayValue,
     onInputChange,
     loading,
+    additionalOptions,
   });
   const debouncedHandleInputChange = useDebounce(handleInputChange, delayTime);
 

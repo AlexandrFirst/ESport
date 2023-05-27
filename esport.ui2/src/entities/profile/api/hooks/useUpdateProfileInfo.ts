@@ -4,14 +4,14 @@ import { ProfileApi } from "../../api/profileApi";
 import { UpdateProfileInfoRequest } from "../types/types";
 import { IProfile } from "../..";
 
-export const updateProfileInfoKey = (userId: string) => [
+export const updateProfileInfoKey = (userId: number) => [
   "profileInformation",
   "updateUserInfo",
   userId,
 ];
 
 export const useUpdateProfileInfo = (
-  userId: string,
+  userId: number,
   options?: UseMutationOptions<IProfile, unknown, UpdateProfileInfoRequest>
 ) => {
   return useMutation({

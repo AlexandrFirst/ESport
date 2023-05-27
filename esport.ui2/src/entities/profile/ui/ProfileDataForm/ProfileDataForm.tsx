@@ -1,7 +1,7 @@
 import React, { FC, ReactNode } from "react";
 import styles from "./ProfileDataForm.module.css";
 
-import { BoldText, InputBase, TextArea } from "@/shared/ui";
+import { BoldText, InputBase, TextAreaBase } from "@/shared/ui";
 
 export interface ProfileDataFormProps {
   name?: string;
@@ -80,7 +80,7 @@ export const ProfileDataForm: FC<ProfileDataFormProps> = ({
         onChange={onChange(onChangeTelephoneNumber)}
       />
       {withBio && (
-        <TextArea placeholder={"Bio..."} onChange={onChange(onChangeBio)} />
+        <TextAreaBase placeholder={"Bio..."} onChange={onChange(onChangeBio)} />
       )}
       {additionalFieldsBelow}
     </div>

@@ -1,7 +1,7 @@
 export { ProfileInformation } from "./ui/ProfileInformation/ProfileInformation";
 
 export type { ProfileInformationState } from "./model/types/ProfileInformationState";
-export type { TrainerProfileInformationState } from "./model/types/trainerProfileInformationState";
+export type { RoleProfileInformationState } from "./model/types/roleProfileInformationState";
 
 export {
   useProfileInformationActions,
@@ -10,7 +10,7 @@ export {
 } from "./model/slices/ProfileInformationSlice";
 
 export {
-  trainerProfileInformationReducer,
-  useTrainerProfileInformationActions,
-  trainerProfileInformationActions,
-} from "./model/slices/trainerProfileInformationSlice";
+  roleProfileInformationReducer,
+  useRoleProfileInformationActions,
+  roleProfileInformationActions,
+} from "./model/slices/roleProfileInformationSlice";

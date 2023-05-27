@@ -1,7 +1,15 @@
 import { useGetProfileInfo } from "../../api/hooks/useGetProfileInfo";
 import { useProfileActions } from "../../model/slices/profileSlice";
 
-export const useProfileInfo = (userId?: string) => {
+interface UseProfileInfoParams {
+  userId: number;
+  forceFetch?: boolean;
+}
+
+export const useProfileInfo = ({
+  userId,
+  forceFetch = false,
+}: UseProfileInfoParams) => {
   const { setProfile } = useProfileActions();
 
   const {
@@ -9,7 +17,7 @@ export const useProfileInfo = (userId?: string) => {
     isLoading,
     error,
     isError,
-  } = useGetProfileInfo(userId, {
+  } = useGetProfileInfo(userId, forceFetch, {
     onSuccess(data) {
       setProfile(data);
     },

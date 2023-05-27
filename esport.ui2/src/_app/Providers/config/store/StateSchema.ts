@@ -14,8 +14,9 @@ import { DeviceSliceState } from "@/shared/model";
 import { ProfileSchema } from "@/entities/profile";
 import {
   ProfileInformationState,
-  TrainerProfileInformationState,
+  RoleProfileInformationState,
 } from "@/widgets/ProfileInformation";
+import { GymsFiltersSchema } from "@/features/GymsFilters";
 
 export interface StateSchema {
   leftSidebar: LeftSidebarSliceState;
@@ -24,7 +25,8 @@ export interface StateSchema {
   profile: ProfileSchema;
   device: DeviceSliceState;
   profileInformation: ProfileInformationState;
-  trainerProfileInformation: TrainerProfileInformationState;
+  roleProfileInformation: RoleProfileInformationState;
+  gymsFilters: GymsFiltersSchema;
 }
 
 export type StateSchemaKey = keyof StateSchema;

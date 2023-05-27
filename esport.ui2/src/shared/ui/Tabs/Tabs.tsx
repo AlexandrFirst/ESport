@@ -52,7 +52,13 @@ export function Tabs<T extends number>({
                       transition={{ type: "spring", duration: 0.5 }}
                     />
                   )}
-                  <div className={cn(styles.label)}>{label}</div>
+                  <div
+                    className={cn(styles.label, {
+                      [styles.selected_text]: selected,
+                    })}
+                  >
+                    {label}
+                  </div>
                 </TabComponent>
               )}
             </Tab>
