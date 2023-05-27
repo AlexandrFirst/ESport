@@ -300,5 +300,46 @@ namespace UserWorkflow.Api.Controllers
                 logger.LogInformation($"ENDED {methodName} {requestInstanceId} at {ended} utc. Took {ended - started}");
             }
         }
+
+        [HttpPost("SetProfileAsLogin")]
+        public async Task<IActionResult> SetProfileAsLogin([FromBody] SetProfileAsLogin command) 
+        {
+            var started = DateTime.UtcNow;
+            var requestInstanceId = Guid.NewGuid();
+            var methodName = this.ControllerContext.RouteData.Values["action"].ToString();
+
+            try
+            {
+                logger.LogInformation($"STARTED {methodName} {requestInstanceId} at {started} utc");
+
+                var userId = User.Claims.FirstOrDefault(x => x.Type == "Id")?.Value;
+                if (string.IsNullOrEmpty(userId))
+                {
+                    return BadRequest(new[] { $"User Id information is abscent in request {methodName}" });
+                }
+
+                var result = await commandBus.ExecuteAsync(User, command);
+
+                return Ok(result.ItemId);
+            }
+            catch (ApplicationException exception)
+            {
+                return BadRequest(new[] { exception.Message });
+            }
+            catch (Exception e)
+            {
+                logger.LogError(e, e.Message);
+                if (e is InvalidOperationException)
+                    return BadRequest(new[] { e.Message });
+
+                return new StatusCodeResult((int)HttpStatusCode.InternalServerError);
+            }
+            finally
+            {
+                var ended = DateTime.UtcNow;
+                logger.LogInformation($"ENDED {methodName} {requestInstanceId} at {ended} utc. Took {ended - started}");
+            }
+        }
+        
     }
 }

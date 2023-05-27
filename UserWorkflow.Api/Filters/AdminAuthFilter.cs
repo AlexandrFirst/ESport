@@ -25,12 +25,14 @@ namespace UserWorkflow.Api.Filters
             if (roleClaim == null)
             {
                 context.Result = provideBadResponse(context.HttpContext, "Unable to authenticate administrator role");
+                return;
             }
 
             var idClaim = context.HttpContext.User.Claims.FirstOrDefault(x => x.Type == "Id");
             if (idClaim == null)
             {
                 context.Result = provideBadResponse(context.HttpContext, "Unable to authenticate administrator id");
+                return;
             }
 
             var roles = roleClaim.Value.Split(',');
@@ -40,16 +42,19 @@ namespace UserWorkflow.Api.Filters
             if (!roles.Any(x => x == "OrgAdmin"))
             {
                 context.Result = provideBadResponse(context.HttpContext, "No org admin role is present for the user");
+                return;
             }
             var admin = await dbContext.OrganisationAdministrators.FirstOrDefaultAsync(x => x.UserId == id);
             if (admin == null)
             {
                 context.Result = provideBadResponse(context.HttpContext, "Org admin is not found");
+                return;
             }
 
             if (!admin.IsConfirmed)
             {
                 context.Result = provideBadResponse(context.HttpContext, "Org admin is not confirmed");
+                return;
             }
         }
     }

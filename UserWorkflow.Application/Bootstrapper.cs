@@ -60,7 +60,7 @@ namespace UserWorkflow.Application
             services.AddTransient<ICommandHandler<UpdateTrainer>, UpdateTrainerHandler>();
             services.AddTransient<ICommandHandler<ConfirmProfileEmail>, ConfirmProfileEmailHandler>();
             services.AddTransient<ICommandHandler<DeleteUser>, DeleteUserHandler>();
-
+            services.AddTransient<ICommandHandler<SetProfileAsLogin>, SetProfileAsLoginHandler>();
 
             services.AddTransient<IRequestHandler<GetPendingAdmins, GetPendingAdminsResult>, GetPendingAdminsHandler>();
             services.AddTransient<IRequestHandler<GetGymRequests, GetGymRequestsResult>, GetGymRequestsHandler>();

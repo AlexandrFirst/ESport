@@ -15,7 +15,7 @@ namespace UserWorkflow.Infrastructure.Security
 
         public string RoleName { get; set; }
         public int RoleId { get; set; }
-
+        
         private UserRole(string roleName, int roleId)
         {
             RoleName = roleName;

@@ -162,7 +162,14 @@ namespace IdentityV2.Infrastructure.Core
 
             using (var transaction = dataContext.Database.BeginTransaction())
             {
+                var oldEmail = user.Email;
                 mapper.Map(userProfile, user);
+                
+                if (!oldEmail.Equals(user.Email)) 
+                {
+                    authorizationCache.RemoveUserFromCache(user.Id);
+                }
+
 
                 if (userProfile.RolesToRemove?.Any() == true)
                 {
