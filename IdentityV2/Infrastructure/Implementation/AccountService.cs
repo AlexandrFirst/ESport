@@ -137,7 +137,7 @@ namespace IdentityV2.Infrastructure.Core
                 messageProducer.SendMessage(new
                 {
                     mail = userToInsert.Email,
-                    template = "<p>Click to confirm your account <a href='" + (isHttps ? "https" : "http") + "://" + mailOptions.ConfirmationHost + $"/api/auth/confirm?token={userToInsert.PendingUser.PendingToken}'>Confirm</a></p>"
+                    template = "<p>Click to confirm your account <a href='" + (isHttps ? "https" : "http") + "://" + mailOptions.ConfirmationHost + $"/confirm/register?token={userToInsert.PendingUser.PendingToken}'>Confirm</a></p>"
                 }, QueueConfigName.MessageConfig);
                 await dataContext.SaveChangesAsync();
 

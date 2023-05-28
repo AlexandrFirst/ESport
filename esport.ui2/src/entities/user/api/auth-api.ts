@@ -28,7 +28,7 @@ export const AuthService = (ctx?: ApiContext) => {
     },
 
     confirm(token: string): Promise<void> {
-      return authApi.get(
+      return instance.get(
         `${process.env.NEXT_PUBLIC_LOGIN_API_URL}/confirm?token=${token}`
       );
     },

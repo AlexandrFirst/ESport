@@ -15,10 +15,14 @@ export { useSnackbar } from "./hooks/useSnackbar";
 export { useUrlWithReturnUrl } from "./hooks/router/useUrlWithReturnUrl";
 export { useMappedRoles } from "./hooks/useMappedRoles";
 export { useDebounce } from "./hooks/useDebounce";
+export { useRedirectAfterFetch } from "./hooks/useRedirectAfterFetch";
 
 //utils
 export { getDeviceDetect } from "./utils/detect-device";
 export { redirect } from "./utils/redirect";
+export { randomAlphabetString, randomNumberString } from "./utils/randomString";
+export { capitalize } from "./utils/capitalize";
+export { Logger } from "./utils/Logger";
 
 export { createBuildPath } from "./utils/build-path";
 export type { Query, Parameter } from "./utils/build-path";

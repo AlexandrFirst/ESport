@@ -1,7 +1,19 @@
 .title {
-  @apply origin-left font-bold text-3xl duration-200 w-fit leading-7;
+  @apply origin-left font-bold duration-200 w-fit leading-7;
 }
 
 .center {
   @apply text-center w-full;
+}
+
+.small {
+  @apply text-2xl;
+}
+
+.medium {
+  @apply text-3xl;
+}
+
+.large {
+  @apply text-4xl;
 }

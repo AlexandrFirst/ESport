@@ -50,7 +50,7 @@ export const getServerSideProps = getAppServerSideProps(
         trainerSports: profile.userTrainerInfo?.trainerSportInfos ?? [],
         gymAdminGyms: profile.userAdminInfo?.userGyms ?? [],
         organisationAdminOrganisationId:
-          profile.userOrganisationAdminInfos?.[0].organisationId ?? 0,
+          profile.userOrganisationAdminInfos?.[0]?.organisationId ?? 0,
       })
     );
 

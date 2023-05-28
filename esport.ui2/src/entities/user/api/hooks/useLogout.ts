@@ -6,16 +6,14 @@ import { AuthToken } from "@/shared/constants";
 import { AuthService } from "../../api/auth-api";
 import { useUserActions } from "../../model/slices/userSlice";
 
-const authKeys = {
-  logout: ["auth", "logout"],
-};
+import { authKeys } from "./authKeys";
 
 export const useLogout = (options?: UseMutationOptions) => {
   const { resetUser } = useUserActions();
 
   return useMutation({
     ...options,
-    mutationKey: authKeys.logout,
+    mutationKey: authKeys.logout(),
     mutationFn: async () => {
       try {
         await AuthService().logout();

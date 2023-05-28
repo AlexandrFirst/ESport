@@ -73,7 +73,7 @@ export const OrganisationAdminProfileInformation: FC<
   };
 
   const additionalOptions: AutocompleteAdditionalOptionList =
-    userOrganisationAdminInfos?.[0].isConfirmed
+    userOrganisationAdminInfos?.[0]?.isConfirmed
       ? [
           {
             key: "create",
