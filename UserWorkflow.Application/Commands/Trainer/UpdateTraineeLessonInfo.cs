@@ -27,7 +27,7 @@ namespace UserWorkflow.Application.Commands.Trainer
         public string ExerciseNotes { get; set; }
         public int ExerciseOrder { get; set; }
         public string OverrideDescription { get; set; }
-        public ExerciseStatus? ExerciseStatus { get; set; };
+        public ExerciseStatus? ExerciseStatus { get; set; }
     }
 }
 
