@@ -12,7 +12,7 @@ import { NoData } from "../NoData/NoData";
 
 export interface ProfileInfoWithCardProps extends ProfileDataFormProps {
   profileInfo?: IProfileInfo;
-  name: keyof IProfile;
+  name: keyof Omit<IProfile, "userIdentityInfo">;
   editable?: boolean;
 }
 

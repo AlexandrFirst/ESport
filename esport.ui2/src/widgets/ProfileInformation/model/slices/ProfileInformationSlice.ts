@@ -20,6 +20,13 @@ const initialState: ProfileInformationState = {
   currentProfile: null,
   editableProfile: defaultValuesForEditableProfile,
   overrideLoginInfo: null,
+  isEmailForProfileChanged: {
+    userTraineeInfo: false,
+    userTrainerInfo: false,
+    userAdminInfo: false,
+    userOrganisationAdminInfos: false,
+    userIdentityInfo: false,
+  },
 };
 
 const profileInformationSlice = buildSlice({
@@ -38,10 +45,39 @@ const profileInformationSlice = buildSlice({
     },
     setEditableProfileNotToNull(
       state,
-      { payload }: PayloadAction<keyof IProfile>
+      { payload }: PayloadAction<keyof Omit<IProfile, "userIdentityInfo">>
     ) {
-      // @ts-ignore
-      state.editableProfile[payload] = defaultValuesForEditableProfile[payload];
+      switch (payload) {
+        case "userTraineeInfo":
+        case "userTrainerInfo":
+        case "userAdminInfo":
+          // @ts-ignore
+          state.editableProfile[payload] = {
+            name: state.currentProfile?.userIdentityInfo?.name ?? "",
+            surname: state.currentProfile?.userIdentityInfo?.surname ?? "",
+            email: state.currentProfile?.userIdentityInfo?.email ?? "",
+            telephoneNumber:
+              state.currentProfile?.userIdentityInfo?.telephoneNumber ?? "",
+            id: 0,
+            info: "",
+            photoId: null,
+            userId: 0,
+          };
+        case "userOrganisationAdminInfos":
+          state.editableProfile.userOrganisationAdminInfos = [
+            {
+              name: state.currentProfile?.userIdentityInfo?.name ?? "",
+              surname: state.currentProfile?.userIdentityInfo?.surname ?? "",
+              email: state.currentProfile?.userIdentityInfo?.email ?? "",
+              telephoneNumber:
+                state.currentProfile?.userIdentityInfo?.telephoneNumber ?? "",
+              id: 0,
+              info: "",
+              photoId: null,
+              userId: 0,
+            },
+          ];
+      }
     },
     setEditableProfileByKey(
       state,
@@ -58,6 +94,23 @@ const profileInformationSlice = buildSlice({
     },
     setOverrideProfile(state, action: PayloadAction<keyof IProfile | null>) {
       state.overrideLoginInfo = action.payload;
+    },
+    resetIsEmailForProfileChanged(state) {
+      state.isEmailForProfileChanged = {
+        userTraineeInfo: false,
+        userTrainerInfo: false,
+        userAdminInfo: false,
+        userOrganisationAdminInfos: false,
+        userIdentityInfo: false,
+      };
+    },
+    setIsEmailForProfileChanged(
+      state,
+      { payload }: PayloadAction<{ key: keyof IProfile; value: boolean }>
+    ) {
+      const { key, value } = payload;
+      // @ts-ignore
+      state.isEmailForProfileChanged[key] = value;
     },
   },
   extraReducers: {

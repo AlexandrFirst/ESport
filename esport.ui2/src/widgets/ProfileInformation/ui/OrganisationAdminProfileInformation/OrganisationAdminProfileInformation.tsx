@@ -1,7 +1,13 @@
 import React, { FC, useState } from "react";
-import styles from "./OrganisationAdminProfileInformation.module.css";
 
-import { Autocomplete, Card, UILink } from "@/shared/ui";
+import { useRouter } from "next/router";
+
+import {
+  Autocomplete,
+  AutocompleteAdditionalOptionList,
+  Card,
+  UILink,
+} from "@/shared/ui";
 
 import { routes } from "@/shared/config";
 import { IProfileInfo, ProfileDataForm } from "@/entities/profile";
@@ -12,8 +18,9 @@ import {
 
 import { useSelectEditableProfile } from "../../model/selectors/selectEditableProfile/selectEditableProfile";
 import { useProfileInformationActions } from "../../model/slices/ProfileInformationSlice";
+import { useRoleProfileInformationActions } from "../../model/slices/roleProfileInformationSlice";
+import { useSelectOrganisationAdminOrganisationId } from "../../model/selectors/selectOrganisationAdminOrganisation/selectOrganisationAdminOrganisationId";
 
-import { SetLoginDataToggle } from "../SetLoginDataToggle/SetLoginDataToggle";
 import { NoData } from "../NoData/NoData";
 
 interface OrganizationAdminProfileInformationProps {
@@ -24,10 +31,16 @@ export const OrganisationAdminProfileInformation: FC<
   OrganizationAdminProfileInformationProps
 > = ({ className }) => {
   const { userOrganisationAdminInfos } = useSelectEditableProfile();
-  const { setEditableProfileByKey } = useProfileInformationActions();
+  const organisationAdminOrganisationId =
+    useSelectOrganisationAdminOrganisationId();
 
+  const { setEditableProfileByKey, setIsEmailForProfileChanged } =
+    useProfileInformationActions();
+  const { setOrganisationAdminOrganisation } =
+    useRoleProfileInformationActions();
+
+  const router = useRouter();
   const [organizationValue, setOrganizationValue] = useState("");
-
   const hasInfo = Boolean(userOrganisationAdminInfos?.length);
 
   const { data: organizations, isLoading: areOrganizationsLoading } =
@@ -35,6 +48,7 @@ export const OrganisationAdminProfileInformation: FC<
       { name: organizationValue, organisationIds: [] },
       {
         enabled: hasInfo,
+        select: (data) => data.organisatationInfoListing,
       }
     );
 
@@ -45,6 +59,33 @@ export const OrganisationAdminProfileInformation: FC<
         profileInfoKey,
         value,
       });
+
+  const handleChangeEmail = (value: string) => {
+    setEditableProfileByKey({
+      profileKey: "userOrganisationAdminInfos",
+      profileInfoKey: "email",
+      value,
+    });
+    setIsEmailForProfileChanged({
+      key: "userOrganisationAdminInfos",
+      value: true,
+    });
+  };
+
+  const additionalOptions: AutocompleteAdditionalOptionList =
+    userOrganisationAdminInfos?.[0].isConfirmed
+      ? [
+          {
+            key: "create",
+            onClick: () => router.push(routes.Organisation.Create()),
+            content: (
+              <UILink href={routes.Organisation.Create()} color={"inverted"}>
+                Create organisation
+              </UILink>
+            ),
+          },
+        ]
+      : [];
 
   return (
     <Card padding={"md"}>
@@ -58,36 +99,26 @@ export const OrganisationAdminProfileInformation: FC<
             onChangeTelephoneNumber={handleChange("telephoneNumber")}
             onChangeSurname={handleChange("surname")}
             onChangeName={handleChange("name")}
-            onChangeEmail={handleChange("email")}
+            onChangeEmail={handleChangeEmail}
             onChangeBio={handleChange("info")}
             withBio
-            additionalFieldsAbove={
-              <SetLoginDataToggle
-                currentProfile={"userOrganisationAdminInfos"}
-              />
-            }
             additionalFieldsBelow={
               <>
                 <Autocomplete<IOrganizationInfoRead>
-                  list={
-                    organizations?.organisationInfoListing
-                      ?.organisatationInfoListing ?? []
-                  }
+                  value={organizations?.find(
+                    (o) => o.organisationId === organisationAdminOrganisationId
+                  )}
+                  list={organizations ?? []}
                   displayValue={"name"}
                   displayKey={"organisationId"}
                   onInputChange={setOrganizationValue}
                   lazy
                   loading={areOrganizationsLoading}
                   label={"Organisation"}
-                  additionalOptions={[
-                    <UILink
-                      key={"Unique"}
-                      href={routes.Organisation.Create()}
-                      className={styles.create_organisation}
-                    >
-                      Create organisation
-                    </UILink>,
-                  ]}
+                  additionalOptions={additionalOptions}
+                  onChange={(value) =>
+                    setOrganisationAdminOrganisation(value?.organisationId ?? 0)
+                  }
                 />
               </>
             }

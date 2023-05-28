@@ -8,10 +8,10 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { SubTitle, Title } from "@/shared/ui";
 import { AppNextPage } from "@/shared/types";
 import { useSnackbar } from "@/shared/lib";
+import { routes } from "@/shared/config";
 
 import { getMainLayout } from "@/widgets/MainLayout";
 import { useRouter } from "next/router";
-import { routes } from "@/shared/config";
 
 type Props = {
   snackbar?: {

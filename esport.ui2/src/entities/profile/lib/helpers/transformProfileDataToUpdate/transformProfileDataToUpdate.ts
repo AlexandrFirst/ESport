@@ -8,12 +8,14 @@ interface TransformProfileDataToUpdateParams {
   data: IProfile;
   overrideLoginInfo: keyof IProfile | null;
   trainerSports?: ITrainerSportInfo[];
+  organisationAdminOrganisationId: number;
 }
 
 export const transformProfileDataToUpdate = ({
   data,
   overrideLoginInfo,
   trainerSports,
+  organisationAdminOrganisationId,
 }: TransformProfileDataToUpdateParams): UpdateProfileInfoRequest => {
   return {
     updateAdminInfo: data.userAdminInfo && {
@@ -27,12 +29,14 @@ export const transformProfileDataToUpdate = ({
     updateTraineeInfo: data.userTraineeInfo && {
       updateUserInfo: {
         ...data.userTraineeInfo,
+        telephone: data.userTraineeInfo?.telephoneNumber,
         overrideIdentityInfo: overrideLoginInfo === "userTraineeInfo",
       },
     },
     updateTrainerInfo: data.userTrainerInfo && {
       updateUserInfo: {
         ...data.userTrainerInfo,
+        telephone: data.userTrainerInfo?.telephoneNumber,
         overrideIdentityInfo: overrideLoginInfo === "userTrainerInfo",
       },
       trainerSportInfoIds: transformTrainerSportInfo(trainerSports),
@@ -41,10 +45,11 @@ export const transformProfileDataToUpdate = ({
       ? {
           updateUserInfo: {
             ...data.userOrganisationAdminInfos[0],
+            telephone: data.userOrganisationAdminInfos[0].telephoneNumber,
             overrideIdentityInfo:
               overrideLoginInfo === "userOrganisationAdminInfos",
           },
-          organisationId: 0,
+          organisationId: organisationAdminOrganisationId,
         }
       : null,
   };

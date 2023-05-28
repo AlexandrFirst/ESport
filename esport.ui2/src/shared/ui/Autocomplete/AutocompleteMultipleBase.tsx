@@ -36,12 +36,19 @@ export function AutocompleteMultipleBase<T extends {} = {}>({
   additionalOptions,
   ...props
 }: AutocompleteMultipleBaseProps<T>) {
-  const { items, getLoadingOrEmpty, handleInputChange } = useAutocomplete({
+  const {
+    items,
+    getLoadingOrEmpty,
+    handleInputChange,
+    getAdditionalOptions,
+    handleChange,
+  } = useAutocomplete({
     list,
     displayValue,
     loading,
     withFilter: false,
     additionalOptions,
+    onChange,
   });
 
   const compare: ByComparator<T> = useCallback(
@@ -50,8 +57,17 @@ export function AutocompleteMultipleBase<T extends {} = {}>({
   );
 
   return (
-    //@ts-ignore
-    <Combobox value={value} onChange={onChange} nullable multiple by={compare}>
+    <Combobox
+      //@ts-ignore
+      value={value}
+      //@ts-ignore
+      onChange={handleChange}
+      //@ts-ignore
+      nullable
+      multiple
+      //@ts-ignore
+      by={compare}
+    >
       {({ open }) => (
         <div className={styles.wrapper}>
           <Combobox.Input
@@ -94,6 +110,7 @@ export function AutocompleteMultipleBase<T extends {} = {}>({
                     )}
                   </Combobox.Option>
                 ))}
+              {getAdditionalOptions()}
             </Combobox.Options>
           </AutocompleteTransition>
         </div>

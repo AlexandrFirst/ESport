@@ -4,11 +4,11 @@ import styles from "./FormError.module.css";
 import { AnimatePresence, motion } from "framer-motion";
 import cn from "classnames";
 
-import { Message } from "../Input/InputBase";
+import { ErrorMessage } from "@/shared/types";
 
 interface FormErrorProps {
   className?: string;
-  error?: Message;
+  error?: ErrorMessage;
 }
 
 export const FormError: FC<FormErrorProps> = ({ className, error }) => {

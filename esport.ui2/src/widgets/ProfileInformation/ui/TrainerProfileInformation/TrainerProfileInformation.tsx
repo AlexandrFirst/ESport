@@ -4,7 +4,6 @@ import { Autocomplete } from "@/shared/ui";
 import { ISport, useGetAllSports } from "@/entities/sport";
 
 import { ProfileInfoPerRole } from "../ProfileInfoPerRole/ProfileInfoPerRole";
-import { SetLoginDataToggle } from "../SetLoginDataToggle/SetLoginDataToggle";
 
 import { useRoleProfileInformationActions } from "../../model/slices/roleProfileInformationSlice";
 import { useSelectTrainerSports } from "../../model/selectors/selectTrainerSports/selectTrainerSports";
@@ -27,9 +26,6 @@ export const TrainerProfileInformation: FC<TrainerProfileInformationProps> = ({
     <>
       <ProfileInfoPerRole
         profileKey={"userTrainerInfo"}
-        additionalFieldsAbove={
-          <SetLoginDataToggle currentProfile={"userTrainerInfo"} />
-        }
         additionalFieldsBelow={
           <>
             <Autocomplete<ISport>

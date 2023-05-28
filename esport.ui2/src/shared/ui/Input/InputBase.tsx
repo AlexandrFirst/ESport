@@ -8,13 +8,14 @@ import styles from "./Input.module.css";
 
 import cn from "classnames";
 import { motion } from "framer-motion";
-import { FormError } from "../FormError/FormError";
 
-export type Message = { message?: string };
+import { ErrorMessage } from "@/shared/types";
+
+import { FormError } from "../FormError/FormError";
 
 export type InputBaseProps = InputHTMLAttributes<HTMLInputElement> & {
   name?: string;
-  errors?: Record<string, Message>;
+  errors?: Record<string, ErrorMessage>;
   callbackOnChange?: (value: string) => void;
   label?: ReactNode;
   endIcon?: ReactNode;
@@ -23,7 +24,7 @@ export type InputBaseProps = InputHTMLAttributes<HTMLInputElement> & {
   labelActive?: boolean;
   marginTop?: "sm" | "md" | "lg" | "none";
   endIconClassName?: string;
-  error?: Message;
+  error?: ErrorMessage;
 };
 
 export const InputBase = forwardRef<HTMLInputElement, InputBaseProps>(

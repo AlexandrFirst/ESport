@@ -1,6 +1,7 @@
 import React, { FC, ReactNode } from "react";
 import styles from "./ProfileDataForm.module.css";
 
+import { ErrorMessage } from "@/shared/types";
 import { BoldText, InputBase, TextAreaBase } from "@/shared/ui";
 
 export interface ProfileDataFormProps {
@@ -22,6 +23,8 @@ export interface ProfileDataFormProps {
   additionalFieldsBelow?: ReactNode;
   additionalFieldsAbove?: ReactNode;
   label?: string;
+
+  emailError?: ErrorMessage;
 }
 
 export const ProfileDataForm: FC<ProfileDataFormProps> = ({
@@ -40,6 +43,7 @@ export const ProfileDataForm: FC<ProfileDataFormProps> = ({
   surname = "",
   name = "",
   withBio,
+  emailError,
 }) => {
   const onChange =
     (cb?: (data: string) => void) =>
@@ -72,6 +76,7 @@ export const ProfileDataForm: FC<ProfileDataFormProps> = ({
         value={email}
         label={"Email"}
         onChange={onChange(onChangeEmail)}
+        error={emailError}
       />
       <InputBase
         name={`${namePrefix}_telephoneNumber`}

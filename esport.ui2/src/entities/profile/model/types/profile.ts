@@ -1,12 +1,23 @@
-import { ITrainerSportInfo } from "../../model/types/trainer-sport-info";
 import { IGymInfo } from "@/entities/gym";
+import { ITrainerSportInfo } from "../../model/types/trainer-sport-info";
 
 export interface IProfile {
   userIdentityInfo?: IProfileInfo;
   userTraineeInfo?: IProfileInfo;
   userTrainerInfo?: ITrainerInfo;
   userAdminInfo?: IGymAdminInfo;
-  userOrganisationAdminInfos?: IProfileInfo[];
+  userOrganisationAdminInfos?: IOrganisationAdminInfo[];
+}
+
+export interface IProfileInfo {
+  id?: number;
+  userId: number;
+  name: string;
+  surname: string;
+  email: string;
+  telephoneNumber: string;
+  photoId: null;
+  info?: string;
 }
 
 export interface ITrainerInfo extends IProfileInfo {
@@ -18,15 +29,8 @@ export interface IGymAdminInfo extends IProfileInfo {
   userGyms: IGymInfo[];
 }
 
-export interface IProfileInfo {
-  id?: number;
-  userId: number;
-  name: string;
-  surname: string;
-  email: string;
-  telephoneNumber: string;
-  photoId: null;
-  gymOrganisationId?: number;
+export interface IOrganisationAdminInfo extends IProfileInfo {
+  organisationId?: number;
   organisationName?: string;
-  info?: string;
+  isConfirmed?: boolean;
 }

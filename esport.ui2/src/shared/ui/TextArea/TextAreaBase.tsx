@@ -2,13 +2,15 @@ import { FC, TextareaHTMLAttributes } from "react";
 import styles from "./TextArea.module.css";
 
 import cn from "classnames";
+
+import { ErrorMessage } from "@/shared/types";
+
 import { FormError } from "../FormError/FormError";
-import { Message } from "../Input/InputBase";
 
 export interface TextAreaBaseProps
   extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   fullWidth?: boolean;
-  error?: Message;
+  error?: ErrorMessage;
 }
 
 export const TextAreaBase: FC<TextAreaBaseProps> = ({

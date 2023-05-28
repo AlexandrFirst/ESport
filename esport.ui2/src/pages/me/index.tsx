@@ -49,6 +49,8 @@ export const getServerSideProps = getAppServerSideProps(
       roleProfileInformationActions.setInitialData({
         trainerSports: profile.userTrainerInfo?.trainerSportInfos ?? [],
         gymAdminGyms: profile.userAdminInfo?.userGyms ?? [],
+        organisationAdminOrganisationId:
+          profile.userOrganisationAdminInfos?.[0].organisationId ?? 0,
       })
     );
 
