@@ -67,8 +67,8 @@ namespace UserWorkflow.Application.Commands.OrgAdminCommands
             var gymsToAdd = organisationGyms.Where(x => !organisation.Gyms.Any(g => x.Id == g.Id));
             var gymsToUpdate = organisation.Gyms.Join(organisationGyms, x => x.Id, x => x.Id, (n, o) => new
             {
-                OldGym = o,
-                NewGym = n,
+                OldGym = n,
+                NewGym = o,
             }).ToList();
 
             esportDataContext.RemoveRange(gymsToDelete);

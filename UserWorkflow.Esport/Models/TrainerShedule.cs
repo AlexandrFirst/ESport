@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace UserWorkflow.Esport.Models
@@ -39,6 +40,8 @@ namespace UserWorkflow.Esport.Models
         {
             Lessons = new List<Lesson>();
             TrainerRequests = new List<TrainerRequest>();
+            TimeOverride = new List<TimeOverride>();
+            _timeOverride = new List<TimeOverride>();
         }
 
         public int Id { get; set; }
@@ -51,7 +54,8 @@ namespace UserWorkflow.Esport.Models
 
         public TrainerStatus Status { get; set; }
 
-        public List<TimeOverride> TimeOverride { get; set; }
+        private List<TimeOverride> _timeOverride { get; set; }
+        public List<TimeOverride> TimeOverride { get { return _timeOverride.Where(x => x != null).ToList(); } set { _timeOverride = value; } }
 
         public virtual List<TrainerRequest> TrainerRequests { get; set; }
 

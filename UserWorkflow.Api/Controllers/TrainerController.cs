@@ -14,7 +14,6 @@ using UserWorkflow.Application.Requests.Gym;
 using UserWorkflow.Application.Requests.Trainer;
 using UserWorkFlow.Infrastructure.Queries;
 using UserWorkflow.Esport.Models;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace UserWorkflow.Api.Controllers
 {

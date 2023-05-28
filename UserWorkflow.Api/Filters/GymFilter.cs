@@ -42,7 +42,7 @@ namespace UserWorkflow.Api.Filters
             var gymAdmin = await dbContext.GymAdministrators.FirstOrDefaultAsync(x => x.GymId == _gymId && x.Administrators.UserId == userId);
             if (gymAdmin == null || gymAdmin?.IsConfirmed != true) 
             {
-                var orgAdmin = await dbContext.OrganisationAdministrators.FirstOrDefaultAsync(x => x.Organisation.Gyms.Any(k => k.Id == _gymId) && x.Id == userId);
+                var orgAdmin = await dbContext.OrganisationAdministrators.FirstOrDefaultAsync(x => x.Organisation.Gyms.Any(k => k.Id == _gymId) && x.UserId == userId);
                 if (orgAdmin == null || orgAdmin.IsConfirmed == false) 
                 {
                     context.Result = provideBadResponse(context.HttpContext,
