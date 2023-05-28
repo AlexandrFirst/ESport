@@ -40,11 +40,16 @@ namespace UserWorkflow.Application.Commands.User
             {
                 confirmEmail = needConfirmation(command.UpdateUserInfo, command.AuthenticatedBy?.Email);
             }
-            else {
+            else
+            {
                 confirmEmail = needConfirmation(command.UpdateUserInfo, organisationAdmin.Email);
             }
             organisationAdmin = createUser<OrganisationAdministrators>(command.UpdateUserInfo, !confirmEmail);
-            var orgnistaionAdminId = await userService.CreateOrUpdateOrganisationAdministrator(organisationAdmin, command.OrganisationId, confirmEmail);
+            var orgnistaionAdminId = await userService.CreateOrUpdateOrganisationAdministrator(organisationAdmin, command.OrganisationId, confirmEmail, new Models.Organisation.SimpleOrgansiationInfo()
+            {
+                Name = command.OrganisationName,
+                Description = command.OrganisationDescription,
+            });
 
             if (confirmEmail)
             {

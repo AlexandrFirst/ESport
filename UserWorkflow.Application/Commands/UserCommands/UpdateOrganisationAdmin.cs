@@ -15,5 +15,7 @@ namespace UserWorkflow.Application.Commands.User
         public UpdateUserInfo UpdateUserInfo { get; set; }
         [Required]
         public int OrganisationId { get; set; }
+        public string OrganisationName { get; set; }
+        public string OrganisationDescription { get; set; }
     }
 }

@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using UserWorkflow.Application.Clients;
 using UserWorkflow.Application.Commands.User;
 using UserWorkflow.Application.Extensions;
+using UserWorkflow.Application.Models.Organisation;
 using UserWorkflow.Application.Models.Rmq;
 using UserWorkflow.Application.ReadModels.User;
 using UserWorkflow.Esport;
@@ -93,14 +94,25 @@ namespace UserWorkflow.Application.Services.Users
             return admin.Id;
         }
 
-        public async Task<int> CreateOrUpdateOrganisationAdministrator(User userModel, int organistaionId, bool needConfirmation = false)
+        public async Task<int> CreateOrUpdateOrganisationAdministrator(User userModel, int organistaionId, bool needConfirmation = false, SimpleOrgansiationInfo? simpleOrgansiationInfo = null)
         {
             var organistaion = await esportDataContext.Organisations.FirstOrDefaultAsync(x => x.Id == organistaionId);
             string action = string.Empty;
 
             if (organistaion == null)
             {
-                organistaion = new Esport.Models.Organisation() { Description = "" };
+                if (simpleOrgansiationInfo != null)
+                {
+                    organistaion = new Esport.Models.Organisation()
+                    {
+                        Description = simpleOrgansiationInfo.Description ?? string.Empty,
+                        Name = simpleOrgansiationInfo.Name ?? string.Empty,
+                    };
+                }
+                else
+                {
+                    organistaion = new Esport.Models.Organisation() { Description = "", Name = "" };
+                }
             }
 
             var organisationAdministrator = await esportDataContext.OrganisationAdministrators.FirstOrDefaultAsync(x => x.UserId == userModel.UserId);
