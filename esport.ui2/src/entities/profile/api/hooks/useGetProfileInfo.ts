@@ -4,9 +4,7 @@ import { ProfileApi } from "../profileApi";
 import { IProfile } from "../../model/types/profile";
 import { useSelectProfile } from "../../model/selectors/select-profile/select-profile";
 
-export const getProfileKeys = {
-  getProfileById: (userId?: number) => ["get-profile-by-id", userId] as const,
-};
+import { profileApiKeys } from "./profileApiKeys";
 
 export type GetProfileOptions = UseQueryOptions<IProfile, unknown, IProfile>;
 
@@ -17,7 +15,7 @@ export const useGetProfileInfo = (
 ) => {
   const profile = useSelectProfile();
   return useQuery({
-    queryKey: getProfileKeys.getProfileById(userId),
+    queryKey: profileApiKeys.getProfileById(userId),
     queryFn: async () => {
       try {
         const { data } = await ProfileApi().getProfileInfo(userId ?? 0);

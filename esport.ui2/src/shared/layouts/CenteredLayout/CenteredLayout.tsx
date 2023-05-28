@@ -23,8 +23,8 @@ export const CenteredLayout: FC<ConfirmingLayoutProps> = ({
   className,
   disabledButton,
   isError,
-  errorFallback,
-  loadingFallback,
+  errorFallback = "Something went wrong",
+  loadingFallback = "Loading...",
   isLoading,
   fadeOutOnFinish,
   children,
@@ -54,7 +54,6 @@ export const CenteredLayout: FC<ConfirmingLayoutProps> = ({
         src={img}
         loader={() => img}
         alt="Boy with coffee"
-        // className={styles.img}
       />
       <Button
         disabled={disabledButton || isLoading}

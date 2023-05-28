@@ -2,20 +2,20 @@ import { useRouter } from "next/router";
 import { BeatLoader } from "react-spinners";
 
 import { AppNextPage, PageProps } from "@/shared/types";
-import { CenteredLayout } from "@/shared/layouts";
-import { ErrorText, Title } from "@/shared/ui";
 import { useRedirectAfterFetch } from "@/shared/lib";
+import { ErrorText, Title } from "@/shared/ui";
+import { CenteredLayout } from "@/shared/layouts";
 
-import { useConfirmUser } from "@/entities/user";
+import { useConfirmMyProfile } from "@/entities/profile";
 
 import { ThemeSwitcher } from "@/features/ThemeSwitcher";
 
-type ConfirmRegisterProps = PageProps & {};
+type ConfirmProfileProps = PageProps & {};
 
-const ConfirmRegister: AppNextPage<ConfirmRegisterProps> = () => {
+const ConfirmProfile: AppNextPage<ConfirmProfileProps> = () => {
   const router = useRouter();
 
-  const { isLoading, isError, isFetched } = useConfirmUser(
+  const { isLoading, isError, isFetched } = useConfirmMyProfile(
     router.query.token as string
   );
 
@@ -33,7 +33,7 @@ const ConfirmRegister: AppNextPage<ConfirmRegisterProps> = () => {
     >
       <ThemeSwitcher className={"absolute right-10 top-10"} />
       <Title center size={"large"}>
-        Your account have been successfully activated
+        Your profile have been successfully activated
       </Title>
       <Title center className="mt-10">
         You will be automatically redirected to home page in {timeLeft}
@@ -42,4 +42,4 @@ const ConfirmRegister: AppNextPage<ConfirmRegisterProps> = () => {
   );
 };
 
-export default ConfirmRegister;
+export default ConfirmProfile;

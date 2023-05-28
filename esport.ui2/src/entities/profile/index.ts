@@ -21,14 +21,10 @@ export {
 
 //api
 export { ProfileApi } from "./api/profileApi";
-export {
-  getProfileKeys,
-  useGetProfileInfo,
-} from "./api/hooks/useGetProfileInfo";
-export {
-  updateProfileInfoKey,
-  useUpdateProfileInfo,
-} from "./api/hooks/useUpdateProfileInfo";
+export { profileApiKeys } from "./api/hooks/profileApiKeys";
+export { useGetProfileInfo } from "./api/hooks/useGetProfileInfo";
+export { useUpdateProfileInfo } from "./api/hooks/useUpdateProfileInfo";
+export { useConfirmMyProfile } from "./api/hooks/useConfirmMyProfile";
 
 //hooks
 export { useProfileInfo } from "./lib/hooks/useProfileInfo";
