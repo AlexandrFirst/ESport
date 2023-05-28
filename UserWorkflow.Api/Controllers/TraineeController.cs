@@ -68,7 +68,7 @@ namespace UserWorkflow.Api.Controllers
         }
 
         [HttpPost("applyForLesson")]
-        public async Task<IActionResult> ApplyForLesson([FromBody] ApplyForLesson applyForLesson) 
+        public async Task<IActionResult> ApplyForLesson([FromBody] ApplyForLesson applyForLesson)
         {
             var started = DateTime.UtcNow;
             var requestInstanceId = Guid.NewGuid();
@@ -105,7 +105,7 @@ namespace UserWorkflow.Api.Controllers
         }
 
         [HttpPost("userTimeTable")]
-        public async Task<IActionResult> GetTraineeTimetable([FromBody] GymTimeTableFilter gymTimeTableFilter) 
+        public async Task<IActionResult> GetTraineeTimetable([FromBody] GymTimeTableFilter gymTimeTableFilter)
         {
             var started = DateTime.UtcNow;
             var requestInstanceId = Guid.NewGuid();
@@ -119,6 +119,43 @@ namespace UserWorkflow.Api.Controllers
                 {
                     DayOfTheWeeks = gymTimeTableFilter.GetFiltrationValue()
                 });
+
+                if (!result.Succeeded)
+                    return BadRequest(result.Errors);
+
+                return Ok(result.Data);
+            }
+            catch (ApplicationException exception)
+            {
+                return BadRequest(new[] { exception.Message });
+            }
+            catch (Exception e)
+            {
+                logger.LogError(e, e.Message);
+                if (e is InvalidOperationException)
+                    return BadRequest(new[] { e.Message });
+
+                return new StatusCodeResult((int)HttpStatusCode.InternalServerError);
+            }
+            finally
+            {
+                var ended = DateTime.UtcNow;
+                logger.LogInformation($"ENDED {methodName} {requestInstanceId} at {ended} utc. Took {ended - started}");
+            }
+        }
+
+        [HttpGet("lessonInfo/{lessonId}")]
+        public async Task<IActionResult> GetLessonInfo(int lessonId)
+        {
+            var started = DateTime.UtcNow;
+            var requestInstanceId = Guid.NewGuid();
+            var methodName = this.ControllerContext.RouteData.Values["action"].ToString();
+
+            try
+            {
+                logger.LogInformation($"STARTED {methodName} {requestInstanceId} at {started} utc");
+
+                var result = await requestBus.ExecuteAsync<GetTraineeLesonInfo, GetTraineeLesonInfoResult>(User, new GetTraineeLesonInfo() { LessonId = lessonId });
 
                 if (!result.Succeeded)
                     return BadRequest(result.Errors);

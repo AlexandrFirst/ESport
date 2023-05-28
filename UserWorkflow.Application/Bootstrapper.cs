@@ -87,10 +87,15 @@ namespace UserWorkflow.Application
             services.AddTransient<ICommandHandler<CreateLesson>, CreateLessonHandler>();
             services.AddTransient<ICommandHandler<ApplyTrainerForTimeSchedule>, ApplyTrainerForTimeScheduleHandler>();
             services.AddTransient<ICommandHandler<ExerciseCreate>, ExerciseCreateHandler>();
+            services.AddTransient<ICommandHandler<ApprovePendingTrainees>, ApprovePendingTraineesHandler>();
+            services.AddTransient<ICommandHandler<UpdateTraineeLessonInfo>, UpdateTraineeLessonInfoHandler>();
             services.AddTransient<IRequestHandler<GetTrainerTimeTable, GetTrainerTimeTableResult>, GetTrainerTimeTableHandler>();
             services.AddTransient<IRequestHandler<GetExerciseTrainerListing, GetExerciseTrainerListingResult>, GetExerciseTrainerListingHandler>();
+            services.AddTransient<IRequestHandler<GetTrainerLessonInfo, GetTrainerLessonInfoResult>, GetTrainerLessonInfoHandler>();
+            services.AddTransient<IRequestHandler<GetPendingTrainees, GetPendingTraineesResult>, GetPendingTraineesHandler>();
 
             services.AddTransient<IRequestHandler<GetTraineeRecommedation, GetTraineeRecommedationResult>, GetTraineeRecommedationHandler>();
+            services.AddTransient<IRequestHandler<GetTraineeLesonInfo, GetTraineeLesonInfoResult>, GetTraineeLesonInfoHandler>();
 
             services.AddScoped<IdentityClient>();
 
