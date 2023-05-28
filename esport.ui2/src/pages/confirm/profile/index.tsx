@@ -9,6 +9,7 @@ import { CenteredLayout } from "@/shared/layouts";
 import { useConfirmMyProfile } from "@/entities/profile";
 
 import { ThemeSwitcher } from "@/features/ThemeSwitcher";
+import { routes } from "@/shared/config";
 
 type ConfirmProfileProps = PageProps & {};
 
@@ -19,7 +20,11 @@ const ConfirmProfile: AppNextPage<ConfirmProfileProps> = () => {
     router.query.token as string
   );
 
-  const timeLeft = useRedirectAfterFetch({ isFetched, isError });
+  const timeLeft = useRedirectAfterFetch({
+    isFetched,
+    isError,
+    redirectPath: routes.Me(),
+  });
 
   return (
     <CenteredLayout
@@ -36,7 +41,7 @@ const ConfirmProfile: AppNextPage<ConfirmProfileProps> = () => {
         Your profile have been successfully activated
       </Title>
       <Title center className="mt-10">
-        You will be automatically redirected to home page in {timeLeft}
+        You will be automatically redirected to your profile page in {timeLeft}
       </Title>
     </CenteredLayout>
   );
