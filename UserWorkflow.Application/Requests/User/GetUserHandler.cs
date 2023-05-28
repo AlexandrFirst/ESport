@@ -54,6 +54,7 @@ namespace UserWorkflow.Application.Requests.User
             var model = new UserTrainerInfo(UserIdentityInfo.InitFromDbUser(trainer));
             model.Id = trainer.Id;
             model.Info = trainer.Info;
+            model.IsConfirmed = trainer.IsProfileConfirmed;
             model.TrainerSportInfos = trainer.TrainerSports.Select(x => new TrainerSportInfo() 
             {
                 SportId = x.SportId,
@@ -80,6 +81,7 @@ namespace UserWorkflow.Application.Requests.User
             var model = new UserTraineeInfo(UserIdentityInfo.InitFromDbUser(trainee));
             model.Id = trainee.Id;
             model.Info = trainee.Info;
+            model.IsConfirmed = trainee.IsProfileConfirmed;
             return model;
         }
 
@@ -97,6 +99,7 @@ namespace UserWorkflow.Application.Requests.User
         {
             var model = new UserAdminInfo(UserIdentityInfo.InitFromDbUser(administrators));
             model.Id = administrators.Id;
+            model.IsConfirmed = administrators.IsProfileConfirmed;
             model.UserGyms = administrators.GymAdministrators.Select(x => new GymInfo()
             {
                 Address = x.Gym.Address,

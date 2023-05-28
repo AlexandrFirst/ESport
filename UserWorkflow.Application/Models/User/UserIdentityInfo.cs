@@ -14,6 +14,7 @@ namespace UserWorkflow.Application.Models.User
         public string Email { get; set; }
         public string TelephoneNumber { get; set; }
         public Guid? PhotoId { get; set; }
+        public bool IsConfirmed { get; set; } = true;
 
         public UserIdentityInfo(UserIdentityInfo other)
         {

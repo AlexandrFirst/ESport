@@ -11,8 +11,7 @@ namespace UserWorkflow.Application.Models.User
         public int Id { get; set; }
         public int? OrganisationId { get; set; }
         public string OrganisationName { get; set; }
-        public bool IsConfirmed { get; set; }
-
+   
         public UserOrganisationAdminInfo(UserIdentityInfo userIdentityInfo): base(userIdentityInfo)
         {
 
