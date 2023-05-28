@@ -1,5 +1,7 @@
 import React, { FC } from "react";
 
+import { ErrorMessage } from "@/shared/types";
+
 import { IProfile } from "@/entities/profile";
 
 import {
@@ -12,6 +14,8 @@ import {
   useProfileInformationActions,
 } from "../../model/slices/ProfileInformationSlice";
 import { useSelectEditableProfile } from "../../model/selectors/selectEditableProfile/selectEditableProfile";
+import { useSelectIsEmailForProfileChanged } from "../../model/selectors/selectIsEmailForProfileChanged/selectIsEmailForProfileChanged";
+import { useSelectCurrentProfile } from "../../model/selectors/selectCurrentProfile/selectCurrentProfile";
 
 interface ProfileInfoPerRoleProps
   extends Pick<
@@ -27,35 +31,58 @@ export const ProfileInfoPerRole: FC<ProfileInfoPerRoleProps> = ({
   className,
   ...props
 }) => {
-  const { setEditableProfileByKey } = useProfileInformationActions();
+  const { setEditableProfileByKey, setIsEmailForProfileChanged } =
+    useProfileInformationActions();
+
   const editableProfile = useSelectEditableProfile();
+  const isEmailChanged = useSelectIsEmailForProfileChanged(profileKey);
+  const profile = useSelectCurrentProfile();
+
+  const { userIdentityInfo } = profile || {};
+
+  const getEmailError = (): ErrorMessage | undefined => {
+    return isEmailChanged &&
+      userIdentityInfo?.email !== editableProfile?.[profileKey]?.email
+      ? {
+          message:
+            "You can save profile, but to proceed you need to confirm your email in your email inbox",
+        }
+      : undefined;
+  };
 
   const handleChange =
     (params: Omit<SetEditableProfileParams, "value">) => (value: string) =>
       setEditableProfileByKey({ ...params, value });
 
+  const handleChangeEmail =
+    (params: Omit<SetEditableProfileParams, "value">) => (value: string) => {
+      setEditableProfileByKey({ ...params, value });
+      setIsEmailForProfileChanged({ key: profileKey, value: true });
+    };
+
   return (
     <ProfileInfoWithCard
       {...props}
-      name={profileKey}
+      name={profileKey as keyof Omit<IProfile, "userIdentityInfo">}
       key={profileKey}
       profileInfo={editableProfile?.[profileKey]}
       onChangeName={handleChange({
-        profileKey: profileKey,
+        profileKey,
         profileInfoKey: "name",
       })}
       onChangeSurname={handleChange({
-        profileKey: profileKey,
+        profileKey,
         profileInfoKey: "surname",
       })}
-      onChangeEmail={handleChange({
-        profileKey: profileKey,
+      onChangeEmail={handleChangeEmail({
+        profileKey,
         profileInfoKey: "email",
       })}
       onChangeTelephoneNumber={handleChange({
-        profileKey: profileKey,
+        profileKey,
         profileInfoKey: "telephoneNumber",
       })}
+      emailError={getEmailError()}
     />
   );
 };

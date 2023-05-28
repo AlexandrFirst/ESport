@@ -31,3 +31,4 @@ export {
 //api
 export { AuthService } from "./api/auth-api";
 export { useLogout } from "./api/hooks/useLogout";
+export { useConfirmUser } from "./api/hooks/useConfirmUser";

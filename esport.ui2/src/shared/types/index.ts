@@ -12,3 +12,5 @@ export type {
   CalendarEvent,
   IPublicCalendarContext as ICalendarContext,
 } from "./calendar";
+
+export type { ErrorMessage } from "./UI";

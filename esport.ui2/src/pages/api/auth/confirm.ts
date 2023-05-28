@@ -1,8 +1,8 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import axios from "axios";
 
 import { routes } from "@/shared/config";
+import { AuthService } from "@/entities/user";
 
 export default async function handler(
   req: NextApiRequest,
@@ -10,9 +10,7 @@ export default async function handler(
 ) {
   if (req.method === "GET") {
     try {
-      await axios.get(
-        `${process.env.LOGIN_API_URL}/confirm?token=${req.query.token}`
-      );
+      await AuthService().confirm(req.query.token as string);
       res.redirect(`${routes.Home()}?success=Account activated`);
     } catch (e: any) {
       res.redirect(

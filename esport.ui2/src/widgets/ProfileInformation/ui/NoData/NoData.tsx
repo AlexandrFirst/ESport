@@ -6,7 +6,7 @@ import { IProfile } from "@/entities/profile";
 import { useProfileInformationActions } from "../../model/slices/ProfileInformationSlice";
 
 interface NoDataProps {
-  name: keyof IProfile;
+  name: keyof Omit<IProfile, "userIdentityInfo">;
   className?: string;
 }
 

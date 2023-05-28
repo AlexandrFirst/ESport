@@ -1,0 +1,11 @@
+.wrapper {
+  @apply min-h-screen w-full flex flex-col items-center justify-center bg-theme-main pb-8 pt-3;
+}
+
+.content {
+  @apply mb-10;
+}
+
+.btn {
+  @apply mt-10;
+}

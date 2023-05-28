@@ -1,21 +1,17 @@
 import { useMutation, UseMutationOptions } from "@tanstack/react-query";
 
 import { ProfileApi } from "../../api/profileApi";
+import { IProfile } from "../../model/types/profile";
 import { UpdateProfileInfoRequest } from "../types/types";
-import { IProfile } from "../..";
 
-export const updateProfileInfoKey = (userId: number) => [
-  "profileInformation",
-  "updateUserInfo",
-  userId,
-];
+import { profileApiKeys } from "./profileApiKeys";
 
 export const useUpdateProfileInfo = (
   userId: number,
   options?: UseMutationOptions<IProfile, unknown, UpdateProfileInfoRequest>
 ) => {
   return useMutation({
-    mutationKey: updateProfileInfoKey(userId),
+    mutationKey: profileApiKeys.updateProfileInfo(userId),
     mutationFn: async (updateDto: UpdateProfileInfoRequest) => {
       try {
         const { data } = await ProfileApi().updateProfileInfo(updateDto);

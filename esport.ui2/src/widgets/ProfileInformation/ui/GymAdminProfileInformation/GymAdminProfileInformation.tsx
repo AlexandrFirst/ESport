@@ -3,7 +3,6 @@ import React, { FC } from "react";
 import { useGetGyms } from "@/entities/gym";
 
 import { ProfileInfoPerRole } from "../ProfileInfoPerRole/ProfileInfoPerRole";
-import { SetLoginDataToggle } from "../SetLoginDataToggle/SetLoginDataToggle";
 import { useSelectGymAdminGyms } from "../../model/selectors/selectGymAdminGyms/selectGymAdminGyms";
 import { useProfileInfo } from "@/entities/profile";
 import { useAuth } from "@/entities/user";
@@ -28,7 +27,7 @@ export const GymAdminProfileInformation: FC<
     gymIds: [],
     organisationIds:
       profile?.userOrganisationAdminInfos?.map(
-        ({ gymOrganisationId }) => gymOrganisationId ?? 0
+        ({ organisationId }) => organisationId ?? 0
       ) ?? [],
   });
 
@@ -37,9 +36,6 @@ export const GymAdminProfileInformation: FC<
   return (
     <ProfileInfoPerRole
       profileKey={"userAdminInfo"}
-      additionalFieldsAbove={
-        <SetLoginDataToggle currentProfile={"userAdminInfo"} />
-      }
       withBio
       additionalFieldsBelow={
         hasOrganizationAdminInfo ? (

@@ -1,5 +1,13 @@
 import { InputBaseProps } from "..";
-import { ReactNode } from "react";
+import { Key, ReactNode } from "react";
+
+export type AdditionalOption = {
+  onClick?: () => void;
+  content: ReactNode;
+  key: Key;
+};
+
+export type AdditionalOptionList = AdditionalOption[];
 
 export interface AutocompleteCommonProps<T extends {} = {}>
   extends Omit<InputBaseProps, "value" | "onChange" | "list" | "name"> {
@@ -11,5 +19,5 @@ export interface AutocompleteCommonProps<T extends {} = {}>
   loading?: boolean;
   delayTime?: number;
   name?: string;
-  additionalOptions?: ReactNode[];
+  additionalOptions?: AdditionalOption[];
 }

@@ -1,7 +1,5 @@
 import React, { Fragment } from "react";
 import styles from "./Autocomplete.module.css";
-
-import cn from "classnames";
 import { Combobox } from "@headlessui/react";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
 
@@ -16,8 +14,8 @@ import { AutocompleteCommonProps } from "./AutocompeleteCommonProps";
 
 export interface AutocompleteBaseProps<T extends {} = {}>
   extends AutocompleteCommonProps<T> {
-  value?: T;
-  onChange?: (value: T) => void;
+  value?: T | null;
+  onChange?: (value: T | null) => void;
   multiple?: false;
 }
 
@@ -33,17 +31,25 @@ export function AutocompleteBase<T extends {} = {}>({
   additionalOptions,
   ...props
 }: AutocompleteBaseProps<T>) {
-  const { items, handleInputChange, getLoadingOrEmpty } = useAutocomplete({
+  const {
+    items,
+    handleInputChange,
+    getLoadingOrEmpty,
+    getAdditionalOptions,
+    getClassNamesForOption,
+    handleChange,
+  } = useAutocomplete({
     list,
     displayValue,
     onInputChange,
     loading,
     additionalOptions,
+    onChange,
   });
   const debouncedHandleInputChange = useDebounce(handleInputChange, delayTime);
 
   return (
-    <Combobox value={value} onChange={onChange} nullable>
+    <Combobox value={value} onChange={handleChange} nullable>
       {({ open, activeOption }) => (
         <div className={styles.wrapper}>
           <Combobox.Input
@@ -73,16 +79,13 @@ export function AutocompleteBase<T extends {} = {}>({
                     key={String(item[displayKey])}
                     value={item}
                     className={({ active }) =>
-                      cn(styles.option, {
-                        [styles.selected]: active,
-                        [styles.selected]:
-                          activeOption?.[displayKey] === item[displayKey],
-                      })
+                      getClassNamesForOption(active, activeOption, item)
                     }
                   >
                     {String(item[displayValue])}
                   </Combobox.Option>
                 ))}
+              {getAdditionalOptions(activeOption)}
             </Combobox.Options>
           </AutocompleteTransition>
         </div>

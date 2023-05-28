@@ -14,5 +14,8 @@ export const ProfileApi = (ctx?: ApiContext) => {
     updateProfileInfo(data: UpdateProfileInfoRequest) {
       return instance.post<IProfile>("/user-update", data);
     },
+    confirmMyProfile(Token: string) {
+      return instance.post("/user-email-confirm", { Token });
+    },
   };
 };

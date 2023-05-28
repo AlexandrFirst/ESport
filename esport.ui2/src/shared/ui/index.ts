@@ -25,9 +25,10 @@ export { PasswordInput } from "./PasswordInput/PasswordInput";
 export { TextAreaBase } from "./TextArea/TextAreaBase";
 export { TextArea } from "./TextArea/TextArea";
 export { Autocomplete } from "./Autocomplete/Autocomplete";
-export type { AutocompleteProps } from "./Autocomplete/Autocomplete";
-export { AutocompleteBase } from "./Autocomplete/AutocompleteBase";
-export type { AutocompleteBaseProps } from "./Autocomplete/AutocompleteBase";
+export type {
+  AdditionalOptionList as AutocompleteAdditionalOptionList,
+  AutocompleteCommonProps,
+} from "./Autocomplete/AutocompeleteCommonProps";
 
 export { Button } from "./Button/Button";
 export { DatePicker } from "./DatePicker/DatePicker";

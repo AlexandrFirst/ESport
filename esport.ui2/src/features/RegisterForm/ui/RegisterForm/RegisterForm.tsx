@@ -14,6 +14,7 @@ import { Button, FormWrapper, IconButton, UILink } from "@/shared/ui";
 
 import { AuthService } from "@/entities/user";
 
+import { getDefaultValues } from "../../lib/getDefaultValues/getDefaultValues";
 import { useValidation } from "../../lib/hooks/useValidation";
 import { IRegisterForm } from "../../model/types/RegisterFormSchema";
 import { RegisterSteps } from "../../constants/register-step";
@@ -26,6 +27,7 @@ export const RegisterForm: FC = () => {
   const validationSchema = useValidation();
   const methods = useForm<IRegisterForm>({
     resolver: yupResolver(validationSchema),
+    defaultValues: getDefaultValues(),
   });
 
   const { register, trigger } = methods;

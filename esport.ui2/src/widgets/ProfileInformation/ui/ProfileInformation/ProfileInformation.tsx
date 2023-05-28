@@ -18,12 +18,11 @@ import { useSelectEditableProfile } from "../../model/selectors/selectEditablePr
 import { useSelectOverrideLoginInfo } from "../../model/selectors/selectOverrideLoginInfo/selectOverrideLoginInfo";
 import { useSelectCurrentProfile } from "../../model/selectors/selectCurrentProfile/selectCurrentProfile";
 import { useSelectTrainerSports } from "../../model/selectors/selectTrainerSports/selectTrainerSports";
-
-import { SetLoginDataToggle } from "../SetLoginDataToggle/SetLoginDataToggle";
 import { ProfileInfoPerRole } from "../ProfileInfoPerRole/ProfileInfoPerRole";
 import { TrainerProfileInformation } from "../TrainerProfileInformation/TrainerProfileInformation";
 import { GymAdminProfileInformation } from "../GymAdminProfileInformation/GymAdminProfileInformation";
 import { OrganisationAdminProfileInformation } from "../OrganisationAdminProfileInformation/OrganisationAdminProfileInformation";
+import { useSelectOrganisationAdminOrganisationId } from "../../model/selectors/selectOrganisationAdminOrganisation/selectOrganisationAdminOrganisationId";
 
 interface ProfileInformationProps {
   userId: number;
@@ -37,11 +36,14 @@ export const ProfileInformation: FC<ProfileInformationProps> = ({
   withEditBtn,
   userId,
 }) => {
-  const { setInitialData } = useProfileInformationActions();
+  const { setInitialData, resetIsEmailForProfileChanged } =
+    useProfileInformationActions();
   const profile = useSelectCurrentProfile();
   const editableProfile = useSelectEditableProfile();
   const overrideLoginInfo = useSelectOverrideLoginInfo();
   const trainerSports = useSelectTrainerSports();
+  const organisationAdminOrganisationId =
+    useSelectOrganisationAdminOrganisationId();
 
   const { showError, showSuccess } = useSnackbar();
 
@@ -55,6 +57,7 @@ export const ProfileInformation: FC<ProfileInformationProps> = ({
         Number(userId)
       );
       setInitialData(profile);
+      resetIsEmailForProfileChanged();
     },
   });
 
@@ -65,6 +68,7 @@ export const ProfileInformation: FC<ProfileInformationProps> = ({
         data: editableProfile,
         overrideLoginInfo,
         trainerSports,
+        organisationAdminOrganisationId,
       })
     );
     await mutate(
@@ -72,6 +76,7 @@ export const ProfileInformation: FC<ProfileInformationProps> = ({
         data: editableProfile,
         overrideLoginInfo,
         trainerSports,
+        organisationAdminOrganisationId,
       })
     );
   };
@@ -87,14 +92,7 @@ export const ProfileInformation: FC<ProfileInformationProps> = ({
     {
       label: "Trainee",
       value: ProfileInfoTab.Trainee,
-      content: (
-        <ProfileInfoPerRole
-          profileKey={"userTraineeInfo"}
-          additionalFieldsAbove={
-            <SetLoginDataToggle currentProfile={"userTraineeInfo"} />
-          }
-        />
-      ),
+      content: <ProfileInfoPerRole profileKey={"userTraineeInfo"} />,
     },
     {
       label: "Trainer",
@@ -107,7 +105,7 @@ export const ProfileInformation: FC<ProfileInformationProps> = ({
       content: <GymAdminProfileInformation />,
     },
     {
-      label: "Organization Admin",
+      label: "Organisation Admin",
       value: ProfileInfoTab.OrganizationAdmin,
       content: <OrganisationAdminProfileInformation />,
     },

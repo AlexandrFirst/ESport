@@ -28,7 +28,7 @@ import { useSnackbar } from "@/shared/lib";
 interface ProfileAvatarProps extends AvatarProps {}
 
 export const ProfileAvatar: FC<ProfileAvatarProps> = ({ ...props }) => {
-  const { user, translatedRole } = useAuth();
+  const { user } = useAuth();
   const { mutate } = useLogout();
 
   const { showError } = useSnackbar();
@@ -42,7 +42,6 @@ export const ProfileAvatar: FC<ProfileAvatarProps> = ({ ...props }) => {
   };
 
   const [isDrawerOpened, setIsDrawerOpened] = useState(false);
-
   const handleCloseDrawer = () => setIsDrawerOpened(false);
   const handleOpenDrawer = () => setIsDrawerOpened(true);
 
@@ -55,7 +54,7 @@ export const ProfileAvatar: FC<ProfileAvatarProps> = ({ ...props }) => {
         <UserNameRoleHolder
           {...props}
           boldText={user?.name ?? ""}
-          regularText={translatedRole}
+          regularText={""}
           src={""}
           avatarText={user?.name[0] ?? ""}
           size={AvatarSize.Small}

@@ -3,18 +3,19 @@ import { PayloadAction } from "@reduxjs/toolkit";
 
 import { buildSlice } from "@/shared/lib";
 
-import { ITrainerSportInfo } from "@/entities/profile";
-
 import { StateSchema } from "@/_app/Providers";
+
+import { ITrainerSportInfo } from "@/entities/profile";
 import { ISport } from "@/entities/sport";
+import { IGymInfo } from "@/entities/gym";
 
 import { RoleProfileInformationState } from "../types/roleProfileInformationState";
 import { transformSportToTrainerSportInfo } from "../../lib/helpers/transformSportToTrainerSportInfo/transformSportToTrainerSportInfo";
-import { IGymInfo } from "@/entities/gym";
 
 const initialState: RoleProfileInformationState = {
   trainerSports: [],
   gymAdminGyms: [],
+  organisationAdminOrganisationId: 0,
 };
 
 const roleProfileInformationSlice = buildSlice({
@@ -24,6 +25,8 @@ const roleProfileInformationSlice = buildSlice({
     setInitialData(state, action: PayloadAction<RoleProfileInformationState>) {
       state.trainerSports = action.payload.trainerSports;
       state.gymAdminGyms = action.payload.gymAdminGyms;
+      state.organisationAdminOrganisationId =
+        action.payload.organisationAdminOrganisationId;
     },
     setTrainerSports(state, action: PayloadAction<ITrainerSportInfo[]>) {
       state.trainerSports = action.payload;
@@ -46,6 +49,9 @@ const roleProfileInformationSlice = buildSlice({
     },
     setGymAdminGyms(state, action: PayloadAction<IGymInfo[]>) {
       state.gymAdminGyms = action.payload;
+    },
+    setOrganisationAdminOrganisation(state, action: PayloadAction<number>) {
+      state.organisationAdminOrganisationId = action.payload;
     },
   },
   extraReducers: {

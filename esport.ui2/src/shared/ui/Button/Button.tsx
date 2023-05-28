@@ -2,8 +2,6 @@ import React, {
   ButtonHTMLAttributes,
   DetailedHTMLProps,
   FC,
-  useCallback,
-  useEffect,
   useState,
 } from "react";
 import styles from "./Button.module.css";
@@ -34,7 +32,7 @@ export const Button: FC<ButtonProps> = ({
   loading,
   disabled,
   variant = "contained",
-  fullWidth = true,
+  fullWidth = false,
   children,
   onClick,
   color = "normal",
