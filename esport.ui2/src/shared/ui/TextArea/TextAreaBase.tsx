@@ -17,15 +17,18 @@ export const TextAreaBase: FC<TextAreaBaseProps> = ({
   className,
   fullWidth = true,
   error,
+  disabled,
   ...props
 }) => {
   return (
     <div className={cn(styles.wrapper, className)}>
       <textarea
         {...props}
+        disabled={disabled}
         className={cn(styles.text_area, {
           [styles.full_width]: fullWidth,
           [styles.error]: !!error,
+          [styles.disabled]: disabled,
         })}
       />
       <FormError error={error} />

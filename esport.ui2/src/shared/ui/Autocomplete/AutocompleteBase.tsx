@@ -3,8 +3,6 @@ import styles from "./Autocomplete.module.css";
 import { Combobox } from "@headlessui/react";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
 
-import { useDebounce } from "@/shared/lib";
-
 import { InputBase } from "../Input/InputBase";
 import { Icon } from "../Icon/Icon";
 
@@ -29,15 +27,16 @@ export function AutocompleteBase<T extends {} = {}>({
   loading,
   delayTime = 200,
   additionalOptions,
+  disabled,
   ...props
 }: AutocompleteBaseProps<T>) {
   const {
     items,
-    handleInputChange,
+    handleChange,
     getLoadingOrEmpty,
     getAdditionalOptions,
     getClassNamesForOption,
-    handleChange,
+    debouncedHandleInputChange,
   } = useAutocomplete({
     list,
     displayValue,
@@ -45,11 +44,16 @@ export function AutocompleteBase<T extends {} = {}>({
     loading,
     additionalOptions,
     onChange,
+    delayTime,
   });
-  const debouncedHandleInputChange = useDebounce(handleInputChange, delayTime);
 
   return (
-    <Combobox value={value} onChange={handleChange} nullable>
+    <Combobox
+      value={value}
+      onChange={handleChange}
+      nullable
+      disabled={disabled}
+    >
       {({ open, activeOption }) => (
         <div className={styles.wrapper}>
           <Combobox.Input

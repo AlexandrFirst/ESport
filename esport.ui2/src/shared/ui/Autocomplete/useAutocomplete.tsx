@@ -5,6 +5,7 @@ import { BeatLoader } from "react-spinners";
 import { Combobox } from "@headlessui/react";
 import cn from "classnames";
 import { AdditionalOption } from "./AutocompeleteCommonProps";
+import { useDebounce } from "@/shared/lib";
 
 interface UseAutocompleteParams<T extends {} = {}> {
   list?: T[];
@@ -14,6 +15,7 @@ interface UseAutocompleteParams<T extends {} = {}> {
   withFilter?: boolean;
   additionalOptions?: AdditionalOption[];
   onChange?: (value: any) => void;
+  delayTime?: number;
 }
 
 export function useAutocomplete<T extends {} = {}>({
@@ -24,6 +26,7 @@ export function useAutocomplete<T extends {} = {}>({
   withFilter = true,
   additionalOptions,
   onChange,
+  delayTime,
 }: UseAutocompleteParams<T>) {
   const [items, setItems] = useState(() => list);
 
@@ -101,6 +104,8 @@ export function useAutocomplete<T extends {} = {}>({
     return onChange?.(value);
   };
 
+  const debouncedHandleInputChange = useDebounce(handleInputChange, delayTime);
+
   useEffect(() => {
     setItems(() => list);
   }, [list]);
@@ -112,5 +117,6 @@ export function useAutocomplete<T extends {} = {}>({
     getAdditionalOptions,
     getClassNamesForOption,
     handleChange,
+    debouncedHandleInputChange,
   };
 }

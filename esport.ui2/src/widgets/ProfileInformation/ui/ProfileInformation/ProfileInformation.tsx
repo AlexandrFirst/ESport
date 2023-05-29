@@ -23,6 +23,9 @@ import { TrainerProfileInformation } from "../TrainerProfileInformation/TrainerP
 import { GymAdminProfileInformation } from "../GymAdminProfileInformation/GymAdminProfileInformation";
 import { OrganisationAdminProfileInformation } from "../OrganisationAdminProfileInformation/OrganisationAdminProfileInformation";
 import { useSelectOrganisationAdminOrganisationId } from "../../model/selectors/selectOrganisationAdminOrganisation/selectOrganisationAdminOrganisationId";
+import { useGetEmailChangedMessage } from "../../lib/hooks/useGetEmailChangedMessage/useGetEmailChangedMessage";
+import { useSelectNewOrganisationName } from "../../model/selectors/selectNewOrganisationName/selectNewOrganisationName";
+import { useSelectNewOrganisationDescription } from "../../model/selectors/selectNewOrganisationDescription/selectNewOrganisationDescription";
 
 interface ProfileInformationProps {
   userId: number;
@@ -44,6 +47,10 @@ export const ProfileInformation: FC<ProfileInformationProps> = ({
   const trainerSports = useSelectTrainerSports();
   const organisationAdminOrganisationId =
     useSelectOrganisationAdminOrganisationId();
+  const newOrganisationName = useSelectNewOrganisationName();
+  const newOrganisationDescription = useSelectNewOrganisationDescription();
+
+  const emailChangedMessage = useGetEmailChangedMessage();
 
   const { showError, showSuccess } = useSnackbar();
 
@@ -52,7 +59,9 @@ export const ProfileInformation: FC<ProfileInformationProps> = ({
       showError(e.message);
     },
     async onSuccess() {
-      showSuccess("Profile updated successfully");
+      showSuccess(`Profile updated successfully. ${emailChangedMessage}`, {
+        duration: 10000,
+      });
       const { data: profile } = await ProfileApi().getProfileInfo(
         Number(userId)
       );
@@ -62,21 +71,14 @@ export const ProfileInformation: FC<ProfileInformationProps> = ({
   });
 
   const handleSave = async () => {
-    console.log(
-      "===transformProfileDataToUpdate(editableProfile, overrideLoginInfo)===",
-      transformProfileDataToUpdate({
-        data: editableProfile,
-        overrideLoginInfo,
-        trainerSports,
-        organisationAdminOrganisationId,
-      })
-    );
     await mutate(
       transformProfileDataToUpdate({
         data: editableProfile,
         overrideLoginInfo,
         trainerSports,
         organisationAdminOrganisationId,
+        organisationAdminOrganisationName: newOrganisationName,
+        organisationAdminOrganisationDescription: newOrganisationDescription,
       })
     );
   };

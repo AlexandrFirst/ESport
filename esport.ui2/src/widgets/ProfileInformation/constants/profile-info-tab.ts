@@ -1,7 +1,7 @@
 export enum ProfileInfoTab {
-  Indentity,
-  Trainee,
-  Trainer,
-  GymAdmin,
-  OrganizationAdmin,
+  Indentity = "LoginInformation",
+  Trainee = "Trainee",
+  Trainer = "Trainer",
+  GymAdmin = "GymAdmin",
+  OrganizationAdmin = "OrgAdmin",
 }

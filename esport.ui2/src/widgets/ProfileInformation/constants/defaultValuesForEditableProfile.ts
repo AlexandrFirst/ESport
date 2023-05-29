@@ -7,6 +7,7 @@ export const defaultValuesForProfileInfo: IProfileInfo = {
   surname: "",
   telephoneNumber: "",
   userId: 0,
+  isConfirmed: false,
 };
 
 export const defaultValuesForEditableProfile: IProfile = {

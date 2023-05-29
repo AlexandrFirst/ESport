@@ -63,3 +63,7 @@
 .initial_width {
   @apply w-[fit-content];
 }
+
+.disabled {
+  @apply !opacity-60 cursor-default;
+}

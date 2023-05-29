@@ -15,7 +15,6 @@ import {
 } from "../../model/slices/ProfileInformationSlice";
 import { useSelectEditableProfile } from "../../model/selectors/selectEditableProfile/selectEditableProfile";
 import { useSelectIsEmailForProfileChanged } from "../../model/selectors/selectIsEmailForProfileChanged/selectIsEmailForProfileChanged";
-import { useSelectCurrentProfile } from "../../model/selectors/selectCurrentProfile/selectCurrentProfile";
 
 interface ProfileInfoPerRoleProps
   extends Pick<
@@ -36,16 +35,12 @@ export const ProfileInfoPerRole: FC<ProfileInfoPerRoleProps> = ({
 
   const editableProfile = useSelectEditableProfile();
   const isEmailChanged = useSelectIsEmailForProfileChanged(profileKey);
-  const profile = useSelectCurrentProfile();
-
-  const { userIdentityInfo } = profile || {};
 
   const getEmailError = (): ErrorMessage | undefined => {
-    return isEmailChanged &&
-      userIdentityInfo?.email !== editableProfile?.[profileKey]?.email
+    return !editableProfile?.[profileKey]?.isConfirmed || isEmailChanged
       ? {
           message:
-            "You can save profile, but to proceed you need to confirm your email in your email inbox",
+            "You can save profile, but you need to confirm your email. Check your inbox!",
         }
       : undefined;
   };

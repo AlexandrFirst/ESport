@@ -1,4 +1,5 @@
 import { IGymReadInfo } from "../../model/types/gym-read-info";
+import { BaseListingResult } from "@/shared/types";
 
 export interface IGymFiltrationModel {
   gymIds?: number[];
@@ -13,6 +14,6 @@ export interface IGymFiltrationModel {
 
 export type IGymListingRequest = IGymFiltrationModel;
 
-export interface IGymListingResponse {
+export interface IGymListingResponse extends BaseListingResult {
   gymReadInfos: IGymReadInfo[];
 }

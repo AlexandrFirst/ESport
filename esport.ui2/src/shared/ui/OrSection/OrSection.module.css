@@ -1,0 +1,11 @@
+.wrapper {
+  @apply flex items-center w-full;
+}
+
+.line {
+  @apply w-3/5 text-theme-main;
+}
+
+.text {
+  @apply mx-4;
+}

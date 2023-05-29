@@ -18,6 +18,7 @@ export interface IProfileInfo {
   telephoneNumber: string;
   photoId: null;
   info?: string;
+  isConfirmed: boolean;
 }
 
 export interface ITrainerInfo extends IProfileInfo {
@@ -30,7 +31,6 @@ export interface IGymAdminInfo extends IProfileInfo {
 }
 
 export interface IOrganisationAdminInfo extends IProfileInfo {
-  organisationId?: number;
-  organisationName?: string;
-  isConfirmed?: boolean;
+  organisationId: number;
+  organisationName: string;
 }

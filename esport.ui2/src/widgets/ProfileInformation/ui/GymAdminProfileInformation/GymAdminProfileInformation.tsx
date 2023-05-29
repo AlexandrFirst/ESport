@@ -1,12 +1,11 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 
-import { useGetGyms } from "@/entities/gym";
+import { IGymReadInfo, useGetGyms } from "@/entities/gym";
 
 import { ProfileInfoPerRole } from "../ProfileInfoPerRole/ProfileInfoPerRole";
 import { useSelectGymAdminGyms } from "../../model/selectors/selectGymAdminGyms/selectGymAdminGyms";
-import { useProfileInfo } from "@/entities/profile";
-import { useAuth } from "@/entities/user";
-import { BoldText } from "@/shared/ui";
+import { Autocomplete } from "@/shared/ui";
+import { useRoleProfileInformationActions } from "../..";
 
 interface GymAdminProfileInformationProps {
   className?: string;
@@ -15,21 +14,22 @@ interface GymAdminProfileInformationProps {
 export const GymAdminProfileInformation: FC<
   GymAdminProfileInformationProps
 > = ({ className }) => {
-  const { user } = useAuth();
+  const [gymsValue, setGymsValue] = useState("");
 
-  const { hasOrganizationAdminInfo, profile } = useProfileInfo({
-    userId: user?.id ?? 0,
-  });
-
-  const { data: gyms, isLoading: isGymsLoading } = useGetGyms({
-    page: 1,
-    pageSize: 100,
-    gymIds: [],
-    organisationIds:
-      profile?.userOrganisationAdminInfos?.map(
-        ({ organisationId }) => organisationId ?? 0
-      ) ?? [],
-  });
+  const { data: gyms, isLoading: isGymsLoading } = useGetGyms(
+    {
+      page: 1,
+      pageSize: 100,
+      gymIds: [],
+      organisationIds: [],
+      name: gymsValue,
+      address: gymsValue,
+    },
+    {
+      select: (data) => data.gymReadInfos,
+    }
+  );
+  const { setGymAdminGyms } = useRoleProfileInformationActions();
 
   const gymAdminGyms = useSelectGymAdminGyms();
 
@@ -38,26 +38,21 @@ export const GymAdminProfileInformation: FC<
       profileKey={"userAdminInfo"}
       withBio
       additionalFieldsBelow={
-        hasOrganizationAdminInfo ? (
-          <>
-            {/*<Autocomplete<ISport>*/}
-            {/*    list={sports}*/}
-            {/*    value={transformTrainerSportInfoToSport(trainerSports)}*/}
-            {/*    displayKey={"id"}*/}
-            {/*    displayValue={"name"}*/}
-            {/*    loading={isSportsLoading}*/}
-            {/*    label={"Sports"}*/}
-            {/*    lazy*/}
-            {/*    multiple*/}
-            {/*    placeholder={"[Swimming, Karate]"}*/}
-            {/*    onChange={setTrainerSportsBySports}*/}
-            {/*/>*/}
-          </>
-        ) : (
-          <BoldText>
-            You have to be in organization to add more information
-          </BoldText>
-        )
+        <>
+          <Autocomplete<IGymReadInfo>
+            list={gyms}
+            // value={transformTrainerSportInfoToSport(trainerSports)}
+            onChange={setGymAdminGyms}
+            onInputChange={setGymsValue}
+            displayKey={"gymId"}
+            displayValue={"address"}
+            loading={isGymsLoading}
+            label={"Gyms"}
+            lazy
+            multiple
+            placeholder={"[Address]"}
+          />
+        </>
       }
     />
   );

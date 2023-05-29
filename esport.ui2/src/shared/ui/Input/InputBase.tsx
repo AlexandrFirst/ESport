@@ -47,6 +47,7 @@ export const InputBase = forwardRef<HTMLInputElement, InputBaseProps>(
       onBlur,
       value,
       endIconClassName,
+      disabled,
       ...props
     },
     ref
@@ -67,12 +68,13 @@ export const InputBase = forwardRef<HTMLInputElement, InputBaseProps>(
               initial={{ opacity: 0 }}
               animate={{
                 opacity: 1,
-                y: labelActive || focused ? -35 : 0,
-                x: labelActive || focused ? -10 : 0,
+                y: (labelActive || focused) && !disabled ? -35 : 0,
+                x: (labelActive || focused) && !disabled ? -10 : 0,
               }}
               htmlFor={name}
               className={cn(styles.text, styles.label, {
                 [styles.error]: !!error,
+                [styles.disabled]: disabled,
               })}
             >
               {label}
@@ -86,7 +88,9 @@ export const InputBase = forwardRef<HTMLInputElement, InputBaseProps>(
             id={name}
             className={cn(styles.input_1, styles.text, {
               [styles.input_1_error]: !!error,
+              [styles.disabled]: disabled,
             })}
+            disabled={disabled}
             onFocus={(e) => {
               setFocused(true);
               onFocus?.(e);
@@ -104,18 +108,6 @@ export const InputBase = forwardRef<HTMLInputElement, InputBaseProps>(
             {endIcon}
           </div>
         </div>
-        {/*<AnimatePresence initial={false}>*/}
-        {/*  {error && (*/}
-        {/*    <motion.p*/}
-        {/*      initial={{ opacity: 0, scale: 0 }}*/}
-        {/*      animate={{ opacity: 1, scale: 1 }}*/}
-        {/*      exit={{ opacity: 0, scale: 0 }}*/}
-        {/*      className={cn(styles.error, styles.helper_text)}*/}
-        {/*    >*/}
-        {/*      {error.message}*/}
-        {/*    </motion.p>*/}
-        {/*  )}*/}
-        {/*</AnimatePresence>*/}
         <FormError error={error} />
       </div>
     );
