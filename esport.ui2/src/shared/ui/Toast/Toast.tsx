@@ -1,4 +1,4 @@
-import { forwardRef, ReactNode, RefObject } from "react";
+import { forwardRef, ReactNode } from "react";
 import styles from "./Toast.module.css";
 
 import cn from "classnames";
@@ -6,7 +6,6 @@ import cn from "classnames";
 // import { useToast } from "./useToast";
 import {
   animationVariables,
-  closeButtonClasses,
   closeIcon,
   getIcon,
   iconClasses,
@@ -61,15 +60,23 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(function Toast(
         </div>
       )}
 
-      {icon && (
-        <div className={cn(iconClasses[type], "flex p-3")}>
-          <div className={styles.iconWrapper}>
-            <span className="sr-only">{type} Icon</span>
-            {icon}
+      <div className={"flex"}>
+        {icon && (
+          <div
+            className={cn(
+              iconClasses[type],
+              "flex justify-center items-center w-20"
+            )}
+          >
+            <div className={styles.iconWrapper}>
+              <span className="sr-only">{type} Icon</span>
+              {icon}
+            </div>
           </div>
-        </div>
-      )}
-      <div className={styles.message}>{message}</div>
+        )}
+        <div className={styles.message}>{message}</div>
+      </div>
+
       <button
         aria-label="Close"
         onClick={() => remove?.(id)}

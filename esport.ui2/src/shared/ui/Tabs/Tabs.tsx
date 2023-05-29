@@ -5,7 +5,7 @@ import cn from "classnames";
 import { motion } from "framer-motion";
 import { Tab } from "@headlessui/react";
 
-export interface TabItem<T extends number> {
+export interface TabItem<T extends string> {
   label: ReactNode;
   value: T;
   content: ReactNode;
@@ -13,27 +13,31 @@ export interface TabItem<T extends number> {
   className?: string;
 }
 
-export type TabList<T extends number> = TabItem<T>[];
+export type TabList<T extends string> = TabItem<T>[];
 
-interface TabsProps<T extends number> {
+interface TabsProps<T extends string> {
   tabs: TabItem<T>[];
   className?: string;
   as?: ElementType;
   onTabChange?: (tab: T) => void;
+  selectedIndex?: number;
+  setSelectedIndex?: (index: number) => void;
 }
 
-export function Tabs<T extends number>({
+export function Tabs<T extends string>({
   tabs,
   className,
   onTabChange,
   as: Component = "ul",
+  selectedIndex,
+  setSelectedIndex,
 }: TabsProps<T>) {
   const handleTabClick = (tab: T) => () => {
     onTabChange?.(tab);
   };
 
   return (
-    <Tab.Group>
+    <Tab.Group selectedIndex={selectedIndex} onChange={setSelectedIndex}>
       <Tab.List>
         <Component className={cn(styles.wrapper, className)}>
           {tabs.map(({ label, value, as: TabComponent = "li", className }) => (

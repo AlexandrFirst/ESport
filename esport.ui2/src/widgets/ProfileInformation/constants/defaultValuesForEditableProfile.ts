@@ -7,6 +7,7 @@ export const defaultValuesForProfileInfo: IProfileInfo = {
   surname: "",
   telephoneNumber: "",
   userId: 0,
+  isConfirmed: false,
 };
 
 export const defaultValuesForEditableProfile: IProfile = {
@@ -21,5 +22,7 @@ export const defaultValuesForEditableProfile: IProfile = {
     ...defaultValuesForProfileInfo,
     userGyms: [],
   },
-  userOrganisationAdminInfos: [defaultValuesForProfileInfo],
+  userOrganisationAdminInfos: [
+    { ...defaultValuesForProfileInfo, organisationName: "", organisationId: 0 },
+  ],
 };

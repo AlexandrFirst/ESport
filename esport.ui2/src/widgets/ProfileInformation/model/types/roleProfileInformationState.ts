@@ -5,4 +5,6 @@ export interface RoleProfileInformationState {
   trainerSports: ITrainerSportInfo[];
   gymAdminGyms: IGymInfo[];
   organisationAdminOrganisationId: number;
+  newOrganisationName: string | null;
+  newOrganisationDescription: string | null;
 }

@@ -13,3 +13,7 @@
 .error {
   @apply text-theme-error border-theme-error;
 }
+
+.disabled {
+  @apply opacity-60 cursor-default;
+}

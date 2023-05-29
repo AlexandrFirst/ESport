@@ -1,3 +1,15 @@
 .text {
-    @apply text-theme-main font-bold text-sm;
+  @apply text-theme-main font-bold;
+}
+
+.small {
+  @apply text-sm;
+}
+
+.medium {
+  @apply text-base;
+}
+
+.large {
+  @apply text-lg;
 }

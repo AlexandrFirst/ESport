@@ -9,6 +9,8 @@ interface TransformProfileDataToUpdateParams {
   overrideLoginInfo: keyof IProfile | null;
   trainerSports?: ITrainerSportInfo[];
   organisationAdminOrganisationId: number;
+  organisationAdminOrganisationName: string | null;
+  organisationAdminOrganisationDescription: string | null;
 }
 
 export const transformProfileDataToUpdate = ({
@@ -16,6 +18,8 @@ export const transformProfileDataToUpdate = ({
   overrideLoginInfo,
   trainerSports,
   organisationAdminOrganisationId,
+  organisationAdminOrganisationName,
+  organisationAdminOrganisationDescription,
 }: TransformProfileDataToUpdateParams): UpdateProfileInfoRequest => {
   return {
     updateAdminInfo: data.userAdminInfo && {
@@ -49,7 +53,17 @@ export const transformProfileDataToUpdate = ({
             overrideIdentityInfo:
               overrideLoginInfo === "userOrganisationAdminInfos",
           },
-          organisationId: organisationAdminOrganisationId,
+          organisationId:
+            organisationAdminOrganisationName ||
+            organisationAdminOrganisationDescription
+              ? 0
+              : organisationAdminOrganisationId,
+          organisationName: organisationAdminOrganisationId
+            ? null
+            : organisationAdminOrganisationName,
+          organisationDescription: organisationAdminOrganisationId
+            ? null
+            : organisationAdminOrganisationDescription,
         }
       : null,
   };

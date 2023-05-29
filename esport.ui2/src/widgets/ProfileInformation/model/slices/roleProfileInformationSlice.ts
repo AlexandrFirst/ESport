@@ -7,7 +7,7 @@ import { StateSchema } from "@/_app/Providers";
 
 import { ITrainerSportInfo } from "@/entities/profile";
 import { ISport } from "@/entities/sport";
-import { IGymInfo } from "@/entities/gym";
+import { IGymReadInfo } from "@/entities/gym";
 
 import { RoleProfileInformationState } from "../types/roleProfileInformationState";
 import { transformSportToTrainerSportInfo } from "../../lib/helpers/transformSportToTrainerSportInfo/transformSportToTrainerSportInfo";
@@ -16,17 +16,22 @@ const initialState: RoleProfileInformationState = {
   trainerSports: [],
   gymAdminGyms: [],
   organisationAdminOrganisationId: 0,
+  newOrganisationName: null,
+  newOrganisationDescription: null,
 };
 
 const roleProfileInformationSlice = buildSlice({
   name: "trainerProfileInformation",
   initialState,
   reducers: {
-    setInitialData(state, action: PayloadAction<RoleProfileInformationState>) {
-      state.trainerSports = action.payload.trainerSports;
-      state.gymAdminGyms = action.payload.gymAdminGyms;
+    setInitialData(
+      state,
+      action: PayloadAction<Partial<RoleProfileInformationState>>
+    ) {
+      state.trainerSports = action.payload.trainerSports ?? [];
+      state.gymAdminGyms = action.payload.gymAdminGyms ?? [];
       state.organisationAdminOrganisationId =
-        action.payload.organisationAdminOrganisationId;
+        action.payload.organisationAdminOrganisationId ?? 0;
     },
     setTrainerSports(state, action: PayloadAction<ITrainerSportInfo[]>) {
       state.trainerSports = action.payload;
@@ -47,11 +52,17 @@ const roleProfileInformationSlice = buildSlice({
       // @ts-ignore
       state.trainerSports[index][key] = value;
     },
-    setGymAdminGyms(state, action: PayloadAction<IGymInfo[]>) {
-      state.gymAdminGyms = action.payload;
+    setGymAdminGyms(state, action: PayloadAction<IGymReadInfo[] | null>) {
+      // state.gymAdminGyms = action.payload;
     },
     setOrganisationAdminOrganisation(state, action: PayloadAction<number>) {
       state.organisationAdminOrganisationId = action.payload;
+    },
+    setNewOrganisationName(state, action: PayloadAction<string | null>) {
+      state.newOrganisationName = action.payload;
+    },
+    setNewOrganisationDescription(state, action: PayloadAction<string | null>) {
+      state.newOrganisationDescription = action.payload;
     },
   },
   extraReducers: {

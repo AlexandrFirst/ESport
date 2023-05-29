@@ -21,6 +21,8 @@ export interface UpdateProfileInfoRequest {
   updateOrganisationAdminInfo?: Maybe<{
     updateUserInfo?: UpdateUserInfo;
     organisationId: number;
+    organisationName: string | null;
+    organisationDescription: string | null;
   }>;
   updateTraineeInfo?: {
     updateUserInfo?: UpdateUserInfo;

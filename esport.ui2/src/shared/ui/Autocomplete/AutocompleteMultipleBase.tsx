@@ -34,14 +34,16 @@ export function AutocompleteMultipleBase<T extends {} = {}>({
   loading,
   delayTime = 200,
   additionalOptions,
+  disabled,
+  onInputChange,
   ...props
 }: AutocompleteMultipleBaseProps<T>) {
   const {
     items,
     getLoadingOrEmpty,
-    handleInputChange,
-    getAdditionalOptions,
     handleChange,
+    getAdditionalOptions,
+    debouncedHandleInputChange,
   } = useAutocomplete({
     list,
     displayValue,
@@ -49,6 +51,8 @@ export function AutocompleteMultipleBase<T extends {} = {}>({
     withFilter: false,
     additionalOptions,
     onChange,
+    onInputChange,
+    delayTime,
   });
 
   const compare: ByComparator<T> = useCallback(
@@ -67,6 +71,7 @@ export function AutocompleteMultipleBase<T extends {} = {}>({
       multiple
       //@ts-ignore
       by={compare}
+      disabled={disabled}
     >
       {({ open }) => (
         <div className={styles.wrapper}>
@@ -75,7 +80,7 @@ export function AutocompleteMultipleBase<T extends {} = {}>({
             displayValue={(items: T[]) =>
               items.map((item) => item[displayValue]).join(", ")
             }
-            onChange={handleInputChange}
+            onChange={debouncedHandleInputChange}
           >
             <InputBase
               {...props}

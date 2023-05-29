@@ -6,6 +6,10 @@ import {
   Autocomplete,
   AutocompleteAdditionalOptionList,
   Card,
+  InputBase,
+  OrSection,
+  SubTitle,
+  TextAreaBase,
   UILink,
 } from "@/shared/ui";
 
@@ -22,6 +26,10 @@ import { useRoleProfileInformationActions } from "../../model/slices/roleProfile
 import { useSelectOrganisationAdminOrganisationId } from "../../model/selectors/selectOrganisationAdminOrganisation/selectOrganisationAdminOrganisationId";
 
 import { NoData } from "../NoData/NoData";
+import { ErrorMessage } from "@/shared/types";
+import { useSelectIsEmailForProfileChanged } from "../../model/selectors/selectIsEmailForProfileChanged/selectIsEmailForProfileChanged";
+import { useSelectNewOrganisationName } from "../../model/selectors/selectNewOrganisationName/selectNewOrganisationName";
+import { useSelectNewOrganisationDescription } from "../../model/selectors/selectNewOrganisationDescription/selectNewOrganisationDescription";
 
 interface OrganizationAdminProfileInformationProps {
   className?: string;
@@ -33,11 +41,20 @@ export const OrganisationAdminProfileInformation: FC<
   const { userOrganisationAdminInfos } = useSelectEditableProfile();
   const organisationAdminOrganisationId =
     useSelectOrganisationAdminOrganisationId();
+  const isEmailChanged = useSelectIsEmailForProfileChanged(
+    "userOrganisationAdminInfos"
+  );
 
   const { setEditableProfileByKey, setIsEmailForProfileChanged } =
     useProfileInformationActions();
-  const { setOrganisationAdminOrganisation } =
-    useRoleProfileInformationActions();
+  const {
+    setOrganisationAdminOrganisation,
+    setNewOrganisationName,
+    setNewOrganisationDescription,
+  } = useRoleProfileInformationActions();
+
+  const organisationName = useSelectNewOrganisationName();
+  const organisationDescription = useSelectNewOrganisationDescription();
 
   const router = useRouter();
   const [organizationValue, setOrganizationValue] = useState("");
@@ -87,6 +104,23 @@ export const OrganisationAdminProfileInformation: FC<
         ]
       : [];
 
+  const getEmailError = (): ErrorMessage | undefined => {
+    return !userOrganisationAdminInfos?.[0].isConfirmed || isEmailChanged
+      ? {
+          message:
+            "You can save profile, but you need to confirm your email. Check your inbox!",
+        }
+      : undefined;
+  };
+
+  const handleChangeOrganisation = (org: IOrganizationInfoRead | null) => {
+    if (org) {
+      setNewOrganisationName("");
+      setNewOrganisationDescription("");
+    }
+    setOrganisationAdminOrganisation(org?.organisationId ?? 0);
+  };
+
   return (
     <Card padding={"md"}>
       {!hasInfo ? (
@@ -102,6 +136,7 @@ export const OrganisationAdminProfileInformation: FC<
             onChangeEmail={handleChangeEmail}
             onChangeBio={handleChange("info")}
             withBio
+            emailError={getEmailError()}
             additionalFieldsBelow={
               <>
                 <Autocomplete<IOrganizationInfoRead>
@@ -114,11 +149,30 @@ export const OrganisationAdminProfileInformation: FC<
                   onInputChange={setOrganizationValue}
                   lazy
                   loading={areOrganizationsLoading}
-                  label={"Organisation"}
+                  label={"Choose existing organisation"}
                   additionalOptions={additionalOptions}
-                  onChange={(value) =>
-                    setOrganisationAdminOrganisation(value?.organisationId ?? 0)
+                  onChange={handleChangeOrganisation}
+                  disabled={Boolean(
+                    organisationName || organisationDescription
+                  )}
+                />
+                <OrSection />
+                <SubTitle size={"large"} className={"my-5"}>
+                  Create new organisation
+                </SubTitle>
+                <InputBase
+                  value={organisationName ?? undefined}
+                  onChange={(e) => setNewOrganisationName(e.target.value)}
+                  disabled={Boolean(organisationAdminOrganisationId)}
+                  label={"Organisation name"}
+                />
+                <TextAreaBase
+                  value={organisationDescription ?? undefined}
+                  onChange={(e) =>
+                    setNewOrganisationDescription(e.target.value)
                   }
+                  disabled={Boolean(organisationAdminOrganisationId)}
+                  placeholder={"Organisation description"}
                 />
               </>
             }
