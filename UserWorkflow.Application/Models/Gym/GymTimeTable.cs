@@ -7,6 +7,13 @@ using UserWorkflow.Esport.Models;
 
 namespace UserWorkflow.Application.Models.Gym
 {
+    public class GymTimeTableByDate 
+    {
+        public int GymId { get; set; }
+        public DateTime DateTime { get; set; }
+        public List<DayTimeTable> DayTimeTable { get; set; }
+    }
+
     public class GymTimeTable
     {
         public int GymId { get; set; }
