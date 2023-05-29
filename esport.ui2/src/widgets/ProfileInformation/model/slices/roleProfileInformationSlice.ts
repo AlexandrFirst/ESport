@@ -24,11 +24,14 @@ const roleProfileInformationSlice = buildSlice({
   name: "trainerProfileInformation",
   initialState,
   reducers: {
-    setInitialData(state, action: PayloadAction<RoleProfileInformationState>) {
-      state.trainerSports = action.payload.trainerSports;
-      state.gymAdminGyms = action.payload.gymAdminGyms;
+    setInitialData(
+      state,
+      action: PayloadAction<Partial<RoleProfileInformationState>>
+    ) {
+      state.trainerSports = action.payload.trainerSports ?? [];
+      state.gymAdminGyms = action.payload.gymAdminGyms ?? [];
       state.organisationAdminOrganisationId =
-        action.payload.organisationAdminOrganisationId;
+        action.payload.organisationAdminOrganisationId ?? 0;
     },
     setTrainerSports(state, action: PayloadAction<ITrainerSportInfo[]>) {
       state.trainerSports = action.payload;

@@ -77,6 +77,8 @@ const profileInformationSlice = buildSlice({
               photoId: null,
               userId: 0,
               isConfirmed: true,
+              organisationId: 0,
+              organisationName: "",
             },
           ];
       }
