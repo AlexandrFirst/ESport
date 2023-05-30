@@ -94,6 +94,10 @@ export const useMenu = (): UseMenuResult => {
                 title: "Gyms",
                 link: routes.Organisation.Gyms([organisationId]),
               },
+              {
+                title: "Trainers",
+                link: routes.Organisation.Gyms([organisationId]),
+              },
             ],
           },
         ],
