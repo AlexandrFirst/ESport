@@ -85,8 +85,11 @@ export const useMenu = (): UseMenuResult => {
           {
             title: "Organisation",
             icon: <MenuIcon Svg={UserGroupIcon} />,
-            link: routes.Organisation.Home(),
             items: [
+              {
+                title: "Settings",
+                link: routes.Organisation.Home(),
+              },
               {
                 title: "Gyms",
                 link: routes.Organisation.Gyms([organisationId]),
