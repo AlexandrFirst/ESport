@@ -40,7 +40,8 @@ namespace UserWorkflow.Application.Commands.Trainer
                 FromTime = command.LessonTimeOverride == null ? null : command.LessonTimeOverride?.FromTime,
                 ToTime = command.LessonTimeOverride == null ? null : command.LessonTimeOverride?.ToTime,
                 LessonType = command.LessonType,
-                OverrideTrainerShedule = command.LessonTimeOverride != null
+                OverrideTrainerShedule = command.LessonTimeOverride != null,
+                TrainerSheduleId = command.TrainerScheduleId
             };
 
             var existingLessonQuery = trainerSchedule.Lessons.AsQueryable();
@@ -84,7 +85,7 @@ namespace UserWorkflow.Application.Commands.Trainer
                                 To = x.TrainerShedule.GymShift.ToTime
                             }
                         };
-                
+
                 bool overlapFrom = lessonFromTime.Any(_lessonFromTime => trainerFrameTime.Any(c => _lessonFromTime <= c.To));
                 bool overlapTo = lessonToTime.Any(_lessonToTime => trainerFrameTime.Any(c => c.From <= _lessonToTime));
 
@@ -96,9 +97,16 @@ namespace UserWorkflow.Application.Commands.Trainer
                 throw new ApplicationException("Unable to add curernt lesson as time it is overlapping with others");
             }
 
-            var trainerFrameTime = trainerSchedule.TimeOverride?.Where(o => lesson.DayOfTheWeek.HasValue &&
-                   (o.DayOfTheWeeks & lesson.DayOfTheWeek.Value) > 1).ToList().DefaultIfEmpty() ?? trainerSchedule.TimeOverride?.Where(x => x.DayOfTheWeeks == (int)DayOfTheWeek.ALL).DefaultIfEmpty() ??
-                   new List<TimeOverride>()
+
+            var trainerFrameTime = trainerSchedule.TimeOverride.Where(o => lesson.DayOfTheWeek.HasValue &&
+                   (o.DayOfTheWeeks & lesson.DayOfTheWeek.Value) > 1).ToList();
+            if (!trainerFrameTime.Any()) 
+            {
+                trainerFrameTime = trainerSchedule.TimeOverride.Where(x => x.DayOfTheWeeks == (int)DayOfTheWeek.ALL).ToList();
+            }
+            if (!trainerFrameTime.Any()) 
+            {
+                trainerFrameTime = new List<TimeOverride>()
                    {
                         new()
                         {
@@ -107,13 +115,18 @@ namespace UserWorkflow.Application.Commands.Trainer
                             To = trainerSchedule.GymShift.ToTime
                         }
                    };
+            };
 
-           
+            if (trainerFrameTime == null)
+            {
+                throw new ApplicationException("Trainer timetable is not correct; Trainer id: " + trainer.Id);
+            }
+
             bool overlapFrom = lessonFromTime.Any(_lessonFromTime => !trainerFrameTime.All(k => _lessonFromTime >= k.From));
             bool overlapTo = lessonToTime.Any(_lessonToTime => !trainerFrameTime.All(k => _lessonToTime <= k.To));
 
             var extendTrainerTime = overlapFrom || overlapTo;
-            if (extendTrainerTime) 
+            if (extendTrainerTime)
             {
                 throw new ApplicationException("Lesson time extend trainer shedule time");
             }

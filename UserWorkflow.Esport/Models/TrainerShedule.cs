@@ -55,7 +55,17 @@ namespace UserWorkflow.Esport.Models
         public TrainerStatus Status { get; set; }
 
         private List<TimeOverride> _timeOverride { get; set; }
-        public List<TimeOverride> TimeOverride { get { return _timeOverride.Where(x => x != null).ToList(); } set { _timeOverride = value; } }
+        public List<TimeOverride> TimeOverride
+        {
+            get
+            {
+                return _timeOverride.Where(x => x != null).ToList();
+            }
+            set
+            {
+                _timeOverride = value;
+            }
+        }
 
         public virtual List<TrainerRequest> TrainerRequests { get; set; }
 
