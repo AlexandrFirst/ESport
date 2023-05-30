@@ -13,6 +13,6 @@ namespace UserWorkflow.Esport.Models
         FRIDAY = 16,
         SATURDAY = 32,
         SUNDAY = 64,
-        ALL = 128
+        ALL = 127
     }
 }

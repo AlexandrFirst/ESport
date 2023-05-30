@@ -41,10 +41,10 @@ namespace UserWorkflow.Application.Commands.Trainer
                 exercise = new Exercise();
             }
 
-            exercise.Name = command.Name;
+            exercise.Name = command.Name;       
             exercise.Description = command.Description;
             exercise.AgeLimit = command.AgeLimit;
-
+            exercise.ExerciseOwnerId = trainer.Id;
             exercise.IsPublic = command.IsPublic;
 
             handleSportInfos(exercise, command.SportIds);
@@ -52,6 +52,11 @@ namespace UserWorkflow.Application.Commands.Trainer
             handleTraumasInfo(exercise, command.TraumaIds);
 
             await handleExerciseTutorials(exercise, command.exerciseInfos);
+
+            if (exercise.Id == 0) 
+            {
+                await esportDataContext.AddAsync(exercise);
+            }
 
             await esportDataContext.SaveChangesAsync();
 

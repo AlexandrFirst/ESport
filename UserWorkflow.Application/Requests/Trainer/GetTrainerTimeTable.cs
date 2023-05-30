@@ -15,10 +15,12 @@ namespace UserWorkflow.Application.Requests.Trainer
         public int TrainerId { get; set; }
         public int? GymId { get; set; }
         public int? DayOfTheWeek { get; set; }
+        public DateTime? StartDateTime { get; set; }
+        public int? DayRange { get; set; }
     }
 
     public class GetTrainerTimeTableResult 
     {
-        public List<GymTimeTable> GymTimeTable { get; set; }
+        public List<GymTimeTableByDate> GymTimeTable { get; set; }
     }
 }

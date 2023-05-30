@@ -23,7 +23,7 @@ namespace UserWorkflow.Application.Commands.Trainer
         {
             var userId = command.AuthenticatedBy.UserId;
 
-            var trainer = await esportDataContext.Trainers.FirstOrDefaultAsync(x => x.Id == userId);
+            var trainer = await esportDataContext.Trainers.FirstOrDefaultAsync(x => x.UserId == userId);
             if (trainer == null) 
             {
                 throw new ApplicationException("No trainer with user id: " + userId + " is found");
