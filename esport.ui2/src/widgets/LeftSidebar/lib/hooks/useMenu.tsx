@@ -1,61 +1,121 @@
 import {
-  BeakerIcon,
   BriefcaseIcon,
   CogIcon,
   ComputerDesktopIcon,
+  HomeIcon,
+  UserGroupIcon,
 } from "@heroicons/react/24/solid";
 
 import { routes } from "@/shared/config";
 
 import { useAuth } from "@/entities/user";
+import { useProfileInfo } from "@/entities/profile";
 
 import { IMenuItem } from "../../types/menu-item";
+
 import MenuIcon from "../../ui/MenuIcon/MenuIcon";
 
-export const useMenu = (): IMenuItem[] => {
-  const { user, isAuth } = useAuth();
+type ShowMenuParams = {
+  condition: boolean;
+  onTrue?: IMenuItem[];
+  onFalse?: IMenuItem[];
+};
 
-  return [
-    {
-      title: "Test",
-      icon: <MenuIcon Svg={BeakerIcon} />,
-      link: routes.Home(),
-    },
+interface UseMenuResult {
+  menu: IMenuItem[];
+  isLoading: boolean;
+}
+
+export const useMenu = (): UseMenuResult => {
+  const { user, isAuth, isOrganisationAdmin, isGymAdmin } = useAuth();
+  const { isProfileLoading, organisationId, isProfileError, profile } =
+    useProfileInfo({
+      userId: user?.id || 0,
+      forceFetch: isAuth,
+    });
+
+  const menuItems = ({ condition, onFalse, onTrue }: ShowMenuParams) => {
+    if (condition) {
+      return onTrue ?? [];
+    }
+    return onFalse ?? [];
+  };
+
+  const unLoggedMenu: IMenuItem[] = [
     {
       title: "Streams",
       icon: <MenuIcon Svg={ComputerDesktopIcon} />,
       link: routes.Streams(),
     },
-    ...(isAuth
-      ? [
+    {
+      title: "Competitions",
+      icon: <MenuIcon Svg={BriefcaseIcon} />,
+      link: routes.Competition.Home(),
+      items: isAuth
+        ? [
+            {
+              title: "Competitions",
+              // icon: <SportsKabaddiIcon className="mr-3" />,
+              link: routes.Competition.Home(),
+            },
+            {
+              title: "Create",
+              // icon: <AddIcon className="mr-3" />,
+              link: routes.Competition.Create(),
+            },
+          ]
+        : undefined,
+    },
+  ];
+
+  if (!isAuth || isProfileError) {
+    return {
+      isLoading: false,
+      menu: unLoggedMenu,
+    };
+  }
+
+  return {
+    isLoading: isProfileLoading,
+    menu: [
+      ...unLoggedMenu,
+      ...menuItems({
+        condition: isOrganisationAdmin,
+        onTrue: [
           {
-            title: "Competitions",
-            icon: <MenuIcon Svg={BriefcaseIcon} />,
-            gap: true,
-            link: routes.Competition.Home(),
+            title: "Organisation",
+            icon: <MenuIcon Svg={UserGroupIcon} />,
+            link: routes.Organisation.Home(),
             items: [
               {
-                title: "Competitions",
-                // icon: <SportsKabaddiIcon className="mr-3" />,
-                link: routes.Competition.Home(),
-              },
-              {
-                title: "Create",
-                // icon: <AddIcon className="mr-3" />,
-                link: routes.Competition.Create(),
+                title: "Gyms",
+                link: routes.Organisation.Gyms([organisationId]),
               },
             ],
           },
-        ]
-      : []),
-    ...(isAuth
-      ? [
+        ],
+      }),
+      ...menuItems({
+        condition: isGymAdmin,
+        onTrue: [
+          {
+            title: "My gyms",
+            icon: <MenuIcon Svg={HomeIcon} />,
+          },
+        ],
+      }),
+
+      ...menuItems({
+        condition: isAuth,
+        onTrue: [
           {
             title: "Settings",
             icon: <MenuIcon Svg={CogIcon} />,
             link: routes.Settings(),
+            gap: true,
           },
-        ]
-      : []),
-  ];
+        ],
+      }),
+    ],
+  };
 };

@@ -10,7 +10,7 @@ import { IRegisterForm } from "../../model/types/RegisterFormSchema";
 export const getDefaultValues = (): IRegisterForm => {
   if (process.env.NEXT_PUBLIC_STAGE !== ServerStage.Prod) {
     return {
-      email: `user${randomNumberString(2)}@test.com`,
+      email: `user${randomNumberString(4)}@test.com`,
       firstName: capitalize(randomAlphabetString(5)),
       lastName: capitalize(randomAlphabetString(5)),
       password: "$Tiger123",

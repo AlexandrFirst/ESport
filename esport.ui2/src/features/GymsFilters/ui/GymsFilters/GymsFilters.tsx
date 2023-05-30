@@ -3,7 +3,7 @@ import styles from "./GymsFilters.module.css";
 
 import cn from "classnames";
 
-import { DatePickerBase, InputBase, SubTitle } from "@/shared/ui";
+import { DatePickerBase, InputBase } from "@/shared/ui";
 import { useGetOrganisations } from "@/entities/organisation";
 
 interface GymsFiltersProps {
@@ -16,7 +16,6 @@ export const GymsFilters: FC<GymsFiltersProps> = ({ className }) => {
 
   return (
     <div className={cn(styles.wrapper, className)}>
-      <SubTitle>Filters</SubTitle>
       <InputBase label={"Address"} />
       <InputBase label={"Name"} />
       {/*<Autocomplete<IOrganizationInfoRead>*/}

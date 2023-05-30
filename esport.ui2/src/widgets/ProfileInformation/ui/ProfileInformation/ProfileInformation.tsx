@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import styles from "./ProfileInformation.module.css";
 
 import { BottomNav, TabList, Tabs } from "@/shared/ui";
-import { useSnackbar } from "@/shared/lib";
+import { useMappedRoles, useSnackbar } from "@/shared/lib";
 
 import {
   ProfileApi,
@@ -13,19 +13,22 @@ import {
 
 import { ProfileInfoTab } from "../../constants/profile-info-tab";
 
+import { useGetEmailChangedMessage } from "../../lib/hooks/useGetEmailChangedMessage/useGetEmailChangedMessage";
+
 import { useProfileInformationActions } from "../../model/slices/ProfileInformationSlice";
 import { useSelectEditableProfile } from "../../model/selectors/selectEditableProfile/selectEditableProfile";
 import { useSelectOverrideLoginInfo } from "../../model/selectors/selectOverrideLoginInfo/selectOverrideLoginInfo";
 import { useSelectCurrentProfile } from "../../model/selectors/selectCurrentProfile/selectCurrentProfile";
 import { useSelectTrainerSports } from "../../model/selectors/selectTrainerSports/selectTrainerSports";
+import { useSelectOrganisationAdminOrganisationId } from "../../model/selectors/selectOrganisationAdminOrganisation/selectOrganisationAdminOrganisationId";
+import { useSelectNewOrganisationName } from "../../model/selectors/selectNewOrganisationName/selectNewOrganisationName";
+import { useSelectNewOrganisationDescription } from "../../model/selectors/selectNewOrganisationDescription/selectNewOrganisationDescription";
+
 import { ProfileInfoPerRole } from "../ProfileInfoPerRole/ProfileInfoPerRole";
 import { TrainerProfileInformation } from "../TrainerProfileInformation/TrainerProfileInformation";
 import { GymAdminProfileInformation } from "../GymAdminProfileInformation/GymAdminProfileInformation";
 import { OrganisationAdminProfileInformation } from "../OrganisationAdminProfileInformation/OrganisationAdminProfileInformation";
-import { useSelectOrganisationAdminOrganisationId } from "../../model/selectors/selectOrganisationAdminOrganisation/selectOrganisationAdminOrganisationId";
-import { useGetEmailChangedMessage } from "../../lib/hooks/useGetEmailChangedMessage/useGetEmailChangedMessage";
-import { useSelectNewOrganisationName } from "../../model/selectors/selectNewOrganisationName/selectNewOrganisationName";
-import { useSelectNewOrganisationDescription } from "../../model/selectors/selectNewOrganisationDescription/selectNewOrganisationDescription";
+import { UserRole } from "@/shared/constants";
 
 interface ProfileInformationProps {
   userId: number;
@@ -39,6 +42,8 @@ export const ProfileInformation: FC<ProfileInformationProps> = ({
   withEditBtn,
   userId,
 }) => {
+  const translatedRoles = useMappedRoles();
+
   const { setInitialData, resetIsEmailForProfileChanged } =
     useProfileInformationActions();
   const profile = useSelectCurrentProfile();
@@ -59,9 +64,12 @@ export const ProfileInformation: FC<ProfileInformationProps> = ({
       showError(e.message);
     },
     async onSuccess() {
-      showSuccess(`Profile updated successfully. ${emailChangedMessage}`, {
-        duration: 10000,
-      });
+      showSuccess(
+        `Profile updated successfully. In order to apply new roles you have to login to your account again. ${emailChangedMessage}`,
+        {
+          duration: 10000,
+        }
+      );
       const { data: profile } = await ProfileApi().getProfileInfo(
         Number(userId)
       );
@@ -92,22 +100,22 @@ export const ProfileInformation: FC<ProfileInformationProps> = ({
       ),
     },
     {
-      label: "Trainee",
+      label: translatedRoles[UserRole.Trainee],
       value: ProfileInfoTab.Trainee,
       content: <ProfileInfoPerRole profileKey={"userTraineeInfo"} />,
     },
     {
-      label: "Trainer",
+      label: translatedRoles[UserRole.Trainer],
       value: ProfileInfoTab.Trainer,
       content: <TrainerProfileInformation />,
     },
     {
-      label: "Gym Admin",
+      label: translatedRoles[UserRole.GymAdmin],
       value: ProfileInfoTab.GymAdmin,
       content: <GymAdminProfileInformation />,
     },
     {
-      label: "Organisation Admin",
+      label: translatedRoles[UserRole.OrganisationAdmin],
       value: ProfileInfoTab.OrganizationAdmin,
       content: <OrganisationAdminProfileInformation />,
     },

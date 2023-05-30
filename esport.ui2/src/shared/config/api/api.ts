@@ -1,5 +1,5 @@
 import https from "https";
-import axios, { CreateAxiosDefaults } from "axios";
+import axios, { AxiosError, CreateAxiosDefaults } from "axios";
 
 import { AuthToken, ServerStage } from "@/shared/constants";
 import { ApiContext } from "@/shared/types";
@@ -40,5 +40,11 @@ export const Api = (config?: ApiConfig) => {
       family: 4,
     });
   }
+  instance.interceptors.response.use(
+    (response) => Promise.resolve(response),
+    (error: AxiosError) => {
+      return Promise.reject(error.response?.data || error);
+    }
+  );
   return instance;
 };

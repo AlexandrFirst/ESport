@@ -6,6 +6,7 @@ import { Combobox } from "@headlessui/react";
 import cn from "classnames";
 import { AdditionalOption } from "./AutocompeleteCommonProps";
 import { useDebounce } from "@/shared/lib";
+import { LoaderColor } from "@/shared/constants";
 
 interface UseAutocompleteParams<T extends {} = {}> {
   list?: T[];
@@ -61,7 +62,7 @@ export function useAutocomplete<T extends {} = {}>({
     if (loading) {
       return (
         <div className={styles.text_wrapper}>
-          <BeatLoader color={"#b2c9df"} />
+          <BeatLoader color={LoaderColor} />
         </div>
       );
     }
