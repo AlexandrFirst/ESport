@@ -5,11 +5,51 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace UserWorkflow.Infrastructure.Paging
 {
     public class Paging<T> : IPaging<T>
     {
+        public ListingResult<T> ApplyPaging(IEnumerable<T> listing, int page = 1, int pageSize = 10)
+        {
+            if (page < 1)
+            {
+                throw new ApplicationException("Page must be greater than 0");
+            }
+
+            if (pageSize < 1)
+            {
+                throw new ApplicationException("Page size must be greater than 0");
+            }
+
+            int totalItems = listing.Count();
+            
+            var result = new ListingResult<T>
+            {
+                CurrentPage = page,
+                Total = totalItems,
+                Listing = listing,
+                WasSuccessfull = true
+            };
+            pageSize = (pageSize > totalItems) ? totalItems : pageSize;
+            result.TotalPage = (totalItems > 0) ? ((int)Math.Ceiling((double)totalItems / (double)pageSize)) : 0;
+
+            if (page > result.TotalPage)
+            {
+                page = result.TotalPage;
+            }
+
+            result.CurrentPage = page;
+            if (totalItems > 0)
+            {
+                ListingResult<T> listingResult = result;
+                listingResult.Listing = listing.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            }
+
+            return result;
+        }
+
         public async Task<ListingResult<T>> ApplyPagingAsync(IQueryable<T> query, int page = 1, int pageSize = 10, CancellationToken token = default)
         {
             if (query == null)

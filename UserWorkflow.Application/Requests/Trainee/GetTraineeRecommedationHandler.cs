@@ -32,7 +32,8 @@ namespace UserWorkflow.Application.Requests.Trainee
 
         public async Task<RequestResult<GetTraineeRecommedationResult>> HandleQueryAsync(GetTraineeRecommedation request)
         {
-            var lessonQuery = esportDataContext.Lessons.AsQueryable();
+            var allLessons = await esportDataContext.Lessons.ToListAsync();
+            var lessonQuery = allLessons.AsQueryable();
 
             var userId = request.AuthenticatedBy.UserId;
             var trainee = await esportDataContext.Trainees.FirstOrDefaultAsync(x => x.UserId == userId);
@@ -65,21 +66,43 @@ namespace UserWorkflow.Application.Requests.Trainee
                     {
                         case LogicalOperation.OR:
                             var sportOrPredicates = new List<Expression<Func<Lesson, bool>>>();
-                            request.LessonSportFilter.SportIds.ForEach(s =>
+                            if (!lessonQuery.SelectMany(x => x.TraineeShedules).Any())
                             {
-                                sportOrPredicates.Add(lessonQuery => lessonQuery.TraineeShedules
-                                    .Any(p => p.TraineeSheduleExercises
-                                    .Any(o => o.TraineeExercise.Exercise.ExerciseSports.Any(d => d.Id == s))));
-                            });
-                            lessonQuery = lessonQuery.Or(sportOrPredicates);
+                                request.LessonSportFilter.SportIds.ForEach(s =>
+                                {
+                                    sportOrPredicates.Add(lessonQuery => lessonQuery.TrainerShedule.Trainer.TrainerSports.Any(p => p.SportId == s));
+                                });
+                                lessonQuery = lessonQuery.Or(sportOrPredicates);
+                            }
+                            else
+                            {
+                                request.LessonSportFilter.SportIds.ForEach(s =>
+                                {
+                                    sportOrPredicates.Add(lessonQuery => lessonQuery.TraineeShedules
+                                        .Any(p => p.TraineeSheduleExercises
+                                        .Any(o => o.TraineeExercise.Exercise.ExerciseSports.Any(d => d.Id == s))));
+                                });
+                                lessonQuery = lessonQuery.Or(sportOrPredicates);
+                            }
                             break;
                         case LogicalOperation.AND:
-                            request.LessonSportFilter.SportIds.ForEach(s =>
+
+                            if (!lessonQuery.SelectMany(x => x.TraineeShedules).Any())
                             {
-                                lessonQuery = lessonQuery.Where(k => k.TraineeShedules
-                                    .Any(p => p.TraineeSheduleExercises
-                                    .Any(o => o.TraineeExercise.Exercise.ExerciseSports.Any(d => d.Id == s))));
-                            });
+                                request.LessonSportFilter.SportIds.ForEach(s =>
+                                {
+                                    lessonQuery = lessonQuery.Where(x => x.TrainerShedule.Trainer.TrainerSports.Any(p => p.SportId == s));
+                                });
+                            }
+                            else
+                            {
+                                request.LessonSportFilter.SportIds.ForEach(s =>
+                                {
+                                    lessonQuery = lessonQuery.Where(k => k.TraineeShedules
+                                        .Any(p => p.TraineeSheduleExercises
+                                        .Any(o => o.TraineeExercise.Exercise.ExerciseSports.Any(d => d.Id == s))));
+                                });
+                            }
                             break;
                         default:
                             throw new ApplicationException("Unknown logical condition");
@@ -145,7 +168,7 @@ namespace UserWorkflow.Application.Requests.Trainee
                 .Any(k => k.TraineeExercise.Exercise.ExerciseSports
                 .Any(l => l.SportId == p)))));
 
-            var result = await lessonPaging.ApplyPagingAsync(lessonQuery, request.Page, request.PageSize);
+            var result = lessonPaging.ApplyPaging(lessonQuery, request.Page, request.PageSize);
 
             return new RequestResult<GetTraineeRecommedationResult>(new GetTraineeRecommedationResult()
             {

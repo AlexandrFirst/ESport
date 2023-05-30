@@ -10,5 +10,6 @@ namespace UserWorkflow.Infrastructure.Paging
     public interface IPaging<T>
     {
         Task<ListingResult<T>> ApplyPagingAsync(IQueryable<T> listing, int page = 1, int pageSize = 10, CancellationToken token = default(CancellationToken));
+        ListingResult<T> ApplyPaging(IEnumerable<T> listing, int page = 1, int pageSize = 10);
     }
 }

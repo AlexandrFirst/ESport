@@ -328,7 +328,7 @@ namespace UserWorkflow.Api.Controllers
             }
         }
 
-        [HttpPost("updateTraineeSchedule")]
+        [HttpPost("UpdateTraineeSchedule")]
         public async Task<IActionResult> UpdateTraineeSchedule([FromBody] UpdateTraineeLessonInfo command)
         {
             var started = DateTime.UtcNow;
