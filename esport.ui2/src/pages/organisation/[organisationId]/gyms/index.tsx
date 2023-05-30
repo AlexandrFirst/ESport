@@ -9,22 +9,25 @@ import { GymList, IGymReadInfo } from "@/entities/gym";
 
 import { getMainLayout } from "@/widgets/MainLayout";
 import { GymsFilters } from "@/features/GymsFilters";
+import { useRouter } from "next/router";
+import { routes } from "@/shared/config";
 
 type GymsProps = PageProps & {
   gyms: IGymReadInfo[];
 };
 
 const Gyms: AppNextPage<GymsProps> = ({ gyms }) => {
+  const router = useRouter();
+
+  const handleGymClick = (gym: IGymReadInfo) => {
+    const { organisationId } = router.query;
+    router.push(routes.Organisation.Gym([organisationId as string, gym.gymId]));
+  };
+
   return (
-    <StickyContentLayout
-      right={
-        <Card className={"border border-theme-main"}>
-          <GymsFilters className={"p-2"} />
-        </Card>
-      }
-    >
+    <StickyContentLayout right={<GymsFilters />}>
       <Card padding={"none"}>
-        <GymList gyms={gyms} />
+        <GymList gyms={gyms} onClickGym={handleGymClick} />
       </Card>
     </StickyContentLayout>
   );

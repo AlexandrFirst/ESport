@@ -10,6 +10,7 @@ import { useConfirmMyProfile } from "@/entities/profile";
 
 import { ThemeSwitcher } from "@/features/ThemeSwitcher";
 import { routes } from "@/shared/config";
+import { LoaderColor } from "@/shared/constants";
 
 type ConfirmProfileProps = PageProps & {};
 
@@ -30,7 +31,7 @@ const ConfirmProfile: AppNextPage<ConfirmProfileProps> = () => {
     <CenteredLayout
       isError={isError}
       isLoading={isLoading}
-      loadingFallback={<BeatLoader color={"#b2c9df"} />}
+      loadingFallback={<BeatLoader color={LoaderColor} />}
       errorFallback={
         <ErrorText className={"text-4xl"}>Something went wrong</ErrorText>
       }

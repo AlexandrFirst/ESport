@@ -9,6 +9,8 @@ import { useRedirectAfterFetch } from "@/shared/lib";
 import { useConfirmUser } from "@/entities/user";
 
 import { ThemeSwitcher } from "@/features/ThemeSwitcher";
+import { routes } from "@/shared/config";
+import { LoaderColor } from "@/shared/constants";
 
 type ConfirmRegisterProps = PageProps & {};
 
@@ -19,13 +21,17 @@ const ConfirmRegister: AppNextPage<ConfirmRegisterProps> = () => {
     router.query.token as string
   );
 
-  const timeLeft = useRedirectAfterFetch({ isFetched, isError });
+  const timeLeft = useRedirectAfterFetch({
+    isFetched,
+    isError,
+    redirectPath: routes.Login(),
+  });
 
   return (
     <CenteredLayout
       isError={isError}
       isLoading={isLoading}
-      loadingFallback={<BeatLoader color={"#b2c9df"} />}
+      loadingFallback={<BeatLoader color={LoaderColor} />}
       errorFallback={
         <ErrorText className={"text-4xl"}>Something went wrong</ErrorText>
       }

@@ -7,7 +7,7 @@ import { ICompetiton } from "../model/types/competiton";
 import { GetCompetitionResponse } from "./types/get-competition";
 
 export const CompetitionApi = (ctx?: ApiContext) => {
-  const instance = Api({ ctx, baseURL: "http://localhost:3001/api/v1" });
+  const instance = Api({ ctx, baseURL: "https://localhost:3001/api/v1" });
 
   return {
     async createCompetition(request: ICreateCompetitionForm) {

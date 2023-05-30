@@ -64,6 +64,7 @@ const profileInformationSlice = buildSlice({
             userId: 0,
             isConfirmed: true,
           };
+          break;
         case "userOrganisationAdminInfos":
           state.editableProfile.userOrganisationAdminInfos = [
             {

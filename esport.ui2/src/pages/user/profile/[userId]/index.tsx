@@ -17,7 +17,7 @@ type ProfileProps = PageProps & {
 };
 
 const Profile: AppNextPage<ProfileProps> = ({ profile }) => {
-  const { isOrgAdmin } = useAuth();
+  const { isOrganisationAdmin } = useAuth();
   const router = useRouter();
 
   const userId = router.query?.userId as string;
@@ -29,7 +29,7 @@ const Profile: AppNextPage<ProfileProps> = ({ profile }) => {
   return (
     <ProfileInformation
       // profile={profile}
-      withEditBtn={isOrgAdmin}
+      withEditBtn={isOrganisationAdmin}
       onEditClick={handleEdit}
       userId={Number(userId)}
     />

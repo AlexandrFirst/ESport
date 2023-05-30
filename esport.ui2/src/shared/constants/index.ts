@@ -4,3 +4,4 @@ export * from "./cookie";
 export * from "./routes";
 export * from "./user-role";
 export * from "./server";
+export * from "./colors";

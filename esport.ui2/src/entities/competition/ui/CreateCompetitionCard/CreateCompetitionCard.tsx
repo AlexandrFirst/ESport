@@ -5,9 +5,17 @@ import { Card, Title } from "@/shared/ui";
 
 import { useCreateCompetition } from "../../api/hooks/useCreateCompetition";
 import { CreateCompetitionForm } from "../CreateCompetitionForm/CreateCompetitionForm";
+import { Logger, useSnackbar } from "@/shared/lib";
 
 export const CreateCompetitionCard: FC = () => {
-  const { mutate, isLoading } = useCreateCompetition();
+  const { showError } = useSnackbar();
+
+  const { mutate, isLoading } = useCreateCompetition({
+    onError(e) {
+      Logger.Error(e);
+      showError(e.message);
+    },
+  });
 
   return (
     <>

@@ -7,6 +7,8 @@ import { StateSchema } from "../config/store/StateSchema";
 
 import { Snackbar } from "@/features/Snackbar";
 
+import { LOCAL_STORAGE_THEME_KEY } from "../lib/ThemeContext";
+
 import { QueryProvider } from "./QueryProvider";
 import { StoreProvider } from "./StoreProvider";
 
@@ -18,7 +20,11 @@ interface ProvidersProps {
 export const Providers: FC<ProvidersProps> = ({ store, children }) => {
   return (
     <StoreProvider store={store}>
-      <ThemeProvider storageKey={"e-sport.theme"}>
+      <ThemeProvider
+        storageKey={LOCAL_STORAGE_THEME_KEY}
+        //TODO: add more themes
+        // themes={["pink", "red", "blue", "light", "dark"]}
+      >
         <Snackbar>
           <QueryProvider>{children}</QueryProvider>
         </Snackbar>

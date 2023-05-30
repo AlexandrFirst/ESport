@@ -7,15 +7,24 @@ import UserIcon from "@heroicons/react/24/solid/UserIcon";
 import { Icon } from "@/shared/ui";
 
 import { IGymReadInfo } from "../../model/types/gym-read-info";
+import cn from "classnames";
 
-interface GymListItemProps {
+export interface GymListItemProps {
   className?: string;
   gym: IGymReadInfo;
+  onClickGym?: (gym: IGymReadInfo) => void;
 }
 
-export const GymListItem: FC<GymListItemProps> = ({ gym }) => {
+export const GymListItem: FC<GymListItemProps> = ({ gym, onClickGym }) => {
+  const handleClick = () => onClickGym?.(gym);
+
   return (
-    <li className={styles.list_item}>
+    <li
+      className={cn(styles.list_item, {
+        [styles.clickable]: Boolean(onClickGym),
+      })}
+      onClick={handleClick}
+    >
       {/*<Image src={} alt={} />*/}
       <div className={styles.photo}>Photo</div>
       <div className={styles.info}>

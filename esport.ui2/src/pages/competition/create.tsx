@@ -6,7 +6,7 @@ import { getAppServerSideProps } from "@/shared/lib";
 
 import { CreateCompetitionCard } from "@/entities/competition";
 
-import { MainLayout } from "@/widgets/MainLayout";
+import { getMainLayout } from "@/widgets/MainLayout";
 
 type Props = {};
 
@@ -14,9 +14,9 @@ const CreateCompetitionPage: AppNextPage<Props> = () => {
   return <CreateCompetitionCard />;
 };
 
-CreateCompetitionPage.getLayout = (page) => {
-  return <MainLayout>{page}</MainLayout>;
-};
+CreateCompetitionPage.getLayout = getMainLayout({
+  headProps: { title: `Create Competition | E-Sport` },
+});
 
 export default CreateCompetitionPage;
 

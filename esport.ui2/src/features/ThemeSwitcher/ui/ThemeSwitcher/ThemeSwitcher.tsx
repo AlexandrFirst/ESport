@@ -1,9 +1,9 @@
-import { FC } from "react";
+import {FC} from "react";
 
-import { IconButton, Menu } from "@/shared/ui";
-import { useTheme } from "next-themes";
+import {IconButton} from "@/shared/ui";
+import {useTheme} from "next-themes";
 // import {Theme} from "@/_app/Providers";
-import { MoonIcon, StarIcon, SunIcon } from "@heroicons/react/24/solid";
+import {MoonIcon, SunIcon} from "@heroicons/react/24/solid";
 
 // import { Theme, useTheme } from "@/_app/Providers";
 interface ThemeSwitcherProps {

@@ -7,6 +7,7 @@ import {
 } from "@/shared/types";
 
 import { checkUserAndRedirect } from "./check-user-and-redirect";
+import { Logger } from "..";
 
 export const getAppServerSideProps = <TProps extends AppPageProps>(
   cb: GetServerSidePropsWithStore<TProps>,
@@ -14,9 +15,9 @@ export const getAppServerSideProps = <TProps extends AppPageProps>(
 ) => {
   //@ts-ignore
   return wrapper.getServerSideProps<TProps>((store) => async (ctx) => {
+    const checkUserResult = checkUserAndRedirect(store, config, ctx);
     try {
       const serverSide = await cb(ctx, store);
-      const checkUserResult = checkUserAndRedirect(store, config, ctx);
 
       //TODO: fix this
       //@ts-ignore
@@ -33,9 +34,10 @@ export const getAppServerSideProps = <TProps extends AppPageProps>(
       }
       return serverSide;
     } catch (e: any) {
-      console.log("===get-app-serversideProps - e===", e);
+      Logger.Debug("===get-app-serversideProps - e===", e);
       const isDev = process.env.NODE_ENV !== "production";
       return {
+        ...checkUserResult,
         props: {
           error: isDev ? e.message : "Something went wrong",
         },

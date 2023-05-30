@@ -20,3 +20,7 @@
 .closed {
   @apply mt-2;
 }
+
+.clickable {
+  @apply cursor-pointer active:opacity-60 hover:opacity-80 transition-opacity;
+}

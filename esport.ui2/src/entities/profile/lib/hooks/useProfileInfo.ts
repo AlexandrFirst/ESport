@@ -34,5 +34,6 @@ export const useProfileInfo = ({
       profile.userOrganisationAdminInfos.length > 0,
     isProfileError: isError,
     profileError: error,
+    organisationId: profile?.userOrganisationAdminInfos?.[0]?.organisationId,
   };
 };

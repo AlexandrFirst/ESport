@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { MoonIcon, StarIcon, SunIcon } from "@heroicons/react/24/solid";
 
-import { IconSvg } from "../../../shared/ui/Icon/Icon";
+import { IconSvg } from "@/shared/ui";
 
 import { LOCAL_STORAGE_THEME_KEY, Theme, ThemeContext } from "./ThemeContext";
 
@@ -29,7 +29,6 @@ export function useTheme(): UseThemeResult {
       default:
         newTheme = Theme.LIGHT;
     }
-    console.log("newTheme: ", newTheme);
     setTheme?.(newTheme);
     localStorage.setItem(LOCAL_STORAGE_THEME_KEY, newTheme);
   };
