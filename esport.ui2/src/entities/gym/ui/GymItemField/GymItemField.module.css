@@ -1,0 +1,10 @@
+.wrapper {
+}
+
+.trash {
+  @apply text-theme-error;
+}
+
+.trash {
+    fill: var(--color-error-main);
+}

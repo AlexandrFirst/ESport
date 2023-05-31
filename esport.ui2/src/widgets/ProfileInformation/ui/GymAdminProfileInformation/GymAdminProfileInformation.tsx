@@ -45,12 +45,13 @@ export const GymAdminProfileInformation: FC<
             onChange={setGymAdminGyms}
             onInputChange={setGymsValue}
             displayKey={"gymId"}
-            displayValue={"address"}
+            displayValue={"name"}
             loading={isGymsLoading}
             label={"Gyms"}
             lazy
             multiple
-            placeholder={"[Address]"}
+            placeholder={"[Title of the gym]"}
+            additionalDisplayValue={"address"}
           />
         </>
       }

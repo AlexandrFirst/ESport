@@ -59,6 +59,7 @@ namespace UserWorkflow.Application.Services.Gym
                 CloseTime = x.CloseTime,
                 OnenTime = x.OpenTime,
                 GymId = x.Id,
+                Name = x.Name,
                 GymSports = x.GymShifts.SelectMany(p => p.TrainerShedules.Where(o => o.TrainerId != null)
                     .SelectMany(t => t.Trainer.TrainerSports.Where(j => j.IsConfirmed == true)
                     .Select(k => new GymSports() { Name = k.Sport.Name, Id = k.SportId })))

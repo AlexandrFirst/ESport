@@ -37,7 +37,8 @@ export const ProfileInfoPerRole: FC<ProfileInfoPerRoleProps> = ({
   const isEmailChanged = useSelectIsEmailForProfileChanged(profileKey);
 
   const getEmailError = (): ErrorMessage | undefined => {
-    return !editableProfile?.[profileKey]?.isConfirmed || isEmailChanged
+    return editableProfile?.[profileKey]?.isProfileConfirmed === false ||
+      isEmailChanged
       ? {
           message:
             "You can save profile, but you need to confirm your email. Check your inbox!",

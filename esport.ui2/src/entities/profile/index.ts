@@ -31,6 +31,7 @@ export { useProfileInfo } from "./lib/hooks/useProfileInfo";
 
 //helpers
 export { transformProfileDataToUpdate } from "./lib/helpers/transformProfileDataToUpdate/transformProfileDataToUpdate";
+export { getOrganisationAdminInfo } from "./lib/helpers/getOrganisationInfo/getOrganisationInfo";
 
 //types
 export type { IProfile, IProfileInfo } from "./model/types/profile";

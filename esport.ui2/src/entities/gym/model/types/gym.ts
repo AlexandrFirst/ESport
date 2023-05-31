@@ -3,8 +3,8 @@ export interface IGym {}
 export interface IGymInfo {
   name: string;
   address: string;
-  openTime: Date;
-  closeTime: Date;
-  gymOrganisationId?: number;
+  openTime: string;
+  closeTime: string;
+  gymId?: number;
   organisationName: string;
 }

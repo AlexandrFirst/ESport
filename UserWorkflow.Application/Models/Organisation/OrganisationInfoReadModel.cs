@@ -11,7 +11,7 @@ namespace UserWorkflow.Application.Models.Organisation
     {
         public int OrganisationId { get; set; }
         public string Name { get; set; }
-        public string Address { get; set; }
+        public string Description { get; set; }
         public List<GymReadInfo> OrganisationGymInfos { get; set; }
         public List<OrganisationAdministartorReadModel> OrganisationAdministartors { get; set; }
     }

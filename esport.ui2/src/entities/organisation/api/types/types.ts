@@ -10,3 +10,20 @@ export interface GetOrganisationListingRequest {
 export interface GetOrganisationListingResult extends BaseListingResult {
   organisatationInfoListing: IOrganizationInfoRead[];
 }
+
+export interface UpdateGymInfo {
+  id: number;
+  name: string;
+  address: string;
+  openTime: string;
+  closeTime: string;
+}
+
+export interface UpdateOrganisationRequest {
+  organisationId: number;
+  organisationInfo: {
+    name: string;
+    description: string;
+  };
+  organisationGyms: UpdateGymInfo[];
+}

@@ -61,7 +61,7 @@ namespace UserWorkflow.Application.Services.Organisation
                 return new OrganisationInfoReadModel()
                 {
                     Name = x.Name,
-                    Address = x.Description,
+                    Description = x.Description,
                     OrganisationId = x.Id,
                     OrganisationAdministartors = x.OrganisationAdministrators.Select(o => new OrganisationAdministartorReadModel()
                     {

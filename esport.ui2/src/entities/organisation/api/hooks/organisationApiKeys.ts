@@ -7,4 +7,5 @@ export const organisationApiKeys = {
     request,
   ],
   createOrganisation: () => [...organisationApiKeys.all, "create-organisation"],
+  updateOrganisation: () => [...organisationApiKeys.all, "create-organisation"],
 };
