@@ -63,6 +63,7 @@ const StreamsPage: AppNextPage = () => {
       src={`${basePath}${value}`}
       className={"stream-iframe"}
       allow="camera *;microphone *"
+      allowFullScreen={true}
     />
   );
 };

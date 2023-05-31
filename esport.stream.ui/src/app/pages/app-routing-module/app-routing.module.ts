@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { StreamListComponent } from '../stream-list/stream-list.component';
 import { StreamComponent } from '../stream-component/stream.component';
 import { EditStreamComponent } from '../edit-stream/edit-stream.component';
+import { RecordedStreamsComponent } from '../recorded-streams/recorded-streams.component';
 
 
 
@@ -11,6 +12,11 @@ const routes: Routes = [
   {
     path: 'streams',
     component: StreamListComponent,
+    pathMatch: 'full'
+  },
+  {
+    path: 'records',
+    component: RecordedStreamsComponent,
     pathMatch: 'full'
   },
   {

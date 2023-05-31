@@ -145,6 +145,18 @@ services:
     ports:
       - '4201:443'
       - '4200:80'
+  stream-ui-dev:
+    image: 12345flex402/esport-stream-ui-local-dev
+    container_name: stream-ui-dev
+    build:
+      context: ./esport.stream.ui
+      dockerfile: ../deploy/StreamUi-local-dev.Dockerfile
+    restart: on-failure
+    volumes:
+      - ./esport.stream.ui:/usr/src/app/app-ui
+      - ./esport.stream.ui/node_modules:/usr/src/app/app-ui/node_modules
+    ports:
+      - '4200:4200'
   competitions:
     image: 12345flex402/esport-competitions-local
     user: root
@@ -206,5 +218,6 @@ services:
       dockerfile: ./deploy/LocalNginx.Dockerfile
     ports:
       - '443:443'
+      - '4201:4201'
     extra_hosts:
       - 'host.docker.internal:host-gateway'
