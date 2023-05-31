@@ -19,8 +19,15 @@
 
     /* transform() -> needed for snackbar */
     --elm-translate: translateX(-100%);
+
+    /* shadcn */
+    --radius: 0.5rem;
 }
 
 body {
     margin: 0;
+}
+
+.stream-iframe {
+    @apply min-h-[91vh] w-full;
 }

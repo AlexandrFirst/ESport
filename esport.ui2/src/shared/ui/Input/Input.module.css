@@ -21,7 +21,7 @@
 /*//--------------------------------------------*/
 
 .main_wrapper {
-  @apply transition-all my-7;
+  @apply transition-all mt-7;
 }
 
 .wrapper {
@@ -66,4 +66,8 @@
 
 .disabled {
   @apply !opacity-60 cursor-default;
+}
+
+.with_margin {
+  @apply mb-7;
 }

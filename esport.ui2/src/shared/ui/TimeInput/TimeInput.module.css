@@ -1,0 +1,7 @@
+.time_input {
+  @apply w-[90px] text-center;
+}
+
+.icon {
+  @apply mt-1.5;
+}

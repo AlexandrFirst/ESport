@@ -18,12 +18,14 @@ export interface LayoutProps extends HeadProps {
   className?: string;
   children: ReactNode;
   withFooter?: boolean;
+  withPaddingRight?: boolean;
 }
 
 export const Layout: FC<LayoutProps> = ({
   className,
   headProps,
   withFooter,
+  withPaddingRight = true,
   children,
 }) => {
   const { isMobile } = useUserDevice();
@@ -43,7 +45,9 @@ export const Layout: FC<LayoutProps> = ({
         [styles.pl_compact]: !isSidebarOpened,
         [styles.pl_full]: isSidebarOpened,
       });
-  const layoutClassName = cn(styles.layout, styles.width100, paddingClasses);
+  const layoutClassName = cn(styles.layout, styles.width100, paddingClasses, {
+    [styles.pr]: withPaddingRight,
+  });
 
   return (
     <>

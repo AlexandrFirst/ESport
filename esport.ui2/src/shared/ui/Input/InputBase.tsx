@@ -25,6 +25,7 @@ export type InputBaseProps = InputHTMLAttributes<HTMLInputElement> & {
   marginTop?: "sm" | "md" | "lg" | "none";
   endIconClassName?: string;
   error?: ErrorMessage;
+  withMarginBottom?: boolean;
 };
 
 export const InputBase = forwardRef<HTMLInputElement, InputBaseProps>(
@@ -48,6 +49,7 @@ export const InputBase = forwardRef<HTMLInputElement, InputBaseProps>(
       value,
       endIconClassName,
       disabled,
+      withMarginBottom = true,
       ...props
     },
     ref
@@ -60,6 +62,7 @@ export const InputBase = forwardRef<HTMLInputElement, InputBaseProps>(
         className={cn(styles.main_wrapper, className, {
           [styles.full_width]: fullWidth,
           [styles.initial_width]: !fullWidth,
+          [styles.with_margin]: withMarginBottom,
         })}
       >
         <div className={cn(styles.wrapper)}>

@@ -1,28 +1,32 @@
 .layout {
-    /*@apply bg-skin-main transition-all duration-500 dark:bg-darkSkin-main pr-6;*/
-    @apply bg-gradient-to-r from-bg-main-from to-bg-main-to transition-all duration-500 pr-6;
+  /*@apply bg-skin-main transition-all duration-500 dark:bg-darkSkin-main pr-6;*/
+  @apply bg-gradient-to-r from-bg-main-from to-bg-main-to transition-all duration-500;
+}
+
+.pr {
+  @apply pr-6;
 }
 
 .main {
-    @apply flex flex-row justify-start;
+  @apply flex flex-row justify-start;
 }
 
 .content {
-    @apply min-h-screen pb-6 pt-[80px];
+  @apply min-h-screen pb-6 pt-[80px];
 }
 
 .pl_compact {
-    @apply pl-leftSidebarCompact;
+  @apply pl-leftSidebarCompact;
 }
 
 .pl_full {
-    @apply pl-leftSidebarFull;
+  @apply pl-leftSidebarFull;
 }
 
 .pl_mobile {
-    @apply pl-leftSidebarMobile;
+  @apply pl-leftSidebarMobile;
 }
 
 .withFooter {
-    @apply pb-32;
+  @apply pb-32;
 }

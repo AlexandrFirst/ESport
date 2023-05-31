@@ -8,4 +8,7 @@ export const organisationRoutes = {
   Gyms: buildPath<[Parameter]>("/:organisationId/gyms"),
   Trainers: buildPath<[Parameter]>("/:organisationId/trainers"),
   Gym: buildPath<[Parameter, Parameter]>("/:organisationId/gyms/:gymId"),
+  CreateRequest: buildPath<[Parameter, Parameter]>(
+    "/:organisationId/gyms/:gymId/create-request"
+  ),
 };

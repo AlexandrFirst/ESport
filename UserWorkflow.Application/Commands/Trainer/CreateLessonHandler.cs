@@ -89,7 +89,7 @@ namespace UserWorkflow.Application.Commands.Trainer
                 bool overlapFrom = lessonFromTime.Any(_lessonFromTime => trainerFrameTime.Any(c => _lessonFromTime <= c.To));
                 bool overlapTo = lessonToTime.Any(_lessonToTime => trainerFrameTime.Any(c => c.From <= _lessonToTime));
 
-                return overlapFrom && overlapFrom;
+                return overlapFrom && overlapTo;
             });
 
             if (overlapWithLessons)
