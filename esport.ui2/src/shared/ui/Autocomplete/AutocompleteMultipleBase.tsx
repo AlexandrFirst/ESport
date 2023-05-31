@@ -36,6 +36,7 @@ export function AutocompleteMultipleBase<T extends {} = {}>({
   additionalOptions,
   disabled,
   onInputChange,
+  additionalDisplayValue,
   ...props
 }: AutocompleteMultipleBaseProps<T>) {
   const {
@@ -110,7 +111,12 @@ export function AutocompleteMultipleBase<T extends {} = {}>({
                     {({ selected }) => (
                       <div className={"flex gap-3"}>
                         {selected && <Icon Svg={CheckIcon} />}
-                        <span>{String(item[displayValue])}</span>
+                        <span>
+                          {String(item[displayValue])}{" "}
+                          {additionalDisplayValue
+                            ? `(${String(item[additionalDisplayValue])})`
+                            : ""}
+                        </span>
                       </div>
                     )}
                   </Combobox.Option>

@@ -1,1 +1,5 @@
-export interface IOrganization {}
+export interface IOrganisation {
+  organisationId: number;
+  name: string;
+  description: string;
+}

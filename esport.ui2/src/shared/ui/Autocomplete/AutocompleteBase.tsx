@@ -28,6 +28,7 @@ export function AutocompleteBase<T extends {} = {}>({
   delayTime = 200,
   additionalOptions,
   disabled,
+  additionalDisplayValue,
   ...props
 }: AutocompleteBaseProps<T>) {
   const {
@@ -86,7 +87,10 @@ export function AutocompleteBase<T extends {} = {}>({
                       getClassNamesForOption(active, activeOption, item)
                     }
                   >
-                    {String(item[displayValue])}
+                    {String(item[displayValue])}{" "}
+                    {additionalDisplayValue
+                      ? `(${String(item[additionalDisplayValue])})`
+                      : ""}
                   </Combobox.Option>
                 ))}
               {getAdditionalOptions(activeOption)}

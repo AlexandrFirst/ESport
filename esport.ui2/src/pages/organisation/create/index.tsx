@@ -1,6 +1,6 @@
 import { AppNextPage, PageProps } from "@/shared/types";
 
-import { CreateOrganisationForm } from "@/entities/organisation";
+import { CreateEditOrganisationForm } from "@/entities/organisation";
 
 import { getMainLayout } from "@/widgets/MainLayout";
 import { Card, Title } from "@/shared/ui";
@@ -11,7 +11,7 @@ const CreateOrganisation: AppNextPage<CreateOrganisationProps> = () => {
   return (
     <Card>
       <Title center>Create organisation</Title>
-      <CreateOrganisationForm />
+      <CreateEditOrganisationForm />
     </Card>
   );
 };

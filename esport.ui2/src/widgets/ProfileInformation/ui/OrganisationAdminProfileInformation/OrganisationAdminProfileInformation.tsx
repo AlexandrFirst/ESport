@@ -90,7 +90,7 @@ export const OrganisationAdminProfileInformation: FC<
   };
 
   const additionalOptions: AutocompleteAdditionalOptionList =
-    userOrganisationAdminInfos?.[0]?.isConfirmed
+    userOrganisationAdminInfos?.[0]?.isProfileConfirmed
       ? [
           {
             key: "create",
@@ -105,7 +105,8 @@ export const OrganisationAdminProfileInformation: FC<
       : [];
 
   const getEmailError = (): ErrorMessage | undefined => {
-    return !userOrganisationAdminInfos?.[0].isConfirmed || isEmailChanged
+    return userOrganisationAdminInfos?.[0].isProfileConfirmed === false ||
+      isEmailChanged
       ? {
           message:
             "You can save profile, but you need to confirm your email. Check your inbox!",

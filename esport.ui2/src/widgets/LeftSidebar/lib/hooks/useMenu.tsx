@@ -28,11 +28,15 @@ interface UseMenuResult {
 
 export const useMenu = (): UseMenuResult => {
   const { user, isAuth, isOrganisationAdmin, isGymAdmin } = useAuth();
-  const { isProfileLoading, organisationId, isProfileError, profile } =
-    useProfileInfo({
-      userId: user?.id || 0,
-      forceFetch: isAuth,
-    });
+  const {
+    isProfileLoading,
+    organisationId,
+    isProfileError,
+    isConfirmedOrgAdmin,
+  } = useProfileInfo({
+    userId: user?.id || 0,
+    forceFetch: isAuth,
+  });
 
   const menuItems = ({ condition, onFalse, onTrue }: ShowMenuParams) => {
     if (condition) {
@@ -86,10 +90,17 @@ export const useMenu = (): UseMenuResult => {
             title: "Organisation",
             icon: <MenuIcon Svg={UserGroupIcon} />,
             items: [
-              {
-                title: "Settings",
-                link: routes.Organisation.Home(),
-              },
+              ...menuItems({
+                condition: isConfirmedOrgAdmin,
+                onTrue: [
+                  {
+                    title: "Settings",
+                    link: routes.Organisation.EditOrganisation([
+                      organisationId,
+                    ]),
+                  },
+                ],
+              }),
               {
                 title: "Gyms",
                 link: routes.Organisation.Gyms([organisationId]),

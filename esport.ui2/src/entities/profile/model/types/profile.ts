@@ -18,7 +18,7 @@ export interface IProfileInfo {
   telephoneNumber: string;
   photoId: null;
   info?: string;
-  isConfirmed: boolean;
+  isProfileConfirmed: boolean;
 }
 
 export interface ITrainerInfo extends IProfileInfo {
@@ -27,10 +27,12 @@ export interface ITrainerInfo extends IProfileInfo {
 }
 
 export interface IGymAdminInfo extends IProfileInfo {
-  userGyms: IGymInfo[];
+  userGyms: IGymInfo & { isConfirmed: boolean }[];
 }
 
 export interface IOrganisationAdminInfo extends IProfileInfo {
   organisationId: number;
   organisationName: string;
+  organisationDescription: string;
+  isConfirmed: boolean;
 }

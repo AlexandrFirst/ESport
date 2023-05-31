@@ -54,7 +54,7 @@ export const getServerSideProps = getAppServerSideProps(async (ctx) => {
   );
 
   const profileInfo: IProfileInfo = {
-    isConfirmed: false,
+    isProfileConfirmed: false,
     email: "some@mail.com",
     name: "Alex",
     surname: "Logvinov",

@@ -5,8 +5,9 @@ export interface IGymReadInfo {
   onenTime: string;
   closeTime: string;
   organisationId: string;
-  gymId: string;
+  gymId: number;
   address: string;
+  name: string;
   gymSports: IGymSports[];
   gymTrainerInfos: IGymTrainerSport[];
 }

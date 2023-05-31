@@ -20,4 +20,5 @@ export interface AutocompleteCommonProps<T extends {} = {}>
   delayTime?: number;
   name?: string;
   additionalOptions?: AdditionalOption[];
+  additionalDisplayValue?: keyof T;
 }

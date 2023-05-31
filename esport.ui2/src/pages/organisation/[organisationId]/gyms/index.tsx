@@ -5,7 +5,7 @@ import { AppNextPage, PageProps } from "@/shared/types";
 import { Card } from "@/shared/ui";
 import { StickyContentLayout } from "@/shared/layouts";
 
-import { GymList, IGymReadInfo } from "@/entities/gym";
+import { GymApi, GymList, IGymReadInfo } from "@/entities/gym";
 
 import { getMainLayout } from "@/widgets/MainLayout";
 import { GymsFilters } from "@/features/GymsFilters";
@@ -18,16 +18,20 @@ type GymsProps = PageProps & {
 
 const Gyms: AppNextPage<GymsProps> = ({ gyms }) => {
   const router = useRouter();
+  const { organisationId } = router.query;
 
   const handleGymClick = (gym: IGymReadInfo) => {
-    const { organisationId } = router.query;
     router.push(routes.Organisation.Gym([organisationId as string, gym.gymId]));
   };
 
   return (
-    <StickyContentLayout right={<GymsFilters />}>
+    <StickyContentLayout right={!!gyms?.length && <GymsFilters />}>
       <Card padding={"none"}>
-        <GymList gyms={gyms} onClickGym={handleGymClick} />
+        <GymList
+          gyms={gyms}
+          onClickGym={handleGymClick}
+          organisationId={Number(organisationId)}
+        />
       </Card>
     </StickyContentLayout>
   );
@@ -153,10 +157,18 @@ export const getServerSideProps = getAppServerSideProps<GymsProps>(
       },
     ];
 
+    const { data } = await GymApi(ctx).gymListing({
+      page: 1,
+      pageSize: 10,
+      gymIds: [],
+      organisationIds: [],
+    });
+
     return {
       props: {
         ...localization,
-        gyms: mocked_gyms,
+        // gyms: mocked_gyms,
+        gyms: data.gymReadInfos,
       },
     };
   }

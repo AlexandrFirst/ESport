@@ -54,7 +54,7 @@ namespace UserWorkflow.Application.Requests.User
             var model = new UserTrainerInfo(UserIdentityInfo.InitFromDbUser(trainer));
             model.Id = trainer.Id;
             model.Info = trainer.Info;
-            model.IsConfirmed = trainer.IsProfileConfirmed;
+            model.IsProfileConfirmed = trainer.IsProfileConfirmed;
             model.TrainerSportInfos = trainer.TrainerSports.Select(x => new TrainerSportInfo() 
             {
                 SportId = x.SportId,
@@ -81,17 +81,21 @@ namespace UserWorkflow.Application.Requests.User
             var model = new UserTraineeInfo(UserIdentityInfo.InitFromDbUser(trainee));
             model.Id = trainee.Id;
             model.Info = trainee.Info;
-            model.IsConfirmed = trainee.IsProfileConfirmed;
+            model.IsProfileConfirmed = trainee.IsProfileConfirmed;
             return model;
         }
 
         private UserOrganisationAdminInfo handleUserAdminOrgInfo(OrganisationAdministrators organisationAdministrators)
         {
-            var model = new UserOrganisationAdminInfo(UserIdentityInfo.InitFromDbUser(organisationAdministrators));
-            model.Id = organisationAdministrators.Id;
-            model.OrganisationName = organisationAdministrators.Organisation?.Name;
-            model.OrganisationId = organisationAdministrators.Organisation?.Id;
-            model.IsConfirmed= organisationAdministrators.IsConfirmed;
+            var model = new UserOrganisationAdminInfo(UserIdentityInfo.InitFromDbUser(organisationAdministrators))
+             {
+                 Id = organisationAdministrators.Id,
+                 OrganisationName = organisationAdministrators.Organisation?.Name,
+                 OrganisationDescription = organisationAdministrators.Organisation?.Description,
+                 OrganisationId = organisationAdministrators.Organisation?.Id,
+                 IsProfileConfirmed = organisationAdministrators.IsProfileConfirmed,
+                 IsConfirmed = organisationAdministrators.IsConfirmed
+             };
             return model;
         }
 
@@ -99,7 +103,7 @@ namespace UserWorkflow.Application.Requests.User
         {
             var model = new UserAdminInfo(UserIdentityInfo.InitFromDbUser(administrators));
             model.Id = administrators.Id;
-            model.IsConfirmed = administrators.IsProfileConfirmed;
+            model.IsProfileConfirmed = administrators.IsProfileConfirmed;
             model.UserGyms = administrators.GymAdministrators.Select(x => new GymInfo()
             {
                 Address = x.Gym.Address,
@@ -107,7 +111,8 @@ namespace UserWorkflow.Application.Requests.User
                 Name = x.Gym.Name,
                 OpenTime = x.Gym.OpenTime,
                 GymOrganisationId = x.Gym.OrganisationId ?? null,
-                OrganisationName = x.Gym.OrganisationId.HasValue ? x.Gym.Organisation.Name : null
+                OrganisationName = x.Gym.OrganisationId.HasValue ? x.Gym.Organisation.Name : null,
+                IsConfirmed = x.IsConfirmed
             }).ToList();
             return model;
         }

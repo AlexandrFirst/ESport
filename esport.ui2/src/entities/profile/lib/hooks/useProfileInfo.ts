@@ -1,5 +1,6 @@
 import { useGetProfileInfo } from "../../api/hooks/useGetProfileInfo";
 import { useProfileActions } from "../../model/slices/profileSlice";
+import { getOrganisationAdminInfo } from "../..";
 
 interface UseProfileInfoParams {
   userId: number;
@@ -34,6 +35,8 @@ export const useProfileInfo = ({
       profile.userOrganisationAdminInfos.length > 0,
     isProfileError: isError,
     profileError: error,
-    organisationId: profile?.userOrganisationAdminInfos?.[0]?.organisationId,
+    organisationId: getOrganisationAdminInfo(profile)?.organisationId,
+    isConfirmedOrgAdmin:
+      getOrganisationAdminInfo(profile)?.isConfirmed ?? false,
   };
 };

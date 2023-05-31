@@ -9,6 +9,7 @@ namespace UserWorkflow.Application.Models.Gym
     public class GymReadInfo
     {
         public TimeSpan OnenTime { get; set; }
+        public string Name { get; set; }
         public TimeSpan CloseTime { get; set; }
         public int OrganisationId { get; set; }
         public int GymId { get; set; }
