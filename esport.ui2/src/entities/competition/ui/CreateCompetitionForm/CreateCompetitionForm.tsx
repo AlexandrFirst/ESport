@@ -36,11 +36,7 @@ export const CreateCompetitionForm: FC<CreateCompetitionFormProps> = ({
   return (
     <>
       <FormWrapper methods={methods} className={styles.form}>
-        <Input
-          name={"title"}
-          label={"Title for your next competition"}
-          fullWidth
-        />
+        <Input name={"title"} label={"Title for your next competition"} />
         <DatePicker
           name={"dateStart"}
           label={"Date start"}
@@ -53,11 +49,9 @@ export const CreateCompetitionForm: FC<CreateCompetitionFormProps> = ({
           // minDate={new Date()}
           // inputProps={{ fullWidth: true }}
         />
-        <div className={styles.btn_container}>
-          <Button loading={loading} onClick={handleSubmit}>
-            Create
-          </Button>
-        </div>
+        <Button loading={loading} onClick={handleSubmit} fullWidth>
+          Create
+        </Button>
       </FormWrapper>
       {withPrompt && <Prompt shouldConfirmLeave={shouldShowPrompt} />}
     </>

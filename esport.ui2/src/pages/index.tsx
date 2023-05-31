@@ -1,6 +1,7 @@
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { GetServerSideProps } from "next";
+import { useRouter } from "next/router";
 
 import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
@@ -11,7 +12,6 @@ import { useSnackbar } from "@/shared/lib";
 import { routes } from "@/shared/config";
 
 import { getMainLayout } from "@/widgets/MainLayout";
-import { useRouter } from "next/router";
 
 type Props = {
   snackbar?: {
@@ -37,6 +37,8 @@ const Home: AppNextPage<Props> = ({ snackbar }) => {
     error && showError(error);
     removeSearchParams();
   }, [showError, showSuccess]);
+
+  const [a, setA] = useState(false);
 
   return (
     <>

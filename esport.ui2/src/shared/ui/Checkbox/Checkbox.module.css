@@ -1,0 +1,23 @@
+.wrapper {
+    @apply flex items-center space-x-2;
+}
+
+.checkbox {
+  @apply h-5 w-5 shrink-0 rounded-sm border-2 border-theme-main transition-all;
+}
+
+.checked {
+  @apply data-[state=checked]:bg-theme-accent data-[state=checked]:text-theme-light;
+}
+
+.disabled {
+  @apply disabled:cursor-default disabled:opacity-50;
+}
+
+.focus {
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-1 focus-visible:ring-offset-2;
+}
+
+.label {
+  @apply text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70;
+}

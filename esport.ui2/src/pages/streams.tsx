@@ -1,6 +1,8 @@
-import { NextPage } from "next";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
+import { useTheme } from "next-themes";
+import { AppNextPage } from "@/shared/types";
+import { getMainLayout } from "@/widgets/MainLayout";
 
 declare global {
   namespace JSX {
@@ -13,10 +15,12 @@ declare global {
   }
 }
 
-const StreamsPage: NextPage = () => {
+const StreamsPage: AppNextPage = () => {
   let basePath = process.env.NEXT_PUBLIC_STREAM_UI_APP ?? "";
+  const { theme } = useTheme();
 
   const [value, setValue] = useState("");
+  const iframeRef = useRef<HTMLIFrameElement | null>(null);
 
   const router = useRouter();
 
@@ -25,9 +29,17 @@ const StreamsPage: NextPage = () => {
     if (!hashPart) {
       hashPart = "streams";
     }
-    console.log("new angular path: ", hashPart);
     setValue(hashPart);
   }
+
+  const sendMessageToIframe = (message: any) => {
+    if (iframeRef.current) {
+      // Specify the target origin if needed, e.g., "http://example.com"
+      const targetOrigin = "*";
+      // Send the message to the iframe
+      iframeRef.current.contentWindow?.postMessage(message, targetOrigin);
+    }
+  };
 
   useEffect(() => {
     window.addEventListener(
@@ -41,20 +53,23 @@ const StreamsPage: NextPage = () => {
     getIFramePath(router.asPath);
   }, [router.asPath]);
 
+  useEffect(() => {
+    sendMessageToIframe(theme);
+  }, [theme]);
+
   return (
-    <>
-      <div>
-        <iframe
-          src={`${basePath}${value}`}
-          style={{
-            width: "100%",
-            minHeight: "100vh",
-          }}
-          allow="camera *;microphone *"
-        ></iframe>
-      </div>
-    </>
+    <iframe
+      ref={iframeRef}
+      src={`${basePath}${value}`}
+      className={"stream-iframe"}
+      allow="camera *;microphone *"
+    />
   );
 };
+
+StreamsPage.getLayout = getMainLayout({
+  headProps: { title: "Streams | E-Sport" },
+  withPaddingRight: false,
+});
 
 export default StreamsPage;

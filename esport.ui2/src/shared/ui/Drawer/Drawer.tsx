@@ -1,4 +1,6 @@
 import React, { ReactNode } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+
 import { AnimationProvider, useAnimationLibs } from "@/shared/lib/ui";
 
 interface DrawerProps {
@@ -26,14 +28,12 @@ const sideVariants = {
 
 //TODO: make it!!!
 export const DrawerContent = (props: DrawerProps) => {
-  const { FramerMotion, Gesture } = useAnimationLibs();
-
   const { className, children, onClose, isOpen, lazy } = props;
 
   return (
-    <FramerMotion.AnimatePresence>
+    <AnimatePresence>
       {isOpen && (
-        <FramerMotion.motion.aside
+        <motion.aside
           initial={{ width: 0 }}
           animate={{
             width: 300,
@@ -43,7 +43,7 @@ export const DrawerContent = (props: DrawerProps) => {
             transition: { delay: 0.7, duration: 0.3 },
           }}
         >
-          <FramerMotion.motion.div
+          <motion.div
             className="container"
             initial="closed"
             animate="open"
@@ -51,10 +51,10 @@ export const DrawerContent = (props: DrawerProps) => {
             variants={sideVariants}
           >
             {children}
-          </FramerMotion.motion.div>
-        </FramerMotion.motion.aside>
+          </motion.div>
+        </motion.aside>
       )}
-    </FramerMotion.AnimatePresence>
+    </AnimatePresence>
   );
 };
 

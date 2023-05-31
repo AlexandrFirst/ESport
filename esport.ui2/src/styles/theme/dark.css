@@ -22,4 +22,11 @@
 
     --color-gradient-bg-from: #28243d;
     --color-gradient-bg-to: #221f34;
+
+    /* shadcn */
+    --background: 224 71% 4%;
+    --foreground: 248 23% 30%;
+
+    --muted: 223 47% 11%;
+    --muted-foreground: 215.4 16.3% 56.9%;
 }
