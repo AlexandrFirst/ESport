@@ -263,23 +263,23 @@ export class StreamComponent implements OnInit {
         },
         {
           "urls": "turn:a.relay.metered.ca:80",
-          "username": "e09bb8a5461f1fac9d21804d",
-          "credential": "ERq6ihqJ2FQG8bXk",
+          "username": "72149d011edb2f3f2ba2f6a5",
+          "credential": "Uj0McnGNaLggpCkg",
         },
         {
           "urls": "turn:a.relay.metered.ca:80?transport=tcp",
-          "username": "e09bb8a5461f1fac9d21804d",
-          "credential": "ERq6ihqJ2FQG8bXk",
+          "username": "72149d011edb2f3f2ba2f6a5",
+          "credential": "Uj0McnGNaLggpCkg",
         },
         {
           "urls": "turn:a.relay.metered.ca:443",
-          "username": "e09bb8a5461f1fac9d21804d",
-          "credential": "ERq6ihqJ2FQG8bXk",
+          "username": "72149d011edb2f3f2ba2f6a5",
+          "credential": "Uj0McnGNaLggpCkg",
         },
         {
           "urls": "turn:a.relay.metered.ca:443?transport=tcp",
-          "username": "e09bb8a5461f1fac9d21804d",
-          "credential": "ERq6ihqJ2FQG8bXk",
+          "username": "72149d011edb2f3f2ba2f6a5",
+          "credential": "Uj0McnGNaLggpCkg",
         },
       ],
       onicecandidate: (candidate: any) => {
@@ -319,23 +319,23 @@ export class StreamComponent implements OnInit {
         },
         {
           "urls": "turn:a.relay.metered.ca:80",
-          "username": "e09bb8a5461f1fac9d21804d",
-          "credential": "ERq6ihqJ2FQG8bXk",
+          "username": "72149d011edb2f3f2ba2f6a5",
+          "credential": "Uj0McnGNaLggpCkg",
         },
         {
           "urls": "turn:a.relay.metered.ca:80?transport=tcp",
-          "username": "e09bb8a5461f1fac9d21804d",
-          "credential": "ERq6ihqJ2FQG8bXk",
+          "username": "72149d011edb2f3f2ba2f6a5",
+          "credential": "Uj0McnGNaLggpCkg",
         },
         {
           "urls": "turn:a.relay.metered.ca:443",
-          "username": "e09bb8a5461f1fac9d21804d",
-          "credential": "ERq6ihqJ2FQG8bXk",
+          "username": "72149d011edb2f3f2ba2f6a5",
+          "credential": "Uj0McnGNaLggpCkg",
         },
         {
           "urls": "turn:a.relay.metered.ca:443?transport=tcp",
-          "username": "e09bb8a5461f1fac9d21804d",
-          "credential": "ERq6ihqJ2FQG8bXk",
+          "username": "72149d011edb2f3f2ba2f6a5",
+          "credential": "Uj0McnGNaLggpCkg",
         },
       ],
       onicecandidate: (candidate: any) => {

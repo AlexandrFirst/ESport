@@ -135,6 +135,7 @@ namespace StreamingService.Services
             }
 
             var streamProvider = scope.ServiceProvider.GetRequiredService<StreamProvider>();
+            streamProvider.setStreamId(streamId);
             var isPresenterStarted = streamProviders.TryAdd(stream.EventId, streamProvider);
             if (!isPresenterStarted)
             {

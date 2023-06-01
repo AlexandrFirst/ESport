@@ -1,4 +1,5 @@
 using ESportAuthClient.ESportAuthClient;
+using MediaClient.Middleware;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.Connections;
@@ -19,6 +20,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
+
 
 namespace StreamingService
 {
@@ -52,6 +54,7 @@ namespace StreamingService
                 options.UseSqlServer(Configuration.GetSection("ConnectionString")["StreamDb"]));
 
             services.AddOptions<KurrentoOptions>().Bind(Configuration.GetSection("KurentoData"));
+            services.AddOptions<RecordedFileOptions>().Bind(Configuration.GetSection("RecordedFileOptions"));
 
             services.AddCors(options => options.AddPolicy("ESportCors", builder =>
             {
@@ -65,7 +68,12 @@ namespace StreamingService
         
             services.AddTransient<StreamProvider>();
             services.AddTransient<UploadFileService>();
+            
             services.AddSingleton<StreamRepositry>();
+            services.AddSingleton<IRecordService, RecordService>();
+
+            MediaClient.Bootstrapper.RegisterIocContainers(services, Configuration);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -76,8 +84,10 @@ namespace StreamingService
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCors("ESportCors");
+            app.UseCustomMediaClient();
 
+            app.UseCors("ESportCors");
+                        
             app.UseRouting();
 
             app.UseAuthentication();

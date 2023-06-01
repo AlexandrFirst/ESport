@@ -22,6 +22,7 @@ namespace StreamingService.Services
     {
         private readonly IServiceScopeFactory serviceProvider;
         private readonly ILogger<StreamProvider> logger;
+        private readonly IRecordService recordService;
         private readonly KurrentoOptions kurrentoOptions;
 
         private KurentoClient kurentoClient;
@@ -34,10 +35,15 @@ namespace StreamingService.Services
 
         private bool isStreamRecording = false;
 
-        public StreamProvider(IServiceScopeFactory serviceProvider, ILogger<StreamProvider> _logger, IOptions<KurrentoOptions> kurrentoOptions)
+        private Guid streamId = Guid.Empty;
+        public void setStreamId(Guid streamId) { this.streamId = streamId; }
+
+        public StreamProvider(IServiceScopeFactory serviceProvider, 
+            ILogger<StreamProvider> _logger, IOptions<KurrentoOptions> kurrentoOptions, IRecordService recordService)
         {
             this.serviceProvider = serviceProvider;
             logger = _logger;
+            this.recordService = recordService;
             this.kurrentoOptions = kurrentoOptions.Value;
 
             viewers = new List<Viewer>();
@@ -181,7 +187,8 @@ namespace StreamingService.Services
                 Console.WriteLine("Processing presenter answer");
                 return new PresenterResponse() { IsSuccess = true, SdpAnswer = sdpAnswer, Endpoint = webRtcEndPoint };
 
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 string message = ex.Message + " | " + ex.InnerException.Message;
                 logger.LogError(message);
@@ -196,14 +203,11 @@ namespace StreamingService.Services
         {
             if (!checkAccessRules(userId)) { return false; }
 
-
             var fileGuid = Guid.NewGuid().ToString();
 
             string fileName = $"{fileGuid}.WEBM";
 
             string recordUri = kurrentoOptions.RecordUri + fileName;
-
-
 
             RecorderEndpoint recorderEndpoint = await kurentoClient.CreateAsync(new RecorderEndpoint(presenter.MediaPipeline, recordUri, MediaProfileSpecType.WEBM));
 
@@ -214,15 +218,19 @@ namespace StreamingService.Services
             {
                 logger.LogInformation("Recording started: " + obj.timestamp);
             };
+
+            recorderEndpoint.Stopped += async (StoppedEventArgs obj) =>
+            {
+                await recordService.SendRecordForUploading(new Models.Record.RecordUploadOption()
+                {
+                    FileId = Guid.Parse(fileGuid),
+                    StreamId = streamId
+                });
+            };
+
             presenter.RecorderEndpoint = recorderEndpoint;
 
-            //await recorderEndpoint.RecordAsync();
-
-            //state = await presenter.RecorderEndpoint.GetStateAsync();
-
-
             await presenter.RecorderEndpoint.RecordAsync();
-
 
             isStreamRecording = true;
 
@@ -273,7 +281,7 @@ namespace StreamingService.Services
 
         public async Task<ViewerResponse> StartViewer(string userId, string sdpOffer)
         {
-           // clearCandidateQueue(userId);
+            // clearCandidateQueue(userId);
             if (presenter == null)
             {
                 await Stop(userId);
@@ -389,7 +397,7 @@ namespace StreamingService.Services
             }
         }
 
-        public async Task SendMessage(ChatMessageInfo chatMessageInfo) 
+        public async Task SendMessage(ChatMessageInfo chatMessageInfo)
         {
             using var scope = serviceProvider.CreateScope();
             var signalHubInstance = scope.ServiceProvider.GetRequiredService<IHubContext<KurrentoHub, IKurentoHubClient>>();
