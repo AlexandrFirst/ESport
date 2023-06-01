@@ -6,10 +6,5 @@ interface LessonProps {
 }
 
 export const Lesson: FC<LessonProps> = (props) => {
-
-    return (
-        <div className={styles.wrapper}>
-
-        </div>
-    );
+  return <div className={styles.wrapper}></div>;
 };

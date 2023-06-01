@@ -5,6 +5,7 @@ export interface IGymInfo {
   address: string;
   openTime: string;
   closeTime: string;
-  gymId?: number;
+  gymId: number;
+  gymOrganisationId: number;
   organisationName: string;
 }

@@ -6,6 +6,7 @@ import { ProfileInfoPerRole } from "../ProfileInfoPerRole/ProfileInfoPerRole";
 import { useSelectGymAdminGyms } from "../../model/selectors/selectGymAdminGyms/selectGymAdminGyms";
 import { Autocomplete } from "@/shared/ui";
 import { useRoleProfileInformationActions } from "../..";
+import { transformGymInfoToGymReadInfo } from "../../lib/helpers/transformGymInfoToGymReadInfo/transformGymInfoToGymReadInfo";
 
 interface GymAdminProfileInformationProps {
   className?: string;
@@ -15,11 +16,12 @@ export const GymAdminProfileInformation: FC<
   GymAdminProfileInformationProps
 > = ({ className }) => {
   const [gymsValue, setGymsValue] = useState("");
+  const gymAdminGyms = useSelectGymAdminGyms();
 
   const { data: gyms, isLoading: isGymsLoading } = useGetGyms(
     {
       page: 1,
-      pageSize: 100,
+      pageSize: 1000,
       gymIds: [],
       organisationIds: [],
       name: gymsValue,
@@ -31,8 +33,6 @@ export const GymAdminProfileInformation: FC<
   );
   const { setGymAdminGyms } = useRoleProfileInformationActions();
 
-  const gymAdminGyms = useSelectGymAdminGyms();
-
   return (
     <ProfileInfoPerRole
       profileKey={"userAdminInfo"}
@@ -41,7 +41,7 @@ export const GymAdminProfileInformation: FC<
         <>
           <Autocomplete<IGymReadInfo>
             list={gyms}
-            // value={transformTrainerSportInfoToSport(trainerSports)}
+            value={transformGymInfoToGymReadInfo(gymAdminGyms)}
             onChange={setGymAdminGyms}
             onInputChange={setGymsValue}
             displayKey={"gymId"}
@@ -52,6 +52,7 @@ export const GymAdminProfileInformation: FC<
             multiple
             placeholder={"[Title of the gym]"}
             additionalDisplayValue={"address"}
+            clearSearchOnChange
           />
         </>
       }

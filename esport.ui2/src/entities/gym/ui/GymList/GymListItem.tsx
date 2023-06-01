@@ -37,23 +37,31 @@ export const GymListItem: FC<GymListItemProps> = ({ gym, onClickGym }) => {
       <div className={"ml-6 flex flex-col justify-end font-semibold"}>
         <span>Sports:</span>
         <ul>
-          {gym.gymSports.map((sport) => (
-            <li key={sport.id} className={"flex items-center gap-2"}>
-              <Icon Svg={UserGroupIcon} />
-              {sport.name}
-            </li>
-          ))}
+          {!!gym.gymSports.length ? (
+            gym.gymSports.map((sport) => (
+              <li key={sport.id} className={"flex items-center gap-2"}>
+                <Icon Svg={UserGroupIcon} />
+                {sport.name}
+              </li>
+            ))
+          ) : (
+            <li>--</li>
+          )}
         </ul>
       </div>
       <div className={"flex flex-col justify-end font-semibold ml-10"}>
         <ul>
           Trainers:
-          {gym.gymTrainerInfos.map((trainer) => (
-            <li key={trainer.id} className={"flex items-center gap-2"}>
-              <Icon Svg={UserIcon} />
-              {trainer.name}
-            </li>
-          ))}
+          {!!gym.gymTrainerInfos.length ? (
+            gym.gymTrainerInfos.map((trainer) => (
+              <li key={trainer.id} className={"flex items-center gap-2"}>
+                <Icon Svg={UserIcon} />
+                {trainer.name}
+              </li>
+            ))
+          ) : (
+            <li>--</li>
+          )}
         </ul>
       </div>
     </li>

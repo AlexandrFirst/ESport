@@ -17,6 +17,7 @@ interface UseAutocompleteParams<T extends {} = {}> {
   additionalOptions?: AdditionalOption[];
   onChange?: (value: any) => void;
   delayTime?: number;
+  clearSearchOnChange?: boolean;
 }
 
 export function useAutocomplete<T extends {} = {}>({
@@ -28,6 +29,7 @@ export function useAutocomplete<T extends {} = {}>({
   additionalOptions,
   onChange,
   delayTime,
+  clearSearchOnChange = false,
 }: UseAutocompleteParams<T>) {
   const [items, setItems] = useState(() => list);
 
@@ -97,6 +99,9 @@ export function useAutocomplete<T extends {} = {}>({
   };
 
   const handleChange = (value: T) => {
+    if (clearSearchOnChange) {
+      onInputChange?.("");
+    }
     if (value?.hasOwnProperty("onClick")) {
       // @ts-ignore
       value.onClick?.();

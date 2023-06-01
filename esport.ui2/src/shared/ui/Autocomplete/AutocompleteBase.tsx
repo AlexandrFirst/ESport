@@ -29,6 +29,7 @@ export function AutocompleteBase<T extends {} = {}>({
   additionalOptions,
   disabled,
   additionalDisplayValue,
+  clearSearchOnChange,
   ...props
 }: AutocompleteBaseProps<T>) {
   const {
@@ -46,6 +47,7 @@ export function AutocompleteBase<T extends {} = {}>({
     additionalOptions,
     onChange,
     delayTime,
+    clearSearchOnChange,
   });
 
   return (
