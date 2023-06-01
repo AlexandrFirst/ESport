@@ -11,6 +11,7 @@ import { IGymReadInfo } from "@/entities/gym";
 
 import { RoleProfileInformationState } from "../types/roleProfileInformationState";
 import { transformSportToTrainerSportInfo } from "../../lib/helpers/transformSportToTrainerSportInfo/transformSportToTrainerSportInfo";
+import { transformGymReadInfoToGymInfo } from "../../lib/helpers/transformGymReadInfoToGymInfo/transformGymReadInfoToGymInfo";
 
 const initialState: RoleProfileInformationState = {
   trainerSports: [],
@@ -48,12 +49,11 @@ const roleProfileInformationSlice = buildSlice({
       }>
     ) {
       const { key, value, index } = action.payload;
-      console.log("===value, key===", value, key);
       // @ts-ignore
       state.trainerSports[index][key] = value;
     },
     setGymAdminGyms(state, action: PayloadAction<IGymReadInfo[] | null>) {
-      // state.gymAdminGyms = action.payload;
+      state.gymAdminGyms = transformGymReadInfoToGymInfo(action.payload ?? []);
     },
     setOrganisationAdminOrganisation(state, action: PayloadAction<number>) {
       state.organisationAdminOrganisationId = action.payload;

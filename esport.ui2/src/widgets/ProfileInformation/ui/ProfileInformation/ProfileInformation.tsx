@@ -3,6 +3,7 @@ import styles from "./ProfileInformation.module.css";
 
 import { BottomNav, TabList, Tabs } from "@/shared/ui";
 import { useMappedRoles, useSnackbar } from "@/shared/lib";
+import { UserRole } from "@/shared/constants";
 
 import {
   ProfileApi,
@@ -28,7 +29,7 @@ import { ProfileInfoPerRole } from "../ProfileInfoPerRole/ProfileInfoPerRole";
 import { TrainerProfileInformation } from "../TrainerProfileInformation/TrainerProfileInformation";
 import { GymAdminProfileInformation } from "../GymAdminProfileInformation/GymAdminProfileInformation";
 import { OrganisationAdminProfileInformation } from "../OrganisationAdminProfileInformation/OrganisationAdminProfileInformation";
-import { UserRole } from "@/shared/constants";
+import { useSelectGymAdminGyms } from "../../model/selectors/selectGymAdminGyms/selectGymAdminGyms";
 
 interface ProfileInformationProps {
   userId: number;
@@ -54,6 +55,7 @@ export const ProfileInformation: FC<ProfileInformationProps> = ({
     useSelectOrganisationAdminOrganisationId();
   const newOrganisationName = useSelectNewOrganisationName();
   const newOrganisationDescription = useSelectNewOrganisationDescription();
+  const gymAdminGyms = useSelectGymAdminGyms();
 
   const emailChangedMessage = useGetEmailChangedMessage();
 
@@ -87,6 +89,7 @@ export const ProfileInformation: FC<ProfileInformationProps> = ({
         organisationAdminOrganisationId,
         organisationAdminOrganisationName: newOrganisationName,
         organisationAdminOrganisationDescription: newOrganisationDescription,
+        gymAdminGyms,
       })
     );
   };

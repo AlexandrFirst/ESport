@@ -65,7 +65,6 @@ export const OrganisationAdminProfileInformation: FC<
       { name: organizationValue, organisationIds: [] },
       {
         enabled: hasInfo,
-        select: (data) => data.organisatationInfoListing,
       }
     );
 
@@ -141,10 +140,10 @@ export const OrganisationAdminProfileInformation: FC<
             additionalFieldsBelow={
               <>
                 <Autocomplete<IOrganizationInfoRead>
-                  value={organizations?.find(
+                  value={organizations?.organisatationInfoListing.find(
                     (o) => o.organisationId === organisationAdminOrganisationId
                   )}
-                  list={organizations ?? []}
+                  list={organizations?.organisatationInfoListing ?? []}
                   displayValue={"name"}
                   displayKey={"organisationId"}
                   onInputChange={setOrganizationValue}

@@ -5,15 +5,10 @@ import {
 } from "../types/types";
 import { OrganisationApi } from "../organisationApi";
 import { organisationApiKeys } from "./organisationApiKeys";
-import { IOrganizationInfoRead } from "../../model/types/organizationInfoRead";
 
 export const useGetOrganisations = (
   request: GetOrganisationListingRequest,
-  options?: UseQueryOptions<
-    GetOrganisationListingResult,
-    unknown,
-    IOrganizationInfoRead[]
-  >
+  options?: UseQueryOptions<GetOrganisationListingResult>
 ) => {
   return useQuery({
     queryKey: organisationApiKeys.getOrganizations(request),

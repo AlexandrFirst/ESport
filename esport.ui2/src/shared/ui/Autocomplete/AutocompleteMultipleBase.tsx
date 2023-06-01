@@ -37,6 +37,7 @@ export function AutocompleteMultipleBase<T extends {} = {}>({
   disabled,
   onInputChange,
   additionalDisplayValue,
+  clearSearchOnChange,
   ...props
 }: AutocompleteMultipleBaseProps<T>) {
   const {
@@ -54,6 +55,7 @@ export function AutocompleteMultipleBase<T extends {} = {}>({
     onChange,
     onInputChange,
     delayTime,
+    clearSearchOnChange,
   });
 
   const compare: ByComparator<T> = useCallback(

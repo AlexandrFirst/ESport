@@ -3,6 +3,7 @@ import { ITrainerSportInfo } from "../../../model/types/trainer-sport-info";
 import { UpdateProfileInfoRequest } from "../../../api/types/types";
 
 import { transformTrainerSportInfo } from "../transformTrainerSportInfo/transformTrainerSportInfo";
+import { IGymInfo } from "@/entities/gym";
 
 interface TransformProfileDataToUpdateParams {
   data: IProfile;
@@ -11,6 +12,7 @@ interface TransformProfileDataToUpdateParams {
   organisationAdminOrganisationId: number;
   organisationAdminOrganisationName: string | null;
   organisationAdminOrganisationDescription: string | null;
+  gymAdminGyms: IGymInfo[];
 }
 
 export const transformProfileDataToUpdate = ({
@@ -20,6 +22,7 @@ export const transformProfileDataToUpdate = ({
   organisationAdminOrganisationId,
   organisationAdminOrganisationName,
   organisationAdminOrganisationDescription,
+  gymAdminGyms,
 }: TransformProfileDataToUpdateParams): UpdateProfileInfoRequest => {
   return {
     updateAdminInfo: data.userAdminInfo && {
@@ -28,7 +31,7 @@ export const transformProfileDataToUpdate = ({
         telephone: data.userAdminInfo?.telephoneNumber,
         overrideIdentityInfo: overrideLoginInfo === "userAdminInfo",
       },
-      gymIds: [],
+      gymIds: gymAdminGyms?.map((gym) => gym.gymId ?? 0) ?? [],
     },
     updateTraineeInfo: data.userTraineeInfo && {
       updateUserInfo: {

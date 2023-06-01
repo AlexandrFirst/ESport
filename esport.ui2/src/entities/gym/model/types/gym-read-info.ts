@@ -4,7 +4,7 @@ import { IGymTrainerSport } from "./gym-trainer-info";
 export interface IGymReadInfo {
   onenTime: string;
   closeTime: string;
-  organisationId: string;
+  organisationId: number;
   gymId: number;
   address: string;
   name: string;

@@ -13,7 +13,9 @@ namespace UserWorkflow.Application.Models.User
         public TimeSpan OpenTime { get; set; }
         public TimeSpan CloseTime { get; set; }
         public int? GymOrganisationId { get; set; }
+        public int GymId { get; set; }
         public string OrganisationName { get; set; }
+        public bool IsConfirmed { get; set; } = true;
     }
 
     public class UserAdminInfo: UserIdentityInfo

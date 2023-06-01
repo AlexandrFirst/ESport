@@ -106,6 +106,7 @@ namespace UserWorkflow.Application.Requests.User
             model.IsProfileConfirmed = administrators.IsProfileConfirmed;
             model.UserGyms = administrators.GymAdministrators.Select(x => new GymInfo()
             {
+                GymId = x.GymId,
                 Address = x.Gym.Address,
                 CloseTime = x.Gym.CloseTime,
                 Name = x.Gym.Name,
