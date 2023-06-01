@@ -37,5 +37,11 @@
     <ProjectReference Include="..\MediaClient\MediaClient.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="Credentials\esport-387717-7edb578345c4.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 
 </Project>
