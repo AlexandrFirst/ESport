@@ -8,6 +8,7 @@ using StreamingService.DL;
 using StreamingService.Dto.Records;
 using System;
 using System.IO;
+using System.IO.Pipes;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -35,13 +36,13 @@ namespace StreamingService.Controllers
 
 
         [HttpGet("record/{fileId}")]
-        public async Task<IResult> Get(string fileId)
+        public async Task<IActionResult> Get(string fileId)
         {
             var fileGuid = Guid.Parse(fileId);
-            var streamRecord = await streamDataContext.EsStreamRecords.FirstOrDefaultAsync(x => x.PublicId == fileId);
-            if (streamRecord == null) { return (IResult)NotFound(); }
+            var streamRecord = await streamDataContext.EsStreamRecords.FirstOrDefaultAsync(x => x.FileName == fileId);
+            if (streamRecord == null) { return new NotFoundResult(); }
 
-            var getVideoBytes = await mediaService.DownloadFile(recordStringBucket, streamRecord.PublicId);
+            var getVideoBytes = await mediaService.DownloadFile(recordStringBucket, streamRecord.FileName);
 
             MemoryStream memStream = new MemoryStream();
             BinaryFormatter binForm = new BinaryFormatter();
@@ -49,23 +50,23 @@ namespace StreamingService.Controllers
             memStream.Write(getVideoBytes, 0, getVideoBytes.Length);
             memStream.Seek(0, SeekOrigin.Begin);
 
-            return Results.Stream(memStream);
+            return new FileStreamResult(memStream, "video/webm");
         }
 
         [HttpPost("streams")]
         public async Task<IActionResult> GetAllRecords([FromBody] RecordFilter recordFilter) 
         {
-            var recordsQuery = streamDataContext.EsStreamRecords.AsQueryable();
+            var recordsQuery = streamDataContext.EsStreamRecords.Where(x => x.PublicId != null).AsQueryable();
             if (recordFilter.PageSize < 1 || recordFilter.Page < 1) 
             {
                 return BadRequest("Invalid input params");
             }
 
-            var records = await recordsQuery.Skip((recordFilter.PageSize - 1) * recordFilter.PageSize).Take(recordFilter.PageSize).ToListAsync();
+            var records = await recordsQuery.Skip((recordFilter.Page - 1) * recordFilter.PageSize).Take(recordFilter.PageSize).ToListAsync();
             var recordsResult = records.Select(x => new RecordListingResponse()
             {
                 FileName = x.FileName,
-                PublicId = x.PublicId.ToString(),
+                PublicId = x.PublicId,
                 RecordId = x.Id.ToString(),
                 RecordTime = x.CreationDate
             });

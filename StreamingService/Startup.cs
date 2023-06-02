@@ -47,7 +47,8 @@ namespace StreamingService
                 o.Authority = Configuration.GetSection("Security")["Authority"];
             });
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddSignalR();
 
             services.AddDbContext<StreamDataContext>(options =>

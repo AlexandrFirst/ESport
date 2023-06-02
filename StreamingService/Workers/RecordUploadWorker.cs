@@ -54,7 +54,7 @@ namespace StreamingService.Workers
                         var fileName = $"D:\\nure\\Diplom\\ESport\\records\\{message.FileId.ToString().ToLowerInvariant()}.WEBM";
                         if (File.Exists(fileName)) 
                         {
-                            var videoRecord = await dbContext.EsStreamRecords.FirstOrDefaultAsync(x => x.EsStreamId == message.RecordId);
+                            var videoRecord = await dbContext.EsStreamRecords.FirstOrDefaultAsync(x => x.Id == message.RecordId);
                             if (videoRecord == null) { continue; }
 
                             var fileBytes = File.ReadAllBytes(fileName);
@@ -65,6 +65,8 @@ namespace StreamingService.Workers
                             videoRecord.PublicId = result.Id;
 
                             await dbContext.SaveChangesAsync();
+
+                            File.Delete(fileName);
                         }
                     }
                 }));
