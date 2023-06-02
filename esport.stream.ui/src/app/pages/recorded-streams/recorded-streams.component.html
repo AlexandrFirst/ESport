@@ -1,0 +1,20 @@
+<div class="p-2">
+    <div class="d-flex justify-content-between">
+        <div class="mx-3">
+            <fa-icon [icon]="['fas', 'arrow-alt-circle-left']"></fa-icon>
+            <a class="ms-2" routerLink="/streams">Back to list</a>
+        </div>
+        <h2 class="me-3">Recorded Stream list</h2>
+    </div>
+    <div>
+        <div class="wrapper">
+            <div *ngFor="let v of records" class="w-auto">
+                <video controls>
+                    <source [src]="getVideoSrc(v.fileName)" type="video/webm">
+                </video>
+                <div>Date Recorded: {{v.recordTime}}</div>
+                <div>Record filename: {{v.fileName}}</div>
+            </div>
+        </div>
+    </div>
+</div>

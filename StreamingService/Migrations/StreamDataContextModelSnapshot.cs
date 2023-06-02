@@ -67,16 +67,19 @@ namespace StreamingService.Migrations
                     b.Property<int>("AccessMode")
                         .HasColumnType("int");
 
-                    b.Property<int>("ByteSize")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("EsStreamId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("FileName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PublicId")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("RecordStatus")

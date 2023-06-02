@@ -1,5 +1,11 @@
 <div class="p-2">
-  <h2>Stream list</h2>
+  <div class="d-flex justify-content-between">
+    <h2>Stream list</h2>
+    <div class="me-3">
+      <a class="me-2" routerLink="/records">View all records</a>
+      <fa-icon [icon]="['fas', 'arrow-alt-circle-right']"></fa-icon>
+    </div>
+  </div>
 
   <div class="list-group">
     <div *ngIf="streams.length == 0">

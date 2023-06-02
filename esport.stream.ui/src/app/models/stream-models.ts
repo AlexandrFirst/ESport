@@ -26,6 +26,26 @@ export interface ICreateStreamEvent {
     endTime?: Date;
 }
 
+export enum AccessMode {
+    All = 1, OnlyParticipants = 2, LinkedUsers = 4
+}
+
+export enum RecordStatus {
+    Active = 1, Review = 2, Uploading = 3
+}
+
+export interface IRecordedStream {
+    publicId: string;
+    recordTime: Date;
+    fileName: string;
+    recordId: string;
+}
+
+export interface IRecordFilter {
+    page: number;
+    pageSize: number;
+}
+
 export interface IStreamEventDto extends ICreateStreamEvent {
     id: string;
 }

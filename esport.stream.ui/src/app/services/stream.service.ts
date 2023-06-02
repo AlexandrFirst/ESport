@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'environments/environment.dev';
 import { Observable, throwError } from 'rxjs';
-import { CreateStreamEvent, Stream, StreamEventDto, StreamUser } from '../models/stream-models';
+import { CreateStreamEvent, IRecordFilter, IRecordedStream, Stream, StreamEventDto, StreamUser } from '../models/stream-models';
 
 @Injectable({
   providedIn: 'root'
@@ -47,5 +47,9 @@ export class StreamService {
     return this.httpClinet.put<number>(environment.apiHost + `/api/streams/updateStream/${streamId}`, streamEvent, {
       withCredentials: true
     });
+  }
+
+  public getAllRecords(recordFilter: IRecordFilter): Observable<IRecordedStream[]> {
+    return this.httpClinet.post<IRecordedStream[]>(environment.apiHost + `/api/streams-records`, recordFilter, { withCredentials: true });
   }
 }

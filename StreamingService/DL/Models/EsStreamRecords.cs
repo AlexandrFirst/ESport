@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace StreamingService.DL.Models
 {
     public enum AccessMode { All = 1, OnlyParticipants = 2, LinkedUsers = 4 }
-    public enum RecordStatus { Active = 1, Review = 2 }
+    public enum RecordStatus { Active = 1, Review = 2, Uploading = 3 }
 
     public class EsStreamRecords
     {
@@ -20,8 +20,9 @@ namespace StreamingService.DL.Models
         public Guid Id { get; set; }
         
         public string Name { get; set; }
-        
-        public int ByteSize { get; set; }
+                
+        public string FileName { get; set; }
+        public string PublicId { get; set; }
         
         public AccessMode AccessMode { get; set; }
 

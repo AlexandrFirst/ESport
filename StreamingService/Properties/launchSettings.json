@@ -1,13 +1,31 @@
 ﻿{
   "$schema": "http://json.schemastore.org/launchsettings.json",
   "profiles": {
-    "StreamingService": {
+    "StreamingService.Dev": {
       "commandName": "Project",
       "launchBrowser": false,
       "launchUrl": "streamWeb",
       "applicationUrl": "http://localhost:5004",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "StreamingService.Local": {
+      "commandName": "Project",
+      "launchBrowser": false,
+      "launchUrl": "streamWeb",
+      "applicationUrl": "http://localhost:5004",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Local"
+      }
+    },
+    "StreamingService.Prod": {
+      "commandName": "Project",
+      "launchBrowser": false,
+      "launchUrl": "streamWeb",
+      "applicationUrl": "http://localhost:5004",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Production"
       }
     }
   }
