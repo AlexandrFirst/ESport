@@ -13,7 +13,8 @@ export { useModal } from "./hooks/useModal";
 export { useUserDevice } from "./hooks/useUserDevice";
 export { useSnackbar } from "./hooks/useSnackbar";
 export { useUrlWithReturnUrl } from "./hooks/router/useUrlWithReturnUrl";
-export { useMappedRoles } from "./hooks/useMappedRoles";
+export { useMappedRoles } from "./hooks/localization/useMappedRoles";
+export { useMappedDaysOfTheWeek } from "./hooks/localization/useMappedDaysOfTheWeek";
 export { useDebounce } from "./hooks/useDebounce";
 export { useRedirectAfterFetch } from "./hooks/useRedirectAfterFetch";
 
@@ -23,6 +24,7 @@ export { redirect } from "./utils/redirect";
 export { randomAlphabetString, randomNumberString } from "./utils/randomString";
 export { capitalize } from "./utils/capitalize";
 export { Logger } from "./utils/Logger";
+export { debounce } from "./utils/debounce";
 
 export { createBuildPath } from "./utils/build-path";
 export type { Query, Parameter } from "./utils/build-path";
@@ -35,9 +37,13 @@ export { checkUserAndRedirect } from "./ssr/check-user-and-redirect";
 export { addReturnUrl } from "./router/add-return-url/add-return-url";
 
 //dates
-export { getCalendarMonth } from "./dates/getCalendarMonth";
+export { getCalendarMonthMatrix } from "./dates/getCalendarMonthMatrix";
 export { isToday } from "./dates/isToday";
 export { isSameDay } from "./dates/isSameDay";
 export { isCurrentMonth } from "./dates/isCurrentMonth";
 export { isSameMonth } from "./dates/isSameMonth";
 export { getTime } from "./dates/getTime";
+export { getTimeFromTimeSpan } from "./dates/getTimeFromTimeSpan";
+export { getCurrentMonth } from "./dates/getCurrentMonth";
+export { isSameDayOfTheWeek } from "./dates/isSameDayOfTheWeek";
+export { getDayOfTheWeekByDayIndex } from "./dates/getDayOfTheWeekByDayIndex";

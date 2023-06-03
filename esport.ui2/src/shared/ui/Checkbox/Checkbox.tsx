@@ -16,6 +16,7 @@ export const Checkbox: FC<CheckboxProps> = ({ name, ...props }) => {
           {...props}
           checked={field.value}
           onCheckedChange={field.onChange}
+          name={name}
         />
       )}
     />

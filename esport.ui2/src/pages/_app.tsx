@@ -24,7 +24,7 @@ function App({ Component, ...restProps }: IAppPageProps) {
   const component = getLayout(<Component {...pageProps} />);
 
   return (
-    <Providers store={store}>
+    <Providers store={store} pageProps={pageProps}>
       <main className={font.className}>{component}</main>
     </Providers>
   );

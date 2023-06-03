@@ -1,5 +1,5 @@
 .wrapper {
-  @apply max-w-[230px];
+  @apply min-w-[230px] max-w-[250px];
 }
 
 .header {

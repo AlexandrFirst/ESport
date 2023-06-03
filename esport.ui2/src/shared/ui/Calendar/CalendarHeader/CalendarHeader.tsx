@@ -14,9 +14,13 @@ import { useCalendarContext } from "../CalendarContext/CalendarContext";
 
 interface CalendarHeaderProps {
   className?: string;
+  onTodayClick?: () => void;
 }
 
-export const CalendarHeader: FC<CalendarHeaderProps> = ({ className }) => {
+export const CalendarHeader: FC<CalendarHeaderProps> = ({
+  className,
+  onTodayClick,
+}) => {
   const {
     currentMonth,
     setCurrentMonth,
@@ -40,6 +44,7 @@ export const CalendarHeader: FC<CalendarHeaderProps> = ({ className }) => {
   function handleReset() {
     onResetMonthClick?.(currentMonth);
     setCurrentMonth(dayjs().month());
+    onTodayClick?.();
     // setCurrentMonth(
     //   currentMonth === dayjs().month()
     //     ? currentMonth + Math.random()
@@ -50,7 +55,7 @@ export const CalendarHeader: FC<CalendarHeaderProps> = ({ className }) => {
   return (
     <header className={cn(styles.header, className)}>
       <div className={"flex gap-5 items-center"}>
-        <ul className={"flex"}>
+        <ul className={"flex gap-5"}>
           <li>
             <IconButton
               Svg={ChevronLeftIcon}

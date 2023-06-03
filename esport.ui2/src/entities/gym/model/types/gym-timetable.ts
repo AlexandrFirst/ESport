@@ -2,8 +2,8 @@ import { DayOfTheWeek } from "@/shared/constants";
 import { ITimetableLesson } from "./timetable-lesson";
 
 export interface IDayTimetable {
-  from: Date;
-  to: Date;
+  from: string;
+  to: string;
   shiftId: number;
   timeTableLessons: ITimetableLesson[];
 }

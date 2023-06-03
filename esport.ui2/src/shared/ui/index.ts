@@ -90,3 +90,6 @@ export { Skeleton } from "./Skeleton/Skeleton";
 
 export { TimeInputBase } from "./TimeInput/TimeInputBase";
 export { TimeInput } from "./TimeInput/TimeInput";
+
+export { Collapse } from "./Collapse/Collapse";
+export type { CollapseList } from "./Collapse/Collapse";

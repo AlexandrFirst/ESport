@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { useState } from "react";
 
 import dayjs from "dayjs";
 
@@ -8,28 +8,32 @@ import { MonthCalendar } from "./MonthCalendar/MonthCalendar";
 import { CalendarContext } from "./CalendarContext/CalendarContext";
 import { CalendarHeader } from "./CalendarHeader/CalendarHeader";
 
-interface CalendarProps extends ICalendarContext {
+interface CalendarProps<T> extends ICalendarContext<T> {
   withHeader?: boolean;
   initialMonth?: number;
+  onTodayClick?: () => void;
 }
 
-export const Calendar: FC<CalendarProps> = ({
+export function Calendar<T = any>({
   withHeader = true,
   initialMonth,
+  currentMonth,
+  setCurrentMonth,
+  onTodayClick,
   ...context
-}) => {
-  const [currentMonth, setCurrentMonth] = useState(
+}: CalendarProps<T>) {
+  const [privateCurrentMonth, setPrivateCurrentMonth] = useState(
     initialMonth ?? dayjs().month()
   );
 
   return (
     <CalendarContext
       {...context}
-      currentMonth={currentMonth}
-      setCurrentMonth={setCurrentMonth}
+      currentMonth={currentMonth ?? privateCurrentMonth}
+      setCurrentMonth={setCurrentMonth ?? setPrivateCurrentMonth}
     >
-      {withHeader && <CalendarHeader />}
+      {withHeader && <CalendarHeader onTodayClick={onTodayClick} />}
       <MonthCalendar />
     </CalendarContext>
   );
-};
+}
