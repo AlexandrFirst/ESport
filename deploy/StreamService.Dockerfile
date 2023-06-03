@@ -5,10 +5,12 @@ WORKDIR /app
 # Copy csproj and restore as distinct layers
 COPY ["./StreamingService/StreamingService.csproj", "StreamingService/"]
 COPY ["./ESportAuthClient/ESportAuthClient.csproj", "ESportAuthClient/"]
+COPY ["./MediaClient/MediaClient.csproj", "MediaClient/"]
 RUN dotnet restore StreamingService/StreamingService.csproj
 
 COPY ./StreamingService/. ./StreamingService
 COPY ./ESportAuthClient/. ./ESportAuthClient
+COPY ./MediaClient/. ./MediaClient
 RUN dotnet publish StreamingService/StreamingService.csproj -c Release -o out
 
 # Build runtime image

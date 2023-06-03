@@ -71,6 +71,7 @@ export function AutocompleteMultipleBase<T extends {} = {}>({
       onChange={handleChange}
       //@ts-ignore
       nullable
+      //@ts-ignore
       multiple
       //@ts-ignore
       by={compare}

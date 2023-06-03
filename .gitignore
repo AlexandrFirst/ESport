@@ -449,7 +449,7 @@ $RECYCLE.BIN/
 !.vscode/launch.json
 !.vscode/extensions.json
 /GateWay/ocelot.json
-
+records/
 .fleet
 
 localhost*.pfx
