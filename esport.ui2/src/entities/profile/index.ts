@@ -22,7 +22,10 @@ export {
 //api
 export { ProfileApi } from "./api/profileApi";
 export { profileApiKeys } from "./api/hooks/profileApiKeys";
-export { useGetProfileInfo } from "./api/hooks/useGetProfileInfo";
+export {
+  useGetProfileInfo,
+  getProfileInfo,
+} from "./api/hooks/useGetProfileInfo";
 export { useUpdateProfileInfo } from "./api/hooks/useUpdateProfileInfo";
 export { useConfirmMyProfile } from "./api/hooks/useConfirmMyProfile";
 
@@ -32,6 +35,7 @@ export { useProfileInfo } from "./lib/hooks/useProfileInfo";
 //helpers
 export { transformProfileDataToUpdate } from "./lib/helpers/transformProfileDataToUpdate/transformProfileDataToUpdate";
 export { getOrganisationAdminInfo } from "./lib/helpers/getOrganisationInfo/getOrganisationInfo";
+export { isAdminForGyms } from "./lib/helpers/isAdminForGyms/isAdminForGyms";
 
 //types
 export type { IProfile, IProfileInfo } from "./model/types/profile";

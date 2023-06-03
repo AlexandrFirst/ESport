@@ -20,6 +20,10 @@ export const getAppServerSideProps = <TProps extends AppPageProps>(
       const serverSide = await cb(ctx, store);
 
       //TODO: fix this
+      // @ts-ignore
+      if (serverSide?.redirect) {
+        return serverSide;
+      }
       //@ts-ignore
       if (serverSide?.props) {
         return {

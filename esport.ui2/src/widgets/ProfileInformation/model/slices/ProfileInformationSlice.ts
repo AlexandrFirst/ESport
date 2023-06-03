@@ -62,7 +62,6 @@ const profileInformationSlice = buildSlice({
             info: "",
             photoId: null,
             userId: 0,
-            isConfirmed: true,
           };
           break;
         case "userOrganisationAdminInfos":
@@ -80,6 +79,8 @@ const profileInformationSlice = buildSlice({
               isConfirmed: true,
               organisationId: 0,
               organisationName: "",
+              isProfileConfirmed: true,
+              organisationDescription: "",
             },
           ];
       }

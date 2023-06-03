@@ -15,9 +15,14 @@ import { StoreProvider } from "./StoreProvider";
 interface ProvidersProps {
   store: Store<CombinedState<StateSchema>>;
   children: ReactNode;
+  pageProps: any;
 }
 
-export const Providers: FC<ProvidersProps> = ({ store, children }) => {
+export const Providers: FC<ProvidersProps> = ({
+  store,
+  children,
+  pageProps,
+}) => {
   return (
     <StoreProvider store={store}>
       <ThemeProvider
@@ -26,7 +31,7 @@ export const Providers: FC<ProvidersProps> = ({ store, children }) => {
         // themes={["pink", "red", "blue", "light", "dark"]}
       >
         <Snackbar>
-          <QueryProvider>{children}</QueryProvider>
+          <QueryProvider pageProps={pageProps}>{children}</QueryProvider>
         </Snackbar>
       </ThemeProvider>
     </StoreProvider>

@@ -11,23 +11,29 @@ interface GymListProps extends Omit<GymListItemProps, "gym"> {
   className?: string;
   gyms: IGymReadInfo[];
   organisationId: number;
+  emptyStateMessage?: string;
+  withCreateGymButton?: boolean;
 }
 
 export const GymList: FC<GymListProps> = ({
   className,
   gyms,
   organisationId,
+  emptyStateMessage = "Seems like you haven't create Gyms",
+  withCreateGymButton,
   ...props
 }) => {
   if (!gyms.length) {
     return (
       <Card className={"text-center"}>
         <Title center className={"mb-4"}>
-          Seems like you haven't create Gyms
+          {emptyStateMessage}
         </Title>
-        <UILink href={routes.Organisation.EditOrganisation([organisationId])}>
-          Let's create the first gym in your organisation!
-        </UILink>
+        {withCreateGymButton && (
+          <UILink href={routes.Organisation.EditOrganisation([organisationId])}>
+            Let&apos;s create the first gym in your organisation!
+          </UILink>
+        )}
       </Card>
     );
   }

@@ -13,11 +13,12 @@ export type CheckboxBaseProps = CheckboxProps & {
 export const CheckboxBase = forwardRef<
   ElementRef<typeof CheckboxPrimitive.Root>,
   CheckboxBaseProps
->(({ className, label, id, ...props }, ref) => (
+>(({ className, label, name, ...props }, ref) => (
   <div className={cn(styles.wrapper, className)}>
     <CheckboxPrimitive.Root
       ref={ref}
-      id={id}
+      id={name}
+      name={name}
       className={cn(
         styles.checkbox,
         styles.disabled,
@@ -33,7 +34,7 @@ export const CheckboxBase = forwardRef<
       </CheckboxPrimitive.Indicator>
     </CheckboxPrimitive.Root>
     {label && (
-      <label htmlFor={id} className={styles.label}>
+      <label htmlFor={name} className={styles.label}>
         {label}
       </label>
     )}

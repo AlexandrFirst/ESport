@@ -46,6 +46,7 @@ export const EditOrganisationForm: FC<EditOrganisationProps> = ({
         closeTime: gym.closeTime,
         openTime: gym.onenTime,
         gymId: gym.gymId,
+        gymOrganisationId: gym.organisationId,
       })) ?? []
     );
   };
@@ -72,6 +73,7 @@ export const EditOrganisationForm: FC<EditOrganisationProps> = ({
       openTime: "00:00",
       closeTime: "00:00",
       gymId: 0,
+      gymOrganisationId: 0,
     });
 
   const handleSubmit = methods.handleSubmit((data) => {

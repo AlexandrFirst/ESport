@@ -10,5 +10,6 @@ export const transformGymReadInfoToGymInfo = (
     closeTime: gym.closeTime,
     openTime: gym.onenTime,
     organisationName: "",
+    gymOrganisationId: gym.organisationId,
   }));
 };

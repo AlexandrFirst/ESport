@@ -23,6 +23,12 @@ export const defaultValuesForEditableProfile: IProfile = {
     userGyms: [],
   },
   userOrganisationAdminInfos: [
-    { ...defaultValuesForProfileInfo, organisationName: "", organisationId: 0 },
+    {
+      ...defaultValuesForProfileInfo,
+      organisationName: "",
+      organisationId: 0,
+      organisationDescription: "",
+      isConfirmed: true,
+    },
   ],
 };

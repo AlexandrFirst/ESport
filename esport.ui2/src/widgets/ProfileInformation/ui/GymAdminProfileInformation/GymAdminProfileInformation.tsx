@@ -18,19 +18,14 @@ export const GymAdminProfileInformation: FC<
   const [gymsValue, setGymsValue] = useState("");
   const gymAdminGyms = useSelectGymAdminGyms();
 
-  const { data: gyms, isLoading: isGymsLoading } = useGetGyms(
-    {
-      page: 1,
-      pageSize: 1000,
-      gymIds: [],
-      organisationIds: [],
-      name: gymsValue,
-      address: gymsValue,
-    },
-    {
-      select: (data) => data.gymReadInfos,
-    }
-  );
+  const { data: gyms, isLoading: isGymsLoading } = useGetGyms({
+    page: 1,
+    pageSize: 1000,
+    gymIds: [],
+    organisationIds: [],
+    name: gymsValue,
+    address: gymsValue,
+  });
   const { setGymAdminGyms } = useRoleProfileInformationActions();
 
   return (
@@ -40,7 +35,7 @@ export const GymAdminProfileInformation: FC<
       additionalFieldsBelow={
         <>
           <Autocomplete<IGymReadInfo>
-            list={gyms}
+            list={gyms?.gymReadInfos ?? []}
             value={transformGymInfoToGymReadInfo(gymAdminGyms)}
             onChange={setGymAdminGyms}
             onInputChange={setGymsValue}

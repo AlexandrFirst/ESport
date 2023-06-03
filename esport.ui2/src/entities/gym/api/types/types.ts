@@ -3,14 +3,15 @@ import { DayOfTheWeek } from "@/shared/constants";
 
 import { IGymTimetable } from "../../model/types/gym-timetable";
 import { IGymReadInfo } from "../../model/types/gym-read-info";
+import { IGymShiftInfo } from "../../model/types/gym-shift-info";
 
 export interface IGymListingRequest {
   gymIds?: number[];
   organisationIds?: number[];
   name?: string;
   address?: string;
-  openHour?: Date;
-  closeHour?: Date;
+  openHour?: string;
+  closeHour?: string;
   page: number;
   pageSize: number;
 }
@@ -25,4 +26,9 @@ export interface GetGymTimetableRequest {
 
 export interface GetGymTimetableResponse {
   gymTimeTable: IGymTimetable[];
+}
+
+export interface AddUpdateGymTimetableRequest {
+  gymId: number;
+  gymShiftInfos: IGymShiftInfo[];
 }

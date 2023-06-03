@@ -7,9 +7,9 @@ import { Card } from "@/shared/ui";
 import { StickyContentLayout } from "@/shared/layouts";
 import { routes } from "@/shared/config";
 
-import { GymApi, GymList, IGymReadInfo } from "@/entities/gym";
+import { GymApi, GymList, IGymReadInfo, useGetGyms } from "@/entities/gym";
 
-import { GymsFilters } from "@/features/GymsFilters";
+import { GymsFilters, useSelectGymFilters } from "@/features/GymsFilters";
 
 import { getMainLayout } from "@/widgets/MainLayout";
 
@@ -20,6 +20,24 @@ type GymsProps = PageProps & {
 const Gyms: AppNextPage<GymsProps> = ({ gyms }) => {
   const router = useRouter();
   const { organisationId } = router.query;
+  const { address, name, openHour, closeHour } = useSelectGymFilters();
+
+  const { data } = useGetGyms(
+    {
+      page: 1,
+      pageSize: 10,
+      organisationIds: [Number(organisationId)],
+      gymIds: [],
+      address: address ?? undefined,
+      name: name ?? undefined,
+      openHour: openHour ?? undefined,
+      closeHour: closeHour ?? undefined,
+    },
+    {
+      enabled:
+        !!organisationId && (!!address || !!name || !!openHour || !!closeHour),
+    }
+  );
 
   const handleGymClick = (gym: IGymReadInfo) => {
     router.push(routes.Organisation.Gym([organisationId as string, gym.gymId]));
@@ -29,9 +47,10 @@ const Gyms: AppNextPage<GymsProps> = ({ gyms }) => {
     <StickyContentLayout right={!!gyms?.length && <GymsFilters />}>
       <Card padding={"none"}>
         <GymList
-          gyms={gyms}
+          gyms={data?.gymReadInfos ?? gyms}
           onClickGym={handleGymClick}
           organisationId={Number(organisationId)}
+          emptyStateMessage={"No gyms found"}
         />
       </Card>
     </StickyContentLayout>

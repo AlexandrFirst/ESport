@@ -2,8 +2,13 @@ import React, { FC } from "react";
 import styles from "./DayEvent.module.css";
 import { useCalendarContext } from "../CalendarContext/CalendarContext";
 import { CalendarEvent } from "@/shared/types";
-import { getTime, isSameDay } from "@/shared/lib";
+import {
+  getTimeFromTimeSpan,
+  isSameDay,
+  isSameDayOfTheWeek,
+} from "@/shared/lib";
 import { Dayjs } from "dayjs";
+import { CalendarEventByDay } from "@/shared/types/calendar";
 
 interface DayEventProps {
   event: CalendarEvent;
@@ -14,13 +19,36 @@ export const DayEvent: FC<DayEventProps> = ({ event, currentDay }) => {
   const { onEventClick } = useCalendarContext();
 
   const handleEventClick = () => {
-    onEventClick?.(event);
+    onEventClick?.(event, currentDay.toDate());
   };
 
-  return isSameDay(event.date, currentDay) ? (
+  const isDayOfTheWeekEvent = (
+    event: CalendarEvent
+  ): event is CalendarEventByDay => {
+    return "dayOfTheWeek" in event;
+  };
+
+  const renderEvent = () => (
     <div onClick={handleEventClick} className={styles.event}>
-      <span className={styles.event_title}>{event.title}</span>
-      <span>{getTime(event.date)}</span>
+      <div className={styles.event_title}>{event.title}</div>
+      <span>
+        {getTimeFromTimeSpan(event.from)} - {getTimeFromTimeSpan(event.to)}
+      </span>
     </div>
-  ) : null;
+  );
+
+  return !isDayOfTheWeekEvent(event)
+    ? isSameDay(event.dateTime, currentDay)
+      ? renderEvent()
+      : null
+    : isSameDayOfTheWeek(event.dayOfTheWeek, currentDay)
+    ? renderEvent()
+    : null;
+
+  // return isSameDay(event.date, currentDay) ? (
+  //   <div onClick={handleEventClick} className={styles.event}>
+  //     <div className={styles.event_title}>{event.title}</div>
+  //     <span>{getTime(event.date)}</span>
+  //   </div>
+  // ) : null;
 };

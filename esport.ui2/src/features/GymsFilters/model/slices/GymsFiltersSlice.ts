@@ -24,6 +24,21 @@ export const GymsFiltersSlice = buildSlice({
         ...action.payload,
       };
     },
+    setAddress(state, action: PayloadAction<string | null>) {
+      state.address = action.payload;
+    },
+    setCloseHour(state, action: PayloadAction<string | null>) {
+      state.closeHour = action.payload;
+    },
+    setName(state, action: PayloadAction<string | null>) {
+      state.name = action.payload;
+    },
+    setOpenHour(state, action: PayloadAction<string | null>) {
+      state.openHour = action.payload;
+    },
+    setOrganisationIds(state, action: PayloadAction<number[] | null>) {
+      state.organisationIds = action.payload;
+    },
   },
   extraReducers: {
     [HYDRATE]: (state, action) => {

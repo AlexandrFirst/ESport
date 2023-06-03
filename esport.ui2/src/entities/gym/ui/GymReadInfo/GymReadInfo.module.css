@@ -1,0 +1,7 @@
+.wrapper {
+
+}
+
+.infoItem {
+    @apply flex gap-2;
+}

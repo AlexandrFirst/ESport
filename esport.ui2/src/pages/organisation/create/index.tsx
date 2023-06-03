@@ -1,6 +1,11 @@
+import { useForm } from "react-hook-form";
+
 import { AppNextPage, PageProps } from "@/shared/types";
 
-import { CreateEditOrganisationForm } from "@/entities/organisation";
+import {
+  CreateEditOrganisationForm,
+  ICreateOrganisation,
+} from "@/entities/organisation";
 
 import { getMainLayout } from "@/widgets/MainLayout";
 import { Card, Title } from "@/shared/ui";
@@ -8,10 +13,11 @@ import { Card, Title } from "@/shared/ui";
 type CreateOrganisationProps = PageProps & {};
 
 const CreateOrganisation: AppNextPage<CreateOrganisationProps> = () => {
+  const methods = useForm<ICreateOrganisation>();
   return (
     <Card>
       <Title center>Create organisation</Title>
-      <CreateEditOrganisationForm />
+      <CreateEditOrganisationForm methods={methods} />
     </Card>
   );
 };

@@ -27,7 +27,7 @@ export interface ITrainerInfo extends IProfileInfo {
 }
 
 export interface IGymAdminInfo extends IProfileInfo {
-  userGyms: IGymInfo & { isConfirmed: boolean }[];
+  userGyms: (IGymInfo & { isConfirmed?: boolean })[];
 }
 
 export interface IOrganisationAdminInfo extends IProfileInfo {
