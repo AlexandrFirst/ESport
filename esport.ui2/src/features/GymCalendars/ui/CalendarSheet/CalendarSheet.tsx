@@ -1,5 +1,9 @@
 import React, { FC, useEffect } from "react";
 import styles from "./CalendarSheet.module.css";
+
+import { useForm } from "react-hook-form";
+import cn from "classnames";
+
 import {
   Button,
   Checkbox,
@@ -12,13 +16,16 @@ import {
   SheetTitle,
   TimeInput,
 } from "@/shared/ui";
-import { IGymReadInfo } from "@/entities/gym";
-import { useMappedDaysOfTheWeekByDayIndex } from "@/shared/lib/hooks/localization/useMappedDaysOfTheWeekByDayIndex";
-import { useForm } from "react-hook-form";
-import { CreateUpdateShift } from "../../model/types/create-update-shift";
-import cn from "classnames";
 import { CalendarEvent } from "@/shared/types";
-import { CalendarDayTimetable } from "../..";
+import {
+  getTimeFromTimeSpan,
+  useMappedDaysOfTheWeekByDayIndex,
+} from "@/shared/lib";
+
+import { IGymReadInfo, IGymWorkingHours } from "@/entities/gym";
+
+import { CreateUpdateShift } from "../../model/types/create-update-shift";
+import { CalendarDayTimetable } from "../../model/types/calendarDayTimetable";
 
 interface CalendarSheetProps {
   className?: string;
@@ -32,6 +39,7 @@ interface CalendarSheetProps {
   setSelectedEvent?: (
     event: CalendarEvent<CalendarDayTimetable> | undefined
   ) => void;
+  workingHours?: Pick<IGymWorkingHours, "from" | "to">;
 }
 
 export const CalendarSheet: FC<CalendarSheetProps> = ({
@@ -44,6 +52,7 @@ export const CalendarSheet: FC<CalendarSheetProps> = ({
   isLoading,
   selectedEvent,
   setSelectedEvent,
+  workingHours,
 }) => {
   const mappedDays = useMappedDaysOfTheWeekByDayIndex();
   const handleClose = () => {
@@ -72,7 +81,11 @@ export const CalendarSheet: FC<CalendarSheetProps> = ({
     <Sheet open={open}>
       <SheetContent onClickClose={handleClose}>
         <SheetHeader>
-          <SheetTitle>Update timetable for {gym.name}</SheetTitle>
+          <SheetTitle>
+            Update timetable for {gym.name} (
+            {getTimeFromTimeSpan(workingHours?.from)} -{" "}
+            {getTimeFromTimeSpan(workingHours?.to)})
+          </SheetTitle>
           <SheetDescription>
             {selectedEvent ? "Edit" : "Add"} timetable for{" "}
             {mappedDays[currentDate?.getDay() ?? 0]}

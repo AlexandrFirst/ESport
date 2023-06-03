@@ -59,29 +59,24 @@ const EditGym: AppNextPage<EditGymProps> = ({ gym }) => {
     setSelectedDate(day);
   };
 
-  const handleCreate = async (formData: CreateUpdateShift) => {
-    console.log("===formData===", formData);
-    console.log(
-      "===transformCreateUpdateShiftToAddUpdateGymTimetable===",
-      transformCreateUpdateShiftToAddUpdateGymTimetable(
-        Number(gymId),
-        data?.gymTimeTable ?? [],
-        formData,
-        selectedDate
-      )
-    );
+  const handleSubmit = async (formData: CreateUpdateShift) => {
     await mutate(
       transformCreateUpdateShiftToAddUpdateGymTimetable(
         Number(gymId),
         data?.gymTimeTable ?? [],
         formData,
-        selectedDate
-      )
-    );
-    await queryClient.invalidateQueries(
-      gymApiKeys.gymTimetable(Number(gymId), {
-        dayOfTheWeeks: [DayOfTheWeek.ALL],
-      })
+        selectedDate,
+        selectedEvent
+      ),
+      {
+        async onSuccess() {
+          await queryClient.invalidateQueries({
+            queryKey: gymApiKeys.gymTimetable(Number(gymId), {
+              dayOfTheWeeks: [DayOfTheWeek.ALL],
+            }),
+          });
+        },
+      }
     );
   };
 
@@ -106,10 +101,11 @@ const EditGym: AppNextPage<EditGymProps> = ({ gym }) => {
         open={isSheetOpened}
         setOpen={setIsSheetOpened}
         currentDate={selectedDate}
-        onSubmit={handleCreate}
+        onSubmit={handleSubmit}
         isLoading={isTimetableLoading || isUpdateLoading}
         selectedEvent={selectedEvent}
         setSelectedEvent={setSelectedEvent}
+        workingHours={data?.gymWorkingHours?.[0]}
       />
     </>
   );

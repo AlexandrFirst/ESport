@@ -1,4 +1,3 @@
-import { ServerStage } from "@/shared/constants";
 import {
   capitalize,
   randomAlphabetString,
@@ -8,7 +7,7 @@ import {
 import { IRegisterForm } from "../../model/types/RegisterFormSchema";
 
 export const getDefaultValues = (): IRegisterForm => {
-  if (process.env.NEXT_PUBLIC_STAGE !== ServerStage.Prod) {
+  if (process.env.NODE_ENV !== "production") {
     return {
       email: `user${randomNumberString(4)}@test.com`,
       firstName: capitalize(randomAlphabetString(5)),

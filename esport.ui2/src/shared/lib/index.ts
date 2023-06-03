@@ -17,6 +17,7 @@ export { useMappedRoles } from "./hooks/localization/useMappedRoles";
 export { useMappedDaysOfTheWeek } from "./hooks/localization/useMappedDaysOfTheWeek";
 export { useDebounce } from "./hooks/useDebounce";
 export { useRedirectAfterFetch } from "./hooks/useRedirectAfterFetch";
+export { useMappedDaysOfTheWeekByDayIndex } from "./hooks/localization/useMappedDaysOfTheWeekByDayIndex";
 
 //utils
 export { getDeviceDetect } from "./utils/detect-device";

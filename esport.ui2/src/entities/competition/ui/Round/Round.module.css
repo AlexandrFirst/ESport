@@ -1,11 +1,9 @@
 .wrapper {
   flex: 0;
-  /*// min-width:300px;*/
-  display: flex;
-  flex-direction: column;
-  /*@media (max-width: ${props.mobileBreakpoint}px) {*/
-  /*  min-width:0;*/
-  /*}*/
+}
+
+.wrapper {
+  @apply flex flex-col mt-5;
 }
 
 .title {

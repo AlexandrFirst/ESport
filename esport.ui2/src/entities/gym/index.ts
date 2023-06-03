@@ -16,6 +16,7 @@ export type {
   IGymListingRequest,
   AddUpdateGymTimetableRequest,
 } from "./api/types/types";
+export type { IGymWorkingHours } from "./model/types/gym-working-hours";
 
 //api
 export { GymApi } from "./api/gymApi";

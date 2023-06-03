@@ -5,7 +5,7 @@ import { routes } from "@/shared/config";
 import { AppNextPage } from "@/shared/types";
 import { getAppServerSideProps } from "@/shared/lib";
 
-import { CompetitionApi, ICompetiton } from "@/entities/competition";
+import { ICompetiton } from "@/entities/competition";
 
 import { getMainLayout } from "@/widgets/MainLayout";
 
@@ -41,7 +41,25 @@ export const getServerSideProps = getAppServerSideProps(async (ctx) => {
     ctx.locale ?? ctx.defaultLocale ?? "en",
     ["common"]
   );
-  const { data } = await CompetitionApi(ctx).getAllCompetitions();
+  // const { data } = await CompetitionApi(ctx).getAllCompetitions();
+
+  const data: ICompetiton[] = [
+    {
+      _id: "64492f90e4f612d8e099d517",
+      title: "Міжнародний турнір у Києві",
+      dateStart: "",
+      organizationId: 1,
+      categories: ["1", "2", "3"],
+    },
+    {
+      _id: "64492f90e4f612d8e099d518",
+      title: "Обласний турнір у Чернівцях",
+      dateStart: "",
+      organizationId: 1,
+      categories: ["1", "2", "3"],
+    },
+  ];
+
   return {
     props: {
       ...localization,
