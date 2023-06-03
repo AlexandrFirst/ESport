@@ -44,7 +44,7 @@ namespace UserWorkflow.Application.Requests.GymAdmin
 
                 var dayShifts = gymShifts.Where(x => (x.DayOfTheWeeks & (int)currentDay) == (int)currentDay);
 
-                foreach (var dayShift in dayShifts)
+                foreach (var dayShift in dayShifts.DistinctBy(x => x.GymId))
                 {
                     result.Add(new GymTimeTable()
                     {
