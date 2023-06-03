@@ -4,6 +4,7 @@ import { DayOfTheWeek } from "@/shared/constants";
 import { IGymTimetable } from "../../model/types/gym-timetable";
 import { IGymReadInfo } from "../../model/types/gym-read-info";
 import { IGymShiftInfo } from "../../model/types/gym-shift-info";
+import { IGymWorkingHours } from "../..";
 
 export interface IGymListingRequest {
   gymIds?: number[];
@@ -25,6 +26,7 @@ export interface GetGymTimetableRequest {
 }
 
 export interface GetGymTimetableResponse {
+  gymWorkingHours: IGymWorkingHours[];
   gymTimeTable: IGymTimetable[];
 }
 

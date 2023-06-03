@@ -10,6 +10,7 @@ import {
 } from "@/entities/competition";
 
 import { getMainLayout } from "@/widgets/MainLayout";
+import { Title } from "@/shared/ui";
 
 type CompetitionPageProps = {
   competition?: ICompetitonWithCategories;
@@ -19,11 +20,11 @@ const CompetitionPage: AppNextPage<CompetitionPageProps> = ({
   competition,
 }) => {
   const tmp = competition?.categories[0];
-  console.log("===tmp===", tmp);
+
   return (
     <>
       {/*<Title>Categories</Title>*/}
-      <>{tmp?.title}</>
+      <Title className={"ml-4"}>{tmp?.title}</Title>
       <CompetitionGrid category={tmp} />
     </>
   );
@@ -44,7 +45,7 @@ export const getServerSideProps = getAppServerSideProps(async (ctx) => {
   const data = {
     competition: {
       _id: "64492f90e4f612d8e099d517",
-      title: "опупительные соревнования2",
+      title: "Міжнародний турнір у Києві",
       dateStart: "2023-01-05T18:32:29.498Z",
       organizationId: 1,
       categories: [
@@ -58,14 +59,21 @@ export const getServerSideProps = getAppServerSideProps(async (ctx) => {
                 {
                   _id: "64492f90e4f612d8e099d511",
                   isProcessed: false,
-                  fightNumber: 10,
+                  fightNumber: 1,
                   competitors: [
                     {
                       teamMemberIds: [],
                       competitorType: "Male",
                       createdAt: "2023-04-26T14:05:00.032Z",
                       updatedAt: "2023-04-26T14:05:00.032Z",
-                      userId: "6449388e8524824166f030c4",
+                      userId: "Микита Левченко",
+                    },
+                    {
+                      teamMemberIds: [],
+                      competitorType: "Male",
+                      createdAt: "2023-04-26T14:05:00.032Z",
+                      updatedAt: "2023-04-26T14:05:00.032Z",
+                      userId: "Михайло Зоряний",
                     },
                   ],
                   createdAt: "2023-04-26T14:05:00.033Z",
@@ -75,14 +83,21 @@ export const getServerSideProps = getAppServerSideProps(async (ctx) => {
                 {
                   _id: "64492f90e4f612d8e099d512",
                   isProcessed: false,
-                  fightNumber: 10,
+                  fightNumber: 2,
                   competitors: [
                     {
                       teamMemberIds: [],
                       competitorType: "Male",
                       createdAt: "2023-04-26T14:05:00.032Z",
                       updatedAt: "2023-04-26T14:05:00.032Z",
-                      userId: "6449388e8524824166f030c4",
+                      userId: "Ігор Кравцов",
+                    },
+                    {
+                      teamMemberIds: [],
+                      competitorType: "Male",
+                      createdAt: "2023-04-26T14:05:00.032Z",
+                      updatedAt: "2023-04-26T14:05:00.032Z",
+                      userId: "Олександр Церковний",
                     },
                   ],
                   createdAt: "2023-04-26T14:05:00.033Z",
@@ -92,14 +107,21 @@ export const getServerSideProps = getAppServerSideProps(async (ctx) => {
                 {
                   _id: "64492f90e4f612d8e099d513",
                   isProcessed: false,
-                  fightNumber: 10,
+                  fightNumber: 3,
                   competitors: [
                     {
                       teamMemberIds: [],
                       competitorType: "Male",
                       createdAt: "2023-04-26T14:05:00.032Z",
                       updatedAt: "2023-04-26T14:05:00.032Z",
-                      userId: "6449388e8524824166f030c4",
+                      userId: "Михайло Зірка",
+                    },
+                    {
+                      teamMemberIds: [],
+                      competitorType: "Male",
+                      createdAt: "2023-04-26T14:05:00.032Z",
+                      updatedAt: "2023-04-26T14:05:00.032Z",
+                      userId: "Томас Шевченко",
                     },
                   ],
                   createdAt: "2023-04-26T14:05:00.033Z",
@@ -109,14 +131,21 @@ export const getServerSideProps = getAppServerSideProps(async (ctx) => {
                 {
                   _id: "64492f90e4f612d8e099d512",
                   isProcessed: false,
-                  fightNumber: 10,
+                  fightNumber: 4,
                   competitors: [
                     {
                       teamMemberIds: [],
                       competitorType: "Male",
                       createdAt: "2023-04-26T14:05:00.032Z",
                       updatedAt: "2023-04-26T14:05:00.032Z",
-                      userId: "6449388e8524824166f030c4",
+                      userId: "Віталій Литвиненко",
+                    },
+                    {
+                      teamMemberIds: [],
+                      competitorType: "Male",
+                      createdAt: "2023-04-26T14:05:00.032Z",
+                      updatedAt: "2023-04-26T14:05:00.032Z",
+                      userId: "Іван Скоропадський",
                     },
                   ],
                   createdAt: "2023-04-26T14:05:00.033Z",
@@ -128,75 +157,51 @@ export const getServerSideProps = getAppServerSideProps(async (ctx) => {
               updatedAt: "2023-04-26T14:05:00.025Z",
               __v: 0,
             },
-            // {
-            //   _id: "64492f90e4f612d8e099d513",
-            //   roundNumber: 2,
-            //   fights: [
-            //     {
-            //       _id: "64492f90e4f612d8e099d511",
-            //       isProcessed: false,
-            //       fightNumber: 10,
-            //       competitors: [
-            //         {
-            //           teamMemberIds: [],
-            //           competitorType: "Male",
-            //           createdAt: "2023-04-26T14:05:00.032Z",
-            //           updatedAt: "2023-04-26T14:05:00.032Z",
-            //           userId: "6449388e8524824166f030c4",
-            //         },
-            //       ],
-            //       createdAt: "2023-04-26T14:05:00.033Z",
-            //       updatedAt: "2023-04-26T14:05:00.033Z",
-            //       __v: 0,
-            //     },
-            //     {
-            //       _id: "64492f90e4f612d8e099d512",
-            //       isProcessed: false,
-            //       fightNumber: 10,
-            //       competitors: [
-            //         {
-            //           teamMemberIds: [],
-            //           competitorType: "Male",
-            //           createdAt: "2023-04-26T14:05:00.032Z",
-            //           updatedAt: "2023-04-26T14:05:00.032Z",
-            //           userId: "6449388e8524824166f030c4",
-            //         },
-            //       ],
-            //       createdAt: "2023-04-26T14:05:00.033Z",
-            //       updatedAt: "2023-04-26T14:05:00.033Z",
-            //       __v: 0,
-            //     },
-            //   ],
-            //   createdAt: "2023-04-26T14:05:00.025Z",
-            //   updatedAt: "2023-04-26T14:05:00.025Z",
-            //   __v: 0,
-            // },
-            // {
-            //   _id: "64492f90e4f612d8e099d513",
-            //   roundNumber: 3,
-            //   fights: [
-            //     {
-            //       _id: "64492f90e4f612d8e099d511",
-            //       isProcessed: false,
-            //       fightNumber: 10,
-            //       competitors: [
-            //         {
-            //           teamMemberIds: [],
-            //           competitorType: "Male",
-            //           createdAt: "2023-04-26T14:05:00.032Z",
-            //           updatedAt: "2023-04-26T14:05:00.032Z",
-            //           userId: "6449388e8524824166f030c4",
-            //         },
-            //       ],
-            //       createdAt: "2023-04-26T14:05:00.033Z",
-            //       updatedAt: "2023-04-26T14:05:00.033Z",
-            //       __v: 0,
-            //     },
-            //   ],
-            //   createdAt: "2023-04-26T14:05:00.025Z",
-            //   updatedAt: "2023-04-26T14:05:00.025Z",
-            //   __v: 0,
-            // },
+            {
+              _id: "64492f90e4f612d8e099d513",
+              roundNumber: 2,
+              fights: [
+                {
+                  _id: "64492f90e4f612d8e099d511",
+                  isProcessed: false,
+                  fightNumber: 5,
+                  competitors: [],
+                  createdAt: "2023-04-26T14:05:00.033Z",
+                  updatedAt: "2023-04-26T14:05:00.033Z",
+                  __v: 0,
+                },
+                {
+                  _id: "64492f90e4f612d8e099d512",
+                  isProcessed: false,
+                  fightNumber: 6,
+                  competitors: [],
+                  createdAt: "2023-04-26T14:05:00.033Z",
+                  updatedAt: "2023-04-26T14:05:00.033Z",
+                  __v: 0,
+                },
+              ],
+              createdAt: "2023-04-26T14:05:00.025Z",
+              updatedAt: "2023-04-26T14:05:00.025Z",
+              __v: 0,
+            },
+            {
+              _id: "64492f90e4f612d8e099d513",
+              roundNumber: 3,
+              fights: [
+                {
+                  _id: "64492f90e4f612d8e099d511",
+                  isProcessed: false,
+                  fightNumber: 7,
+                  competitors: [],
+                  createdAt: "2023-04-26T14:05:00.033Z",
+                  updatedAt: "2023-04-26T14:05:00.033Z",
+                  __v: 0,
+                },
+              ],
+              createdAt: "2023-04-26T14:05:00.025Z",
+              updatedAt: "2023-04-26T14:05:00.025Z",
+              __v: 0,
+            },
           ],
           title: "Хлопці 10-11 лет, до 60 кг",
           createdAt: "2023-04-26T14:05:00.028Z",
