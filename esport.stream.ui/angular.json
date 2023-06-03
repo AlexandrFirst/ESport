@@ -30,9 +30,18 @@
               "src/assets"
             ],
             "styles": [
-              "@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.scss",
-              "./node_modules/bootstrap/dist/css/bootstrap.css"
+              {
+                "input": "src/dark.scss",
+                "bundleName": "dark",
+                "inject": false
+              },
+              {
+                "input": "src/light.scss",
+                "bundleName": "light",
+                "inject": true
+              },
+              "@angular/material/prebuilt-themes/deeppurple-amber.css"
             ],
             "scripts": [
               "./node_modules/bootstrap/dist/js/bootstrap.js",
