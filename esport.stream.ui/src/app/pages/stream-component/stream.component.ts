@@ -1,10 +1,10 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HubConnection } from '@microsoft/signalr';
 import { YesNoComponent } from 'src/app/components/modals/yes-no/yes-no.component';
 import { MediaModel, MediaType } from 'src/app/models/media-models';
-import { StreamUser } from 'src/app/models/stream-models';
+import { StreamEventDto, StreamUser } from 'src/app/models/stream-models';
 import { SignalService } from 'src/app/services/signal.service';
 import { StreamService } from 'src/app/services/stream.service';
 import * as kurentoUtils from 'kurento-utils';
@@ -15,9 +15,10 @@ import { ClientMessage, IClientMessageBody, MessageType } from 'src/app/models/s
   templateUrl: './stream.component.html',
   styleUrls: ['./stream.component.scss']
 })
-export class StreamComponent implements OnInit {
+export class StreamComponent implements OnInit, OnDestroy {
 
   private streamId: string;
+  streamEvent: StreamEventDto;
 
   userInfo: StreamUser;
   isLoading: boolean = true;
@@ -59,6 +60,9 @@ export class StreamComponent implements OnInit {
 
     this.streamId = route.snapshot.params["id"];
   }
+  ngOnDestroy(): void {
+    this.stop();
+  }
 
   ngOnInit(): void {
     if (!this.streamId) {
@@ -97,7 +101,14 @@ export class StreamComponent implements OnInit {
       }
     })
 
-
+    this.streamService.getStreamEvent(this.streamId).subscribe({
+      next: (value: StreamEventDto) => {
+        this.streamEvent = value;
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
   }
 
   videoInputSelected(sourceId: string) {
@@ -296,8 +307,8 @@ export class StreamComponent implements OnInit {
         console.log("[presenter] WebRtcPeerSendonly: ", error);
         return;
       }
-      this.webRtcPeer?.generateOffer((_error: any | undefined, sdp: string) => { 
-         this.onOfferPresenter(_error, sdp) 
+      this.webRtcPeer?.generateOffer((_error: any | undefined, sdp: string) => {
+        this.onOfferPresenter(_error, sdp)
       });
     })
     console.log('presenter peer connection', this.webRtcPeer)
@@ -363,6 +374,7 @@ export class StreamComponent implements OnInit {
   public stop() {
     if (!this.isConnectionSetup || !this.isCommunicationOn) {
       console.log("Unable to stop not initialized connection");
+      this.dispose();
       return;
     }
 
@@ -528,6 +540,19 @@ export class StreamComponent implements OnInit {
     if (this.isConnectionSetup) {
       this.webRtcPeer?.dispose();
       this.isCommunicationOn = false;
+
+      if (this.videoInput?.MediaDeviceId !== '-1' && this.v_mediaStream) {
+        this.v_mediaStream.getTracks().forEach(function (track) {
+          track.stop();
+        });
+      }
+
+      if (this.audioInput?.MediaDeviceId !== '-1' && this.s_mediaStream) {
+        this.s_mediaStream.getTracks().forEach(function (track) {
+          track.stop();
+        });
+      }
+
       this.router.navigate(["streams"], {
         queryParams: {
           "messsage": message

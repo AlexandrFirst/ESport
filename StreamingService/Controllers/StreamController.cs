@@ -112,7 +112,7 @@ namespace StreamingService.Controllers
             var stream = await context.EsStreams.FirstOrDefaultAsync(x => x.Id == _streamId);
             //need to check wheather the stream is live
             //if yes than create an exception
-            if (streamRepositry.IsStreamStarted(stream.EventId)) 
+            if (streamRepositry.IsStreamStarted(streamId)) 
             {
                 return BadRequest(new { Message = "Stream is already started" });
             }

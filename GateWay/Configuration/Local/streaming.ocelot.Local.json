@@ -76,6 +76,56 @@
       }
     },
     {
+      "DownstreamPathTemplate": "/Stream/{streamId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "host.docker.internal",
+          "Port": 5004
+        }
+      ],
+      "UpstreamPathTemplate": "/api/streams/{streamId}",
+      "UpstreamHttpMethod": [ "GET", "OPTIONS" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "ESport",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "Role": "Pupil,LocalAdmin,OrgAdmin"
+      },
+      "AddHeadersToRequest": {
+        "Role": "Claims[Role] > value > |",
+        "Id": "Claims[Id] > value > |",
+        "Name": "Claims[Name] > value > |",
+        "Email": "Claims[Email] > value > |"
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/Stream/updateStream/{streamId}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "host.docker.internal",
+          "Port": 5004
+        }
+      ],
+      "UpstreamPathTemplate": "/api/streams/updateStream/{streamId}",
+      "UpstreamHttpMethod": [ "PUT", "OPTIONS" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "ESport",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "Role": "Pupil,LocalAdmin,OrgAdmin"
+      },
+      "AddHeadersToRequest": {
+        "Role": "Claims[Role] > value > |",
+        "Id": "Claims[Id] > value > |",
+        "Name": "Claims[Name] > value > |",
+        "Email": "Claims[Email] > value > |"
+      }
+    },
+    {
       "DownstreamPathTemplate": "/Media/streams",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [

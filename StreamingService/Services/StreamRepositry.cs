@@ -112,9 +112,9 @@ namespace StreamingService.Services
             }
         }
 
-        public bool IsStreamStarted(string eventId)
+        public bool IsStreamStarted(string streamId)
         {
-            var streamProviderExists = streamProviders.ContainsKey(eventId);
+            var streamProviderExists = streamProviders.ContainsKey(streamId);
             return streamProviderExists;
         }
 
@@ -128,18 +128,18 @@ namespace StreamingService.Services
                 throw new Exception($"No stream with id: {streamId} is found");
             }
 
-            var streamProviderExists = streamProviders.ContainsKey(stream.EventId);
+            var streamProviderExists = streamProviders.ContainsKey(streamId.ToString());
             if (streamProviderExists)
             {
-                throw new Exception($"The stream for this event {stream.EventId} is already exists");
+                throw new Exception($"The stream {streamId.ToString()} for this event {stream.EventId} is already exists");
             }
 
             var streamProvider = scope.ServiceProvider.GetRequiredService<StreamProvider>();
             streamProvider.setStreamId(streamId);
-            var isPresenterStarted = streamProviders.TryAdd(stream.EventId, streamProvider);
+            var isPresenterStarted = streamProviders.TryAdd(streamId.ToString(), streamProvider);
             if (!isPresenterStarted)
             {
-                throw new Exception($"Presenter for stream with event id: {stream.EventId} is not started; such stream exists");
+                throw new Exception($"Presenter for stream {streamId.ToString()} with event id: {stream.EventId} is not started; such stream exists");
             }
 
             var presenterResponse = await streamProvider.StartPresenter(organiserId.ToString(), sdpOffer);
@@ -171,10 +171,10 @@ namespace StreamingService.Services
 
             if (stream.OrganiserId == userId)
             {
-                var isStreamRemoved = streamProviders.TryRemove(stream.EventId, out var removedStreamProvider);
+                var isStreamRemoved = streamProviders.TryRemove(streamId.ToString(), out var removedStreamProvider);
                 if (!isStreamRemoved)
                 {
-                    throw new Exception($"stream with event id {stream.EventId} to stop is not found");
+                    throw new Exception($"stream {streamId.ToString()} with event id {stream.EventId} to stop is not found");
                 }
             }
         }
@@ -202,10 +202,10 @@ namespace StreamingService.Services
                 throw new Exception($"No stream with id {streamId} is found");
             }
 
-            var streamProviderExists = streamProviders.TryGetValue(stream.EventId, out var streamProvider);
+            var streamProviderExists = streamProviders.TryGetValue(streamId.ToString(), out var streamProvider);
             if (!streamProviderExists)
             {
-                throw new Exception($"Stream for event with id {stream.EventId} is not started");
+                throw new Exception($"Stream {streamId} for event with id {stream.EventId} is not started");
             }
 
             return streamProvider;
