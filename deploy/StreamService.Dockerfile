@@ -14,7 +14,7 @@ COPY ./MediaClient/. ./MediaClient
 RUN dotnet publish StreamingService/StreamingService.csproj -c Release -o out
 
 # Build runtime image
-FROM mcr.microsoft.com/dotnet/aspnet:3.1
+FROM mcr.microsoft.com/dotnet/aspnet:6.0
 
 EXPOSE 5004
 EXPOSE 5014

@@ -148,7 +148,7 @@ namespace StreamingService.Controllers
             var userIdValue = userIdClaim.Value;
 
             bool isUserOrganizer = userIdValue == dbStream.OrganiserId.ToString();
-            bool isStreamStarted = streamRepositry.IsStreamStarted(dbStream.EventId);
+            bool isStreamStarted = streamRepositry.IsStreamStarted(streamId);
 
             return Ok(new UserStreamResponse()
             {

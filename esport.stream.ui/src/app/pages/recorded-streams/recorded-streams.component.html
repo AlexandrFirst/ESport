@@ -9,7 +9,7 @@
     <div>
         <div class="wrapper">
             <div *ngFor="let v of records" class="w-auto">
-                <video controls>
+                <video controls class="w-100">
                     <source [src]="getVideoSrc(v.fileName)" type="video/webm">
                 </video>
                 <div>Date Recorded: {{v.recordTime}}</div>

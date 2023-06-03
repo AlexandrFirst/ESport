@@ -78,6 +78,14 @@ export class StreamComponent implements OnInit, OnDestroy {
       next: (value: StreamUser) => {
         this.userInfo = value;
 
+        if (!value.isStreamStarted && !value.isOrganizer) {
+          let dialogRef = this.displayMessage('Stream is not started yes')
+          dialogRef.afterClosed().subscribe(x => {
+            this.router.navigate(['streams'])
+          })
+          return;
+        }
+
         this.signalService.setup().then(m => {
           this.isConnectionSetup = true;
           this.hubConnection = m.connection;

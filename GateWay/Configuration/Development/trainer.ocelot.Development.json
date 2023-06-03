@@ -126,7 +126,7 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/Trainer/pdateTraineeSchedule",
+      "DownstreamPathTemplate": "/Trainer/updateTraineeSchedule",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
