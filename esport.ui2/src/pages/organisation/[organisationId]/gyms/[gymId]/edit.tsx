@@ -5,7 +5,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import { dehydrate, QueryClient, useQueryClient } from "@tanstack/react-query";
 
 import { AppNextPage, CalendarEvent, PageProps } from "@/shared/types";
-import { getAppServerSideProps } from "@/shared/lib";
+import { getAppServerSideProps, useSnackbar } from "@/shared/lib";
 import { DayOfTheWeek } from "@/shared/constants";
 import { routes } from "@/shared/config";
 
@@ -39,6 +39,7 @@ const EditGym: AppNextPage<EditGymProps> = ({ gym }) => {
   const { gymId, organisationId } = router.query;
 
   const queryClient = useQueryClient();
+  const { showSuccess, showError } = useSnackbar();
 
   const { data, isLoading: isTimetableLoading } = useGetGymTimetable(
     Number(gymId ?? 0),
@@ -75,6 +76,10 @@ const EditGym: AppNextPage<EditGymProps> = ({ gym }) => {
               dayOfTheWeeks: [DayOfTheWeek.ALL],
             }),
           });
+          showSuccess("Timetable updated successfully");
+        },
+        onError(e: any) {
+          showError(e.message ?? "Something went wrong");
         },
       }
     );

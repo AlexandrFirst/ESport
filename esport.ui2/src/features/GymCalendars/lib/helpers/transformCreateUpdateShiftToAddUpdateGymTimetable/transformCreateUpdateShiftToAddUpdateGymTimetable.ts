@@ -1,7 +1,7 @@
-import {CalendarDayTimetable, CreateUpdateShift} from "../../..";
-import {AddUpdateGymTimetableRequest, IGymTimetable} from "@/entities/gym";
-import {getDayOfTheWeekByDayIndex} from "@/shared/lib";
-import {CalendarEvent} from "@/shared/types";
+import { CalendarDayTimetable, CreateUpdateShift } from "../../..";
+import { AddUpdateGymTimetableRequest, IGymTimetable } from "@/entities/gym";
+import { getDayOfTheWeekByDayIndex } from "@/shared/lib";
+import { CalendarEvent } from "@/shared/types";
 
 //TODO: implement
 export const transformCreateUpdateShiftToAddUpdateGymTimetable = (
