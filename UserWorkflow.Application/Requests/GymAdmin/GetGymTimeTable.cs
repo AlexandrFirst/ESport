@@ -15,8 +15,16 @@ namespace UserWorkflow.Application.Requests.GymAdmin
         public List<int> GymId { get; set; }
     }
 
+    public class GymWorkingHours 
+    {
+        public int GymId { get; set; }
+        public TimeSpan From { get; set; }
+        public TimeSpan To { get; set; }
+    }
+
     public class GetGymTimeTableResponse 
     {
+        public List<GymWorkingHours> GymWorkingHours { get; set; }
         public List<GymTimeTable> GymTimeTable { get; set; }
     }
 }

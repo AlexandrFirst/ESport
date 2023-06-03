@@ -22,7 +22,7 @@ namespace UserWorkflow.Application.Requests.GymAdmin
 
         public async Task<RequestResult<GetGymTimeTableResponse>> HandleQueryAsync(GetGymTimeTable request)
         {
-            var gymInfo = await context.Gyms.Where(x => request.GymId.Any(p => p == x.Id)).ToListAsync(); ;
+            var gymInfo = await context.Gyms.Where(x => request.GymId.Any(p => p == x.Id)).ToListAsync();
             if (gymInfo == null)
             {
                 throw new ApplicationException($"Unable to find gym with id: {request.GymId}");
@@ -35,6 +35,10 @@ namespace UserWorkflow.Application.Requests.GymAdmin
             }
 
             var result = new List<GymTimeTable>();
+            var gymWokingHours = gymShifts.DistinctBy(x => x.GymId)
+                .Select(x => new GymWorkingHours() { GymId = x.GymId, From = x.Gym.OpenTime, To = x.Gym.CloseTime})
+                .ToList();
+
             foreach (var dow in Enum.GetValues(typeof(DayOfTheWeek)))
             {
                 var currentDay = (DayOfTheWeek)dow;
@@ -83,7 +87,8 @@ namespace UserWorkflow.Application.Requests.GymAdmin
 
             return new RequestResult<GetGymTimeTableResponse>(new GetGymTimeTableResponse()
             {
-                GymTimeTable = orderedResult
+                GymTimeTable = orderedResult,
+                GymWorkingHours = gymWokingHours
             });
         }
     }
