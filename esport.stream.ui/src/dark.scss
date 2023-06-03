@@ -1,172 +1,170 @@
+// Vapor 5.0.1
+// Bootswatch
 
-@import url("../node_modules/bootstrap/dist/css/bootstrap.css");
+$theme: "vapor" !default;
+
+//
+// Color system
+//
 
 $white:    #fff !default;
 $gray-100: #f8f9fa !default;
-$gray-200: #ebebeb !default;
+$gray-200: #e9ecef !default;
 $gray-300: #dee2e6 !default;
 $gray-400: #ced4da !default;
 $gray-500: #adb5bd !default;
-$gray-600: #888 !default;
-$gray-700: #444 !default;
-$gray-800: #303030 !default;
-$gray-900: #222 !default;
+$gray-600: #6c757d !default;
+$gray-700: #495057 !default;
+$gray-800: #343a40 !default;
+$gray-900: #170229 !default;
 $black:    #000 !default;
 
-$blue:   #000 !default;
-$indigo:  #000 !default;
-$purple:  #000 !default;
-$pink:   #000 !default;
-$red:     #000 !default;
-$orange:  #000 !default;
-$yellow: #000 !default;
-$green:  #000 !default;
-$teal:    #000 !default;
-$cyan:    #000 !default;
+$blue:    #1ba2f6 !default;
+$indigo:  #6610f2 !default;
+$purple:  #6f42c1 !default;
+$pink:    #ea39b8 !default;
+$red:     #e44c55 !default;
+$orange:  #f1b633 !default;
+$yellow:  #ffc107 !default;
+$green:   #3cf281 !default;
+$teal:    #3f81a2 !default;
+$cyan:    #32fbe2 !default;
 
-$primary:       $blue !default;
-$secondary:     $gray-700 !default;
+$primary:       $purple !default;
+$secondary:     $pink !default;
 $success:       $green !default;
-$info:          $cyan !default;
+$info:          $blue !default;
 $warning:       $yellow !default;
 $danger:        $red !default;
-$light:         $gray-500 !default;
-$dark:          $gray-800 !default;
+$light:         #44d9e8 !default;
+$dark:          $gray-900 !default;
 
-$min-contrast-ratio:   1.9 !default;
+$min-contrast-ratio:   1.2 !default;
+
+// Options
+
+// $enable-rounded:              false !default;
 
 // Body
 
-$body-bg:                   $gray-900 !default;
-$body-color:                $white !default;
+$body-bg:                   #1a0933 !default;
+$body-color:                $cyan !default;
 
 // Links
 
-$link-color:                $success !default;
+$link-color:                              $body-color !default;
+
+// Components
+
+$border-width:                0 !default;
+
+$border-radius:               .15rem !default;
+$border-radius-sm:            .05rem !default;
+
+$component-active-bg:         $pink !default;
 
 // Fonts
 
 // stylelint-disable-next-line value-keyword-case
 $font-family-sans-serif:      Lato, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol" !default;
-$h1-font-size:                3rem !default;
-$h2-font-size:                2.5rem !default;
-$h3-font-size:                2rem !default;
-$text-muted:                  $gray-600 !default;
+
+$text-muted:                  rgba($body-color, .3) !default;
+
+$blockquote-footer-color:     $text-muted !default;
 
 // Tables
 
-$table-border-color:          $gray-700 !default;
+$table-color:                 $white !default;
 
-$table-bg-scale:              0% !default;
+$table-bg-scale:              0 !default;
 
 // Forms
 
-$input-bg:                          $white !default;
-$input-color:                       $gray-800 !default;
-$input-border-color:                $body-bg !default;
-$input-group-addon-color:           $gray-500 !default;
-$input-group-addon-bg:              $gray-700 !default;
+$input-bg:                              lighten($body-bg, 10%) !default;
+$input-disabled-bg:                     lighten($body-bg, 5%) !default;
 
-$form-check-input-bg:                     $white !default;
-$form-check-input-border:                 none !default;
+$input-color:                           $white !default;
 
-$form-select-disabled-color:        $gray-600 !default;
+$input-placeholder-color:               rgba($white, .4) !default;
 
-$form-file-button-color:          $white !default;
+$input-group-addon-bg:                  $input-disabled-bg !default;
 
-// Dropdowns
+$form-range-track-bg:             $input-bg !default;
 
-$dropdown-bg:                       $gray-900 !default;
-$dropdown-border-color:             $gray-700 !default;
-$dropdown-divider-bg:               $gray-700 !default;
-$dropdown-link-color:               $white !default;
-$dropdown-link-hover-color:         $white !default;
-$dropdown-link-hover-bg:            $primary !default;
+$form-range-thumb-disabled-bg:             $purple !default;
 
 // Navs
 
-$nav-link-padding-x:                2rem !default;
-$nav-link-disabled-color:           $gray-500 !default;
-$nav-tabs-border-color:             $gray-700 !default;
-$nav-tabs-link-hover-border-color:  $nav-tabs-border-color $nav-tabs-border-color transparent !default;
-$nav-tabs-link-active-color:        $white !default;
-$nav-tabs-link-active-border-color: $nav-tabs-border-color $nav-tabs-border-color transparent !default;
+$nav-link-disabled-color:           $text-muted !default;
 
-// Navbar
-
-$navbar-padding-y:                  1rem !default;
-$navbar-dark-color:                rgba($white, .6) !default;
-$navbar-dark-hover-color:          $white !default;
-$navbar-light-color:                rgba($gray-900, .7) !default;
-$navbar-light-hover-color:          $gray-900 !default;
-$navbar-light-active-color:         $gray-900 !default;
-$navbar-light-toggler-border-color: rgba($gray-900, .1) !default;
+$nav-tabs-link-active-color:        $component-active-bg !default;
 
 // Pagination
 
-$pagination-color:                  $white !default;
-$pagination-bg:                     $success !default;
-$pagination-border-width:           0 !default;
-$pagination-border-color:           transparent !default;
-$pagination-hover-color:            $white !default;
-$pagination-hover-bg:               lighten($success, 10%) !default;
-$pagination-hover-border-color:     transparent !default;
-$pagination-active-bg:              $pagination-hover-bg !default;
-$pagination-active-border-color:    transparent !default;
-$pagination-disabled-color:         $white !default;
-$pagination-disabled-bg:            darken($success, 15%) !default;
-$pagination-disabled-border-color:  transparent !default;
+$pagination-bg:                     transparent !default;
+
+$pagination-focus-bg:               transparent !default;
+
+$pagination-hover-bg:               transparent !default;
+
+$pagination-disabled-color:         $text-muted !default;
+$pagination-disabled-bg:            transparent !default;
 
 // Cards
 
-$card-cap-bg:                       $gray-700 !default;
-$card-bg:                           $gray-800 !default;
+$card-border-width:                 2px !default;
+$card-cap-color:                    $white !default;
+$card-color:                        $white !default;
+
+// Tooltips
+
+$tooltip-bg:                        $dark !default;
+$tooltip-opacity:                   1 !default;
 
 // Popovers
 
-$popover-bg:                        $gray-800 !default;
-$popover-header-bg:                 $gray-700 !default;
+$popover-bg:                        $primary !default;
+
+$popover-header-color:              $white !default;
+
+$popover-body-color:                $white !default;
 
 // Toasts
 
-$toast-background-color:            $gray-700 !default;
-$toast-header-background-color:     $gray-800 !default;
+$toast-color:                       $white !default;
+$toast-background-color:            $primary !default;
+
+$toast-header-color:                $toast-color !default;
+$toast-header-background-color:     $toast-background-color !default;
 
 // Modals
 
-$modal-content-bg:                  $gray-800 !default;
-$modal-content-border-color:        $gray-700 !default;
-$modal-header-border-color:         $gray-700 !default;
+$modal-content-color:               $white !default;
+$modal-content-bg:                  $primary !default;
 
 // Progress bars
 
-$progress-bg:                       $gray-700 !default;
+$progress-bg:                       $input-disabled-bg !default;
 
 // List group
 
-$list-group-color:                  $body-color !default;
-$list-group-bg:                     $gray-800 !default;
-$list-group-border-color:           $gray-700 !default;
-$list-group-hover-bg:               $gray-700 !default;
-$list-group-action-hover-color:     $list-group-color !default;
-$list-group-action-active-bg:       $gray-900 !default;
+$list-group-color:                  $white !default;
+$list-group-bg:                     $input-disabled-bg !default;
+$list-group-hover-bg:               $pink !default;
+$list-group-disabled-color:         $text-muted !default;
+$list-group-action-color:           $body-color !default;
+$list-group-action-hover-color:     $white !default;
+$list-group-action-active-bg:       $list-group-hover-bg !default;
 
 // Breadcrumbs
 
-$breadcrumb-padding-y:              .375rem !default;
-$breadcrumb-padding-x:              .75rem !default;
-$breadcrumb-bg:                     $gray-700 !default;
-$breadcrumb-border-radius:          .25rem !default;
+$breadcrumb-divider-color:          $text-muted !default;
+$breadcrumb-active-color:           $component-active-bg !default;
 
-// Close
+// Fix disappearing <hr>
 
-$btn-close-color:            $white !default;
-$btn-close-opacity:          .4 !default;
-$btn-close-hover-opacity:    1 !default;
+hr:not([size]) {
+  height: 1px !important;
+}
 
-// Code
-
-$pre-color:                         inherit !default;
-
-
-
+@import 'node_modules/bootstrap/scss/bootstrap';
