@@ -97,6 +97,7 @@ export type { CollapseList } from "./Collapse/Collapse";
 export * from "./Dropdown/Dropdown";
 export * from "./Select/Select";
 export * from "./Table/Table";
+export { Badge } from "./Badge/Badge";
 
 // DataTable
 export { DataTable } from "./DataTable/DataTable";

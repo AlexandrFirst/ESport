@@ -1,0 +1,11 @@
+.default {
+  @apply bg-theme-main hover:opacity-80 border-transparent text-theme-light;
+}
+
+.secondary {
+  @apply bg-theme-card-main hover:opacity-80 border-transparent text-theme-light;
+}
+
+.outlined {
+  @apply text-theme-main border-theme-main;
+}

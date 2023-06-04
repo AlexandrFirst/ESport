@@ -14,6 +14,8 @@ export const gymApiKeys = {
     [...gymApiKeys.all, "gym-timetable", "update"] as const,
   createTrainerRequest: () =>
     [...gymApiKeys.all, "trainer-request", "create"] as const,
-  getTrainerRequestsRequest: (request: GetTrainerRequestsRequest) =>
+  getTrainerRequestsAll: () =>
+    [...gymApiKeys.all, "get-trainer-requests"] as const,
+  getTrainerRequestsRequest: (request?: GetTrainerRequestsRequest) =>
     [...gymApiKeys.all, "get-trainer-requests", request] as const,
 };

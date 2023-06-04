@@ -44,5 +44,6 @@ export const useProfileInfo = ({
     //TODO: check with backend
     // isConfirmedGymAdmin: profile?.userAdminInfo?.isConfirmed ?? false,
     isAdminForGyms: isAdminForGyms(profile, gymIds),
+    trainerId: profile?.userTrainerInfo?.id,
   };
 };

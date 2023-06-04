@@ -9,6 +9,7 @@ import { DayOfTheWeek } from "@/shared/constants";
 import {
   CollapsableGymReadInfo,
   getGymTimetable,
+  getGymTrainerRequests,
   GymApi,
   gymApiKeys,
   IGymReadInfo,
@@ -46,7 +47,7 @@ export const getServerSideProps = getAppServerSideProps(async (ctx, store) => {
     ctx.locale ?? ctx.defaultLocale ?? "en",
     ["common"]
   );
-  const { gymId } = ctx.query;
+  const { gymId, organisationId } = ctx.query;
 
   const queryClient = new QueryClient();
   const { user } = store.getState();
@@ -75,6 +76,24 @@ export const getServerSideProps = getAppServerSideProps(async (ctx, store) => {
     queryClient.prefetchQuery({
       queryKey: profileApiKeys.getProfileById(userId),
       queryFn: async () => getProfileInfo(userId, ctx),
+    }),
+    queryClient.prefetchQuery({
+      queryKey: gymApiKeys.getTrainerRequestsRequest({
+        page: 1,
+        pageSize: 1000,
+        gymId: Number(gymId ?? 0),
+        organisationId: Number(organisationId ?? 0),
+      }),
+      queryFn: async () =>
+        getGymTrainerRequests(
+          {
+            page: 1,
+            pageSize: 100,
+            gymId: Number(gymId ?? 0),
+            organisationId: Number(organisationId ?? 0),
+          },
+          ctx
+        ),
     }),
   ]);
 
