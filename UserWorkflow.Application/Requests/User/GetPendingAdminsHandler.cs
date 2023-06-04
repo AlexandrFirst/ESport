@@ -66,6 +66,10 @@ namespace UserWorkflow.Application.Requests.User
             {
                 var pendingGymOrganistors = context.GymAdministrators
                     .Where(x => x.Gym.OrganisationId == currentOrganisationAdministrator.OrganisationId && x.IsConfirmed == false);
+                if (request.GymId.HasValue) 
+                {
+                    pendingGymOrganistors = pendingGymOrganistors.Where(x => x.GymId == request.GymId);
+                }
                 var result = await gymAdministartorPaging.ApplyPagingAsync(pendingGymOrganistors, request.Page, request.PageSize);
 
 

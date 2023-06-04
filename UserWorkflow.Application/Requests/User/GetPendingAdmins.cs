@@ -15,6 +15,7 @@ namespace UserWorkflow.Application.Requests.User
         public int Page { get; set; }
         public int PageSize { get; set; }
         public AdminType AdminType { get; set; }
+        public int? GymId { get; set; }
     }
 
     public class GetPendingAdminsResult : BaseListing
