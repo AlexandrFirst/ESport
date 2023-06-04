@@ -43,14 +43,16 @@ namespace UserWorkflow.Application.Commands.Gym
                 throw new ApplicationException("Start shift time must be greater than end time");
             }
 
-            var maxOpenTime = command.GymShiftInfos.Min(x => x.Start);
-            var maxCloseTime = command.GymShiftInfos.Min(x => x.End);
-
-            if (maxCloseTime > gym.CloseTime || maxOpenTime < gym.OpenTime)
+            if (command.GymShiftInfos.Any())
             {
-                throw new ApplicationException("Open and close time should be in bound of gyms working our");
-            }
+                var maxOpenTime = command.GymShiftInfos.Min(x => x.Start);
+                var maxCloseTime = command.GymShiftInfos.Min(x => x.End);
 
+                if (maxCloseTime >= gym.CloseTime || maxOpenTime <= gym.OpenTime)
+                {
+                    throw new ApplicationException("Open and close time should be in bound of gyms working our");
+                }
+            }
 
             var shiftsToUpdate = gym.GymShifts.Join(command.GymShiftInfos, x => x.Id, x => x.GymShiftId, (x, y) => new
             {
@@ -92,6 +94,7 @@ namespace UserWorkflow.Application.Commands.Gym
                 }
                 mapper.Map(item._new, item._old);
             }
+            
             context.AddRange(mapper.Map<List<GymShift>>(shiftsToAdd, opt =>
             {
                 opt.AfterMap((src, dest) =>
@@ -103,7 +106,7 @@ namespace UserWorkflow.Application.Commands.Gym
                 });
             }));
 
-
+            context.GymShifts.RemoveRange(shiftsToRemove);
 
             await context.SaveChangesAsync();
             return new CommandResult(gym.Id);
