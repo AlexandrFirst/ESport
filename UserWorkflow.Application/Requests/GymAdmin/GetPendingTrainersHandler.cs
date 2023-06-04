@@ -48,6 +48,7 @@ namespace UserWorkflow.Application.Requests.GymAdmin
             var queryResutlt = await paging.ApplyPagingAsync(trainerResponseQuery, request.CurrentPage, request.PageSize);
             var pendingTrainers = queryResutlt.Listing.Select(x => new PendingTrainerModel()
             {
+                RequestId = x.TrainerRequestId,
                 TrainerInfo = new TrainerInfo()
                 {
                     Email = x.Trainer.Email,

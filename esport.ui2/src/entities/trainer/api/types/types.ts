@@ -1,12 +1,6 @@
-import { IGymTimetableByDate } from "@/entities/gym";
-
 export interface GetTrainerTimetableRequest {
   trainerId: number;
   gymId?: number;
-  startDateTime?: Date;
+  startDateTime?: string;
   dayRange?: number;
-}
-
-export interface GetTrainerTimetableResponse {
-  gymTimeTable: IGymTimetableByDate[];
 }

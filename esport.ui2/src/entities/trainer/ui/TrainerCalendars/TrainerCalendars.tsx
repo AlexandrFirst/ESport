@@ -1,13 +1,19 @@
 import { FC } from "react";
 
-import { TwoCalendars } from "@/shared/ui";
+import { TwoCalendars, TwoCalendarsProps } from "@/shared/ui";
 import { CalendarEvent } from "@/shared/types";
 
-interface TrainerCalendarsProps {
+import { IDayTimetable } from "@/entities/gym";
+
+interface TrainerCalendarsProps
+  extends Omit<TwoCalendarsProps<IDayTimetable>, "calendarEvents"> {
   className?: string;
-  timetable: CalendarEvent<unknown>[];
+  timetable: CalendarEvent<IDayTimetable>[];
 }
 
-export const TrainerCalendars: FC<TrainerCalendarsProps> = ({ timetable }) => {
-  return <TwoCalendars calendarEvents={timetable} />;
+export const TrainerCalendars: FC<TrainerCalendarsProps> = ({
+  timetable,
+  ...props
+}) => {
+  return <TwoCalendars {...props} calendarEvents={timetable} />;
 };

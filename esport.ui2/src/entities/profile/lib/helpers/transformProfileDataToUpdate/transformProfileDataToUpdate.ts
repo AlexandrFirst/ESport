@@ -1,9 +1,9 @@
-import { IProfile } from "../../../model/types/profile";
-import { ITrainerSportInfo } from "../../../model/types/trainer-sport-info";
-import { UpdateProfileInfoRequest } from "../../../api/types/types";
-
-import { transformTrainerSportInfo } from "../transformTrainerSportInfo/transformTrainerSportInfo";
 import { IGymInfo } from "@/entities/gym";
+import { ITrainerSportInfo } from "@/entities/trainer";
+
+import { IProfile } from "../../../model/types/profile";
+import { UpdateProfileInfoRequest } from "../../../api/types/types";
+import { transformTrainerSportInfo } from "../transformTrainerSportInfo/transformTrainerSportInfo";
 
 interface TransformProfileDataToUpdateParams {
   data: IProfile;

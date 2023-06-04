@@ -5,9 +5,9 @@ import { buildSlice } from "@/shared/lib";
 
 import { StateSchema } from "@/_app/Providers";
 
-import { ITrainerSportInfo } from "@/entities/profile";
 import { ISport } from "@/entities/sport";
 import { IGymReadInfo } from "@/entities/gym";
+import { ITrainerSportInfo } from "@/entities/trainer";
 
 import { RoleProfileInformationState } from "../types/roleProfileInformationState";
 import { transformSportToTrainerSportInfo } from "../../lib/helpers/transformSportToTrainerSportInfo/transformSportToTrainerSportInfo";

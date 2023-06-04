@@ -1,5 +1,6 @@
 import { DayOfTheWeek } from "@/shared/constants";
-import { ITimetableLesson } from "./timetable-lesson";
+
+import { ITimetableLesson } from "@/entities/lesson";
 
 export interface IDayTimetable {
   from: string;

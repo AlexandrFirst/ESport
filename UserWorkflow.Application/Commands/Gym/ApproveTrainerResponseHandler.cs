@@ -55,6 +55,8 @@ namespace UserWorkflow.Application.Commands.Gym
                 }, QueueConfigName.MessageConfig);
             });
             dataContext.TrainerResponses.RemoveRange(allRequestResponses);
+            dataContext.TrainerResponses.Remove(trainerResponse);
+            dataContext.TrainerRequests.Remove(trainerResponse.TrainerRequest);
 
             await dataContext.SaveChangesAsync();
             return new CommandResult(1);

@@ -1,13 +1,11 @@
 import { useQuery, UseQueryOptions } from "@tanstack/react-query";
 import { ApiContext } from "@/shared/types";
 
-import {
-  GetTrainerTimetableRequest,
-  GetTrainerTimetableResponse,
-} from "../types/types";
+import { GetTrainerTimetableRequest } from "../types/types";
 import { TrainerApi } from "../trainerApi";
 
 import { trainerApiKeys } from "./trainerApiKeys";
+import { IGymTimetableByDate } from "@/entities/gym";
 
 export const getTrainerTimetable = async (
   request: GetTrainerTimetableRequest,
@@ -24,9 +22,9 @@ export const getTrainerTimetable = async (
 export const useGetTrainerTimetable = (
   request: GetTrainerTimetableRequest,
   options?: UseQueryOptions<
-    GetTrainerTimetableResponse,
+    IGymTimetableByDate[],
     unknown,
-    GetTrainerTimetableResponse
+    IGymTimetableByDate[]
   >
 ) => {
   return useQuery({

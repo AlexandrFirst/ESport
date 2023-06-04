@@ -16,3 +16,5 @@ export type { GetTrainerTimetableRequest } from "./api/types/types";
 export type { ITrainerSportInfo } from "./model/types/trainer-sport-info";
 export type { IPendingTrainerModel } from "./model/types/pending-trainer-model";
 export type { ITrainerInfo } from "./model/types/trainer-info";
+
+export { transfornGymTimetableByDateToCalendarEvent } from "./lib/helpers/transfornGymTimetableByDateToCalendarEvent/transfornGymTimetableByDateToCalendarEvent";

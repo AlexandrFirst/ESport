@@ -1,7 +1,12 @@
-import { CalendarDayTimetable, CreateUpdateShift } from "../../..";
-import { AddUpdateGymTimetableRequest, IGymTimetable } from "@/entities/gym";
 import { getDayOfTheWeekByDayIndex } from "@/shared/lib";
 import { CalendarEvent } from "@/shared/types";
+
+import {
+  AddUpdateGymTimetableRequest,
+  CalendarDayTimetable,
+  CreateUpdateShift,
+  IGymTimetable,
+} from "@/entities/gym";
 
 interface Params {
   gymId: number;

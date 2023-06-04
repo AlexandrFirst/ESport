@@ -8,26 +8,20 @@ import {
   getTrainerTimetable,
   GetTrainerTimetableRequest,
   trainerApiKeys,
-  TrainerCalendars,
-  useGetTrainerTimetable,
 } from "@/entities/trainer";
 import { ProfileApi } from "@/entities/profile";
 
 import { useCurrentUserProfileInfo } from "@/features/CurrentUserProfileInfo";
 
 import { getMainLayout } from "@/widgets/MainLayout";
+import { TrainerTimetable } from "@/features/TrainerTimetable";
 
 type TimetableProps = PageProps & {};
 
 const Timetable: AppNextPage<TimetableProps> = () => {
   const { trainerId } = useCurrentUserProfileInfo();
 
-  const { data } = useGetTrainerTimetable({
-    trainerId,
-    startDateTime: new Date(),
-    dayRange: 30,
-  });
-  return <TrainerCalendars timetable={data?.gymTimeTable ?? []} />;
+  return <TrainerTimetable trainerId={trainerId} />;
 };
 
 Timetable.getLayout = getMainLayout({
@@ -47,7 +41,7 @@ export const getServerSideProps = getAppServerSideProps(async (ctx, store) => {
 
   const request: GetTrainerTimetableRequest = {
     trainerId: data?.userTrainerInfo?.userId ?? 0,
-    startDateTime: new Date(),
+    startDateTime: new Date().toLocaleDateString(),
     dayRange: 30,
   };
 

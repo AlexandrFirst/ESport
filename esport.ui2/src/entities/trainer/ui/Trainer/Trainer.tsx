@@ -6,10 +6,5 @@ interface TrainerProps {
 }
 
 export const Trainer: FC<TrainerProps> = (props) => {
-
-    return (
-        <div className={styles.wrapper}>
-
-        </div>
-    );
+  return <div className={styles.wrapper}></div>;
 };
