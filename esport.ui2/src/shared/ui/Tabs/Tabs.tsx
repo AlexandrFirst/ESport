@@ -11,9 +11,10 @@ export interface TabItem<T extends string> {
   content: ReactNode;
   as?: ElementType;
   className?: string;
+  disabled?: boolean;
 }
 
-export type TabList<T extends string> = TabItem<T>[];
+export type TabList<T extends string = string> = TabItem<T>[];
 
 interface TabsProps<T extends string> {
   tabs: TabItem<T>[];
@@ -40,33 +41,42 @@ export function Tabs<T extends string>({
     <Tab.Group selectedIndex={selectedIndex} onChange={setSelectedIndex}>
       <Tab.List>
         <Component className={cn(styles.wrapper, className)}>
-          {tabs.map(({ label, value, as: TabComponent = "li", className }) => (
-            <Tab key={value} as={Fragment}>
-              {({ selected }) => (
-                <TabComponent
-                  className={cn(styles.tab, className, {
-                    [styles.activeTab]: selected,
-                  })}
-                  onClick={handleTabClick(value)}
-                >
-                  {selected && (
-                    <motion.div
-                      layoutId="active-pill"
-                      className={styles.pill}
-                      transition={{ type: "spring", duration: 0.5 }}
-                    />
-                  )}
-                  <div
-                    className={cn(styles.label, {
-                      [styles.selected_text]: selected,
+          {tabs.map(
+            ({
+              label,
+              value,
+              as: TabComponent = "li",
+              className,
+              disabled,
+            }) => (
+              <Tab key={value} disabled={disabled}>
+                {({ selected }) => (
+                  <TabComponent
+                    className={cn(styles.tab, className, {
+                      [styles.activeTab]: selected,
+                      [styles.disabled]: disabled,
                     })}
+                    onClick={handleTabClick(value)}
                   >
-                    {label}
-                  </div>
-                </TabComponent>
-              )}
-            </Tab>
-          ))}
+                    {selected && (
+                      <motion.div
+                        layoutId="active-pill"
+                        className={styles.pill}
+                        transition={{ type: "spring", duration: 0.5 }}
+                      />
+                    )}
+                    <div
+                      className={cn(styles.label, {
+                        [styles.selected_text]: selected,
+                      })}
+                    >
+                      {label}
+                    </div>
+                  </TabComponent>
+                )}
+              </Tab>
+            )
+          )}
         </Component>
       </Tab.List>
       <Tab.Panels>

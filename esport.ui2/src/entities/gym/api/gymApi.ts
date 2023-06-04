@@ -6,6 +6,8 @@ import {
   CreateTrainerRequestRequest,
   GetGymTimetableRequest,
   GetGymTimetableResponse,
+  GetTrainerRequestsRequest,
+  GetTrainerRequestsResponse,
   IGymListingRequest,
   IGymListingResponse,
 } from "./types/types";
@@ -34,6 +36,12 @@ export const GymApi = (ctx?: ApiContext) => {
       request: CreateTrainerRequestRequest
     ) {
       return instance.post(`/gym/${gymId}/request/open`, request);
+    },
+    async getTrainerRequests(request: GetTrainerRequestsRequest) {
+      return instance.post<GetTrainerRequestsResponse>(
+        "/trainer-requests",
+        request
+      );
     },
   };
 };

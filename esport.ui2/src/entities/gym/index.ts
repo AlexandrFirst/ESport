@@ -37,3 +37,7 @@ export {
 } from "./api/hooks/useGetGymTimetable";
 export { useAddUpdateTimetable } from "./api/hooks/useAddUpdateTimetable";
 export { useCreateTrainerRequest } from "./api/hooks/useCreateTrainerRequest";
+export {
+  getGymTrainerRequests,
+  useGetGymTrainerRequests,
+} from "./api/hooks/useGetGymTrainerRequests";

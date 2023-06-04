@@ -4,7 +4,7 @@ import { DayOfTheWeek } from "@/shared/constants";
 import { IGymTimetable } from "../../model/types/gym-timetable";
 import { IGymReadInfo } from "../../model/types/gym-read-info";
 import { IGymShiftInfo } from "../../model/types/gym-shift-info";
-import { IGymWorkingHours } from "../..";
+import { IGymRequestItem, IGymWorkingHours } from "../..";
 
 export interface IGymListingRequest {
   gymIds?: number[];
@@ -38,4 +38,15 @@ export interface AddUpdateGymTimetableRequest {
 export interface CreateTrainerRequestRequest {
   shiftId: number;
   description: string;
+}
+
+export interface GetTrainerRequestsRequest {
+  gymId?: number;
+  organisationId?: number;
+  page: number;
+  pageSize: number;
+}
+
+export interface GetTrainerRequestsResponse extends BaseListingResult {
+  gymRequestItems: IGymRequestItem[];
 }

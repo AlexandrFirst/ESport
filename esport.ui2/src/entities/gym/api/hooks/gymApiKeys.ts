@@ -1,4 +1,8 @@
-import { GetGymTimetableRequest, IGymListingRequest } from "../types/types";
+import {
+  GetGymTimetableRequest,
+  GetTrainerRequestsRequest,
+  IGymListingRequest,
+} from "../types/types";
 
 export const gymApiKeys = {
   all: ["gyms"] as const,
@@ -10,4 +14,6 @@ export const gymApiKeys = {
     [...gymApiKeys.all, "gym-timetable", "update"] as const,
   createTrainerRequest: () =>
     [...gymApiKeys.all, "trainer-request", "create"] as const,
+  getTrainerRequestsRequest: (request: GetTrainerRequestsRequest) =>
+    [...gymApiKeys.all, "get-trainer-requests", request] as const,
 };

@@ -118,7 +118,12 @@ export const CalendarSheet: FC<CalendarSheetProps> = ({
         selectedEvent,
         shiftToDelete: event?.data,
       }),
-      { onSuccess, onError }
+      {
+        onSuccess() {
+          showSuccess("Option was deleted successfully");
+        },
+        onError,
+      }
     );
   };
 

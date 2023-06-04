@@ -15,9 +15,8 @@ import {
 } from "@/entities/gym";
 import { getProfileInfo, profileApiKeys } from "@/entities/profile";
 
-import { EditableCalendarTimetable } from "@/features/GymCalendars";
-
 import { getMainLayout } from "@/widgets/MainLayout";
+import { GymInfoTabs } from "@/widgets/GymInfoTabs";
 
 type GymProps = PageProps & {
   gym: IGymReadInfo;
@@ -31,7 +30,7 @@ const Gym: AppNextPage<GymProps> = ({ error, gym }) => {
       <Card>
         <CollapsableGymReadInfo gym={gym} />
       </Card>
-      <EditableCalendarTimetable gym={gym} />
+      <GymInfoTabs gym={gym} />
     </>
   );
 };
