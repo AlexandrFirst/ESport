@@ -5,12 +5,13 @@ import { IProfile } from "../../model/types/profile";
 import { useSelectProfile } from "../../model/selectors/select-profile/select-profile";
 
 import { profileApiKeys } from "./profileApiKeys";
+import { ApiContext } from "@/shared/types";
 
 export type GetProfileOptions = UseQueryOptions<IProfile, unknown, IProfile>;
 
-export const getProfileInfo = async (userId?: number) => {
+export const getProfileInfo = async (userId?: number, ctx?: ApiContext) => {
   try {
-    const { data } = await ProfileApi().getProfileInfo(userId ?? 0);
+    const { data } = await ProfileApi(ctx).getProfileInfo(userId ?? 0);
     return data;
   } catch (e) {
     throw e;

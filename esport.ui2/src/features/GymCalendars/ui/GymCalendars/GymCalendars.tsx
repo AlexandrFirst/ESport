@@ -6,7 +6,7 @@ import { Calendar, SmallCalendar } from "@/shared/ui";
 import { getCurrentMonth } from "@/shared/lib";
 import { CalendarEvent } from "@/shared/types";
 
-import { CalendarDayTimetable } from "../../model/types/calendarDayTimetable";
+import { CalendarDayTimetable } from "@/entities/gym";
 
 interface GymCalendarsProps {
   className?: string;
