@@ -21,6 +21,7 @@ using UserWorkflow.Application.Requests.User;
 using UserWorkflow.Application.Services.Confirmation;
 using UserWorkflow.Application.Services.Gym;
 using UserWorkflow.Application.Services.Lesson;
+using UserWorkflow.Application.Services.Media;
 using UserWorkflow.Application.Services.Organisation;
 using UserWorkflow.Application.Services.Users;
 using UserWorkflow.Esport.Models;
@@ -48,6 +49,8 @@ namespace UserWorkflow.Application
             services.AddTransient<IRequestBus, RequestBus>();
             services.AddTransient<IValidateCommand, ValidateCommand>();
             services.AddTransient<IValidateRequest, ValidateRequest>();
+
+            services.AddTransient<IUserMediaService, UserMediaService>();
 
             services.AddTransient<IUserService, UserService>();
             services.AddTransient<ILessonService, LessonService>();

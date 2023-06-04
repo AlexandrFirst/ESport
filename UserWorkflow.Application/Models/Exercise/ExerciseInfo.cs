@@ -13,7 +13,7 @@ namespace UserWorkflow.Application.Models.Exercise
         public List<ExerciseRelationModel> SportRelations { get; set; }
         public List<ExerciseRelationModel> TraumaRelations { get; set; }
         public List<ExerciseRelationModel> BodypartRelation { get; set; }
-        public List<string> ExerciseTutorialLinks { get; set; }
+        public List<int> ExerciseTutorialLinks { get; set; }
     }
 
     public class ExerciseRelationModel 
