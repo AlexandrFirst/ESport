@@ -1,0 +1,15 @@
+.sub_trigger {
+  @apply flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none focus:bg-theme-accent data-[state=open]:bg-theme-accent;
+}
+
+.sub_content {
+  @apply z-50 min-w-[8rem] overflow-hidden rounded-md border bg-theme-card-main p-1 text-theme-main shadow-md animate-in data-[side=bottom]:slide-in-from-top-1 data-[side=left]:slide-in-from-right-1 data-[side=right]:slide-in-from-left-1 data-[side=top]:slide-in-from-bottom-1;
+}
+
+.content {
+  @apply z-50 min-w-[8rem] overflow-hidden rounded-md border bg-theme-card-main p-1 text-theme-main shadow-md animate-in data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2;
+}
+
+.item {
+  @apply relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none transition-colors focus:bg-theme-accent focus:text-theme-light data-[disabled]:pointer-events-none data-[disabled]:opacity-50;
+}

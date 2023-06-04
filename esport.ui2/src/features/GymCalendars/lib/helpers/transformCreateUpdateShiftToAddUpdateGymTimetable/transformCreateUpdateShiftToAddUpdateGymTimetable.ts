@@ -1,16 +1,25 @@
-import {CalendarDayTimetable, CreateUpdateShift} from "../../..";
-import {AddUpdateGymTimetableRequest, IGymTimetable} from "@/entities/gym";
-import {getDayOfTheWeekByDayIndex} from "@/shared/lib";
-import {CalendarEvent} from "@/shared/types";
+import { CalendarDayTimetable, CreateUpdateShift } from "../../..";
+import { AddUpdateGymTimetableRequest, IGymTimetable } from "@/entities/gym";
+import { getDayOfTheWeekByDayIndex } from "@/shared/lib";
+import { CalendarEvent } from "@/shared/types";
 
-//TODO: implement
-export const transformCreateUpdateShiftToAddUpdateGymTimetable = (
-  gymId: number,
-  gymTimetable: IGymTimetable[],
-  data: CreateUpdateShift,
-  selectedDate?: Date,
-  selectedEvent?: CalendarEvent<CalendarDayTimetable>
-): AddUpdateGymTimetableRequest => {
+interface Params {
+  gymId: number;
+  gymTimetable: IGymTimetable[];
+  selectedDate?: Date;
+  selectedEvent?: CalendarEvent<CalendarDayTimetable>;
+  data?: CreateUpdateShift;
+  shiftToDelete?: CalendarDayTimetable;
+}
+
+export const transformCreateUpdateShiftToAddUpdateGymTimetable = ({
+  gymId,
+  gymTimetable,
+  selectedDate,
+  selectedEvent,
+  data,
+  shiftToDelete,
+}: Params): AddUpdateGymTimetableRequest => {
   let gymShiftInfos = gymTimetable
     .map((timetable) => {
       return timetable.dayTimeTable.map((dayTimeTable) => {
@@ -33,14 +42,23 @@ export const transformCreateUpdateShiftToAddUpdateGymTimetable = (
     );
   }
 
-  gymShiftInfos.push({
-    dayOfTheWeek: getDayOfTheWeekByDayIndex(selectedDate),
-    end: data.to,
-    start: data.from,
-    notifyOnUpdate: data.notifyOnUpdate,
-    gymShiftId: selectedEvent?.data?.shiftId ?? 0,
-    forceUpdateOverridenTimes: false,
-  });
+  if (data) {
+    gymShiftInfos.push({
+      dayOfTheWeek: getDayOfTheWeekByDayIndex(selectedDate),
+      end: data.to,
+      start: data.from,
+      notifyOnUpdate: data.notifyOnUpdate,
+      gymShiftId: selectedEvent?.data?.shiftId ?? 0,
+      forceUpdateOverridenTimes: false,
+    });
+  }
+
+  if (shiftToDelete) {
+    gymShiftInfos = gymShiftInfos.filter(
+      (shift) => shift.gymShiftId !== shiftToDelete.shiftId
+    );
+  }
+
   return {
     gymId,
     gymShiftInfos,

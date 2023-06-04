@@ -8,6 +8,7 @@ import { Icon } from "@/shared/ui";
 
 import { IGymReadInfo } from "../../model/types/gym-read-info";
 import cn from "classnames";
+import { getTimeFromTimeSpan } from "@/shared/lib";
 
 export interface GymListItemProps {
   className?: string;
@@ -28,10 +29,16 @@ export const GymListItem: FC<GymListItemProps> = ({ gym, onClickGym }) => {
       {/*<Image src={} alt={} />*/}
       <div className={styles.photo}>Photo</div>
       <div className={styles.info}>
-        <span className={"mt-2"}>Address: {gym.address}</span>
+        <span className={"mt-5"}>
+          {gym.name} ({gym.address})
+        </span>
         <div className={"flex flex-col"}>
-          <span className={styles.time}>Opened: {gym.onenTime}</span>
-          <span className={styles.closed}>Closed: {gym.closeTime}</span>
+          <span className={styles.time}>
+            Opened: {getTimeFromTimeSpan(gym.onenTime)}
+          </span>
+          <span className={styles.closed}>
+            Closed: {getTimeFromTimeSpan(gym.closeTime)}
+          </span>
         </div>
       </div>
       <div className={"ml-6 flex flex-col justify-end font-semibold"}>

@@ -1,7 +1,14 @@
 import { DayOfTheWeek } from "@/shared/constants";
 import { useMemo } from "react";
 
-export const useMappedDaysOfTheWeek = (): Record<DayOfTheWeek, string> => {
+interface UseMappedDaysOfTheWeekParams {
+  listAllTranslations?: boolean;
+}
+
+export const useMappedDaysOfTheWeek = (
+  config?: UseMappedDaysOfTheWeekParams
+): Record<DayOfTheWeek, string> => {
+  const { listAllTranslations } = config || {};
   return useMemo(
     () => ({
       [DayOfTheWeek.MONDAY]: "Monday",
@@ -11,8 +18,10 @@ export const useMappedDaysOfTheWeek = (): Record<DayOfTheWeek, string> => {
       [DayOfTheWeek.FRIDAY]: "Friday",
       [DayOfTheWeek.SATURDAY]: "Saturday",
       [DayOfTheWeek.SUNDAY]: "Sunday",
-      [DayOfTheWeek.ALL]: "All",
+      [DayOfTheWeek.ALL]: listAllTranslations
+        ? "Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday"
+        : "All",
     }),
-    []
+    [listAllTranslations]
   );
 };

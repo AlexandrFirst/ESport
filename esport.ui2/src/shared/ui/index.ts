@@ -93,3 +93,13 @@ export { TimeInput } from "./TimeInput/TimeInput";
 
 export { Collapse } from "./Collapse/Collapse";
 export type { CollapseList } from "./Collapse/Collapse";
+
+export * from "./Dropdown/Dropdown";
+export * from "./Select/Select";
+export * from "./Table/Table";
+
+// DataTable
+export { DataTable } from "./DataTable/DataTable";
+export { DataTableColumnHeader } from "./DataTable/DataTableColumnHeader";
+export { DataTablePagination } from "./DataTable/DataTablePagination";
+export { DataTableViewOptions } from "./DataTable/DataTableViewOptions";

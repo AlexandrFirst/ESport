@@ -34,3 +34,8 @@ export interface AddUpdateGymTimetableRequest {
   gymId: number;
   gymShiftInfos: IGymShiftInfo[];
 }
+
+export interface CreateTrainerRequestRequest {
+  shiftId: number;
+  description: string;
+}

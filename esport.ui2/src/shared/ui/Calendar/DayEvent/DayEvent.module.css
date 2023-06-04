@@ -1,5 +1,9 @@
 .event {
-  @apply flex justify-between p-1 mx-3 text-theme-light text-sm rounded mb-1 truncate bg-theme-accent;
+  @apply flex justify-between p-1 mx-3 text-theme-light text-sm rounded mb-1 truncate bg-theme-accent cursor-default;
+}
+
+.clickable {
+  @apply cursor-pointer;
 }
 
 .event_title {

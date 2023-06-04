@@ -9,6 +9,7 @@ import {
 } from "@/shared/lib";
 import { Dayjs } from "dayjs";
 import { CalendarEventByDay } from "@/shared/types/calendar";
+import cn from "classnames";
 
 interface DayEventProps {
   event: CalendarEvent;
@@ -29,7 +30,12 @@ export const DayEvent: FC<DayEventProps> = ({ event, currentDay }) => {
   };
 
   const renderEvent = () => (
-    <div onClick={handleEventClick} className={styles.event}>
+    <div
+      onClick={handleEventClick}
+      className={cn(styles.event, {
+        [styles.clickable]: Boolean(onEventClick),
+      })}
+    >
       <div className={styles.event_title}>{event.title}</div>
       <span>
         {getTimeFromTimeSpan(event.from)} - {getTimeFromTimeSpan(event.to)}

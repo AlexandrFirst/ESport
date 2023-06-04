@@ -27,7 +27,11 @@
 }
 
 .day {
-  @apply flex-1 cursor-pointer;
+  @apply flex-1;
+}
+
+.clickable {
+  @apply cursor-pointer;
 }
 
 .current_day {
