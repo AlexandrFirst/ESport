@@ -43,6 +43,8 @@ export const DayEvent: FC<DayEventProps> = ({ event, currentDay }) => {
     </div>
   );
 
+  // console.log("===event===", event);
+
   return !isDayOfTheWeekEvent(event)
     ? isSameDay(event.dateTime, currentDay)
       ? renderEvent()

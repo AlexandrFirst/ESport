@@ -1,5 +1,5 @@
 import { IGymInfo } from "@/entities/gym";
-import { ITrainerSportInfo } from "../../model/types/trainer-sport-info";
+import { ITrainerSportInfo } from "@/entities/trainer";
 
 export interface IProfile {
   userIdentityInfo?: IProfileInfo;

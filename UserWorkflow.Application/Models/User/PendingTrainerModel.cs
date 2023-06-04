@@ -8,6 +8,7 @@ namespace UserWorkflow.Application.Models.User
 {
     public class PendingTrainerModel
     {
+        public int RequestId { get; set; }
         public TrainerInfo TrainerInfo { get; set; }
         public ScheduleInfo ScheduleInfo { get; set; }
     }

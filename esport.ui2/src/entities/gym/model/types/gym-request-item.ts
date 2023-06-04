@@ -11,4 +11,5 @@ export interface IGymRequestItem {
   to: string;
   dayOfTheWeeks: DayOfTheWeek[];
   timeOverrides: ITimeOverride[];
+  isApplied: boolean;
 }

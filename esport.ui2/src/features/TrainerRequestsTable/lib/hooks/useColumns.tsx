@@ -1,10 +1,17 @@
+import { useCallback } from "react";
 import { ColumnDef } from "@tanstack/table-core";
+import { useQueryClient } from "@tanstack/react-query";
 
-import { getTimeFromTimeSpan, useMappedDaysOfTheWeek } from "@/shared/lib";
+import {
+  getApiError,
+  getTimeFromTimeSpan,
+  useMappedDaysOfTheWeek,
+  useSnackbar,
+} from "@/shared/lib";
 import { DayOfTheWeek } from "@/shared/constants";
-import { Button } from "@/shared/ui";
+import { Badge, Button } from "@/shared/ui";
 
-import { IGymRequestItem } from "@/entities/gym";
+import { GymApi, gymApiKeys, IGymRequestItem } from "@/entities/gym";
 
 interface UseColumnsProps {
   disabledAction?: boolean;
@@ -15,6 +22,26 @@ export const useColumns = (
 ): ColumnDef<IGymRequestItem>[] => {
   const { disabledAction } = props || {};
   const mappedDays = useMappedDaysOfTheWeek({ listAllTranslations: true });
+  const { showError, showSuccess } = useSnackbar();
+  const queryClient = useQueryClient();
+
+  const handleApply = useCallback(
+    (requestId: number) => async () => {
+      try {
+        await GymApi().applyForTrainerRequest({
+          trainerRequestId: requestId,
+        });
+        showSuccess("Successfully applied for trainer request");
+      } catch (e: any) {
+        showError(getApiError(e));
+      } finally {
+        await queryClient.invalidateQueries({
+          queryKey: gymApiKeys.getTrainerRequestsAll(),
+        });
+      }
+    },
+    [queryClient, showError, showSuccess]
+  );
 
   return [
     {
@@ -46,9 +73,17 @@ export const useColumns = (
       header: "",
       cell: ({ row: { original } }) => (
         <div className="flex justify-center">
-          <Button variant={"text"} disabled={disabledAction}>
-            Apply
-          </Button>
+          {!original.isApplied ? (
+            <Button
+              onClick={handleApply(original.requestId)}
+              variant={"text"}
+              disabled={disabledAction}
+            >
+              Apply
+            </Button>
+          ) : (
+            <Badge variant={"outlined"}>Applied</Badge>
+          )}
         </div>
       ),
     },

@@ -50,3 +50,7 @@ export interface GetTrainerRequestsRequest {
 export interface GetTrainerRequestsResponse extends BaseListingResult {
   gymRequestItems: IGymRequestItem[];
 }
+
+export interface ApplyForTrainerRequestRequest {
+  trainerRequestId: number;
+}

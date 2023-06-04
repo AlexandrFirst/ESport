@@ -3,7 +3,8 @@ import styles from "./TrainerSportInfoList.module.css";
 
 import { BoldText, DatePickerBase, InputBase } from "@/shared/ui";
 
-import { ITrainerSportInfo } from "@/entities/profile";
+import { ITrainerSportInfo } from "@/entities/trainer";
+
 import { useRoleProfileInformationActions } from "../../model/slices/roleProfileInformationSlice";
 import { useSelectTrainerSports } from "../../model/selectors/selectTrainerSports/selectTrainerSports";
 

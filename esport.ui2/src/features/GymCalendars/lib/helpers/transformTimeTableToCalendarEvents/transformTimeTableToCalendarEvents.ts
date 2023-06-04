@@ -1,7 +1,6 @@
 import { CalendarEvent } from "@/shared/types";
-import { IGymTimetable } from "@/entities/gym";
 
-import { CalendarDayTimetable } from "../../../model/types/calendarDayTimetable";
+import { CalendarDayTimetable, IGymTimetable } from "@/entities/gym";
 
 export const transformTimeTableToCalendarEvents = (
   gymTimeTable?: IGymTimetable[]

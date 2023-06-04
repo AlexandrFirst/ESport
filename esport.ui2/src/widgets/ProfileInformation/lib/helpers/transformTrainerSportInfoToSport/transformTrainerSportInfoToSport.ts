@@ -1,5 +1,5 @@
 import { ISport, SportType } from "@/entities/sport";
-import { ITrainerSportInfo } from "@/entities/profile";
+import { ITrainerSportInfo } from "@/entities/trainer";
 
 export const transformTrainerSportInfoToSport = (
   trainerSportsInfo: Partial<ITrainerSportInfo>[]

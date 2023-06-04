@@ -9,6 +9,7 @@ import {
   ReadonlyProfileInfo,
 } from "@/entities/profile";
 import { NoData } from "../NoData/NoData";
+import { SetAsLoginDataButton } from "@/features/SetAsLoginDataButton";
 
 export interface ProfileInfoWithCardProps extends ProfileDataFormProps {
   profileInfo?: IProfileInfo;
@@ -26,7 +27,10 @@ export const ProfileInfoWithCard: FC<ProfileInfoWithCardProps> = ({
     <Card padding={"md"}>
       {editable ? (
         profileInfo ? (
-          <ProfileDataForm {...profileInfo} {...props} />
+          <>
+            <SetAsLoginDataButton profileKey={name} forCurrentUser />
+            <ProfileDataForm {...profileInfo} {...props} />
+          </>
         ) : (
           <NoData name={name} />
         )

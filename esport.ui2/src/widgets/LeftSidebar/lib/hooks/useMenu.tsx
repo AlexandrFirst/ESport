@@ -2,9 +2,10 @@ import {
   BriefcaseIcon,
   CogIcon,
   ComputerDesktopIcon,
-  HomeIcon,
   UserGroupIcon,
 } from "@heroicons/react/24/solid";
+
+import { PersonStanding } from "lucide-react";
 
 import { routes } from "@/shared/config";
 
@@ -27,7 +28,7 @@ interface UseMenuResult {
 }
 
 export const useMenu = (): UseMenuResult => {
-  const { user, isAuth, isOrganisationAdmin, isGymAdmin } = useAuth();
+  const { user, isAuth, isOrganisationAdmin, isTrainer } = useAuth();
   const {
     isProfileLoading,
     profileOrganisationId,
@@ -106,19 +107,28 @@ export const useMenu = (): UseMenuResult => {
                 link: routes.Organisation.Gyms([profileOrganisationId]),
               },
               {
-                title: "Trainers",
-                link: routes.Organisation.Gyms([profileOrganisationId]),
+                title: "Admins",
+                link: routes.Organisation.PendingAdmins([
+                  profileOrganisationId,
+                ]),
               },
             ],
           },
         ],
       }),
       ...menuItems({
-        condition: isGymAdmin,
+        condition: isTrainer,
         onTrue: [
           {
-            title: "My gyms",
-            icon: <MenuIcon Svg={HomeIcon} />,
+            title: "Trainer room",
+            icon: <MenuIcon Svg={PersonStanding} />,
+            gap: true,
+            items: [
+              {
+                title: "Timetable",
+                link: routes.Trainer.Timetable(),
+              },
+            ],
           },
         ],
       }),

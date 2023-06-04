@@ -1,4 +1,4 @@
-import { ITrainerSportInfo } from "../../../model/types/trainer-sport-info";
+import { ITrainerSportInfo } from "@/entities/trainer";
 import { TrainerSportInfoToUpdate } from "../../../api/types/types";
 
 export const transformTrainerSportInfo = (

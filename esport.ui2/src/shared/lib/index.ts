@@ -26,6 +26,7 @@ export { randomAlphabetString, randomNumberString } from "./utils/randomString";
 export { capitalize } from "./utils/capitalize";
 export { Logger } from "./utils/Logger";
 export { debounce } from "./utils/debounce";
+export { getApiError } from "./utils/getApiError";
 
 export { createBuildPath } from "./utils/build-path";
 export type { Query, Parameter } from "./utils/build-path";

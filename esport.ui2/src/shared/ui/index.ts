@@ -69,6 +69,8 @@ export { BottomNav } from "./BottomNav/BottomNav";
 // calendar
 export { Calendar } from "./Calendar/Calendar";
 export { SmallCalendar } from "./Calendar/SmallCalendar/SmallCalendar";
+export { TwoCalendars } from "./Calendar/TwoCalendars/TwoCalendars";
+export type { TwoCalendarsProps } from "./Calendar/TwoCalendars/TwoCalendars";
 
 export { OrSection } from "./OrSection/OrSection";
 
@@ -97,6 +99,7 @@ export type { CollapseList } from "./Collapse/Collapse";
 export * from "./Dropdown/Dropdown";
 export * from "./Select/Select";
 export * from "./Table/Table";
+export { Badge } from "./Badge/Badge";
 
 // DataTable
 export { DataTable } from "./DataTable/DataTable";

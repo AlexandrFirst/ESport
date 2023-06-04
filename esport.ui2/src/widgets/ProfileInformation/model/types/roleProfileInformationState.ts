@@ -1,5 +1,5 @@
-import { ITrainerSportInfo } from "@/entities/profile";
 import { IGymInfo } from "@/entities/gym";
+import { ITrainerSportInfo } from "@/entities/trainer";
 
 export interface RoleProfileInformationState {
   trainerSports: ITrainerSportInfo[];
