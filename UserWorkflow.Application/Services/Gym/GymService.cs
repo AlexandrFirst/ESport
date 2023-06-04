@@ -51,6 +51,11 @@ namespace UserWorkflow.Application.Services.Gym
                 gymQuery = gymQuery.Where(x => x.Name.StartsWith(gymFiltrattionModel.Name));
             }
 
+            if (!string.IsNullOrEmpty(gymFiltrattionModel.Address))
+            {
+                gymQuery = gymQuery.Where(x => x.Name.StartsWith(gymFiltrattionModel.Address));
+            }
+
             var gymSearchResult = await gymPaging.ApplyPagingAsync(gymQuery);
             var gymSearchResultListing = gymSearchResult.Listing.Select(x => new GymReadInfo()
             {
