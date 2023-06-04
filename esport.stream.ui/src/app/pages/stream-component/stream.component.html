@@ -1,6 +1,10 @@
 <div class="mt-3">
+    <div class="mx-3">
+        <fa-icon [icon]="['fas', 'arrow-alt-circle-left']"></fa-icon>
+        <a class="ms-2" routerLink="/streams">Back to list</a>
+    </div>
     <h3 *ngIf="isLoading">Retrieving information</h3>
-    <h3 *ngIf="!isLoading">{{streamEvent.name}}</h3>
+    <h2 class="ms-3" *ngIf="!isLoading && streamEvent">Stream name: {{streamEvent.name}}</h2>
     <div *ngIf="!isLoading">
         <div class="row m-auto justify-content-center">
             <div *ngIf="isCommunicationOn" class="col-3"
@@ -55,8 +59,10 @@
                 [disabled]="isCommunicationOn">Join
                 stream</button>
             <button class="btn btn-warning me-2" (click)="record()" *ngIf="userInfo.isOrganizer"
-                [disabled]="!isCommunicationOn">Record
-                stream</button>
+                [disabled]="!isCommunicationOn">
+                <span *ngIf="isRecording">Record stream</span>
+                <span *ngIf="!isRecording">Stop recording</span>
+            </button>
             <button class="btn btn-danger ms-2" (click)="stop()" [disabled]="!isCommunicationOn">
                 <span *ngIf="userInfo.isOrganizer">Stop</span>
                 <span *ngIf="!userInfo.isOrganizer">Leave</span>
