@@ -1,3 +1,8 @@
+import { BaseListingResult } from "@/shared/types";
+
+import { AdminType } from "../../constants/admin-type";
+import { IPendingAdminModel } from "../../model/types/pending-admin-model";
+
 export interface TrainerSportInfoToUpdate {
   sportId: number;
   from: Date;
@@ -31,4 +36,18 @@ export interface UpdateProfileInfoRequest {
     updateUserInfo?: UpdateUserInfo;
     trainerSportInfoIds: TrainerSportInfoToUpdate[];
   };
+}
+
+export interface GetPendingAdminsRequest {
+  page: number;
+  pageSize: number;
+  adminType: AdminType;
+}
+
+export interface GetPendingAdminsResponse extends BaseListingResult {
+  pendingAdminModels: IPendingAdminModel[];
+}
+
+export interface ConfirmAdminRequest {
+  userId: number;
 }

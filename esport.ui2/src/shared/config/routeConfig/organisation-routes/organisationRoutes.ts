@@ -7,7 +7,7 @@ export const organisationRoutes = {
   Create: buildPath("/create"),
   EditOrganisation: buildPath<[Parameter]>("/:organisationId/edit"),
   Gyms: buildPath<[Parameter]>("/:organisationId/gyms"),
-  Trainers: buildPath<[Parameter]>("/:organisationId/trainers"),
+  PendingAdmins: buildPath<[Parameter]>("/:organisationId/pending-admins"),
   Gym: buildPath<[Parameter, Parameter]>("/:organisationId/gyms/:gymId"),
   GymTrainerRequests: buildPath<[Parameter, Parameter]>(
     "/:organisationId/gyms/:gymId/trainer-requests"

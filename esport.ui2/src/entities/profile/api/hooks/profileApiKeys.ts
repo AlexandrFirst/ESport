@@ -1,3 +1,5 @@
+import { AdminType } from "../..";
+
 export const profileApiKeys = {
   all: ["profile"] as const,
   getProfileById: (userId?: number) =>
@@ -11,4 +13,8 @@ export const profileApiKeys = {
     ] as const,
   confirmMyProfile: (token: string) =>
     [...profileApiKeys.all, "confirmMyProfile", token] as const,
+  getPendingAdminsAll: () =>
+    [...profileApiKeys.all, "getPendingAdmins"] as const,
+  getPendingAdmins: (adminType: AdminType) =>
+    [...profileApiKeys.all, "getPendingAdmins", adminType] as const,
 };

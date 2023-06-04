@@ -7,10 +7,11 @@ import cn from "classnames";
 import { TabList, Tabs } from "@/shared/ui";
 
 import { useAuth } from "@/entities/user";
-import { useProfileInfo } from "@/entities/profile";
+import { AdminType, useProfileInfo } from "@/entities/profile";
 import { IGymReadInfo } from "@/entities/gym";
 import { EditableCalendarTimetable } from "@/features/GymCalendars";
 import { TrainerRequestsTable } from "@/features/TrainerRequestsTable";
+import { PendingAdminsTable } from "@/features/PendingAdminsTable";
 
 interface GymInfoTabsProps {
   className?: string;
@@ -47,6 +48,18 @@ export const GymInfoTabs: FC<GymInfoTabsProps> = ({ className, gym }) => {
         !hasTrainerInfo &&
         !isAdminForGyms &&
         profileOrganisationId !== Number(organisationId),
+    },
+    {
+      label: "Pending gym administators",
+      value: "gym admin requests",
+      content: (
+        <PendingAdminsTable
+          initialState={AdminType.GymAdmin}
+          gymId={gym.gymId}
+        />
+      ),
+      disabled:
+        !isAdminForGyms && profileOrganisationId !== Number(organisationId),
     },
   ];
 

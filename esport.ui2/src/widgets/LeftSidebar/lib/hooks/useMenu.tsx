@@ -106,8 +106,10 @@ export const useMenu = (): UseMenuResult => {
                 link: routes.Organisation.Gyms([profileOrganisationId]),
               },
               {
-                title: "Trainers",
-                link: routes.Organisation.Gyms([profileOrganisationId]),
+                title: "Admins",
+                link: routes.Organisation.PendingAdmins([
+                  profileOrganisationId,
+                ]),
               },
             ],
           },
