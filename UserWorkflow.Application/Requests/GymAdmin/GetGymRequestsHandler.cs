@@ -43,9 +43,9 @@ namespace UserWorkflow.Application.Requests.GymAdmin
                 GymName = x.TrainerShedule.GymShift.Gym.Name,
                 RequestDescription = x.Description,
                 TimeOverrides = x.TrainerShedule.TimeOverride,
-                DayOfTheWeeks = x.TrainerShedule.TimeOverride?.Any() == true ? ParseDayOfTheWeek(x.TrainerShedule.GymShift.DayOfTheWeeks) : new List<DayOfTheWeek>(),
-                From = x.TrainerShedule.TimeOverride?.Any() == true ? x.TrainerShedule.GymShift.FromTime : null,
-                To = x.TrainerShedule.TimeOverride?.Any() == true ? x.TrainerShedule.GymShift.ToTime : null,
+                DayOfTheWeeks = x.TrainerShedule.TimeOverride?.Any() == true ? new List<DayOfTheWeek>() : ParseDayOfTheWeek(x.TrainerShedule.GymShift.DayOfTheWeeks),
+                From = x.TrainerShedule.TimeOverride?.Any() == true ? null: x.TrainerShedule.GymShift.FromTime,
+                To = x.TrainerShedule.TimeOverride?.Any() == true ? null : x.TrainerShedule.GymShift.ToTime,
                 ShiftId = x.TrainerShedule.ShiftId
             }).ToList();
 
