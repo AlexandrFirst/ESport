@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,6 +25,9 @@ namespace UserWorkflow.Application.Requests.GymAdmin
         {
             var trainerRequestQuery = dataContext.TrainerRequests.AsQueryable();
 
+            var userId = request.AuthenticatedBy.UserId;
+            var trainer = await dataContext.Trainers.FirstOrDefaultAsync(x => x.UserId == userId);
+
             if (request.OrganisationId.HasValue && request.OrganisationId > 0)
             {
                 trainerRequestQuery = trainerRequestQuery.Where(x => x.TrainerShedule.GymShift.Gym.OrganisationId == request.OrganisationId);
@@ -33,6 +37,8 @@ namespace UserWorkflow.Application.Requests.GymAdmin
             {
                 trainerRequestQuery = trainerRequestQuery.Where(x => x.TrainerShedule.GymShift.GymId == request.GymId);
             }
+
+            var appliedTrainerRequests = trainer == null ? new List<int>() : trainer.TrainerResponses.Select(x => x.TrainerRequestId).ToList();
 
             var trainerRequestResult = await paging.ApplyPagingAsync(trainerRequestQuery, request.Page, request.PageSize);
 
@@ -44,9 +50,10 @@ namespace UserWorkflow.Application.Requests.GymAdmin
                 RequestDescription = x.Description,
                 TimeOverrides = x.TrainerShedule.TimeOverride,
                 DayOfTheWeeks = x.TrainerShedule.TimeOverride?.Any() == true ? new List<DayOfTheWeek>() : ParseDayOfTheWeek(x.TrainerShedule.GymShift.DayOfTheWeeks),
-                From = x.TrainerShedule.TimeOverride?.Any() == true ? null: x.TrainerShedule.GymShift.FromTime,
+                From = x.TrainerShedule.TimeOverride?.Any() == true ? null : x.TrainerShedule.GymShift.FromTime,
                 To = x.TrainerShedule.TimeOverride?.Any() == true ? null : x.TrainerShedule.GymShift.ToTime,
-                ShiftId = x.TrainerShedule.ShiftId
+                ShiftId = x.TrainerShedule.ShiftId,
+                IsApplied = appliedTrainerRequests.Any(p => p == x.Id)
             }).ToList();
 
             return new RequestResult<GetGymRequestsResult>(new GetGymRequestsResult()

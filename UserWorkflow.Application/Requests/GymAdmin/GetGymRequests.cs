@@ -33,5 +33,6 @@ namespace UserWorkflow.Application.Requests.GymAdmin
         public TimeSpan? To { get; set; }
         public List<DayOfTheWeek> DayOfTheWeeks { get; set; }
         public List<TimeOverride> TimeOverrides { get; set; }
+        public bool IsApplied { get; set; }
     }
 }
