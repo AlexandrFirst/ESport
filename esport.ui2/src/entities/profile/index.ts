@@ -49,3 +49,4 @@ export type { IPendingAdminModel } from "./model/types/pending-admin-model";
 
 //constants
 export { AdminType } from "./constants/admin-type";
+export { UserTypeEntity } from "./constants/user-type-entity";

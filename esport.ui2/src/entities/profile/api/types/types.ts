@@ -2,6 +2,7 @@ import { BaseListingResult } from "@/shared/types";
 
 import { AdminType } from "../../constants/admin-type";
 import { IPendingAdminModel } from "../../model/types/pending-admin-model";
+import { UserTypeEntity } from "../../constants/user-type-entity";
 
 export interface TrainerSportInfoToUpdate {
   sportId: number;
@@ -42,6 +43,7 @@ export interface GetPendingAdminsRequest {
   page: number;
   pageSize: number;
   adminType: AdminType;
+  gymId?: number;
 }
 
 export interface GetPendingAdminsResponse extends BaseListingResult {
@@ -50,4 +52,8 @@ export interface GetPendingAdminsResponse extends BaseListingResult {
 
 export interface ConfirmAdminRequest {
   userId: number;
+}
+
+export interface SetAsLoginDataRequest {
+  userTypeProfile: UserTypeEntity;
 }

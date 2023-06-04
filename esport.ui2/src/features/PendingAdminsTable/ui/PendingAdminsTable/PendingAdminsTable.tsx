@@ -26,6 +26,7 @@ export const PendingAdminsTable: FC<PendingAdminsTableProps> = ({
     page: 1,
     pageSize: 100,
     adminType,
+    gymId,
   });
 
   const columns = useColumns(adminType, gymId);

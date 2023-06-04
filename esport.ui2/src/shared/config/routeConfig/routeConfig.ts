@@ -3,6 +3,7 @@ import { createBuildPath } from "@/shared/lib";
 import { userRoutes } from "./user-routes/userRoutes";
 import { competitionRoutes } from "./competition-routes/competitionRoutes";
 import { organisationRoutes } from "./organisation-routes/organisationRoutes";
+import { trainerRoutes } from "./trainer-routes/trainerRoutes";
 
 const buildPath = createBuildPath("/");
 
@@ -20,4 +21,5 @@ export const routes = {
   User: userRoutes,
   Competition: competitionRoutes,
   Organisation: organisationRoutes,
+  Trainer: trainerRoutes,
 };

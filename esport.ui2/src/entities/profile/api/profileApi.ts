@@ -6,6 +6,7 @@ import {
   ConfirmAdminRequest,
   GetPendingAdminsRequest,
   GetPendingAdminsResponse,
+  SetAsLoginDataRequest,
   UpdateProfileInfoRequest,
 } from "./types/types";
 
@@ -33,6 +34,9 @@ export const ProfileApi = (ctx?: ApiContext) => {
     },
     confirmGymAdmin(gymId: number, request: ConfirmAdminRequest) {
       return instance.post(`/confirm-gym-admin/${gymId}`, request);
+    },
+    setAsLoginData(request: SetAsLoginDataRequest) {
+      return instance.post(`/update-user-login`, request);
     },
   };
 };
