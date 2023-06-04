@@ -1,4 +1,5 @@
 import { AdminType } from "../..";
+import { GetPendingTrainersRequest } from "../types/types";
 
 export const profileApiKeys = {
   all: ["profile"] as const,
@@ -17,4 +18,8 @@ export const profileApiKeys = {
     [...profileApiKeys.all, "getPendingAdmins"] as const,
   getPendingAdmins: (adminType: AdminType) =>
     [...profileApiKeys.all, "getPendingAdmins", adminType] as const,
+  getPendingTrainersAll: () =>
+    [...profileApiKeys.all, "getPendingTrainers"] as const,
+  getPendingTrainers: (gymId: number, request: GetPendingTrainersRequest) =>
+    [...profileApiKeys.all, "getPendingTrainers", gymId, request] as const,
 };

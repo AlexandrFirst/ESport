@@ -69,6 +69,8 @@ export { BottomNav } from "./BottomNav/BottomNav";
 // calendar
 export { Calendar } from "./Calendar/Calendar";
 export { SmallCalendar } from "./Calendar/SmallCalendar/SmallCalendar";
+export { TwoCalendars } from "./Calendar/TwoCalendars/TwoCalendars";
+export type { TwoCalendarsProps } from "./Calendar/TwoCalendars/TwoCalendars";
 
 export { OrSection } from "./OrSection/OrSection";
 

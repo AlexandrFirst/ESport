@@ -13,3 +13,9 @@ export interface IGymTimetable {
   dayOfTheWeek: DayOfTheWeek;
   dayTimeTable: IDayTimetable[];
 }
+
+export interface IGymTimetableByDate {
+  gymId: number;
+  dateTime: Date;
+  dayTimeTable: IDayTimetable[];
+}

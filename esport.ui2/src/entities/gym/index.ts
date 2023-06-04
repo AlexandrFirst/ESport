@@ -14,7 +14,11 @@ export type { IGymInfo } from "./model/types/gym";
 export type { IGymReadInfo } from "./model/types/gym-read-info";
 export type { IGymTrainerInfo } from "./model/types/gym-trainer-info";
 export type { IGymShiftInfo } from "./model/types/gym-shift-info";
-export type { IGymTimetable, IDayTimetable } from "./model/types/gym-timetable";
+export type {
+  IGymTimetable,
+  IDayTimetable,
+  IGymTimetableByDate,
+} from "./model/types/gym-timetable";
 export type {
   IGymListingRequest,
   AddUpdateGymTimetableRequest,

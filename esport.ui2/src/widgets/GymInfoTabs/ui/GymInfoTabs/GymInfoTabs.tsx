@@ -12,6 +12,7 @@ import { IGymReadInfo } from "@/entities/gym";
 import { EditableCalendarTimetable } from "@/features/GymCalendars";
 import { TrainerRequestsTable } from "@/features/TrainerRequestsTable";
 import { PendingAdminsTable } from "@/features/PendingAdminsTable";
+import { PendingTrainersTable } from "@/features/PendingTrainersTable";
 
 interface GymInfoTabsProps {
   className?: string;
@@ -58,6 +59,13 @@ export const GymInfoTabs: FC<GymInfoTabsProps> = ({ className, gym }) => {
           gymId={gym.gymId}
         />
       ),
+      disabled:
+        !isAdminForGyms && profileOrganisationId !== Number(organisationId),
+    },
+    {
+      label: "Pending trainers",
+      value: "pending trainers",
+      content: <PendingTrainersTable gymId={gym.gymId} />,
       disabled:
         !isAdminForGyms && profileOrganisationId !== Number(organisationId),
     },

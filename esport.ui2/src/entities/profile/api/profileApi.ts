@@ -3,9 +3,12 @@ import { Api } from "@/shared/config";
 
 import { IProfile } from "../model/types/profile";
 import {
+  ApprovePendingTrainerRequest,
   ConfirmAdminRequest,
   GetPendingAdminsRequest,
   GetPendingAdminsResponse,
+  GetPendingTrainersRequest,
+  GetPendingTrainersResponse,
   SetAsLoginDataRequest,
   UpdateProfileInfoRequest,
 } from "./types/types";
@@ -37,6 +40,18 @@ export const ProfileApi = (ctx?: ApiContext) => {
     },
     setAsLoginData(request: SetAsLoginDataRequest) {
       return instance.post(`/update-user-login`, request);
+    },
+    getPendingTrainers(gymId: number, request: GetPendingTrainersRequest) {
+      return instance.post<GetPendingTrainersResponse>(
+        `/gym/${gymId}/pending-trainers`,
+        request
+      );
+    },
+    approvePendingTrainer(
+      gymId: number,
+      request: ApprovePendingTrainerRequest
+    ) {
+      return instance.post(`gym/${gymId}/trainer/approve`, request);
     },
   };
 };

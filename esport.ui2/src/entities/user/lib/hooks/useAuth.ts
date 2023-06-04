@@ -12,6 +12,7 @@ export const useAuth = () => {
   return {
     user,
     isAuth: !!user,
+    userId: user?.id ?? 0,
     roles: roles ?? [],
 
     isTrainee: hasRole(UserRole.Trainee),

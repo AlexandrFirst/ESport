@@ -33,9 +33,14 @@ export {
   useGetPendingAdmins,
 } from "./api/hooks/useGetPendingAdmins";
 export type { ConfirmAdminRequest } from "./api/types/types";
+export {
+  getPendingTrainers,
+  useGetPendingTrainers,
+} from "./api/hooks/useGetPendingTrainers";
 
 //hooks
 export { useProfileInfo } from "./lib/hooks/useProfileInfo";
+export type { UseProfileInfoParams } from "./lib/hooks/useProfileInfo";
 
 //helpers
 export { transformProfileDataToUpdate } from "./lib/helpers/transformProfileDataToUpdate/transformProfileDataToUpdate";
@@ -44,7 +49,6 @@ export { isAdminForGyms } from "./lib/helpers/isAdminForGyms/isAdminForGyms";
 
 //types
 export type { IProfile, IProfileInfo } from "./model/types/profile";
-export type { ITrainerSportInfo } from "./model/types/trainer-sport-info";
 export type { IPendingAdminModel } from "./model/types/pending-admin-model";
 
 //constants

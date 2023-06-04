@@ -14,7 +14,11 @@ import {
   gymApiKeys,
   IGymReadInfo,
 } from "@/entities/gym";
-import { getProfileInfo, profileApiKeys } from "@/entities/profile";
+import {
+  getPendingTrainers,
+  getProfileInfo,
+  profileApiKeys,
+} from "@/entities/profile";
 
 import { getMainLayout } from "@/widgets/MainLayout";
 import { GymInfoTabs } from "@/widgets/GymInfoTabs";
@@ -91,6 +95,21 @@ export const getServerSideProps = getAppServerSideProps(async (ctx, store) => {
             pageSize: 100,
             gymId: Number(gymId ?? 0),
             organisationId: Number(organisationId ?? 0),
+          },
+          ctx
+        ),
+    }),
+    queryClient.prefetchQuery({
+      queryKey: profileApiKeys.getPendingTrainers(Number(gymId), {
+        pageSize: 100,
+        currentPage: 1,
+      }),
+      queryFn: async () =>
+        getPendingTrainers(
+          Number(gymId),
+          {
+            currentPage: 1,
+            pageSize: 100,
           },
           ctx
         ),

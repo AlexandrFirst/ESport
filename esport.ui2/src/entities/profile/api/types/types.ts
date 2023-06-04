@@ -1,5 +1,7 @@
 import { BaseListingResult } from "@/shared/types";
 
+import { IPendingTrainerModel } from "@/entities/trainer";
+
 import { AdminType } from "../../constants/admin-type";
 import { IPendingAdminModel } from "../../model/types/pending-admin-model";
 import { UserTypeEntity } from "../../constants/user-type-entity";
@@ -56,4 +58,22 @@ export interface ConfirmAdminRequest {
 
 export interface SetAsLoginDataRequest {
   userTypeProfile: UserTypeEntity;
+}
+
+export interface GetPendingTrainersRequest {
+  currentPage: number;
+  pageSize: number;
+  shiftId?: number;
+}
+
+export interface GetPendingTrainersResponse extends BaseListingResult {
+  pendingTrainerModels: IPendingTrainerModel[];
+  currentPage: number;
+  totalItems: number;
+  pageSize: number;
+}
+
+export interface ApprovePendingTrainerRequest {
+  trainerId: number;
+  requestId: number;
 }

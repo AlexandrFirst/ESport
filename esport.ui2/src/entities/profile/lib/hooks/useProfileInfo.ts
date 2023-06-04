@@ -3,7 +3,7 @@ import { useProfileActions } from "../../model/slices/profileSlice";
 import { getOrganisationAdminInfo } from "../..";
 import { isAdminForGyms } from "../helpers/isAdminForGyms/isAdminForGyms";
 
-interface UseProfileInfoParams {
+export interface UseProfileInfoParams {
   userId: number;
   forceFetch?: boolean;
   gymIds?: number[];
@@ -52,6 +52,6 @@ export const useProfileInfo = ({
     // isConfirmedGymAdmin: profile?.userAdminInfo?.isConfirmed ?? false,
     isConfirmedProfiles,
     isAdminForGyms: isAdminForGyms(profile, gymIds),
-    trainerId: profile?.userTrainerInfo?.id,
+    trainerId: profile?.userTrainerInfo?.id ?? 0,
   };
 };
