@@ -3,6 +3,7 @@ import { Api } from "@/shared/config";
 
 import {
   AddUpdateGymTimetableRequest,
+  CreateTrainerRequestRequest,
   GetGymTimetableRequest,
   GetGymTimetableResponse,
   IGymListingRequest,
@@ -27,6 +28,12 @@ export const GymApi = (ctx?: ApiContext) => {
       request: AddUpdateGymTimetableRequest
     ) {
       return instance.post(`/gym/${gymId}/timetable/update`, request);
+    },
+    async createTrainerRequest(
+      gymId: number,
+      request: CreateTrainerRequestRequest
+    ) {
+      return instance.post(`/gym/${gymId}/request/open`, request);
     },
   };
 };

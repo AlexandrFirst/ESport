@@ -17,6 +17,7 @@ export type {
   AddUpdateGymTimetableRequest,
 } from "./api/types/types";
 export type { IGymWorkingHours } from "./model/types/gym-working-hours";
+export type { IGymRequestItem } from "./model/types/gym-request-item";
 
 //api
 export { GymApi } from "./api/gymApi";
@@ -27,3 +28,4 @@ export {
   getGymTimetable,
 } from "./api/hooks/useGetGymTimetable";
 export { useAddUpdateTimetable } from "./api/hooks/useAddUpdateTimetable";
+export { useCreateTrainerRequest } from "./api/hooks/useCreateTrainerRequest";

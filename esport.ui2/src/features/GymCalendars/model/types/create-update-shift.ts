@@ -3,3 +3,7 @@ export interface CreateUpdateShift {
   to: string;
   notifyOnUpdate: boolean;
 }
+
+export interface CreateUpdateShiftWithTrainerRequest extends CreateUpdateShift {
+  trainerRequest?: string;
+}

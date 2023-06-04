@@ -8,4 +8,6 @@ export const gymApiKeys = {
     [...gymApiKeys.all, "gym-timetable", gymId, request] as const,
   addUpdateTimetable: () =>
     [...gymApiKeys.all, "gym-timetable", "update"] as const,
+  createTrainerRequest: () =>
+    [...gymApiKeys.all, "trainer-request", "create"] as const,
 };

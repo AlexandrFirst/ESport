@@ -30,7 +30,7 @@ export const useMenu = (): UseMenuResult => {
   const { user, isAuth, isOrganisationAdmin, isGymAdmin } = useAuth();
   const {
     isProfileLoading,
-    organisationId,
+    profileOrganisationId,
     isProfileError,
     isConfirmedOrgAdmin,
   } = useProfileInfo({
@@ -96,18 +96,18 @@ export const useMenu = (): UseMenuResult => {
                   {
                     title: "Settings",
                     link: routes.Organisation.EditOrganisation([
-                      organisationId,
+                      profileOrganisationId,
                     ]),
                   },
                 ],
               }),
               {
                 title: "Gyms",
-                link: routes.Organisation.Gyms([organisationId]),
+                link: routes.Organisation.Gyms([profileOrganisationId]),
               },
               {
                 title: "Trainers",
-                link: routes.Organisation.Gyms([organisationId]),
+                link: routes.Organisation.Gyms([profileOrganisationId]),
               },
             ],
           },

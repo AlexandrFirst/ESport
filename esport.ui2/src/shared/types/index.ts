@@ -14,3 +14,4 @@ export type {
 } from "./calendar";
 
 export type { ErrorMessage } from "./UI";
+export type { ITimeOverride } from "./time-override";

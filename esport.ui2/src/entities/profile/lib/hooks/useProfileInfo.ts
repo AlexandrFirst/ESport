@@ -38,7 +38,7 @@ export const useProfileInfo = ({
       profile.userOrganisationAdminInfos.length > 0,
     isProfileError: isError,
     profileError: error,
-    organisationId: getOrganisationAdminInfo(profile)?.organisationId,
+    profileOrganisationId: getOrganisationAdminInfo(profile)?.organisationId,
     isConfirmedOrgAdmin:
       getOrganisationAdminInfo(profile)?.isConfirmed ?? false,
     //TODO: check with backend

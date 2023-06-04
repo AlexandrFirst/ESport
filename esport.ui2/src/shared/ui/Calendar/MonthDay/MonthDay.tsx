@@ -40,7 +40,12 @@ export const MonthDay: FC<MonthDayProps> = ({ className, day, rowIdx }) => {
           {day.format("DD")}
         </p>
       </header>
-      <div className={styles.day} onClick={handleDayClick(day)}>
+      <div
+        className={cn(styles.day, {
+          [styles.clickable]: Boolean(onSelectDate),
+        })}
+        onClick={handleDayClick(day)}
+      >
         {events?.map((evt, idx) => (
           <DayEvent event={evt} key={idx} currentDay={day} />
         ))}

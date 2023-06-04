@@ -1,0 +1,7 @@
+.wrapper {
+
+}
+
+.column_header_btn {
+    @apply -ml-3 h-8 data-[state=open]:bg-theme-accent;
+}

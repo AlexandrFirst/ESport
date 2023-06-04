@@ -4,3 +4,7 @@
 .content {
   @apply mt-10;
 }
+
+.trash {
+  fill: var(--color-error-main);
+}
