@@ -1,76 +1,78 @@
 import React, { FC, useEffect } from "react";
-import styles from "./CalendarSheet.module.css";
 
 import { useForm } from "react-hook-form";
-import cn from "classnames";
-
-import {
-  Button,
-  Checkbox,
-  FormWrapper,
-  IconButton,
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  TextArea,
-  TimeInput,
-} from "@/shared/ui";
-import { CalendarEvent } from "@/shared/types";
-import {
-  getTimeFromTimeSpan,
-  useMappedDaysOfTheWeekByDayIndex,
-} from "@/shared/lib";
-
-import { IGymReadInfo, IGymWorkingHours } from "@/entities/gym";
-
-import {
-  CreateUpdateShift,
-  CreateUpdateShiftWithTrainerRequest,
-} from "../../model/types/create-update-shift";
-import { CalendarDayTimetable } from "../../model/types/calendarDayTimetable";
-import { useValidation } from "../../lib/hooks/useValidation";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { TrashIcon } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
 
-interface CalendarSheetProps {
-  className?: string;
-  open?: boolean;
-  setOpen?: (p: boolean) => void;
-  currentDate?: Date | null;
-  gym: Pick<IGymReadInfo, "name">;
-  onSubmit?: (data: CreateUpdateShift) => Promise<void>;
-  isLoading?: boolean;
-  selectedEvent?: CalendarEvent<CalendarDayTimetable>;
-  setSelectedEvent?: (
-    event: CalendarEvent<CalendarDayTimetable> | undefined
-  ) => void;
-  workingHours?: Pick<IGymWorkingHours, "from" | "to">;
-  onRemove?: (data?: CalendarEvent<CalendarDayTimetable>) => void;
+import { DayOfTheWeek } from "@/shared/constants";
+import { CalendarEvent } from "@/shared/types";
+import { useSnackbar } from "@/shared/lib";
+
+import {
+  CalendarDayTimetable,
+  CreateUpdateShiftWithTrainerRequest,
+  CreateUpdateTimetableForm,
+  gymApiKeys,
+  GymTimetableSheet,
+  GymTimetableSheetProps,
+  IGymTimetable,
+  useAddUpdateTimetable,
+  useCreateTrainerRequest,
+} from "@/entities/gym";
+
+import { useValidation } from "../../lib/hooks/useValidation";
+import { transformCreateUpdateShiftToAddUpdateGymTimetable } from "../../lib/helpers/transformCreateUpdateShiftToAddUpdateGymTimetable/transformCreateUpdateShiftToAddUpdateGymTimetable";
+
+interface CalendarSheetProps
+  extends Pick<
+    GymTimetableSheetProps,
+    | "gym"
+    | "selectedEvent"
+    | "setSelectedEvent"
+    | "workingHours"
+    | "open"
+    | "setOpen"
+    | "selectedDate"
+  > {
+  timetable: IGymTimetable[];
+  gymId: number;
 }
 
 export const CalendarSheet: FC<CalendarSheetProps> = ({
-  className,
-  open,
-  setOpen,
-  currentDate,
-  gym,
-  onSubmit,
-  isLoading,
-  selectedEvent,
   setSelectedEvent,
+  gym,
+  selectedEvent,
   workingHours,
-  onRemove,
+  timetable,
+  selectedDate,
+  gymId,
+  setOpen,
+  open,
 }) => {
-  const validationSchema = useValidation();
+  const queryClient = useQueryClient();
+  const { showSuccess, showError } = useSnackbar();
 
-  const mappedDays = useMappedDaysOfTheWeekByDayIndex();
-  const handleClose = () => {
-    setOpen?.(false);
-    setSelectedEvent?.(undefined);
+  const { mutate: mutateAddUpdateTimetable, isLoading: isUpdateLoading } =
+    useAddUpdateTimetable();
+  const {
+    mutate: mutateCreateTrainerRequest,
+    isLoading: isCreateRequestLoading,
+  } = useCreateTrainerRequest();
+
+  const onSuccess = async () => {
+    await queryClient.invalidateQueries({
+      queryKey: gymApiKeys.gymTimetable(Number(gymId), {
+        dayOfTheWeeks: [DayOfTheWeek.ALL],
+      }),
+    });
+    showSuccess("Timetable has been added successfully");
   };
+
+  const onError = (e: any) => {
+    showError(e?.[0] ?? e?.message ?? "Something went wrong");
+  };
+
+  const validationSchema = useValidation();
 
   const methods = useForm<CreateUpdateShiftWithTrainerRequest>({
     defaultValues: {
@@ -82,79 +84,75 @@ export const CalendarSheet: FC<CalendarSheetProps> = ({
   });
 
   const handleSubmit = methods.handleSubmit(async (data) => {
-    await onSubmit?.(data);
-    handleClose();
+    console.log("===data===", data);
+    await mutateAddUpdateTimetable(
+      transformCreateUpdateShiftToAddUpdateGymTimetable({
+        gymId: Number(gymId),
+        gymTimetable: timetable ?? [],
+        selectedDate,
+        selectedEvent,
+        data,
+      }),
+      { onSuccess, onError }
+    );
+    if (data.trainerRequest) {
+      await mutateCreateTrainerRequest(
+        {
+          gymId: Number(gymId),
+          shiftId: selectedEvent?.data?.shiftId ?? 0,
+          description: data.trainerRequest,
+        },
+        {
+          onError,
+        }
+      );
+    }
   });
 
-  const handleRemove = () => {
-    onRemove?.(selectedEvent);
-    handleClose();
+  const handleDelete = async (event?: CalendarEvent<CalendarDayTimetable>) => {
+    await mutateAddUpdateTimetable(
+      transformCreateUpdateShiftToAddUpdateGymTimetable({
+        gymId: Number(gymId),
+        gymTimetable: timetable ?? [],
+        selectedDate,
+        selectedEvent,
+        shiftToDelete: event?.data,
+      }),
+      { onSuccess, onError }
+    );
   };
 
   useEffect(() => {
-    methods.setValue(
-      "from",
-      selectedEvent?.data?.from ?? workingHours?.from ?? "12:00"
-    );
-    methods.setValue(
-      "to",
-      selectedEvent?.data?.to ?? workingHours?.to ?? "20:00"
-    );
-    methods.setValue("trainerRequest", "");
-  }, [methods, selectedEvent, workingHours]);
+    if (open) {
+      methods.setValue(
+        "from",
+        selectedEvent?.data?.from ?? workingHours?.from ?? "12:00"
+      );
+      methods.setValue(
+        "to",
+        selectedEvent?.data?.to ?? workingHours?.to ?? "20:00"
+      );
+      methods.setValue("trainerRequest", "");
+    }
+  }, [methods, open, selectedEvent, workingHours]);
 
   return (
-    <Sheet open={open}>
-      <SheetContent onClickClose={handleClose}>
-        <SheetHeader>
-          <SheetTitle className={"flex items-center gap-5"}>
-            Update timetable for {gym.name} (
-            {getTimeFromTimeSpan(workingHours?.from)} -{" "}
-            {getTimeFromTimeSpan(workingHours?.to)})
-            {selectedEvent && (
-              <IconButton
-                Svg={TrashIcon}
-                iconSize={"l"}
-                svgClassName={styles.trash}
-                onClick={handleRemove}
-              />
-            )}
-          </SheetTitle>
-          <SheetDescription>
-            {selectedEvent ? "Edit" : "Add"} timetable for{" "}
-            {mappedDays[currentDate?.getDay() ?? 0]}{" "}
-            {selectedEvent &&
-              `(${getTimeFromTimeSpan(
-                selectedEvent.from
-              )} - ${getTimeFromTimeSpan(selectedEvent.to)})`}
-          </SheetDescription>
-        </SheetHeader>
-        <FormWrapper
-          methods={methods}
-          className={cn(styles.content, className)}
-        >
-          <div className={"flex gap-5 items-center justify-center"}>
-            <TimeInput name={"from"} label={"From"} /> -
-            <TimeInput name={"to"} label={"To"} />
-          </div>
-          <Checkbox name={"notifyOnUpdate"} label={"Notify me on update"} />
-          {selectedEvent && (
-            <TextArea
-              className={"my-5"}
-              name={"trainerRequest"}
-              placeholder={"Create trainer request..."}
-            />
-          )}
-        </FormWrapper>
-        <SheetFooter>
-          <Button variant={"outlined"} onClick={handleClose}>
-            Cancel
-          </Button>
-          <Button onClick={handleSubmit} loading={isLoading}>
-            Submit
-          </Button>
-        </SheetFooter>
-      </SheetContent>
-    </Sheet>
+    <GymTimetableSheet
+      gym={gym}
+      onRemove={handleDelete}
+      onSubmit={handleSubmit}
+      selectedEvent={selectedEvent}
+      workingHours={workingHours}
+      open={open}
+      setOpen={setOpen}
+      isLoading={isUpdateLoading || isCreateRequestLoading}
+      setSelectedEvent={setSelectedEvent}
+      selectedDate={selectedDate}
+    >
+      <CreateUpdateTimetableForm
+        methods={methods}
+        withTrainerRequest={!!selectedEvent}
+      />
+    </GymTimetableSheet>
   );
 };

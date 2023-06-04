@@ -4,6 +4,9 @@ export { GymList } from "./ui/GymList/GymList";
 export { GymItemField } from "./ui/GymItemField/GymItemField";
 export { GymReadInfo } from "./ui/GymReadInfo/GymReadInfo";
 export { CollapsableGymReadInfo } from "./ui/CollapsableGymReadInfo/CollapsableGymReadInfo";
+export { CreateUpdateTimetableForm } from "./ui/CreateUpdateTimetableForm/CreateUpdateTimetableForm";
+export { GymTimetableSheet } from "./ui/GymTimetableSheet/GymTimetableSheet";
+export type { GymTimetableSheetProps } from "./ui/GymTimetableSheet/GymTimetableSheet";
 
 //types
 export type { GymSchema } from "./model/types/gymSchema";
@@ -18,6 +21,11 @@ export type {
 } from "./api/types/types";
 export type { IGymWorkingHours } from "./model/types/gym-working-hours";
 export type { IGymRequestItem } from "./model/types/gym-request-item";
+export type { CalendarDayTimetable } from "./model/types/calendar/calendarDayTimetable";
+export type {
+  CreateUpdateShift,
+  CreateUpdateShiftWithTrainerRequest,
+} from "./model/types/create-update-shift";
 
 //api
 export { GymApi } from "./api/gymApi";

@@ -6,13 +6,15 @@ import {
   GetGymTimetableResponse,
 } from "../types/types";
 import { gymApiKeys } from "./gymApiKeys";
+import { ApiContext } from "@/shared/types";
 
 export const getGymTimetable = async (
   gymId: number,
-  request: GetGymTimetableRequest
+  request: GetGymTimetableRequest,
+  ctx?: ApiContext
 ) => {
   try {
-    const { data } = await GymApi().getTimetable(gymId, request);
+    const { data } = await GymApi(ctx).getTimetable(gymId, request);
     return data;
   } catch (e) {
     throw e;
