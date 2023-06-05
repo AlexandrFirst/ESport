@@ -75,7 +75,6 @@ namespace IdentityV2.Controllers
         }
 
         [Authorize]
-        //[RequireHttps]
         [HttpGet("info")]
         [EnableCors("ESportCors")]
         public IActionResult CurrentUserInfo() 

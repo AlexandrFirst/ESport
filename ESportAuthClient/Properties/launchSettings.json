@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "ESportAuthClient": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:39615;http://localhost:39618"
+    }
+  }
+}
