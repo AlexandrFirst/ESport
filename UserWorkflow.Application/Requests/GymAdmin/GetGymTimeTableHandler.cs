@@ -77,7 +77,7 @@ namespace UserWorkflow.Application.Requests.GymAdmin
                                     TrainerSheduleId = l.Id,
                                     TrainerName = l.Trainer.Name
                                 })).OrderBy(i => i.From).ToList(),
-                                TrainerScheduleIds = timeTableLessonsQuery.Select(x => x.Id).ToList()
+                                TrainerScheduleIds = timeTableLessonsQuery.Select(x => x.Id).ToList(),
                             };
                         }).OrderBy(a => a.From).ToList(),
                     });

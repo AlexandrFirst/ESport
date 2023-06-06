@@ -59,7 +59,7 @@ namespace UserWorkflow.Application.Requests.Trainer
                 gymTimeTable.AddRange(dayTimeTable.Select(x => new GymTimeTableByDate()
                 {
                     DateTime = startDateTime,
-                    DayTimeTable = x.DayTimeTable,
+                    DayTimeTable = x.DayTimeTable.Where(x => x.TrainerScheduleIds.Any()).ToList(),
                     GymId = x.GymId
                 }));
             }
