@@ -21,6 +21,7 @@ export const TrainerTimetable: FC<TrainerTimetableProps> = ({
 }) => {
   const [sheetOpened, setSheetOpened] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<IDayTimetable>();
+  const [selectedDay, setSelectedDay] = useState<Date>();
 
   const { data } = useGetTrainerTimetable({
     trainerId,
@@ -31,6 +32,7 @@ export const TrainerTimetable: FC<TrainerTimetableProps> = ({
   const handleEventClick = (event: CalendarEvent<IDayTimetable>, day: Date) => {
     setSheetOpened(true);
     setSelectedEvent(event.data);
+    setSelectedDay(day);
   };
 
   return (
@@ -43,6 +45,8 @@ export const TrainerTimetable: FC<TrainerTimetableProps> = ({
         open={sheetOpened}
         setOpen={setSheetOpened}
         selectedEvent={selectedEvent}
+        selectedDay={selectedDay}
+        setSelectedEvent={setSelectedEvent}
       />
     </>
   );

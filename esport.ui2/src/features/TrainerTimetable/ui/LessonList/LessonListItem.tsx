@@ -27,13 +27,11 @@ export const LessonListItem: FC<LessonListItemProps> = ({ lesson }) => {
           iconSize={"m"}
           fill={false}
         />
-        <RegularText>
-          Type: {translatedLessonType[lesson.lessonType]}
-        </RegularText>
+        <RegularText>{translatedLessonType[lesson.lessonType]}</RegularText>
       </FlexContainer>
       <FlexContainer className={"mt-3"}>
         <Icon Svg={Watch} iconSize={"m"} fill={false} />
-        <BoldText>Time: {getTimeRangeStr(lesson)}</BoldText>
+        <BoldText>{getTimeRangeStr(lesson)}</BoldText>
       </FlexContainer>
     </Card>
   );

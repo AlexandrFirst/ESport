@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -13,7 +13,7 @@ import {
   LessonType,
   useTranslatedLessonType,
 } from "@/entities/lesson";
-import { TrainerApi, trainerApiKeys } from "@/entities/trainer";
+import { trainerApiKeys, useCreateLesson } from "@/entities/trainer";
 
 import { useValidation } from "../../lib/hooks/useValidation";
 import { IAddLessonForm } from "../../model/types/AddLessonForm";
@@ -21,7 +21,7 @@ import { transformLessonToCreate } from "../../lib/helpers/transformLessonToCrea
 
 interface AddLessonFormProps {
   className?: string;
-  onSuccess?: () => void;
+  onSuccess?: (data: IAddLessonForm) => void;
   onCancel?: () => void;
   dayOfTheWeek?: DayOfTheWeek;
   trainerScheduleId?: number;
@@ -38,7 +38,7 @@ export const AddLessonForm: FC<AddLessonFormProps> = ({
   const translatedLessonType = useTranslatedLessonType();
   const { showApiError, showSuccess } = useSnackbar();
   const queryClient = useQueryClient();
-  const [isLoading, setIsLoading] = useState(false);
+  const { mutate, isLoading } = useCreateLesson();
 
   const methods = useForm<IAddLessonForm>({
     resolver: yupResolver(schema),
@@ -50,20 +50,21 @@ export const AddLessonForm: FC<AddLessonFormProps> = ({
   });
 
   const handleSubmit = methods.handleSubmit(async (data) => {
-    try {
-      setIsLoading(true);
-      await TrainerApi().createLesson(
-        transformLessonToCreate(data, dayOfTheWeek, trainerScheduleId)
-      );
-      await queryClient.invalidateQueries({
-        queryKey: trainerApiKeys.getTimetableAll(),
-      });
-      onSuccess?.();
-    } catch (e) {
-      showApiError(e);
-    } finally {
-      setIsLoading(false);
-    }
+    await mutate(
+      transformLessonToCreate(data, dayOfTheWeek, trainerScheduleId),
+      {
+        async onSuccess() {
+          await queryClient.invalidateQueries({
+            queryKey: trainerApiKeys.getTimetableAll(),
+          });
+          onSuccess?.(data);
+          showSuccess("Lesson was successfully added");
+        },
+        onError(e) {
+          showApiError(e);
+        },
+      }
+    );
   });
 
   return (

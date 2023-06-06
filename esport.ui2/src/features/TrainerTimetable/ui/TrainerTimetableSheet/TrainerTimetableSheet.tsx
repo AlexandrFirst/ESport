@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { Dispatch, FC, SetStateAction, useState } from "react";
 import styles from "./TrainerTimetableSheet.module.css";
 
 import {
@@ -10,43 +10,26 @@ import {
   SheetTitle,
 } from "@/shared/ui";
 import { IDayTimetable } from "@/entities/gym";
-import { getTimeRangeStr } from "@/shared/lib";
-import { ITimetableLesson, LessonType } from "@/entities/lesson";
+import { getDayOfTheWeekByDayIndex, getTimeRangeStr } from "@/shared/lib";
 import { LessonList } from "../LessonList/LessonList";
 import { AddLessonForm } from "../AddLessonForm/AddLessonForm";
+import { IAddLessonForm } from "../../model/types/AddLessonForm";
 
 interface TrainerTimetableSheetProps {
   className?: string;
   open?: boolean;
   setOpen?: (p: boolean) => void;
   selectedEvent?: IDayTimetable;
+  selectedDay?: Date;
+  setSelectedEvent?: Dispatch<SetStateAction<IDayTimetable | undefined>>;
 }
-
-const mocked_lessons: ITimetableLesson[] = [
-  {
-    lessonId: 1,
-    from: "12:00:00",
-    to: "13:00:00",
-    lessonType: LessonType.Group,
-    trainerId: 1,
-    trainerName: "John",
-    trainerSheduleId: 1,
-  },
-  {
-    lessonId: 12,
-    from: "15:00:00",
-    to: "16:00:00",
-    lessonType: LessonType.Individual,
-    trainerId: 1,
-    trainerName: "John",
-    trainerSheduleId: 2,
-  },
-];
 
 export const TrainerTimetableSheet: FC<TrainerTimetableSheetProps> = ({
   open,
   setOpen,
   selectedEvent,
+  selectedDay,
+  setSelectedEvent,
 }) => {
   const [isFormVisible, setIsFormVisible] = useState(false);
 
@@ -56,12 +39,26 @@ export const TrainerTimetableSheet: FC<TrainerTimetableSheetProps> = ({
 
   const handleManageFormVisible = (b: boolean) => () => setIsFormVisible(b);
 
-  const [a, setA] = useState(false);
-  const test = () => {
-    setA(true);
-    setTimeout(() => {
-      setA(false);
-    }, 3000);
+  const handleSuccess = (data: IAddLessonForm) => {
+    setSelectedEvent?.((prev) => {
+      if (prev) {
+        return {
+          ...prev,
+          timeTableLessons: [
+            ...prev.timeTableLessons,
+            {
+              trainerId: prev.timeTableLessons?.[0]?.trainerId ?? 0,
+              lessonId: 0,
+              trainerName: "",
+              from: data.from,
+              to: data.to,
+              lessonType: data.lessonType.value,
+            },
+          ],
+        };
+      }
+    });
+    handleManageFormVisible(false);
   };
 
   return (
@@ -75,11 +72,11 @@ export const TrainerTimetableSheet: FC<TrainerTimetableSheetProps> = ({
           </SheetHeader>
           <ScrollArea className={styles.scroll}>
             <LessonList
-              lessons={mocked_lessons}
+              lessons={selectedEvent?.timeTableLessons ?? []}
               onAddLesson={handleManageFormVisible(true)}
               className={styles.list}
             />
-            {!isFormVisible && (
+            {!isFormVisible && !!selectedEvent?.timeTableLessons.length && (
               <Button
                 className={"mt-5"}
                 onClick={handleManageFormVisible(true)}
@@ -89,10 +86,9 @@ export const TrainerTimetableSheet: FC<TrainerTimetableSheetProps> = ({
             )}
             {isFormVisible && (
               <AddLessonForm
-                trainerScheduleId={
-                  selectedEvent?.timeTableLessons?.[0]?.trainerSheduleId
-                }
-                onSuccess={handleManageFormVisible(false)}
+                trainerScheduleId={selectedEvent?.trainerScheduleIds[0] ?? 0}
+                dayOfTheWeek={getDayOfTheWeekByDayIndex(selectedDay)}
+                onSuccess={handleSuccess}
                 onCancel={handleManageFormVisible(false)}
               />
             )}
