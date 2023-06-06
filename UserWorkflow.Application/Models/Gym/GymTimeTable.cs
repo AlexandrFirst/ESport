@@ -27,7 +27,7 @@ namespace UserWorkflow.Application.Models.Gym
         public TimeSpan To { get; set; }
         public int ShiftId { get; set; }
         public List<TimeTableLesson> TimeTableLessons { get; set; }
-        public List<int> TrainerShitIds { get; set; }
+        public List<int> TrainerScheduleIds { get; set; }
     }
 
 
