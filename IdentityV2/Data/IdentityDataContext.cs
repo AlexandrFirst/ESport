@@ -15,7 +15,10 @@ namespace IdentityV2.Data
 
         public IdentityDataContext([NotNull] DbContextOptions options) : base(options)
         {
-            Database.Migrate();
+            if (Database.IsSqlServer())
+            {
+                Database.Migrate();
+            }
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

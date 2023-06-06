@@ -54,7 +54,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserWorkflow.Infrastructure
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserWorkflow.Esport", "UserWorkflow.Esport\UserWorkflow.Esport.csproj", "{C4D1B500-A052-4C2A-A455-C3A71A8BD19F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MediaClient", "MediaClient\MediaClient.csproj", "{B287D05E-DE43-44EE-96B9-BAC14C3123C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MediaClient", "MediaClient\MediaClient.csproj", "{B287D05E-DE43-44EE-96B9-BAC14C3123C9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdentityTests", "IdentityTests\IdentityTests.csproj", "{DD1ADCA9-0999-4A0A-86F3-4FBD49742195}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -114,6 +116,10 @@ Global
 		{B287D05E-DE43-44EE-96B9-BAC14C3123C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B287D05E-DE43-44EE-96B9-BAC14C3123C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B287D05E-DE43-44EE-96B9-BAC14C3123C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD1ADCA9-0999-4A0A-86F3-4FBD49742195}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD1ADCA9-0999-4A0A-86F3-4FBD49742195}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD1ADCA9-0999-4A0A-86F3-4FBD49742195}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD1ADCA9-0999-4A0A-86F3-4FBD49742195}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -136,6 +142,7 @@ Global
 		{DFCDC305-25F9-4F83-8E13-EC07C6AB3C0C} = {9960B713-6F2A-488D-BD2A-200D7B2833DA}
 		{C4D1B500-A052-4C2A-A455-C3A71A8BD19F} = {AA5D3245-1071-47A7-8439-B9CD15F2DBA5}
 		{B287D05E-DE43-44EE-96B9-BAC14C3123C9} = {CEACC709-AAB5-4BB0-96F0-7566E7D820CD}
+		{DD1ADCA9-0999-4A0A-86F3-4FBD49742195} = {5B2781B5-6719-4E73-A78A-37C04813F737}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C6DC7AF7-5CCE-4874-926A-1B4521D4B7F5}

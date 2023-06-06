@@ -67,7 +67,7 @@ namespace UserWorkflow.Application.Requests.Trainer
                 BodypartRelation = x.BodyParts.Select(c => new ExerciseRelationModel() { Id = c.BodyPartId, Name = c.BodyParts.Name }).ToList(),
                 Description = x.Description,
                 Name = x.Name,
-                ExerciseTutorialLinks = x.ExerciseTutorails.Select(x => x.Link).ToList(),
+                ExerciseTutorialLinks = x.ExerciseTutorails.Select(x => x.Id).ToList(),
                 SportRelations = x.ExerciseSports.Select(c => new ExerciseRelationModel() { Id = c.SportId, Name = c.Sport.Name }).ToList(),
                 TraumaRelations = x.ExerciseTraumas.Select(c => new ExerciseRelationModel() { Id = c.TraumaId, Name = c.Traumas.Name }).ToList()
             }).ToList();

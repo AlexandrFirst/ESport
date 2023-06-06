@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "RMQEsportClient": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:39616;http://localhost:39619"
+    }
+  }
+}
