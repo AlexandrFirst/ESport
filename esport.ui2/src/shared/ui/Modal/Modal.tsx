@@ -17,6 +17,7 @@ interface ModalProps {
   title?: string;
   description?: string;
   actions?: (close: () => void) => ReactNode;
+  minSize?: "md" | "lg" | "full";
 }
 
 const ANIMATION_DELAY = 50;
@@ -31,6 +32,7 @@ export const Modal = (props: ModalProps) => {
     onClose,
     lazy,
     title,
+    minSize = "md",
   } = props;
 
   const { close, isClosing, isMounted } = useModal({
@@ -61,7 +63,7 @@ export const Modal = (props: ModalProps) => {
           })}
         />
 
-        <div className={styles.content}>
+        <div className={cn(styles.content, styles[minSize])}>
           {title && <h2 className={styles.title}>{title}</h2>}
           {description && <h2 className={styles.description}>{description}</h2>}
           {children}

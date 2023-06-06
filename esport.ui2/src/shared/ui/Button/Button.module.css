@@ -7,7 +7,7 @@
 }
 
 .btn {
-  @apply px-4 py-1.5 font-semibold rounded-md text-blue-100 transition-all min-h-[10px] hover:opacity-80 active:opacity-60;
+  @apply px-4 py-1.5 font-semibold rounded-md text-blue-100 transition-all min-h-[10px] hover:opacity-80 active:opacity-60 text-center;
 }
 
 .disabled {

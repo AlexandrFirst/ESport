@@ -27,6 +27,7 @@ export { capitalize } from "./utils/capitalize";
 export { Logger } from "./utils/Logger";
 export { debounce } from "./utils/debounce";
 export { getApiError } from "./utils/getApiError";
+export { getTimeRangeStr } from "./utils/getTimeRangeStr";
 
 export { createBuildPath } from "./utils/build-path";
 export type { Query, Parameter } from "./utils/build-path";

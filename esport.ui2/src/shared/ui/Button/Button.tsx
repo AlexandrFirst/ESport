@@ -7,8 +7,8 @@ import React, {
 import styles from "./Button.module.css";
 
 import cn from "classnames";
-import { motion, useAnimation } from "framer-motion";
-import { BeatLoader } from "react-spinners";
+import { useAnimation } from "framer-motion";
+import { Loader2 } from "lucide-react";
 
 export type ButtonVariant = "contained" | "text" | "outlined";
 type ButtonColor = "normal" | "success" | "error" | "theme-main";
@@ -140,24 +140,15 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           }
         )}
       >
-        <motion.div className="wrapper">
-          <motion.div
-            initial={{ opacity: 0, y: -4 }}
-            animate={doneControls}
-            className={styles.checkmarkWrapper}
+        <span className={"flex items-center justify-center transition-all"}>
+          <Loader2
+            className={cn("mr-2 animate-spin transition-all", {
+              "h-4 w-4 opacity-1": loading,
+              "h-0 w-0 opacity-0": !loading,
+            })}
           />
-
-          <motion.span initial={{ opacity: 1 }} animate={textControls}>
-            {children}
-          </motion.span>
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={loadingControls}
-            className={styles.loaderWrapper}
-          >
-            <BeatLoader color={"#FFF"} size={6} />
-          </motion.div>
-        </motion.div>
+          {children}
+        </span>
       </button>
     );
   }

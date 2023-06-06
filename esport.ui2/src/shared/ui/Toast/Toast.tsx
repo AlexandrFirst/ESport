@@ -60,7 +60,7 @@ export const Toast = forwardRef<HTMLDivElement, ToastProps>(function Toast(
         </div>
       )}
 
-      <div className={"flex"}>
+      <div className={"flex min-w-[30px]"}>
         {icon && (
           <div
             className={cn(

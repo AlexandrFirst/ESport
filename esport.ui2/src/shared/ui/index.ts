@@ -6,8 +6,8 @@ export type { IconSvg, IconProps } from "./Icon/Icon";
 
 export { IconButton } from "./IconButton/IconButton";
 export { default as Logo } from "./Logo/Logo";
-export { default as Title } from "./Title/Title";
-export { default as SubTitle } from "./SubTitle/SubTitle";
+export { default as Title } from "./Text/Title/Title";
+export { default as SubTitle } from "./Text/SubTitle/SubTitle";
 
 export { ListItemButton } from "./ListItemButton/ListItemButton";
 export { Menu, ItemPadding } from "./Popups/Menu/Menu";
@@ -29,6 +29,8 @@ export type {
   AdditionalOptionList as AutocompleteAdditionalOptionList,
   AutocompleteCommonProps,
 } from "./Autocomplete/AutocompeleteCommonProps";
+export { DropdownBase } from "./Popups/Dropdown/DropdownBase";
+export { Dropdown } from "./Popups/Dropdown/Dropdown";
 
 export { Button } from "./Button/Button";
 export { DatePicker } from "./DatePicker/DatePicker";
@@ -96,13 +98,15 @@ export { TimeInput } from "./TimeInput/TimeInput";
 export { Collapse } from "./Collapse/Collapse";
 export type { CollapseList } from "./Collapse/Collapse";
 
-export * from "./Dropdown/Dropdown";
 export * from "./Select/Select";
 export * from "./Table/Table";
 export { Badge } from "./Badge/Badge";
 
 // DataTable
 export { DataTable } from "./DataTable/DataTable";
-export { DataTableColumnHeader } from "./DataTable/DataTableColumnHeader";
 export { DataTablePagination } from "./DataTable/DataTablePagination";
 export { DataTableViewOptions } from "./DataTable/DataTableViewOptions";
+
+export { ScrollArea, ScrollBar } from "./ScrollArea/ScrollArea";
+
+export { Portal } from "./Portal/Portal";

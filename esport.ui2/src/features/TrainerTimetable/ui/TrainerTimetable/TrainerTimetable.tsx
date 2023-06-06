@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import React, { FC, useState } from "react";
 
 import {
   TrainerCalendars,
@@ -12,15 +12,19 @@ import { IDayTimetable } from "@/entities/gym";
 interface TrainerTimetableProps {
   className?: string;
   trainerId: number;
+  startDateTime?: string;
 }
 
-export const TrainerTimetable: FC<TrainerTimetableProps> = ({ trainerId }) => {
+export const TrainerTimetable: FC<TrainerTimetableProps> = ({
+  trainerId,
+  startDateTime,
+}) => {
   const [sheetOpened, setSheetOpened] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<IDayTimetable>();
 
   const { data } = useGetTrainerTimetable({
     trainerId,
-    startDateTime: new Date().toLocaleDateString(),
+    startDateTime: startDateTime ?? new Date().toLocaleDateString(),
     dayRange: 30,
   });
 

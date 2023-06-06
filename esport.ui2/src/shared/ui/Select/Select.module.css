@@ -3,7 +3,7 @@
 }
 
 .content {
-  @apply relative z-50 min-w-[8rem] overflow-hidden rounded-md border bg-theme-card-main text-theme-main shadow-md animate-in fade-in-80;
+  @apply relative z-popover min-w-[8rem] overflow-hidden rounded-md border bg-theme-card-main text-theme-main shadow-md animate-in fade-in-80;
 }
 
 .item {

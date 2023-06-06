@@ -7,26 +7,29 @@ import React, {
 import styles from "./Input.module.css";
 
 import cn from "classnames";
-import { motion } from "framer-motion";
 
 import { ErrorMessage } from "@/shared/types";
 
 import { FormError } from "../FormError/FormError";
+import {
+  AnimatedLabel,
+  AnimatedLabelProps,
+} from "../AnimatedLabel/AnimatedLabel";
 
-export type InputBaseProps = InputHTMLAttributes<HTMLInputElement> & {
-  name?: string;
-  errors?: Record<string, ErrorMessage>;
-  callbackOnChange?: (value: string) => void;
-  label?: ReactNode;
-  endIcon?: ReactNode;
-  variant?: "outlined" | "standard" | "filled";
-  fullWidth?: boolean;
-  labelActive?: boolean;
-  marginTop?: "sm" | "md" | "lg" | "none";
-  endIconClassName?: string;
-  error?: ErrorMessage;
-  withMarginBottom?: boolean;
-};
+export type InputBaseProps = InputHTMLAttributes<HTMLInputElement> &
+  Omit<AnimatedLabelProps, "error" | "htmlFor"> & {
+    name?: string;
+    errors?: Record<string, ErrorMessage>;
+    callbackOnChange?: (value: string) => void;
+    label?: ReactNode;
+    endIcon?: ReactNode;
+    variant?: "outlined" | "standard" | "filled";
+    fullWidth?: boolean;
+    marginTop?: "sm" | "md" | "lg" | "none";
+    endIconClassName?: string;
+    error?: ErrorMessage;
+    withMarginBottom?: boolean;
+  };
 
 export const InputBase = forwardRef<HTMLInputElement, InputBaseProps>(
   function InputBase(
@@ -67,21 +70,14 @@ export const InputBase = forwardRef<HTMLInputElement, InputBaseProps>(
       >
         <div className={cn(styles.wrapper)}>
           {label && (
-            <motion.label
-              initial={{ opacity: 0 }}
-              animate={{
-                opacity: 1,
-                y: (labelActive || focused) && !disabled ? -35 : 0,
-                x: (labelActive || focused) && !disabled ? -10 : 0,
-              }}
+            <AnimatedLabel
+              label={label}
+              labelActive={labelActive}
+              focused={focused}
+              disabled={disabled}
+              error={!!error}
               htmlFor={name}
-              className={cn(styles.text, styles.label, {
-                [styles.error]: !!error,
-                [styles.disabled]: disabled,
-              })}
-            >
-              {label}
-            </motion.label>
+            />
           )}
           <input
             {...props}
