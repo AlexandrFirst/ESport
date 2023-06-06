@@ -7,6 +7,7 @@ export interface IDayTimetable {
   to: string;
   shiftId: number;
   timeTableLessons: ITimetableLesson[];
+  trainerScheduleIds: number[];
 }
 
 export interface IGymTimetable {
