@@ -1,0 +1,7 @@
+.wrapper {
+
+}
+
+.thumb {
+    @apply relative flex-1 rounded-full bg-theme-card-main;
+}

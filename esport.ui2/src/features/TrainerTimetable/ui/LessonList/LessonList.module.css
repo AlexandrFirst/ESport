@@ -1,0 +1,11 @@
+.wrapper {
+
+}
+
+.list_item {
+    @apply mt-3.5;
+}
+
+.card {
+    @apply flex flex-col;
+}

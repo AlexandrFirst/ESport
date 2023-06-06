@@ -8,7 +8,7 @@ import { Icon } from "@/shared/ui";
 
 import { IGymReadInfo } from "../../model/types/gym-read-info";
 import cn from "classnames";
-import { getTimeFromTimeSpan } from "@/shared/lib";
+import { getTimeFromTimeSpan, uniqueObjectsArray } from "@/shared/lib";
 
 export interface GymListItemProps {
   className?: string;
@@ -18,6 +18,11 @@ export interface GymListItemProps {
 
 export const GymListItem: FC<GymListItemProps> = ({ gym, onClickGym }) => {
   const handleClick = () => onClickGym?.(gym);
+
+  // const trainers = Array.from(new Set(gym.gymTrainerInfos.map((t) => t.id)));
+
+  const trainers = uniqueObjectsArray(gym.gymTrainerInfos, "id");
+  const sports = uniqueObjectsArray(gym.gymSports, "id");
 
   return (
     <li
@@ -44,8 +49,8 @@ export const GymListItem: FC<GymListItemProps> = ({ gym, onClickGym }) => {
       <div className={"ml-6 flex flex-col justify-end font-semibold"}>
         <span>Sports:</span>
         <ul>
-          {!!gym.gymSports.length ? (
-            gym.gymSports.map((sport) => (
+          {!!sports.length ? (
+            sports.map((sport) => (
               <li key={sport.id} className={"flex items-center gap-2"}>
                 <Icon Svg={UserGroupIcon} />
                 {sport.name}
@@ -59,8 +64,8 @@ export const GymListItem: FC<GymListItemProps> = ({ gym, onClickGym }) => {
       <div className={"flex flex-col justify-end font-semibold ml-10"}>
         <ul>
           Trainers:
-          {!!gym.gymTrainerInfos.length ? (
-            gym.gymTrainerInfos.map((trainer) => (
+          {!!trainers.length ? (
+            trainers.map((trainer) => (
               <li key={trainer.id} className={"flex items-center gap-2"}>
                 <Icon Svg={UserIcon} />
                 {trainer.name}

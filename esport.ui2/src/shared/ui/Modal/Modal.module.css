@@ -6,7 +6,7 @@
   left: 0;
   opacity: 0;
   pointer-events: none;
-  z-index: 100;
+  z-index: var(--modal-z-index);
   color: var(--color-text-main);
   display: flex;
   justify-content: center;
@@ -47,4 +47,16 @@
 .isClosing > .content {
   transform: translateY(100%);
   opacity: 0.7;
+}
+
+.md {
+  @apply min-w-[400px];
+}
+
+.lg {
+  @apply min-w-[600px];
+}
+
+.full {
+  @apply min-w-[100%] h-screen rounded-none;
 }

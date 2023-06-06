@@ -10,11 +10,17 @@ export {
   useGetTrainerTimetable,
   getTrainerTimetable,
 } from "./api/hooks/useGetTrainerTimetable";
-export type { GetTrainerTimetableRequest } from "./api/types/types";
+export { useCreateLesson } from "./api/hooks/useCreateLesson";
 
 //types
 export type { ITrainerSportInfo } from "./model/types/trainer-sport-info";
 export type { IPendingTrainerModel } from "./model/types/pending-trainer-model";
 export type { ITrainerInfo } from "./model/types/trainer-info";
+
+//api types
+export type {
+  GetTrainerTimetableRequest,
+  CreateLessonRequest,
+} from "./api/types/types";
 
 export { transfornGymTimetableByDateToCalendarEvent } from "./lib/helpers/transfornGymTimetableByDateToCalendarEvent/transfornGymTimetableByDateToCalendarEvent";

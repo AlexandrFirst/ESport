@@ -1,10 +1,10 @@
-import { LessonType } from "@/entities/lesson";
+import { LessonType } from "../../constants/lesson-type";
 
 export interface ITimetableLesson {
   lessonId: number;
   trainerId: number;
   trainerName: string;
   lessonType: LessonType;
-  from: Date;
-  to: Date;
+  from: string;
+  to: string;
 }

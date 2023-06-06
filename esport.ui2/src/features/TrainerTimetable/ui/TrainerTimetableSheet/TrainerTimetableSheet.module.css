@@ -1,3 +1,10 @@
 .wrapper {
+}
 
+.scroll {
+  @apply h-[calc(100vh-150px)] w-full pr-3 mt-10;
+}
+
+.list {
+  @apply mb-5;
 }

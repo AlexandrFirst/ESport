@@ -7,4 +7,5 @@ export const trainerApiKeys = {
     ...trainerApiKeys.getTimetableAll(),
     request,
   ],
+  createLesson: () => [...trainerApiKeys.all, "create-lesson"],
 };
