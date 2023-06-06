@@ -31,6 +31,7 @@ namespace UserWorkflow.Application.Models.Gym
 
     public class TimeTableLesson 
     {
+        public int TrainerSheduleId { get; set; }
         public int LessonId { get; set; }
         public int TrainerId { get; set; }
         public string TrainerName { get; set; }

@@ -74,6 +74,7 @@ namespace UserWorkflow.Application.Requests.GymAdmin
                                     To = j.ToTime ?? k.ToTime,
                                     LessonType = j.LessonType,
                                     TrainerId = l.TrainerId.Value,
+                                    TrainerSheduleId = l.Id,
                                     TrainerName = l.Trainer.Name
                                 })).OrderBy(i => i.From).ToList(),
                             };
