@@ -30,6 +30,7 @@ const mocked_lessons: ITimetableLesson[] = [
     lessonType: LessonType.Group,
     trainerId: 1,
     trainerName: "John",
+    trainerSheduleId: 1,
   },
   {
     lessonId: 12,
@@ -38,6 +39,7 @@ const mocked_lessons: ITimetableLesson[] = [
     lessonType: LessonType.Individual,
     trainerId: 1,
     trainerName: "John",
+    trainerSheduleId: 2,
   },
 ];
 
@@ -87,6 +89,9 @@ export const TrainerTimetableSheet: FC<TrainerTimetableSheetProps> = ({
             )}
             {isFormVisible && (
               <AddLessonForm
+                trainerScheduleId={
+                  selectedEvent?.timeTableLessons?.[0]?.trainerSheduleId
+                }
                 onSuccess={handleManageFormVisible(false)}
                 onCancel={handleManageFormVisible(false)}
               />

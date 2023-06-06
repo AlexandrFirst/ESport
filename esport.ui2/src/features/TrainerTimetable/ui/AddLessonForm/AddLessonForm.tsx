@@ -1,7 +1,8 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useQueryClient } from "@tanstack/react-query";
 
 import { Button, Dropdown, FormWrapper } from "@/shared/ui";
 import { useSnackbar } from "@/shared/lib";
@@ -17,14 +18,13 @@ import { TrainerApi, trainerApiKeys } from "@/entities/trainer";
 import { useValidation } from "../../lib/hooks/useValidation";
 import { IAddLessonForm } from "../../model/types/AddLessonForm";
 import { transformLessonToCreate } from "../../lib/helpers/transformLessonToCreate/transformLessonToCreate";
-import { useQueryClient } from "@tanstack/react-query";
 
 interface AddLessonFormProps {
   className?: string;
   onSuccess?: () => void;
   onCancel?: () => void;
   dayOfTheWeek?: DayOfTheWeek;
-  loading?: boolean;
+  trainerScheduleId?: number;
 }
 
 export const AddLessonForm: FC<AddLessonFormProps> = ({
@@ -32,12 +32,13 @@ export const AddLessonForm: FC<AddLessonFormProps> = ({
   onSuccess,
   onCancel,
   dayOfTheWeek = DayOfTheWeek.MONDAY,
-  loading,
+  trainerScheduleId,
 }) => {
   const schema = useValidation();
   const translatedLessonType = useTranslatedLessonType();
   const { showApiError, showSuccess } = useSnackbar();
   const queryClient = useQueryClient();
+  const [isLoading, setIsLoading] = useState(false);
 
   const methods = useForm<IAddLessonForm>({
     resolver: yupResolver(schema),
@@ -50,8 +51,9 @@ export const AddLessonForm: FC<AddLessonFormProps> = ({
 
   const handleSubmit = methods.handleSubmit(async (data) => {
     try {
+      setIsLoading(true);
       await TrainerApi().createLesson(
-        transformLessonToCreate(data, dayOfTheWeek, 1)
+        transformLessonToCreate(data, dayOfTheWeek, trainerScheduleId)
       );
       await queryClient.invalidateQueries({
         queryKey: trainerApiKeys.getTimetableAll(),
@@ -59,6 +61,8 @@ export const AddLessonForm: FC<AddLessonFormProps> = ({
       onSuccess?.();
     } catch (e) {
       showApiError(e);
+    } finally {
+      setIsLoading(false);
     }
   });
 
@@ -85,14 +89,14 @@ export const AddLessonForm: FC<AddLessonFormProps> = ({
       </div>
       <div className={"flex gap-5"}>
         <Button
-          disabled={loading}
+          disabled={isLoading}
           variant={"outlined"}
           color={"error"}
           onClick={onCancel}
         >
           Cancel
         </Button>
-        <Button disabled={loading} onClick={handleSubmit}>
+        <Button disabled={isLoading} onClick={handleSubmit}>
           Submit
         </Button>
       </div>

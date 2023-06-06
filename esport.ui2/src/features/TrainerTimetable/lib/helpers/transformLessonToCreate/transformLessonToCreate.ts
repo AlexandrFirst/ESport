@@ -5,7 +5,7 @@ import { DayOfTheWeek } from "@/shared/constants";
 export const transformLessonToCreate = (
   data: IAddLessonForm,
   dayOfTheWeek: DayOfTheWeek,
-  trainerScheduleId: number
+  trainerScheduleId?: number
 ): CreateLessonRequest => {
   return {
     lessonType: data.lessonType.value,
@@ -14,6 +14,6 @@ export const transformLessonToCreate = (
       fromTime: data.from,
       dayOfTheWeek: dayOfTheWeek,
     },
-    trainerScheduleId: trainerScheduleId,
+    trainerScheduleId: trainerScheduleId ?? 0,
   };
 };
