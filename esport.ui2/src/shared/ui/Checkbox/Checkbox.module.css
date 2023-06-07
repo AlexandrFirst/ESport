@@ -1,5 +1,5 @@
 .wrapper {
-    @apply flex items-center space-x-2;
+  @apply flex items-center space-x-2;
 }
 
 .checkbox {
@@ -8,6 +8,10 @@
 
 .checked {
   @apply data-[state=checked]:bg-theme-accent data-[state=checked]:text-theme-light;
+}
+
+.error {
+  @apply text-theme-error border-theme-error;
 }
 
 .disabled {
