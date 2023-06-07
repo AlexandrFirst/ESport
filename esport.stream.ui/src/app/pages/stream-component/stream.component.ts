@@ -61,7 +61,7 @@ export class StreamComponent implements OnInit, OnDestroy {
     this.streamId = route.snapshot.params["id"];
   }
   ngOnDestroy(): void {
-    this.stop();
+    // this.stop();
   }
 
   ngOnInit(): void {
@@ -282,23 +282,23 @@ export class StreamComponent implements OnInit, OnDestroy {
         },
         {
           "urls": "turn:a.relay.metered.ca:80",
-          "username": "72149d011edb2f3f2ba2f6a5",
-          "credential": "Uj0McnGNaLggpCkg",
+          "username": "c5Q4MTVZd4AvW2eL",
+          "credential": "c5Q4MTVZd4AvW2eL",
         },
         {
           "urls": "turn:a.relay.metered.ca:80?transport=tcp",
-          "username": "72149d011edb2f3f2ba2f6a5",
-          "credential": "Uj0McnGNaLggpCkg",
+          "username": "c5Q4MTVZd4AvW2eL",
+          "credential": "c5Q4MTVZd4AvW2eL",
         },
         {
           "urls": "turn:a.relay.metered.ca:443",
-          "username": "72149d011edb2f3f2ba2f6a5",
-          "credential": "Uj0McnGNaLggpCkg",
+          "username": "c5Q4MTVZd4AvW2eL",
+          "credential": "c5Q4MTVZd4AvW2eL",
         },
         {
           "urls": "turn:a.relay.metered.ca:443?transport=tcp",
-          "username": "72149d011edb2f3f2ba2f6a5",
-          "credential": "Uj0McnGNaLggpCkg",
+          "username": "c5Q4MTVZd4AvW2eL",
+          "credential": "c5Q4MTVZd4AvW2eL",
         },
       ],
       onicecandidate: (candidate: any) => {
@@ -338,23 +338,23 @@ export class StreamComponent implements OnInit, OnDestroy {
         },
         {
           "urls": "turn:a.relay.metered.ca:80",
-          "username": "72149d011edb2f3f2ba2f6a5",
-          "credential": "Uj0McnGNaLggpCkg",
+          "username": "c5Q4MTVZd4AvW2eL",
+          "credential": "c5Q4MTVZd4AvW2eL",
         },
         {
           "urls": "turn:a.relay.metered.ca:80?transport=tcp",
-          "username": "72149d011edb2f3f2ba2f6a5",
-          "credential": "Uj0McnGNaLggpCkg",
+          "username": "c5Q4MTVZd4AvW2eL",
+          "credential": "c5Q4MTVZd4AvW2eL",
         },
         {
           "urls": "turn:a.relay.metered.ca:443",
-          "username": "72149d011edb2f3f2ba2f6a5",
-          "credential": "Uj0McnGNaLggpCkg",
+          "username": "c5Q4MTVZd4AvW2eL",
+          "credential": "c5Q4MTVZd4AvW2eL",
         },
         {
           "urls": "turn:a.relay.metered.ca:443?transport=tcp",
-          "username": "72149d011edb2f3f2ba2f6a5",
-          "credential": "Uj0McnGNaLggpCkg",
+          "username": "c5Q4MTVZd4AvW2eL",
+          "credential": "c5Q4MTVZd4AvW2eL",
         },
       ],
       onicecandidate: (candidate: any) => {

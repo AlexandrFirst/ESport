@@ -153,10 +153,7 @@ namespace StreamingService.Services
                 var webRtcEndPoint = await kurentoClient.CreateAsync(new WebRtcEndpoint(mediaPipeline, recvonly: false, sendonly: true, useDataChannels: true));
 
 
-                await webRtcEndPoint.SetMinOutputBitrateAsync(30);
                 await webRtcEndPoint.SetMaxOutputBitrateAsync(100);
-
-                await webRtcEndPoint.SetMinVideoSendBandwidthAsync(30);
                 await webRtcEndPoint.SetMaxVideoSendBandwidthAsync(100);
 
 
@@ -324,37 +321,6 @@ namespace StreamingService.Services
                     Id = "iceCandidate",
                     Body = JsonConvert.SerializeObject(cadidate)
                 });
-            };
-
-            webRtcEndPoint.DataChannelClose += (DataChannelCloseEventArgs obj) =>
-            {
-                logger.LogError($"Data channel close with client id: {userId} happend; {obj.ToString()} ");
-            };
-
-            webRtcEndPoint.ConnectionStateChanged += (ConnectionStateChangedEventArgs obj) =>
-            {
-                logger.LogError($"ConnectionStateChanged with client id: {userId} happend; {obj.ToString()} ");
-            };
-
-
-            webRtcEndPoint.Error += (ErrorEventArgs args) =>
-            {
-                logger.LogError($"Error with client id: {userId} happend; {args.description} {args.errorCode} {args.type}");
-            };
-
-            webRtcEndPoint.MediaSessionTerminated += (MediaSessionTerminatedEventArgs args) =>
-            {
-                logger.LogError($"MediaSessionTerminated with client id: {userId} happend; {args.type}");
-            };
-
-            webRtcEndPoint.OnDataChannelClosed += (OnDataChannelClosedEventArgs args) =>
-            {
-                logger.LogError($"OnDataChannelClosed with client id: {userId} happend; {args.type}; channel id: {args.channelId}");
-            };
-
-            webRtcEndPoint.ElementDisconnected += (ElementDisconnectedEventArgs obj) =>
-            {
-                logger.LogError($"Disconnected with client id: {userId} happend; {obj.ToString()} ");
             };
 
             var sdpAnswer = await webRtcEndPoint.ProcessOfferAsync(sdpOffer);
