@@ -28,7 +28,8 @@ interface UseMenuResult {
 }
 
 export const useMenu = (): UseMenuResult => {
-  const { user, isAuth, isOrganisationAdmin, isTrainer } = useAuth();
+  const { user, isAuth, isOrganisationAdmin, isTrainer, isGymAdmin } =
+    useAuth();
   const {
     isProfileLoading,
     profileOrganisationId,
@@ -85,7 +86,7 @@ export const useMenu = (): UseMenuResult => {
     menu: [
       ...unLoggedMenu,
       ...menuItems({
-        condition: isOrganisationAdmin,
+        condition: isOrganisationAdmin || isGymAdmin,
         onTrue: [
           {
             title: "Organisation",

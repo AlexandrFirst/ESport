@@ -1,0 +1,15 @@
+.text {
+  @apply text-theme-main;
+}
+
+.label {
+  @apply absolute top-[25%] left-2.5 focus:top-0 cursor-text font-semibold;
+}
+
+.error {
+  @apply text-theme-error;
+}
+
+.disabled {
+  @apply !opacity-60 cursor-default;
+}

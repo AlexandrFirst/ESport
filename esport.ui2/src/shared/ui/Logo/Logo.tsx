@@ -1,13 +1,13 @@
 import React, { memo } from "react";
 import styles from "./Logo.module.css";
 
+import { Title } from "..";
 import { routes } from "../../config/routeConfig/routeConfig";
 
 import Link from "next/link";
 import { ImageProps } from "next/image";
 import cn from "classnames";
 
-import { Title } from "../Title/Title";
 import { LogoSvg } from "./logoSvg";
 
 interface SportLogoProps extends Partial<ImageProps> {

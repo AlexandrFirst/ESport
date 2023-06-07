@@ -1,3 +1,27 @@
 .wrapper {
-    @apply font-bold w-fit leading-none;
+  @apply font-bold leading-none;
+}
+
+.fit {
+  @apply w-fit;
+}
+
+.center {
+  @apply text-center;
+}
+
+.sm {
+  @apply text-sm;
+}
+
+.md {
+  @apply text-base;
+}
+
+.lg {
+  @apply text-lg;
+}
+
+.xl {
+  @apply text-xl;
 }

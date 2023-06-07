@@ -5,6 +5,8 @@ import { routes } from "@/shared/config";
 import { AppServerSideConfig, StateSchemaStore } from "@/shared/types";
 import { ReturnUrl } from "@/shared/constants";
 
+import { Logger } from "../utils/Logger";
+
 export const checkUserAndRedirect = <TProps>(
   store: StateSchemaStore,
   config?: Pick<AppServerSideConfig, "roles" | "auth" | "forbiddenPath">,
@@ -27,21 +29,22 @@ export const checkUserAndRedirect = <TProps>(
         props: {} as TProps,
       };
     }
-    //TODO: check
     const hasPermissions =
       roles?.some((confRole) =>
         user.roles?.some((userRole) => userRole === confRole)
       ) ?? false;
-    console.log("===hasPermissions===", hasPermissions);
-    // if (roles && roles.length > 0 && !roles.includes(user. as UserRole)) {
-    //   return {
-    //     redirect: {
-    //       destination: getDestination(config?.forbiddenPath ?? routes.Forbidden()),
-    //       permanent: false,
-    //     },
-    //     props: {} as TProps,
-    //   };
-    // }
+    if (!!roles?.length && !hasPermissions) {
+      Logger.Debug("===hasPermissions===", hasPermissions);
+      return {
+        redirect: {
+          destination: getDestination(
+            config?.forbiddenPath ?? routes.Forbidden()
+          ),
+          permanent: false,
+        },
+        props: {} as TProps,
+      };
+    }
   }
   return {
     props: {} as TProps,
