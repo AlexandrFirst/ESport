@@ -1,4 +1,5 @@
 import { DragEvent, useState } from "react";
+import { useThrottle } from "@/shared/lib";
 
 interface UseDragAndDropProps {
   onFileChange?: (files: File[] | null) => void;
@@ -10,15 +11,16 @@ export const useDragAndDrop = (params?: UseDragAndDropProps) => {
   const { onFileChange, accept, onFilesReject } = params || {};
 
   const [drag, setDrag] = useState(false);
+  const throttledSetDrag = useThrottle(setDrag, 100);
 
   const handleDragStart = (e: DragEvent<HTMLElement>) => {
     e.preventDefault();
-    setDrag(true);
+    throttledSetDrag(true);
   };
 
   const handleDragLeave = (e: DragEvent<HTMLElement>) => {
     e.preventDefault();
-    setDrag(false);
+    throttledSetDrag(false);
   };
 
   const handleDropFile = (e: DragEvent<HTMLElement>) => {
@@ -51,5 +53,6 @@ export const useDragAndDrop = (params?: UseDragAndDropProps) => {
     handleDragLeave,
     handleDropFile,
     setDrag,
+    throttledSetDrag,
   };
 };

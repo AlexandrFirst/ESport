@@ -6,10 +6,5 @@ interface TraumaProps {
 }
 
 export const Trauma: FC<TraumaProps> = (props) => {
-
-    return (
-        <div className={styles.wrapper}>
-
-        </div>
-    );
+  return <div className={styles.wrapper}></div>;
 };

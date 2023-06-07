@@ -6,10 +6,5 @@ interface BodyPartProps {
 }
 
 export const BodyPart: FC<BodyPartProps> = (props) => {
-
-    return (
-        <div className={styles.wrapper}>
-
-        </div>
-    );
+  return <div className={styles.wrapper}></div>;
 };

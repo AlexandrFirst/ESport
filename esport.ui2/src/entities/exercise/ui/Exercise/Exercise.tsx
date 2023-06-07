@@ -6,10 +6,5 @@ interface ExerciseProps {
 }
 
 export const Exercise: FC<ExerciseProps> = (props) => {
-
-    return (
-        <div className={styles.wrapper}>
-
-        </div>
-    );
+  return <div className={styles.wrapper}></div>;
 };

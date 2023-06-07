@@ -11,9 +11,9 @@ export default {
   },
 } as ComponentMeta<typeof BodyPart>;
 
-const Template: ComponentStory<typeof BodyPart> = (args) => <BodyPart {...args} />;
+const Template: ComponentStory<typeof BodyPart> = (args) => (
+  <BodyPart {...args} />
+);
 
 export const Normal = Template.bind({});
-Normal.args = {
-
-};
+Normal.args = {};

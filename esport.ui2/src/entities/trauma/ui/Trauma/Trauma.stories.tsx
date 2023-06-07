@@ -14,6 +14,4 @@ export default {
 const Template: ComponentStory<typeof Trauma> = (args) => <Trauma {...args} />;
 
 export const Normal = Template.bind({});
-Normal.args = {
-
-};
+Normal.args = {};
