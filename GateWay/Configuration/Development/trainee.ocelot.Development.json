@@ -84,7 +84,7 @@
           "Port": 5005
         }
       ],
-      "UpstreamPathTemplate": "/trainee-timetable",
+      "UpstreamPathTemplate": "/trainee-lesson-info/{lessonId}",
       "UpstreamHttpMethod": [ "POST" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "ESport",
