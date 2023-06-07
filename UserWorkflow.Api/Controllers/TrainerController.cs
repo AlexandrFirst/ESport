@@ -148,6 +148,7 @@ namespace UserWorkflow.Api.Controllers
         }
 
         [HttpPost("ExerciseCreate")]
+        [RequestSizeLimit(100_000_000)]
         public async Task<IActionResult> CreateLesson([FromForm] ExerciseCreate exerciseCreate) 
         {
             var started = DateTime.UtcNow;
