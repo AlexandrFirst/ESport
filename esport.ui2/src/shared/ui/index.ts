@@ -24,11 +24,14 @@ export type { InputBaseProps } from "./Input/InputBase";
 export { PasswordInput } from "./PasswordInput/PasswordInput";
 export { TextAreaBase } from "./TextArea/TextAreaBase";
 export { TextArea } from "./TextArea/TextArea";
+
 export { Autocomplete } from "./Autocomplete/Autocomplete";
 export type {
   AdditionalOptionList as AutocompleteAdditionalOptionList,
   AutocompleteCommonProps,
 } from "./Autocomplete/AutocompeleteCommonProps";
+export { FormAutocomplete } from "./Autocomplete/FormAutocomplete";
+
 export { DropdownBase } from "./Popups/Dropdown/DropdownBase";
 export { Dropdown } from "./Popups/Dropdown/Dropdown";
 
@@ -110,3 +113,5 @@ export { DataTableViewOptions } from "./DataTable/DataTableViewOptions";
 export { ScrollArea, ScrollBar } from "./ScrollArea/ScrollArea";
 
 export { Portal } from "./Portal/Portal";
+export { DragAndDropFileUpload } from "./DragAndDropFileUpload/DragAndDropFileUpload";
+export { useDragAndDrop } from "./DragAndDropFileUpload/useDragAndDrop";

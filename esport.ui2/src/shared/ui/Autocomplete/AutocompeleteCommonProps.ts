@@ -22,4 +22,5 @@ export interface AutocompleteCommonProps<T extends {} = {}>
   additionalOptions?: AdditionalOption[];
   additionalDisplayValue?: keyof T;
   clearSearchOnChange?: boolean;
+  withFilter?: boolean;
 }

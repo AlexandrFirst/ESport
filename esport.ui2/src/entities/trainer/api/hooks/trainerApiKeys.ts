@@ -1,4 +1,7 @@
-import { GetTrainerTimetableRequest } from "../types/types";
+import {
+  GetExerciseTrainerListingRequest,
+  GetTrainerTimetableRequest,
+} from "../types/types";
 
 export const trainerApiKeys = {
   all: ["trainer-api"],
@@ -8,4 +11,10 @@ export const trainerApiKeys = {
     request,
   ],
   createLesson: () => [...trainerApiKeys.all, "create-lesson"],
+  exerciseListingAll: () => [...trainerApiKeys.all, "excercise-listing"],
+  exerciseListing: (request: GetExerciseTrainerListingRequest) => [
+    ...trainerApiKeys.all,
+    "excercise-listing",
+    request,
+  ],
 };

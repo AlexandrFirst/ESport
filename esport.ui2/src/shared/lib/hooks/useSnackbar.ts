@@ -53,5 +53,23 @@ export const useSnackbar = () => {
     },
     [addSnack]
   );
-  return { showSuccess, showError, showApiError };
+
+  const showWarning = useCallback(
+    (
+      message: string,
+      config?: Pick<Partial<ToastProps>, "position" | "duration">
+    ) => {
+      const { duration = 3000, position = "bottomLeft" } = config || {};
+
+      addSnack({
+        message,
+        position,
+        duration,
+        type: "warning",
+      });
+    },
+    [addSnack]
+  );
+
+  return { showSuccess, showError, showApiError, showWarning };
 };

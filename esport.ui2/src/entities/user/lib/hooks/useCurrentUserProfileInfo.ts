@@ -1,4 +1,4 @@
-import { useAuth } from "@/entities/user";
+import { useAuth } from "./useAuth";
 import { useProfileInfo, UseProfileInfoParams } from "@/entities/profile";
 
 interface UseCurrentUserProfileInfoProps

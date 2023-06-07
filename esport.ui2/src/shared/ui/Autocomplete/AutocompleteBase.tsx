@@ -1,7 +1,9 @@
 import React, { Fragment } from "react";
 import styles from "./Autocomplete.module.css";
+
 import { Combobox } from "@headlessui/react";
 import { ChevronDownIcon, ChevronUpIcon } from "@heroicons/react/24/solid";
+import cn from "classnames";
 
 import { InputBase } from "../Input/InputBase";
 import { Icon } from "../Icon/Icon";
@@ -30,6 +32,8 @@ export function AutocompleteBase<T extends {} = {}>({
   disabled,
   additionalDisplayValue,
   clearSearchOnChange,
+  withFilter = true,
+  className,
   ...props
 }: AutocompleteBaseProps<T>) {
   const {
@@ -48,6 +52,7 @@ export function AutocompleteBase<T extends {} = {}>({
     onChange,
     delayTime,
     clearSearchOnChange,
+    withFilter,
   });
 
   return (
@@ -58,7 +63,7 @@ export function AutocompleteBase<T extends {} = {}>({
       disabled={disabled}
     >
       {({ open, activeOption }) => (
-        <div className={styles.wrapper}>
+        <div className={cn(styles.wrapper, className)}>
           <Combobox.Input
             as={Fragment}
             onChange={debouncedHandleInputChange}

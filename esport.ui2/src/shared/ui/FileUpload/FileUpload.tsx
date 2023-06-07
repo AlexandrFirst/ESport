@@ -7,14 +7,17 @@ import React, {
   useRef,
 } from "react";
 import styles from "./FileUpload.module.css";
+import cn from "classnames";
 
-interface FileUploadProps
+export interface FileUploadProps
   extends DetailedHTMLProps<
     InputHTMLAttributes<HTMLInputElement>,
     HTMLInputElement
   > {
-  onFileChange?: (file: File | null) => void;
+  onFileChange?: (files: File[] | null) => void;
   children: ReactNode;
+  multiple?: boolean;
+  className?: string;
 }
 
 export const FileUpload: FC<FileUploadProps> = ({
@@ -22,17 +25,20 @@ export const FileUpload: FC<FileUploadProps> = ({
   onFileChange,
   name = "file",
   children,
+  multiple,
+  className,
 }) => {
   const ref = useRef<HTMLInputElement | null>(null);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onFileChange?.(e.target?.files?.[0] ?? null);
+    const files = e.target.files;
+    onFileChange?.(files ? Array.from(files) : null);
   };
 
   const handleClick = () => ref.current?.click();
 
   return (
-    <div onClick={handleClick} className={styles.wrapper}>
+    <div onClick={handleClick} className={cn(styles.wrapper, className)}>
       <input
         type="file"
         name={name}
@@ -40,6 +46,7 @@ export const FileUpload: FC<FileUploadProps> = ({
         className={styles.input}
         accept={accept}
         ref={ref}
+        multiple={multiple}
       />
       {children}
     </div>

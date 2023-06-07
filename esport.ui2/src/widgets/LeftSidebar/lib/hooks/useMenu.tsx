@@ -129,6 +129,10 @@ export const useMenu = (): UseMenuResult => {
                 title: "Timetable",
                 link: routes.Trainer.Timetable(),
               },
+              {
+                title: "Excercises",
+                link: routes.Trainer.Excercises(),
+              },
             ],
           },
         ],

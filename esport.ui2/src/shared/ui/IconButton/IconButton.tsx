@@ -26,6 +26,7 @@ export const IconButton: FC<IconButtonProps> = (props) => {
     className,
     as: Component = "button",
     disabled = false,
+    fill,
     ...otherProps
   } = props;
 
@@ -37,7 +38,12 @@ export const IconButton: FC<IconButtonProps> = (props) => {
         [styles.disabled]: disabled,
       })}
     >
-      <Icon Svg={Svg} className={svgClassName} iconSize={iconSize} />
+      <Icon
+        Svg={Svg}
+        className={svgClassName}
+        iconSize={iconSize}
+        fill={fill}
+      />
     </Component>
   );
 };

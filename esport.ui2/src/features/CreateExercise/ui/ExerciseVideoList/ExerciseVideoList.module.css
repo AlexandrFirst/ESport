@@ -1,0 +1,15 @@
+.wrapper {
+  @apply py-5 px-4 border-theme-accent border-4 border-dashed rounded-md;
+}
+
+.trash {
+  fill: var(--color-error-main);
+}
+
+.list_item {
+  @apply flex items-center border-b border-theme-main mb-3 last:border-none last:mb-0;
+}
+
+.drag {
+  @apply opacity-50;
+}

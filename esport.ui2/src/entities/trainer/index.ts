@@ -11,6 +11,10 @@ export {
   getTrainerTimetable,
 } from "./api/hooks/useGetTrainerTimetable";
 export { useCreateLesson } from "./api/hooks/useCreateLesson";
+export {
+  getTrainerExercises,
+  useGetExercises,
+} from "./api/hooks/useGetExcercises";
 
 //types
 export type { ITrainerSportInfo } from "./model/types/trainer-sport-info";

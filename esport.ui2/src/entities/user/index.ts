@@ -11,6 +11,7 @@ export {
 //lib
 export { updateStoreUser } from "./lib/helpers/update-store-user/update-store-user";
 export { useAuth } from "./lib/hooks/useAuth";
+export { useCurrentUserProfileInfo } from "./lib/hooks/useCurrentUserProfileInfo";
 
 //types
 export type { UserSchema } from "./model/types/userSchema";

@@ -10,7 +10,6 @@ interface FormAutocompleteProps<T extends {} = {}>
 
 export function FormAutocomplete<T extends {} = {}>({
   name,
-  // multiple,
   ...props
 }: FormAutocompleteProps<T>) {
   return (

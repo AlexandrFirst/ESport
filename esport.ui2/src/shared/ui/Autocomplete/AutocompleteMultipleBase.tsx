@@ -38,6 +38,8 @@ export function AutocompleteMultipleBase<T extends {} = {}>({
   onInputChange,
   additionalDisplayValue,
   clearSearchOnChange,
+  withFilter = false,
+  className,
   ...props
 }: AutocompleteMultipleBaseProps<T>) {
   const {
@@ -50,7 +52,7 @@ export function AutocompleteMultipleBase<T extends {} = {}>({
     list,
     displayValue,
     loading,
-    withFilter: false,
+    withFilter,
     additionalOptions,
     onChange,
     onInputChange,
@@ -78,7 +80,7 @@ export function AutocompleteMultipleBase<T extends {} = {}>({
       disabled={disabled}
     >
       {({ open }) => (
-        <div className={styles.wrapper}>
+        <div className={cn(styles.wrapper, className)}>
           <Combobox.Input
             as={Fragment}
             displayValue={(items: T[]) =>
