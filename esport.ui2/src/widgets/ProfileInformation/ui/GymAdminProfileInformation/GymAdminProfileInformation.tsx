@@ -1,11 +1,12 @@
 import React, { FC, useState } from "react";
 
+import { Autocomplete } from "@/shared/ui";
+
 import { IGymReadInfo, useGetGyms } from "@/entities/gym";
 
 import { ProfileInfoPerRole } from "../ProfileInfoPerRole/ProfileInfoPerRole";
 import { useSelectGymAdminGyms } from "../../model/selectors/selectGymAdminGyms/selectGymAdminGyms";
-import { Autocomplete } from "@/shared/ui";
-import { useRoleProfileInformationActions } from "../..";
+import { useRoleProfileInformationActions } from "../../model/slices/roleProfileInformationSlice";
 import { transformGymInfoToGymReadInfo } from "../../lib/helpers/transformGymInfoToGymReadInfo/transformGymInfoToGymReadInfo";
 
 interface GymAdminProfileInformationProps {
@@ -48,6 +49,7 @@ export const GymAdminProfileInformation: FC<
             placeholder={"[Title of the gym]"}
             additionalDisplayValue={"address"}
             clearSearchOnChange
+            fullWidth
           />
         </>
       }

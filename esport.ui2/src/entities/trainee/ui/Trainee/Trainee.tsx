@@ -6,10 +6,5 @@ interface TraineeProps {
 }
 
 export const Trainee: FC<TraineeProps> = (props) => {
-
-    return (
-        <div className={styles.wrapper}>
-
-        </div>
-    );
+  return <div className={styles.wrapper}></div>;
 };

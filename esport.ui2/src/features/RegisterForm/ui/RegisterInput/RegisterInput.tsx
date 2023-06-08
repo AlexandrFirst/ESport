@@ -19,6 +19,7 @@ export const RegisterInput = forwardRef<HTMLInputElement, RegisterInputProps>(
         ref={ref}
         label={label}
         className={cn(styles.input, { [styles.hide]: isHided })}
+        fullWidth
       />
     ) : (
       <PasswordInput
@@ -26,6 +27,7 @@ export const RegisterInput = forwardRef<HTMLInputElement, RegisterInputProps>(
         ref={ref}
         placeholder={typeof label === "string" ? label : undefined}
         className={cn(styles.input, { [styles.hide]: isHided })}
+        fullWidth
       />
     );
   }
