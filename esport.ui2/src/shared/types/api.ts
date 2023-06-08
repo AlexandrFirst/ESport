@@ -5,6 +5,11 @@ export type ApiContext = Pick<
   "req" | "res"
 >;
 
+export interface BasePagintaionRequest {
+  page: number;
+  pageSize: number;
+}
+
 export interface BaseListingResult {
   page: number;
   totalItems: number;

@@ -15,6 +15,7 @@ import {
   profileInformationReducer,
   roleProfileInformationReducer,
 } from "@/widgets/ProfileInformation";
+import { TraineeRecommendationFiltersReducer } from "@/features/TraineeRecommendationFilters";
 
 export const reducer = combineReducers<StateSchema>({
   leftSidebar: leftSidebarReducer,
@@ -26,4 +27,5 @@ export const reducer = combineReducers<StateSchema>({
   roleProfileInformation: roleProfileInformationReducer,
   gymsFilters: GymsFiltersReducer,
   trainerExerciseFliters: TrainerExerciseFlitersReducer,
+  traineeRecommendationFilters: TraineeRecommendationFiltersReducer,
 });

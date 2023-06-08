@@ -17,6 +17,7 @@ export const routes = {
   Streams: buildPath("/streams"),
   Settings: buildPath("/settings"),
   Me: buildPath("/me"),
+  TraineeRecommendations: buildPath("/find-sport"),
 
   User: userRoutes,
   Competition: competitionRoutes,

@@ -43,7 +43,7 @@ export const InputBase = forwardRef<HTMLInputElement, InputBaseProps>(
       placeholder,
       endIcon,
       className,
-      fullWidth = true,
+      fullWidth = false,
       labelActive = false,
       marginTop = "none",
       error,

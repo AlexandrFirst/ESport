@@ -47,7 +47,7 @@ export function DropdownBase<T>({
 }: DropdownBaseProps<T>) {
   const menuClasses = [mapDirectionClass[direction]];
 
-  const compareBy = (a: T, b: T) => a[displayKey] === b[displayKey];
+  const compareBy = (a: T, b: T) => a?.[displayKey] === b?.[displayKey];
 
   return (
     <>

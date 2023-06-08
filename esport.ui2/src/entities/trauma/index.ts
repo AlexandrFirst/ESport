@@ -3,6 +3,7 @@ export type { TraumaSchema } from "./model/types/traumaSchema";
 
 //types
 export type { ITrauma } from "./model/types/trauma";
+export type { ITraumaHistoryRecord } from "./model/types/trauma-history-record";
 
 //api
 export { TraumaApi } from "./api/TraumaApi";

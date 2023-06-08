@@ -1,4 +1,4 @@
-import { getTimeFromTimeSpan } from "..";
+import { getTimeFromTimeSpan } from "../dates/getTimeFromTimeSpan";
 
 interface GetFromToStringParams {
   from?: string;
@@ -6,6 +6,7 @@ interface GetFromToStringParams {
 }
 
 export const getTimeRangeStr = (params: GetFromToStringParams) => {
+  if (!params.from || !params.to) return "--";
   return `${getTimeFromTimeSpan(params.from)} - ${getTimeFromTimeSpan(
     params.to
   )}`;

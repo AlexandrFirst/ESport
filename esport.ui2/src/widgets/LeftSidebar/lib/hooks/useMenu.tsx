@@ -5,7 +5,7 @@ import {
   UserGroupIcon,
 } from "@heroicons/react/24/solid";
 
-import { PersonStanding } from "lucide-react";
+import { LogIn, PersonStanding, QrCode } from "lucide-react";
 
 import { routes } from "@/shared/config";
 
@@ -15,6 +15,7 @@ import { useProfileInfo } from "@/entities/profile";
 import { IMenuItem } from "../../types/menu-item";
 
 import MenuIcon from "../../ui/MenuIcon/MenuIcon";
+import { useGetLoginUrl } from "@/shared/lib/hooks/useGetLoginUrl";
 
 type ShowMenuParams = {
   condition: boolean;
@@ -39,6 +40,7 @@ export const useMenu = (): UseMenuResult => {
     userId: user?.id || 0,
     forceFetch: isAuth,
   });
+  const loginUrl = useGetLoginUrl();
 
   const menuItems = ({ condition, onFalse, onTrue }: ShowMenuParams) => {
     if (condition) {
@@ -49,28 +51,20 @@ export const useMenu = (): UseMenuResult => {
 
   const unLoggedMenu: IMenuItem[] = [
     {
-      title: "Streams",
-      icon: <MenuIcon Svg={ComputerDesktopIcon} />,
-      link: routes.Streams(),
+      title: "Discover E-Sport",
+      icon: <MenuIcon Svg={QrCode} />,
+      items: [
+        {
+          title: "Find sport for you",
+          link: routes.TraineeRecommendations(),
+        },
+      ],
     },
     {
-      title: "Competitions",
-      icon: <MenuIcon Svg={BriefcaseIcon} />,
-      link: routes.Competition.Home(),
-      items: isAuth
-        ? [
-            {
-              title: "Competitions",
-              // icon: <SportsKabaddiIcon className="mr-3" />,
-              link: routes.Competition.Home(),
-            },
-            {
-              title: "Create",
-              // icon: <AddIcon className="mr-3" />,
-              link: routes.Competition.Create(),
-            },
-          ]
-        : undefined,
+      title: "Login",
+      gap: true,
+      icon: <MenuIcon Svg={LogIn} />,
+      link: loginUrl,
     },
   ];
 
@@ -84,7 +78,31 @@ export const useMenu = (): UseMenuResult => {
   return {
     isLoading: isProfileLoading,
     menu: [
-      ...unLoggedMenu,
+      {
+        title: "Streams",
+        icon: <MenuIcon Svg={ComputerDesktopIcon} />,
+        link: routes.Streams(),
+      },
+      {
+        title: "Competitions",
+        icon: <MenuIcon Svg={BriefcaseIcon} />,
+        link: routes.Competition.Home(),
+        items: menuItems({
+          condition: isAuth,
+          onTrue: [
+            {
+              title: "Competitions",
+              // icon: <SportsKabaddiIcon className="mr-3" />,
+              link: routes.Competition.Home(),
+            },
+            {
+              title: "Create",
+              // icon: <AddIcon className="mr-3" />,
+              link: routes.Competition.Create(),
+            },
+          ],
+        }),
+      },
       ...menuItems({
         condition: isOrganisationAdmin || isGymAdmin,
         onTrue: [

@@ -34,6 +34,8 @@ export { FormAutocomplete } from "./Autocomplete/FormAutocomplete";
 
 export { DropdownBase } from "./Popups/Dropdown/DropdownBase";
 export { Dropdown } from "./Popups/Dropdown/Dropdown";
+export type { DropdownProps } from "./Popups/Dropdown/Dropdown";
+export type { DropdownBaseProps } from "./Popups/Dropdown/DropdownBase";
 
 export { Button } from "./Button/Button";
 export { DatePicker } from "./DatePicker/DatePicker";

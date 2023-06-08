@@ -18,6 +18,7 @@ import {
 } from "@/widgets/ProfileInformation";
 import { GymsFiltersSchema } from "@/features/GymsFilters";
 import { TrainerExerciseFlitersSchema } from "@/features/TrainerExerciseFliters";
+import { TraineeRecommendationFiltersSchema } from "@/features/TraineeRecommendationFilters";
 
 export interface StateSchema {
   leftSidebar: LeftSidebarSliceState;
@@ -29,6 +30,7 @@ export interface StateSchema {
   roleProfileInformation: RoleProfileInformationState;
   gymsFilters: GymsFiltersSchema;
   trainerExerciseFliters: TrainerExerciseFlitersSchema;
+  traineeRecommendationFilters: TraineeRecommendationFiltersSchema;
 }
 
 export type StateSchemaKey = keyof StateSchema;
