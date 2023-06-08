@@ -2,7 +2,7 @@ import React, { FC } from "react";
 
 import { StickyContentLayout } from "@/shared/layouts";
 
-import { ExerciseInfoList } from "@/entities/exercise";
+import { ExerciseInfoList, IExerciseInfo } from "@/entities/exercise";
 import { useGetExercises } from "@/entities/trainer";
 import { Title, UILink } from "@/shared/ui";
 import { routes } from "@/shared/config";
@@ -16,13 +16,24 @@ interface TrainerExerciseListProps {
   className?: string;
 }
 
+const m: IExerciseInfo[] = [
+  {
+    name: "ALALALLA",
+    description: "aalalalalala",
+    exerciseTutorialLinks: [1, 2, 3, 1111],
+    sportRelations: [],
+    bodypartRelation: [],
+    traumaRelations: [],
+  },
+];
+
 export const TrainerExerciseList: FC<TrainerExerciseListProps> = ({
   className,
 }) => {
   const { trainerSports } = useCurrentUserProfileInfo();
   const { sports, isMine, name, bodyParts } = useSelectTrainerExerciseFilters();
 
-  const { data } = useGetExercises({
+  const { data, isLoading } = useGetExercises({
     page: 1,
     pageSize: 100,
     isMine,
@@ -35,6 +46,7 @@ export const TrainerExerciseList: FC<TrainerExerciseListProps> = ({
   return (
     <StickyContentLayout right={<TrainerExerciseFliters />}>
       <ExerciseInfoList
+        isLoading={isLoading}
         list={data?.exerciseInfos ?? []}
         emptyState={
           <>

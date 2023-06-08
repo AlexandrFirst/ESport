@@ -115,3 +115,6 @@ export { ScrollArea, ScrollBar } from "./ScrollArea/ScrollArea";
 export { Portal } from "./Portal/Portal";
 export { DragAndDropFileUpload } from "./DragAndDropFileUpload/DragAndDropFileUpload";
 export { useDragAndDrop } from "./DragAndDropFileUpload/useDragAndDrop";
+
+export { AspectRatio } from "./AspectRatio/AspectRatio";
+export { AppVideo } from "./AppVideo/AppVideo";

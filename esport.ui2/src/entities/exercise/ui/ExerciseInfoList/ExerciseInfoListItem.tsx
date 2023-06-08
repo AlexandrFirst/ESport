@@ -9,17 +9,19 @@ import {
   CollapseList,
   RegularText,
 } from "@/shared/ui";
+import { VideoGrid } from "../VideoGrid/VideoGrid";
 
 interface ExerciseListItemProps {
   className?: string;
   item: IExerciseInfo;
+  index?: number;
 }
 
 export const ExerciseInfoListItem: FC<ExerciseListItemProps> = ({
   className,
   item,
+  index,
 }) => {
-  console.log("===item===", item);
   const list: CollapseList = [
     {
       title: (
@@ -28,13 +30,8 @@ export const ExerciseInfoListItem: FC<ExerciseListItemProps> = ({
           <RegularText>Description: {item.description}</RegularText>
         </div>
       ),
-      key: item.description,
-      content: (
-        <video
-          src={`${process.env.NEXT_PUBLIC_API_URL}/exercise-tutorial/${item.exerciseTutorialLinks[0]}`}
-          controls
-        />
-      ),
+      key: index ?? item.name,
+      content: <VideoGrid exerciseTutorialLinks={item.exerciseTutorialLinks} />,
     },
   ];
 
@@ -42,10 +39,6 @@ export const ExerciseInfoListItem: FC<ExerciseListItemProps> = ({
     <div className={styles.wrapper}>
       <Card padding={"md"}>
         <Collapse list={list} justifyBetween />
-        {/*<video*/}
-        {/*  src={`${process.env.NEXT_PUBLIC_API_URL}/exercise-tutorial/${item.exerciseTutorialLinks[0]}`}*/}
-        {/*  controls*/}
-        {/*/>*/}
       </Card>
     </div>
   );

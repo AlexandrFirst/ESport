@@ -41,7 +41,7 @@ export const getServerSideProps = getAppServerSideProps(
 
     await queryClient.prefetchQuery({
       queryKey: trainerApiKeys.exerciseListing(request),
-      queryFn: async () => getTrainerExercises(request),
+      queryFn: async () => getTrainerExercises(request, ctx),
     });
 
     return {

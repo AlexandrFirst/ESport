@@ -11,3 +11,5 @@ export type { IExerciseInfo } from "./model/types/exercise-info";
 export { ExerciseApi } from "./api/ExerciseApi";
 export { exerciseApiKeys } from "./api/hooks/exerciseApiKeys";
 export { useTrainerCreateExercise } from "./api/hooks/useTrainerCreateExercise";
+
+export { getExerciseVideoUrl } from "./lib/helpers/getExerciseVideoUrl";
