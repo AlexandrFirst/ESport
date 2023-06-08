@@ -9,7 +9,7 @@ import { ProfilePhotoWrapper } from "./ProfilePhotoWrapper";
 
 interface EditableProfilePhotoProps extends ProfilePhotoProps {
   editable?: boolean;
-  onChange?: (file: File | null) => void;
+  onChange?: (file: File[] | null) => void;
 }
 
 export const EditableProfilePhoto: FC<EditableProfilePhotoProps> = ({
