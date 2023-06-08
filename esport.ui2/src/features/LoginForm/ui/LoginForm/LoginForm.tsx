@@ -67,11 +67,13 @@ export const LoginForm: FC<LoginFormProps> = (props) => {
         {...methods.register("mail")}
         className={styles.input}
         label={"E-mail"}
+        fullWidth
       />
       <PasswordInput
         {...methods.register("password")}
         className={styles.input}
         label="Password"
+        fullWidth
       />
       <UILink className={styles.link} href={routes.Register()}>
         Forgot password?

@@ -155,6 +155,7 @@ export const OrganisationAdminProfileInformation: FC<
                   disabled={Boolean(
                     organisationName || organisationDescription
                   )}
+                  fullWidth
                 />
                 <OrSection />
                 <SubTitle size={"large"} className={"my-5"}>
@@ -165,12 +166,14 @@ export const OrganisationAdminProfileInformation: FC<
                   onChange={(e) => setNewOrganisationName(e.target.value)}
                   disabled={Boolean(organisationAdminOrganisationId)}
                   label={"Organisation name"}
+                  fullWidth
                 />
                 <TextAreaBase
                   value={organisationDescription ?? undefined}
                   onChange={(e) =>
                     setNewOrganisationDescription(e.target.value)
                   }
+                  fullWidth
                   disabled={Boolean(organisationAdminOrganisationId)}
                   placeholder={"Organisation description"}
                 />

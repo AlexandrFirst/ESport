@@ -62,6 +62,7 @@ export const ProfileDataForm: FC<ProfileDataFormProps> = ({
           value={name}
           onChange={onChange(onChangeName)}
           className={styles.input}
+          fullWidth
         />
         <InputBase
           name={`${namePrefix}_surname`}
@@ -69,6 +70,7 @@ export const ProfileDataForm: FC<ProfileDataFormProps> = ({
           label={"Surname"}
           onChange={onChange(onChangeSurname)}
           className={styles.input}
+          fullWidth
         />
       </div>
       <InputBase
@@ -77,15 +79,21 @@ export const ProfileDataForm: FC<ProfileDataFormProps> = ({
         label={"Email"}
         onChange={onChange(onChangeEmail)}
         error={emailError}
+        fullWidth
       />
       <InputBase
         name={`${namePrefix}_telephoneNumber`}
         value={telephoneNumber}
         label={"Telephone number"}
         onChange={onChange(onChangeTelephoneNumber)}
+        fullWidth
       />
       {withBio && (
-        <TextAreaBase placeholder={"Bio..."} onChange={onChange(onChangeBio)} />
+        <TextAreaBase
+          placeholder={"Bio..."}
+          onChange={onChange(onChangeBio)}
+          fullWidth
+        />
       )}
       {additionalFieldsBelow}
     </div>

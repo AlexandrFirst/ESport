@@ -103,8 +103,8 @@ export const CreateExerciseForm: FC<CreateExerciseProps> = (props) => {
     <Card>
       <Title center>Create exercise</Title>
       <FormWrapper methods={methods}>
-        <Input name={"name"} label={"Name"} />
-        <Input name={"description"} label={"Description"} />
+        <Input name={"name"} label={"Name"} fullWidth />
+        <Input name={"description"} label={"Description"} fullWidth />
         {!videos?.length ? (
           <DragAndDropFileUpload
             className={"mt-4 mb-10"}
@@ -129,6 +129,7 @@ export const CreateExerciseForm: FC<CreateExerciseProps> = (props) => {
           multiple
           name={"sports"}
           label={"Sports"}
+          fullWidth
         />
         <FormAutocomplete
           list={traumas ?? []}
@@ -140,6 +141,7 @@ export const CreateExerciseForm: FC<CreateExerciseProps> = (props) => {
           multiple
           withFilter
           className={"mt-10"}
+          fullWidth
         />
         <FormAutocomplete
           list={bodyParts ?? []}
@@ -151,6 +153,7 @@ export const CreateExerciseForm: FC<CreateExerciseProps> = (props) => {
           multiple
           withFilter
           className={"mt-10"}
+          fullWidth
         />
         <Checkbox name={"isPublic"} label={"Make public"} className={"my-3"} />
         <BottomNav

@@ -39,6 +39,7 @@ export const TrainerProfileInformation: FC<TrainerProfileInformationProps> = ({
               multiple
               placeholder={"[Swimming, Karate]"}
               onChange={setTrainerSportsBySports}
+              fullWidth
             />
             <TrainerSportInfoList />
           </>

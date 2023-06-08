@@ -36,16 +36,22 @@ export const CreateCompetitionForm: FC<CreateCompetitionFormProps> = ({
   return (
     <>
       <FormWrapper methods={methods} className={styles.form}>
-        <Input name={"title"} label={"Title for your next competition"} />
+        <Input
+          name={"title"}
+          label={"Title for your next competition"}
+          fullWidth
+        />
         <DatePicker
           name={"dateStart"}
           label={"Date start"}
+          fullWidth
           // minDate={new Date()}
           // inputProps={{ fullWidth: true }}
         />
         <DatePicker
           name={"dateEnd"}
           label={"Date end"}
+          fullWidth
           // minDate={new Date()}
           // inputProps={{ fullWidth: true }}
         />

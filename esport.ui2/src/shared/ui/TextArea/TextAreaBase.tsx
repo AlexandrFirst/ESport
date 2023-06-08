@@ -15,7 +15,7 @@ export interface TextAreaBaseProps
 
 export const TextAreaBase: FC<TextAreaBaseProps> = ({
   className,
-  fullWidth = true,
+  fullWidth = false,
   error,
   disabled,
   ...props

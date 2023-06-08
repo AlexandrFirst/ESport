@@ -38,16 +38,19 @@ export const TrainerSportInfoListItem: FC<TrainerSportInfoListItemProps> = ({
           value={trainerSports[index].level}
           onChange={handleChange("level")}
           label={"Level"}
+          fullWidth
         />
         <DatePickerBase
           value={trainerSports[index].fromDate}
           label={"Started from"}
           onChange={handleChange("fromDate")}
+          fullWidth
         />
         <DatePickerBase
           value={trainerSports[index].toDate}
           label={"Finished at"}
           onChange={handleChange("toDate")}
+          fullWidth
         />
       </div>
     </li>
