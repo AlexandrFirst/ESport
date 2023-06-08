@@ -58,6 +58,7 @@ namespace GateWay
                            });
                            o.Listen(IPAddress.Any, 5002);
                            o.Limits.MaxRequestBodySize = int.MaxValue;
+                           Console.WriteLine("Request size limit: " + o.Limits.MaxRequestBodySize);
                        });
                    });
 
