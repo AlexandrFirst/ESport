@@ -2,14 +2,9 @@ import React, { FC } from "react";
 import styles from "./ExerciseInfoList.module.css";
 
 import { IExerciseInfo } from "../../model/types/exercise-info";
-import {
-  BoldText,
-  Card,
-  Collapse,
-  CollapseList,
-  RegularText,
-} from "@/shared/ui";
+import { Card, Collapse, CollapseList } from "@/shared/ui";
 import { VideoGrid } from "../VideoGrid/VideoGrid";
+import { ExerciseCommonInfo } from "../ExerciseCommonInfo/ExerciseCommonInfo";
 
 interface ExerciseListItemProps {
   className?: string;
@@ -24,12 +19,7 @@ export const ExerciseInfoListItem: FC<ExerciseListItemProps> = ({
 }) => {
   const list: CollapseList = [
     {
-      title: (
-        <div>
-          <BoldText>Name: {item.name}</BoldText>
-          <RegularText>Description: {item.description}</RegularText>
-        </div>
-      ),
+      title: <ExerciseCommonInfo item={item} />,
       key: index ?? item.name,
       content: <VideoGrid exerciseTutorialLinks={item.exerciseTutorialLinks} />,
     },

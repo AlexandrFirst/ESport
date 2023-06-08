@@ -11,8 +11,8 @@ import {
   trainerApiKeys,
 } from "@/entities/trainer";
 import { ProfileApi } from "@/entities/profile";
+import { useCurrentUserProfileInfo } from "@/entities/user";
 
-import { useCurrentUserProfileInfo } from "@/features/CurrentUserProfileInfo";
 import { TrainerTimetable } from "@/features/TrainerTimetable";
 
 import { getMainLayout } from "@/widgets/MainLayout";
