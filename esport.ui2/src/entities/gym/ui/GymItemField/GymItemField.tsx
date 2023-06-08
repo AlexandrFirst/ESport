@@ -20,8 +20,8 @@ export const GymItemField: FC<OrganisationGymListProps> = ({
   return (
     <div className={styles.wrapper}>
       <div className={"flex gap-3 items-center"}>
-        <Input name={`gymList.${index}.name`} label={"Title"} />
-        <Input name={`gymList.${index}.address`} label={"Address"} />
+        <Input name={`gymList.${index}.name`} label={"Title"} fullWidth />
+        <Input name={`gymList.${index}.address`} label={"Address"} fullWidth />
         <div className={"flex gap-3 items-center"}>
           <TimeInput name={`gymList.${index}.openTime`} label={"Opens at"} />
           -
