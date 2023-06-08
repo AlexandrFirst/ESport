@@ -18,6 +18,8 @@ export { useMappedDaysOfTheWeek } from "./hooks/localization/useMappedDaysOfTheW
 export { useDebounce } from "./hooks/useDebounce";
 export { useRedirectAfterFetch } from "./hooks/useRedirectAfterFetch";
 export { useMappedDaysOfTheWeekByDayIndex } from "./hooks/localization/useMappedDaysOfTheWeekByDayIndex";
+export { useThrottle } from "./hooks/useThrottle";
+export { useGetLoginUrl } from "./hooks/useGetLoginUrl";
 
 //utils
 export { getDeviceDetect } from "./utils/detect-device";

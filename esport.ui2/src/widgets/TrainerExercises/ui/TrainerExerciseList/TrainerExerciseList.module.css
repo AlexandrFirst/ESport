@@ -1,0 +1,6 @@
+.wrapper {
+}
+
+.link {
+  @apply mt-5 flex justify-end;
+}

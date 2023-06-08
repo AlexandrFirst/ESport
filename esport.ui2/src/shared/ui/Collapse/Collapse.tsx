@@ -16,16 +16,25 @@ export type CollapseList = CollapseItem[];
 interface CollapseProps {
   className?: string;
   list: CollapseList;
+  justifyBetween?: boolean;
 }
 
-export const Collapse: FC<CollapseProps> = ({ className, list }) => {
+export const Collapse: FC<CollapseProps> = ({
+  className,
+  list,
+  justifyBetween,
+}) => {
   return (
     <>
       {list.map(({ content, key, title, ...item }) => (
         <Disclosure key={key} defaultOpen={item.defaultOpen}>
           {({ open }) => (
             <>
-              <Disclosure.Button className={styles.btn}>
+              <Disclosure.Button
+                className={cn(styles.btn, {
+                  [styles.justifyBetween]: justifyBetween,
+                })}
+              >
                 {title}
                 <ChevronUpIcon
                   className={cn(styles.icon, { [styles.icon_open]: open })}

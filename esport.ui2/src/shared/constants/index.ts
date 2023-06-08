@@ -6,3 +6,4 @@ export * from "./user-role";
 export * from "./server";
 export * from "./colors";
 export * from "./day";
+export * from "./logical-operation";

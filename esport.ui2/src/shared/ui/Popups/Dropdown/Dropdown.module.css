@@ -1,5 +1,5 @@
 .trigger {
-  @apply bg-theme-main  min-w-[150px] min-h-[45px] px-3 py-2 rounded-md pl-3 pr-10 text-left border border-theme-main shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm;
+  @apply bg-theme-main min-w-[150px] min-h-[45px] px-3 py-2 rounded-md pl-3 pr-10 text-left border border-theme-main shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm;
 }
 
 .trigger_error {
@@ -11,7 +11,7 @@
 }
 
 .list {
-  @apply absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-theme-main py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm;
+  @apply absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-theme-main py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-modal;
 }
 
 .item {

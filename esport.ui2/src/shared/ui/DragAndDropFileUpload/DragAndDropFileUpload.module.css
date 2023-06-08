@@ -1,0 +1,7 @@
+.dropArea {
+  @apply h-48 border-4 border-dashed border-theme-accent rounded-md flex items-center justify-center flex-col font-semibold hover:opacity-90 transition-opacity text-theme-main;
+}
+
+.action_text {
+  @apply text-theme-accent;
+}

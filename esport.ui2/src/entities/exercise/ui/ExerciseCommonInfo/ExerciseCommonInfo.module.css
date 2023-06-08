@@ -1,0 +1,7 @@
+.wrapper {
+  @apply text-start;
+}
+
+.list {
+  @apply mt-3.5 flex items-center;
+}

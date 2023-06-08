@@ -2,7 +2,7 @@ import React from "react";
 import { Controller } from "react-hook-form";
 import { DropdownBase, DropdownBaseProps } from "./DropdownBase";
 
-interface DropdownProps<T> extends DropdownBaseProps<T> {
+export interface DropdownProps<T> extends DropdownBaseProps<T> {
   name: string;
 }
 

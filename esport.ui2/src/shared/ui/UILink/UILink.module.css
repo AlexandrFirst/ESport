@@ -9,3 +9,7 @@
 .inverted {
   @apply text-theme-main active:text-theme-light;
 }
+
+.xl {
+  @apply text-xl;
+}

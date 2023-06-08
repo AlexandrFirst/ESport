@@ -35,6 +35,7 @@ export const TrainerTimetableSheet: FC<TrainerTimetableSheetProps> = ({
 
   const handleClose = () => {
     setOpen?.(false);
+    setIsFormVisible(false);
   };
 
   const handleManageFormVisible = (b: boolean) => () => setIsFormVisible(b);

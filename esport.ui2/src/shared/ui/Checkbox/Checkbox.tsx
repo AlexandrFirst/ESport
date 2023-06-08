@@ -11,9 +11,10 @@ export const Checkbox: FC<CheckboxProps> = ({ name, ...props }) => {
   return (
     <Controller
       name={name}
-      render={({ field }) => (
+      render={({ field, fieldState }) => (
         <CheckboxBase
           {...props}
+          {...fieldState}
           checked={field.value}
           onCheckedChange={field.onChange}
           name={name}

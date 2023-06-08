@@ -1,15 +1,11 @@
 import React, { FC, memo } from "react";
-
-import { routes } from "@/shared/config";
 import { UILink } from "@/shared/ui";
 
 import { ListItem } from "../ListItem/ListItem";
-import { ReturnUrl } from "@/shared/constants";
-import { useRouter } from "next/router";
+import { useGetLoginUrl } from "@/shared/lib";
 
 const AnonItems: FC = () => {
-  const router = useRouter();
-  const loginUrl = `${routes.Login()}?${ReturnUrl}=${router.asPath}`;
+  const loginUrl = useGetLoginUrl();
 
   return (
     <ListItem className={"!mr-0"}>
