@@ -6,16 +6,19 @@ import cn from "classnames";
 import { useRouter } from "next/router";
 
 type LinkColor = "normal" | "inverted";
+type LinkSize = "base" | "xl";
 
 interface UILinkProps extends LinkProps {
   className?: string;
   children?: ReactNode;
   color?: LinkColor;
+  size?: LinkSize;
 }
 
 const UILink: FC<UILinkProps> = ({
   className,
   color = "normal",
+  size = "base",
   children,
   onClick,
   ...props
@@ -30,7 +33,7 @@ const UILink: FC<UILinkProps> = ({
     <Link
       {...props}
       onClick={handleClick}
-      className={cn(styles.wrapper, styles[color], className)}
+      className={cn(styles.wrapper, styles[color], styles[size], className)}
     >
       {children}
     </Link>

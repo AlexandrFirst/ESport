@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import styles from "./TrainerExerciseList.module.css";
 
 import { StickyContentLayout } from "@/shared/layouts";
 
@@ -59,6 +60,13 @@ export const TrainerExerciseList: FC<TrainerExerciseListProps> = ({
           </>
         }
       />
+      {!!data?.exerciseInfos.length && (
+        <div className={styles.link}>
+          <UILink size={"xl"} href={routes.Trainer.CreateExcercise()}>
+            Create exercise
+          </UILink>
+        </div>
+      )}
     </StickyContentLayout>
   );
 };

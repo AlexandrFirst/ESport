@@ -24,7 +24,6 @@ import { useValidation } from "../../lib/hooks/useValidation";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useTrainerCreateExercise } from "@/entities/exercise";
 import { useRouter } from "next/router";
-import { routes } from "@/shared/config";
 
 interface CreateExerciseProps {
   className?: string;
@@ -43,6 +42,7 @@ export const CreateExerciseForm: FC<CreateExerciseProps> = (props) => {
       bodyParts: [],
     },
   });
+  const { setValue } = methods;
 
   const { showWarning, showApiError, showSuccess } = useSnackbar();
 
@@ -84,7 +84,14 @@ export const CreateExerciseForm: FC<CreateExerciseProps> = (props) => {
       },
       onSuccess() {
         showSuccess("Exercise created successfully");
-        router.push(routes.Trainer.Excercises());
+        setValue("name", "");
+        setValue("description", "");
+        setValue("isPublic", false);
+        setValue("sports", []);
+        setValue("traumas", []);
+        setValue("bodyParts", []);
+        setVideos(null);
+        // router.push(routes.Trainer.Excercises());
       },
     });
   });
