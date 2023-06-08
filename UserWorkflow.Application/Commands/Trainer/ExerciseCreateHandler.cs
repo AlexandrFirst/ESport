@@ -1,5 +1,6 @@
 ﻿using MediaClient.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,14 +17,15 @@ namespace UserWorkflow.Application.Commands.Trainer
     {
         private readonly EsportDataContext esportDataContext;
         private readonly IMediaService mediaService;
-
+        private readonly IServiceProvider serviceProvider;
         private readonly string bucketName = "exercise_tutorials";
 
         public ExerciseCreateHandler(EsportDataContext esportDataContext,
-            IMediaService mediaService)
+            IMediaService mediaService, IServiceProvider serviceProvider)
         {
             this.esportDataContext = esportDataContext;
             this.mediaService = mediaService;
+            this.serviceProvider = serviceProvider;
         }
 
         public async Task<CommandResult> HandleCommandAsync(ExerciseCreate command)
@@ -51,15 +53,15 @@ namespace UserWorkflow.Application.Commands.Trainer
             handleBodyParts(exercise, command.BodyPartIds);
             handleTraumasInfo(exercise, command.TraumaIds);
 
-            await handleExerciseTutorials(exercise, command.exerciseInfos);
-
             if (exercise.Id == 0) 
             {
                 await esportDataContext.AddAsync(exercise);
             }
 
             await esportDataContext.SaveChangesAsync();
-
+            
+            Task.Run(() => handleExerciseTutorials(exercise.Id, command.exerciseInfos));
+            
             return new CommandResult(exercise.Id);
         }
 
@@ -107,9 +109,17 @@ namespace UserWorkflow.Application.Commands.Trainer
             exercise.ExerciseTraumas.RemoveAll(x => traumasToRemove.Contains(x.TraumaId));
         }
 
-        private async Task handleExerciseTutorials(Exercise exercise, List<ExerciseTutorialInfo> exerciseTutorialInfo)
+        private async Task handleExerciseTutorials(int exerciseId, List<ExerciseTutorialInfo> exerciseTutorialInfo)
         {
+
+            using var scope = serviceProvider.CreateScope();
+
+            var _context = scope.ServiceProvider.GetRequiredService<EsportDataContext>();
+
             exerciseTutorialInfo ??= new List<ExerciseTutorialInfo>();
+
+            var exercise = await _context.Exercises.FirstOrDefaultAsync(x => x.Id == exerciseId);
+            if (exercise == null) { throw new ApplicationException("Exercise with id: " + exerciseId + " is not found"); }
 
             var tutorialToAdd = exerciseTutorialInfo.Where(x => !exercise.ExerciseTutorails.Any(s => s.Link == x.ExerciseId)).ToList();
             var tutorialToRemove = exercise.ExerciseTutorails.Where(x => !exerciseTutorialInfo.Any(s => s.ExerciseId == x.Link)).ToList();
