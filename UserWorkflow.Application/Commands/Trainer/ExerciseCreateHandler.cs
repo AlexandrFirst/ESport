@@ -142,6 +142,8 @@ namespace UserWorkflow.Application.Commands.Trainer
                 await mediaService.RemoveFile(bucketName, tutorial.Link);
                 exercise.ExerciseTutorails.RemoveAll(l => l.Link == tutorial.Link);
             }
+
+            await _context.SaveChangesAsync();
         }
 
     }
