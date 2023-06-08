@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -56,6 +57,7 @@ namespace GateWay
                                }
                            });
                            o.Listen(IPAddress.Any, 5002);
+                           o.Limits.MaxRequestBodySize = int.MaxValue;
                        });
                    });
 
