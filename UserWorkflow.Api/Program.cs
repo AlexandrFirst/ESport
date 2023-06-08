@@ -28,6 +28,7 @@ namespace UserWorkflow.Api
                 {
                     services.AddHostedService<QueueMessageListener>();
                     services.AddHostedService<ConfirmationMessageListener>();
+                    services.AddHostedService<ExerciseMediaWorker>();
                 });
     }
 }

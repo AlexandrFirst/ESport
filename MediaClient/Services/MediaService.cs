@@ -64,7 +64,7 @@ namespace MediaClient.Services
             if (length < 0)
                 throw new ApplicationException("file is empty");
 
-            using var fileStream = formFile.OpenReadStream();
+            var fileStream = formFile.OpenReadStream();
             byte[] bytes = new byte[length];
             fileStream.Read(bytes, 0, (int)formFile.Length);
 

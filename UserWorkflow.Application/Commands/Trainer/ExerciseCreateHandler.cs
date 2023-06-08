@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UserWorkflow.Application.Models.Exercise;
+using UserWorkflow.Application.Services.Media;
 using UserWorkflow.Esport;
 using UserWorkflow.Esport.Models;
 using UserWorkFlow.Infrastructure.Commands;
@@ -16,16 +17,16 @@ namespace UserWorkflow.Application.Commands.Trainer
     public class ExerciseCreateHandler : ICommandHandler<ExerciseCreate>
     {
         private readonly EsportDataContext esportDataContext;
-        private readonly IMediaService mediaService;
         private readonly IServiceProvider serviceProvider;
-        private readonly string bucketName = "exercise_tutorials";
+        private readonly IUserMediaService userMediaService;
 
         public ExerciseCreateHandler(EsportDataContext esportDataContext,
-            IMediaService mediaService, IServiceProvider serviceProvider)
+           IServiceProvider serviceProvider, 
+            IUserMediaService userMediaService)
         {
             this.esportDataContext = esportDataContext;
-            this.mediaService = mediaService;
             this.serviceProvider = serviceProvider;
+            this.userMediaService = userMediaService;
         }
 
         public async Task<CommandResult> HandleCommandAsync(ExerciseCreate command)
@@ -52,16 +53,15 @@ namespace UserWorkflow.Application.Commands.Trainer
             handleSportInfos(exercise, command.SportIds);
             handleBodyParts(exercise, command.BodyPartIds);
             handleTraumasInfo(exercise, command.TraumaIds);
-
             if (exercise.Id == 0) 
             {
                 await esportDataContext.AddAsync(exercise);
             }
 
             await esportDataContext.SaveChangesAsync();
-            
-            Task.Run(() => handleExerciseTutorials(exercise.Id, command.exerciseInfos));
-            
+
+            await handleExerciseTutorials(exercise.Id, command.exerciseInfos);
+                   
             return new CommandResult(exercise.Id);
         }
 
@@ -124,23 +124,26 @@ namespace UserWorkflow.Application.Commands.Trainer
             var tutorialToAdd = exerciseTutorialInfo.Where(x => !exercise.ExerciseTutorails.Any(s => s.Link == x.ExerciseId)).ToList();
             var tutorialToRemove = exercise.ExerciseTutorails.Where(x => !exerciseTutorialInfo.Any(s => s.ExerciseId == x.Link)).ToList();
 
+            var mediaWriter = userMediaService.GetMediaUploadChannelWriter();
+
             foreach (var tutorial in tutorialToAdd)
             {
-                var uploadResult = await mediaService.UploadFile(bucketName, tutorial.VideoExerciseExample);
-
-                var exerciseTutorial = new ExerciseTutorial()
+                await mediaWriter.WriteAsync(new ExerciseMediaModel() 
                 {
-                    Link = uploadResult.FileId,
-                    PublicId = uploadResult.Id,
-                };
-
-                exercise.ExerciseTutorails.Add(exerciseTutorial);
+                    ExerciseId= exerciseId,
+                    ExerciseTutorial = tutorial.VideoExerciseExample,
+                    ExerciseTutorialAction = ExerciseTutorialAction.CREATE
+                });
             }
 
             foreach (var tutorial in tutorialToRemove)
             {
-                await mediaService.RemoveFile(bucketName, tutorial.Link);
-                exercise.ExerciseTutorails.RemoveAll(l => l.Link == tutorial.Link);
+                await mediaWriter.WriteAsync(new ExerciseMediaModel()
+                {
+                    ExerciseId = exerciseId,
+                    ExerciseTutorialAction = ExerciseTutorialAction.DELETE,
+                    TutorialId = tutorial.Id
+                });
             }
 
             await _context.SaveChangesAsync();
