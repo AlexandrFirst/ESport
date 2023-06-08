@@ -27,8 +27,12 @@ export function CreateEditOrganisationForm<T extends ICreateOrganisation>({
 }: CreateOrganisationFormProps<T>) {
   return (
     <FormWrapper methods={methods} className={className}>
-      <Input name={"name"} label={"Organisation name"} />
-      <TextArea name={"description"} placeholder={"Organisation description"} />
+      <Input name={"name"} label={"Organisation name"} fullWidth />
+      <TextArea
+        name={"description"}
+        placeholder={"Organisation description"}
+        fullWidth
+      />
       {additionalFields}
       <Button
         onClick={onSubmit}
