@@ -13,3 +13,7 @@
 .content {
   @apply pt-4 pb-2;
 }
+
+.justifyBetween {
+  @apply justify-between w-full;
+}

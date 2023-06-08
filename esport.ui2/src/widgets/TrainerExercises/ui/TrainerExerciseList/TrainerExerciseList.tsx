@@ -6,6 +6,11 @@ import { ExerciseInfoList } from "@/entities/exercise";
 import { useGetExercises } from "@/entities/trainer";
 import { Title, UILink } from "@/shared/ui";
 import { routes } from "@/shared/config";
+import { useCurrentUserProfileInfo } from "@/entities/user";
+import {
+  TrainerExerciseFliters,
+  useSelectTrainerExerciseFilters,
+} from "@/features/TrainerExerciseFliters";
 
 interface TrainerExerciseListProps {
   className?: string;
@@ -14,17 +19,21 @@ interface TrainerExerciseListProps {
 export const TrainerExerciseList: FC<TrainerExerciseListProps> = ({
   className,
 }) => {
+  const { trainerSports } = useCurrentUserProfileInfo();
+  const { sports, isMine, name, bodyParts } = useSelectTrainerExerciseFilters();
+
   const { data } = useGetExercises({
     page: 1,
     pageSize: 100,
-    isMine: true,
-    name: "",
-    bodyParts: [],
-    sports: [],
+    isMine,
+    name,
+    bodyParts,
+    // sports: trainerSports.map(({ sportId }) => sportId),
+    sports,
   });
 
   return (
-    <StickyContentLayout>
+    <StickyContentLayout right={<TrainerExerciseFliters />}>
       <ExerciseInfoList
         list={data?.exerciseInfos ?? []}
         emptyState={

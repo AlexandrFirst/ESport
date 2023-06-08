@@ -25,7 +25,7 @@ export const TrainerApi = (ctx?: ApiContext) => {
     },
     async exerciseListing(request: GetExerciseTrainerListingRequest) {
       return instance.post<GetExerciseTrainerListingResponse>(
-        "/trainer-create-lesson",
+        "/trainer-exercise-listing",
         request
       );
     },
