@@ -63,13 +63,13 @@ export const CreateExerciseForm: FC<CreateExerciseProps> = (props) => {
     formData.append("IsPublic", String(data.isPublic));
 
     data.sports.forEach((sport, index) => {
-      formData.append(`SportIds:${index}`, String(sport.sportId));
+      formData.append(`SportIds[${index}]`, String(sport.sportId));
     });
     data.traumas.forEach((trauma, index) => {
-      formData.append(`TraumaIds:${index}`, String(trauma.id));
+      formData.append(`TraumaIds[${index}]`, String(trauma.id));
     });
     data.bodyParts.forEach((bodyPart, index) => {
-      formData.append(`BodyPartIds:${index}`, String(bodyPart.id));
+      formData.append(`BodyPartIds[${index}]`, String(bodyPart.id));
     });
 
     if (videos) {
