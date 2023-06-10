@@ -13,3 +13,4 @@ export { selectOpenedSubItems } from "./model/selectors/selectOpenedSubItems/sel
 export { updateSidebarState } from "./lib/helpers/updateSidebarState";
 
 export { Sidebar } from "./ui/Sidebar/Sidebar";
+export { SidebarDrawer } from "./ui/SidebarDrawer/SidebarDrawer";

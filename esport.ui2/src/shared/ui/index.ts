@@ -94,6 +94,7 @@ export {
   SheetTitle,
   SheetTrigger,
 } from "./Sheet/Sheet";
+export type { SheetPosition } from "./Sheet/Sheet";
 
 export { Skeleton } from "./Skeleton/Skeleton";
 

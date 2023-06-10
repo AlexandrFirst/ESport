@@ -50,6 +50,7 @@ const Home: AppNextPage<Props> = ({ snackbar }) => {
 
 Home.getLayout = getMainLayout({
   headProps: { title: "E-Sport | Main" },
+  withLeftSidebar: false,
 });
 
 export default Home;

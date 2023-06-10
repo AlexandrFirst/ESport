@@ -24,12 +24,20 @@ export const getAppServerSideProps = <TProps extends AppPageProps>(
       if (serverSide?.redirect) {
         return serverSide;
       }
+      console.log("===checkUserResult===", checkUserResult);
       //@ts-ignore
       if (serverSide?.props) {
         return {
           ...checkUserResult,
           // @ts-ignore
-          redirect: serverSide?.redirect ? serverSide?.redirect : undefined,
+          redirect: serverSide?.redirect
+            ? // @ts-ignore
+              serverSide?.redirect
+            : // @ts-ignore
+            checkUserResult?.redirect
+            ? // @ts-ignore
+              checkUserResult?.redirect
+            : undefined,
           props: {
             // @ts-ignore
             ...serverSide.props,

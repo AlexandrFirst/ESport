@@ -12,6 +12,7 @@ interface FooterProps {
 
 export const Footer: FC<FooterProps> = ({ className, children }) => {
   const isSidebarOpened = useSelectIsSidebarOpened();
+  console.log("===isSidebarOpened===", isSidebarOpened);
 
   return (
     <footer
