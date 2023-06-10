@@ -1,6 +1,8 @@
 import { FC, useState } from "react";
 
+import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 import {
   BottomNav,
@@ -15,15 +17,14 @@ import {
 import { useSnackbar } from "@/shared/lib";
 
 import { useCurrentUserProfileInfo } from "@/entities/user";
-
-import { ExerciseVideoList } from "../ExerciseVideoList/ExerciseVideoList";
 import { useGetTraumas } from "@/entities/trauma";
 import { useGetBodyParts } from "@/entities/bodyPart";
+import { useTrainerCreateExercise } from "@/entities/exercise";
+
 import { ICreateExerciseForm } from "../../model/types/create-exercise-form";
 import { useValidation } from "../../lib/hooks/useValidation";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useTrainerCreateExercise } from "@/entities/exercise";
-import { useRouter } from "next/router";
+
+import { ExerciseVideoList } from "../ExerciseVideoList/ExerciseVideoList";
 
 interface CreateExerciseProps {
   className?: string;
@@ -141,6 +142,7 @@ export const CreateExerciseForm: FC<CreateExerciseProps> = (props) => {
           multiple
           withFilter
           className={"mt-10"}
+          loading={isTraumasLoading}
           fullWidth
         />
         <FormAutocomplete
@@ -154,17 +156,10 @@ export const CreateExerciseForm: FC<CreateExerciseProps> = (props) => {
           withFilter
           className={"mt-10"}
           fullWidth
+          loading={isBodyPartsLoading}
         />
         <Checkbox name={"isPublic"} label={"Make public"} className={"my-3"} />
-        <BottomNav
-          loading={
-            isProfileLoading ||
-            isBodyPartsLoading ||
-            isTraumasLoading ||
-            isCreateLessonLoading
-          }
-          onSave={handleSubmit}
-        />
+        <BottomNav loading={isCreateLessonLoading} onSave={handleSubmit} />
       </FormWrapper>
     </Card>
   );
