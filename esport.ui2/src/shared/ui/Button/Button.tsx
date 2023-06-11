@@ -1,6 +1,7 @@
 import React, {
   ButtonHTMLAttributes,
   DetailedHTMLProps,
+  ElementType,
   forwardRef,
   useEffect,
   useState,
@@ -25,6 +26,7 @@ export interface ButtonProps
   loading?: boolean;
   variant?: ButtonVariant;
   color?: ButtonColor;
+  as?: ElementType;
 }
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -38,6 +40,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       children,
       onClick,
       color = "normal",
+      as: Component = "button",
       ...props
     },
     ref
@@ -57,7 +60,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     }, [loading]);
 
     return (
-      <button
+      <Component
         {...props}
         ref={ref}
         disabled={disabled || loading}
@@ -84,7 +87,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           />
           {children}
         </span>
-      </button>
+      </Component>
     );
   }
 );

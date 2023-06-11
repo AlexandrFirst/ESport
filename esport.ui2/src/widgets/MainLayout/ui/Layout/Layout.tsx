@@ -1,17 +1,17 @@
-import React, { FC, ReactNode, useCallback } from "react";
+import React, { FC, ReactNode, useCallback, useEffect } from "react";
 import styles from "./Layout.module.css";
 
 import cn from "classnames";
 
 import { Head, HeadProps } from "@/features/Head";
-import { useAppDispatch, useAppSelector, useUserDevice } from "@/shared/lib";
+import { useAppSelector, useUserDevice } from "@/shared/lib";
 
 import { Header } from "@/widgets/Header";
 
 import {
-  leftSidebarActions,
   selectIsSidebarOpened,
   Sidebar,
+  useLeftSidebarActions,
 } from "@/widgets/LeftSidebar";
 
 export interface LayoutProps extends HeadProps {
@@ -19,6 +19,7 @@ export interface LayoutProps extends HeadProps {
   children: ReactNode;
   withFooter?: boolean;
   withPaddingRight?: boolean;
+  withLeftSidebar?: boolean;
 }
 
 export const Layout: FC<LayoutProps> = ({
@@ -26,38 +27,46 @@ export const Layout: FC<LayoutProps> = ({
   headProps,
   withFooter,
   withPaddingRight = true,
+  withLeftSidebar = true,
   children,
 }) => {
   const { isMobile } = useUserDevice();
+  const { updateSidebarOpened } = useLeftSidebarActions();
 
-  const isSidebarOpened = useAppSelector(selectIsSidebarOpened) ?? false;
-  const dispatch = useAppDispatch();
+  const isSidebarOpened =
+    useAppSelector(selectIsSidebarOpened) ?? withLeftSidebar;
 
   const setIsSidebarOpened = useCallback(
-    (isOpened: boolean) =>
-      dispatch(leftSidebarActions.updateSidebarOpened(isOpened)),
-    [dispatch]
+    (isOpened: boolean) => updateSidebarOpened(isOpened),
+    [updateSidebarOpened]
   );
 
   const paddingClasses = isMobile
     ? styles.pl_mobile
     : cn({
-        [styles.pl_compact]: !isSidebarOpened,
-        [styles.pl_full]: isSidebarOpened,
+        [styles.pl_compact]: !isSidebarOpened && withLeftSidebar,
+        [styles.pl_full]: isSidebarOpened && withLeftSidebar,
+        [styles.pl_min]: !withLeftSidebar,
       });
   const layoutClassName = cn(styles.layout, styles.width100, paddingClasses, {
     [styles.pr]: withPaddingRight,
   });
 
+  useEffect(() => {
+    updateSidebarOpened(withLeftSidebar);
+  }, [updateSidebarOpened, withLeftSidebar]);
+
   return (
     <>
       <Head {...headProps} />
-      <Header />
+      <Header withLogoAndMenu={!withLeftSidebar} />
       <main>
-        <Sidebar
-          isSidebarOpened={isSidebarOpened}
-          setIsSidebarOpened={setIsSidebarOpened}
-        />
+        {withLeftSidebar && (
+          <Sidebar
+            isSidebarOpened={isSidebarOpened}
+            setIsSidebarOpened={setIsSidebarOpened}
+          />
+        )}
         <section
           className={cn(layoutClassName, styles.content, className, {
             [styles.withFooter]: withFooter,

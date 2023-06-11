@@ -1,0 +1,3 @@
+.wrapper {
+  @apply w-[350px] flex items-center justify-center shadow-2xl hover:scale-105 transition-all;
+}

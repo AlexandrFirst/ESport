@@ -4,7 +4,7 @@ import { BrowserView, MobileView } from "@/shared/ui";
 
 import { SidebarContextProvider } from "../SidebarContext/SidebarContext";
 import { LargeScreenSidebar } from "../LargeScreenSidebar/LargeScreenSidebar";
-import { MobileSidebar } from "../MobileSidebar/MobileSidebar";
+import { SidebarDrawer } from "../..";
 
 interface SidebarProps {
   isSidebarOpened: boolean;
@@ -18,7 +18,7 @@ export const Sidebar: FC<SidebarProps> = ({
   return (
     <SidebarContextProvider context={{ isSidebarOpened, setIsSidebarOpened }}>
       <MobileView>
-        <MobileSidebar />
+        <SidebarDrawer setOpen={setIsSidebarOpened} open={isSidebarOpened} />
       </MobileView>
       <BrowserView>
         <LargeScreenSidebar />

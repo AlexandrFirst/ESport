@@ -56,6 +56,8 @@ const SheetOverlay = forwardRef<
 ));
 SheetOverlay.displayName = SheetPrimitive.Overlay.displayName;
 
+export type SheetPosition = "top" | "bottom" | "left" | "right";
+
 const sheetVariants = cva(styles.sheet_variants_base, {
   variants: {
     position: {

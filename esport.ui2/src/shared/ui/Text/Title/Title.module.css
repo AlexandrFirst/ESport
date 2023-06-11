@@ -17,3 +17,7 @@
 .large {
   @apply text-4xl;
 }
+
+.extra-large {
+  @apply md:text-8xl sm:text-7xl;
+}

@@ -1,0 +1,15 @@
+.blur {
+  @apply bg-gradient-to-r from-main-from to-main-to rounded-full blur-3xl opacity-80;
+}
+
+.small {
+  @apply w-[150px] h-[150px];
+}
+
+.medium {
+  @apply w-[250px] h-[250px];
+}
+
+.large {
+  @apply w-[350px] h-[350px];
+}
