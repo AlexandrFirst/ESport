@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, useCallback, useEffect } from "react";
 import { Sheet, SheetContent, SheetPosition } from "@/shared/ui";
 import { SidebarMenu } from "../SidebarMenu/SidebarMenu";
 import { SidebarContextProvider } from "../SidebarContext/SidebarContext";
@@ -16,8 +16,12 @@ export const SidebarDrawer: FC<SidebarDrawerProps> = ({
   setOpen,
   open,
 }) => {
-  const handleClose = () => setOpen?.(false);
-  const handleIsOpen = (p: boolean) => setOpen?.(p);
+  const handleClose = useCallback(() => setOpen?.(false), []);
+  const handleIsOpen = useCallback((p: boolean) => setOpen?.(p), []);
+
+  useEffect(() => {
+    return () => handleClose();
+  }, [handleClose]);
 
   return (
     <SidebarContextProvider

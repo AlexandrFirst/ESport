@@ -36,18 +36,18 @@ export const Header: FC<HeaderProps> = ({ className, withLogoAndMenu }) => {
       })}
     >
       {(isMobile || withLogoAndMenu) && (
-        <SidebarDrawer open={isDrawerOpened} setOpen={setIsDrawerOpened} />
-      )}
-      {(isMobile || withLogoAndMenu) && (
-        <div className={"flex"}>
-          <IconButton
-            Svg={Menu}
-            fill={false}
-            iconSize={"m"}
-            onClick={handleLeftSidebarOpen}
-          />
-          <Logo showText />
-        </div>
+        <>
+          <SidebarDrawer open={isDrawerOpened} setOpen={setIsDrawerOpened} />
+          <div className={"flex"}>
+            <IconButton
+              Svg={Menu}
+              fill={false}
+              iconSize={"m"}
+              onClick={handleLeftSidebarOpen}
+            />
+            <Logo showText />
+          </div>
+        </>
       )}
       <nav className={styles.nav}>
         <ul className={styles.list}>

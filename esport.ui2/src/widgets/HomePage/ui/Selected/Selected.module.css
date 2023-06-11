@@ -1,0 +1,6 @@
+.wrapper {
+}
+
+.accent_text {
+  @apply text-theme-accent;
+}

@@ -1,9 +1,11 @@
 import React, { FC } from "react";
 import styles from "./Hero.module.css";
-import { SubTitle, Title } from "@/shared/ui";
+
 import { useTranslation } from "next-i18next";
-import { Blur } from "../Blur/Blur";
 import { useScrollTop } from "@/shared/lib";
+
+import { SubTitle, Title } from "@/shared/ui";
+import { Blur } from "../Blur/Blur";
 import { TryNowButton } from "../TryNowButton/TryNowButton";
 
 interface HeroProps {
@@ -11,7 +13,7 @@ interface HeroProps {
 }
 
 export const Hero: FC<HeroProps> = ({ className }) => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation("home");
   const scrollTop = useScrollTop();
 
   return (
@@ -33,11 +35,12 @@ export const Hero: FC<HeroProps> = ({ className }) => {
         style={{ right: `${100 + scrollTop / 2}px` }}
       />
       <Title center size={"extra-large"}>
-        <span className={styles.accent_text}>E-S</span>port
+        <span className={styles.accent_text}>{t("title.selected")}</span>
+        {t("title.other")}
       </Title>
       <SubTitle center size={"extra-large"} className={"mt-8"}>
-        <span className={styles.accent_text}>Forge Your Legacy,</span> Dominate
-        the Game
+        <span className={styles.accent_text}>{t("slogan.selected")}</span>{" "}
+        {t("slogan.other")}
       </SubTitle>
       <div className={styles.btn_container}>
         <TryNowButton />

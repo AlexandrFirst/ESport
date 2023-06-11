@@ -1,6 +1,9 @@
 import React, { FC } from "react";
-import { Button } from "@/shared/ui";
+
+import { useTranslation } from "next-i18next";
 import Link from "next/link";
+
+import { Button } from "@/shared/ui";
 import { routes } from "@/shared/config";
 
 interface TryNowButtonProps {
@@ -12,10 +15,12 @@ export const TryNowButton: FC<TryNowButtonProps> = ({
   className,
   fullWidth = true,
 }) => {
+  const { t } = useTranslation("home");
+
   return (
     // @ts-ignore
     <Button as={Link} href={routes.Register()} fullWidth={fullWidth}>
-      TRY NOW
+      {t("try")}
     </Button>
   );
 };

@@ -1,6 +1,8 @@
 import React, { FC } from "react";
 import styles from "./Footer.module.css";
 
+import { useTranslation } from "next-i18next";
+
 import { RegularText } from "@/shared/ui";
 
 interface FooterProps {
@@ -8,11 +10,10 @@ interface FooterProps {
 }
 
 export const MainPageFooter: FC<FooterProps> = ({ className }) => {
+  const { t } = useTranslation("home");
   return (
     <footer className={styles.wrapper}>
-      <RegularText>
-        © Copyright 2023 E-SPORT COMPANY. Powered with ♥ by nure students
-      </RegularText>
+      <RegularText>{t("footer")}</RegularText>
     </footer>
   );
 };
