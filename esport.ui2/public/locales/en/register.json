@@ -1,0 +1,17 @@
+{
+  "title": "Adventure starts here",
+  "subtitle": "Please sign-in to your account and start the adventure",
+  "form": {
+    "success": "You have been successfully registered, please check your email box",
+    "submit": "Submit",
+    "next": "Next"
+  },
+  "login": {
+    "first": "Already have an account?",
+    "link": "Sign in instead"
+  },
+  "firstName": "First name",
+  "lastName": "Last name",
+  "email": "Email",
+  "telephoneNumber": "Telephone number"
+}

@@ -1,0 +1,12 @@
+{
+  "title": "Welcome to E-Sport",
+  "subtitle": "Please sign-in to your account and start the adventure",
+  "email": "Email",
+  "password": "Password",
+  "forgotPassword": "Forgot password?",
+  "login": "Login",
+  "register": {
+    "first": "New on our platform?",
+    "link": "Create an account"
+  }
+}

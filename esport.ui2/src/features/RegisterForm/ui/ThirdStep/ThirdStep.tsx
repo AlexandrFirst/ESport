@@ -5,6 +5,7 @@ import { RegisterSteps } from "../../constants/register-step";
 import { IRegisterForm } from "../../model/types/RegisterFormSchema";
 
 import { RegisterInput } from "../RegisterInput/RegisterInput";
+import { useTranslation } from "next-i18next";
 
 interface ThirdStepProps {
   currStep: RegisterSteps;
@@ -12,6 +13,8 @@ interface ThirdStepProps {
 }
 
 export const ThirdStep: React.FC<ThirdStepProps> = ({ currStep, register }) => {
+  const { t } = useTranslation("register");
+
   const isHided = currStep !== RegisterSteps.AdditioanalInfo;
 
   return (
@@ -23,7 +26,7 @@ export const ThirdStep: React.FC<ThirdStepProps> = ({ currStep, register }) => {
       /> */}
       <RegisterInput
         {...register("telephoneNumber")}
-        label={"Telephone number"}
+        label={t("telephoneNumber")}
         isHided={isHided}
       />
     </>

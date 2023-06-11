@@ -6,6 +6,7 @@ import { RegisterSteps } from "../../constants/register-step";
 import { IRegisterForm } from "../../model/types/RegisterFormSchema";
 
 import { RegisterInput } from "../RegisterInput/RegisterInput";
+import { useTranslation } from "next-i18next";
 
 interface FirstStepProps {
   currStep: RegisterSteps;
@@ -13,20 +14,26 @@ interface FirstStepProps {
 }
 
 export const FirstStep: FC<FirstStepProps> = ({ currStep, register }) => {
+  const { t } = useTranslation("register");
+
   const isHided = currStep !== RegisterSteps.MainInfo;
   return (
     <>
       <RegisterInput
         {...register("firstName")}
-        label={"First name"}
+        label={t("firstName")}
         isHided={isHided}
       />
       <RegisterInput
         {...register("lastName")}
-        label={"Last name"}
+        label={t("lastName")}
         isHided={isHided}
       />
-      <RegisterInput {...register("email")} label={"Email"} isHided={isHided} />
+      <RegisterInput
+        {...register("email")}
+        label={t("email")}
+        isHided={isHided}
+      />
     </>
   );
 };

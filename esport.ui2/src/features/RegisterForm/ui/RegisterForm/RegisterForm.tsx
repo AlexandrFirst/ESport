@@ -22,8 +22,11 @@ import { RegisterSteps } from "../../constants/register-step";
 import { FirstStep } from "../FirstStep/FirstStep";
 import { ThirdStep } from "../ThirdStep/ThirdStep";
 import { SecondStep } from "../SecondStep/SecondStep";
+import { useTranslation } from "next-i18next";
 
 export const RegisterForm: FC = () => {
+  const { t } = useTranslation("register");
+
   const validationSchema = useValidation();
   const methods = useForm<IRegisterForm>({
     resolver: yupResolver(validationSchema),
@@ -72,9 +75,7 @@ export const RegisterForm: FC = () => {
         showError(data.error.toString(), { duration: 10000 });
         return;
       }
-      showSuccess(
-        "You have successfully registered, please check your email box"
-      );
+      showSuccess(t("form.success"));
     } catch (e: any) {
       showError(e.message);
     } finally {
@@ -103,7 +104,7 @@ export const RegisterForm: FC = () => {
 
         {!isLastStep ? (
           <Button fullWidth={false} className={styles.btn} onClick={handleNext}>
-            Next
+            {t("form.next")}
           </Button>
         ) : (
           <Button
@@ -112,12 +113,12 @@ export const RegisterForm: FC = () => {
             onClick={handleSubmit}
             loading={isLoading}
           >
-            Submit
+            {t("form.submit")}
           </Button>
         )}
       </div>
-      <span className={styles.text}>Already have an account? </span>
-      <UILink href={loginWithReturnUrl}>Sign in instead</UILink>
+      <span className={styles.text}>{t("login.first")} </span>
+      <UILink href={loginWithReturnUrl}>{t("login.link")}</UILink>
     </FormWrapper>
   );
 };
