@@ -1,0 +1,35 @@
+{
+  "title": {
+    "selected": "E-S",
+    "other": "port"
+  },
+  "slogan": {
+    "selected": "Forge Your Legacy,",
+    "other": "Dominate the Game"
+  },
+  "try": "TRY NOW",
+  "about": {
+    "subtitle": {
+      "first": "Why",
+      "second": "You",
+      "third": "need",
+      "fourth": "E-Sport?"
+    },
+    "promo": {
+      "you": "You",
+      "questionDo": "Do",
+      "questionAre": "Are",
+      "first": "want to find a Sport for you in your place?",
+      "second": "a trainer?",
+      "third": "a gym administrator?",
+      "fourth": "want to create a really big sport organisation?",
+      "fifth": "want to see sport streams?",
+      "sixth": "want to participate in tournaments?"
+    },
+    "title": {
+      "first": "You need",
+      "selected": "E-Sport!"
+    }
+  },
+  "footer": "© Copyright 2023 E-SPORT COMPANY. Powered with ♥ by nure students"
+}

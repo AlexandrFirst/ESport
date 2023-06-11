@@ -51,7 +51,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
 }) => {
   const localization = await serverSideTranslations(
     locale ?? defaultLocale ?? "en",
-    ["common"]
+    ["common", "home"]
   );
 
   return {
