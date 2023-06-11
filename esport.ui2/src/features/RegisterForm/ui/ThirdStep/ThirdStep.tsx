@@ -1,11 +1,12 @@
 import React from "react";
+
 import { UseFormRegister } from "react-hook-form";
+import { useTranslation } from "next-i18next";
 
 import { RegisterSteps } from "../../constants/register-step";
 import { IRegisterForm } from "../../model/types/RegisterFormSchema";
 
 import { RegisterInput } from "../RegisterInput/RegisterInput";
-import { useTranslation } from "next-i18next";
 
 interface ThirdStepProps {
   currStep: RegisterSteps;
