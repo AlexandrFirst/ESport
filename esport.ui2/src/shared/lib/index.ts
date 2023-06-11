@@ -20,6 +20,7 @@ export { useRedirectAfterFetch } from "./hooks/useRedirectAfterFetch";
 export { useMappedDaysOfTheWeekByDayIndex } from "./hooks/localization/useMappedDaysOfTheWeekByDayIndex";
 export { useThrottle } from "./hooks/useThrottle";
 export { useGetLoginUrl } from "./hooks/useGetLoginUrl";
+export { useScrollTop } from "./hooks/useScrollTop";
 
 //utils
 export { getDeviceDetect } from "./utils/detect-device";

@@ -44,8 +44,9 @@ export const Layout: FC<LayoutProps> = ({
   const paddingClasses = isMobile
     ? styles.pl_mobile
     : cn({
-        [styles.pl_compact]: !isSidebarOpened,
-        [styles.pl_full]: isSidebarOpened,
+        [styles.pl_compact]: !isSidebarOpened && withLeftSidebar,
+        [styles.pl_full]: isSidebarOpened && withLeftSidebar,
+        [styles.pl_min]: !withLeftSidebar,
       });
   const layoutClassName = cn(styles.layout, styles.width100, paddingClasses, {
     [styles.pr]: withPaddingRight,

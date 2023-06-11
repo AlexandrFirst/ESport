@@ -2,7 +2,7 @@ import React, { FC, memo, PropsWithChildren } from "react";
 import styles from "./Title.module.css";
 import cn from "classnames";
 
-export type TitleSize = "small" | "medium" | "large";
+export type TitleSize = "small" | "medium" | "large" | "extra-large";
 
 interface SportTitleProps extends PropsWithChildren {
   className?: string;

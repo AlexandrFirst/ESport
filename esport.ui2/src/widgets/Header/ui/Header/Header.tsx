@@ -14,7 +14,7 @@ import { ListItem } from "../ListItem/ListItem";
 import { AuthItems } from "../AuthItems/AuthItems";
 import { IconButton, Logo } from "@/shared/ui";
 import { SidebarDrawer } from "@/widgets/LeftSidebar";
-import { useUserDevice } from "@/shared/lib";
+import { useScrollTop, useUserDevice } from "@/shared/lib";
 
 interface HeaderProps {
   className?: string;
@@ -26,11 +26,13 @@ export const Header: FC<HeaderProps> = ({ className, withLogoAndMenu }) => {
   const { isMobile } = useUserDevice();
   const [isDrawerOpened, setIsDrawerOpened] = useState(false);
   const handleLeftSidebarOpen = () => setIsDrawerOpened(true);
+  const scrollTop = useScrollTop();
 
   return (
     <header
       className={cn(styles.header, className, {
         [styles.with_logo]: withLogoAndMenu,
+        [styles.scrolled]: scrollTop > 0,
       })}
     >
       {(isMobile || withLogoAndMenu) && (

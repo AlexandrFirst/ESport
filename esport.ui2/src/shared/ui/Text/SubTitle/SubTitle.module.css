@@ -1,5 +1,9 @@
 .text {
-  @apply text-theme-main font-bold;
+  @apply text-theme-main font-bold duration-200;
+}
+
+.center {
+  @apply text-center;
 }
 
 .small {
@@ -12,4 +16,8 @@
 
 .large {
   @apply text-lg;
+}
+
+.extra-large {
+  @apply md:text-3xl sm:text-2xl;
 }

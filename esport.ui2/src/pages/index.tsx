@@ -1,17 +1,14 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
-
-import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-
-import { SubTitle, Title } from "@/shared/ui";
 import { AppNextPage } from "@/shared/types";
 import { useSnackbar } from "@/shared/lib";
 import { routes } from "@/shared/config";
 
 import { getMainLayout } from "@/widgets/MainLayout";
+import { HomePage } from "@/widgets/HomePage";
 
 type Props = {
   snackbar?: {
@@ -22,7 +19,6 @@ type Props = {
 
 const Home: AppNextPage<Props> = ({ snackbar }) => {
   const { error, success } = snackbar ?? {};
-  const { t } = useTranslation("common");
 
   const router = useRouter();
 
@@ -38,18 +34,11 @@ const Home: AppNextPage<Props> = ({ snackbar }) => {
     removeSearchParams();
   }, [showError, showSuccess]);
 
-  const [a, setA] = useState(false);
-
-  return (
-    <>
-      <Title center>{t("title")}</Title>
-      <SubTitle className={"mt-5"}>It is main page of really cool app</SubTitle>
-    </>
-  );
+  return <HomePage />;
 };
 
 Home.getLayout = getMainLayout({
-  headProps: { title: "E-Sport | Main" },
+  headProps: { title: "E-Sport | System for sport" },
   withLeftSidebar: false,
 });
 

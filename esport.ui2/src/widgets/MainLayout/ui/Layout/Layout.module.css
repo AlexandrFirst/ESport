@@ -15,6 +15,10 @@
   @apply min-h-screen pb-6 pt-[80px];
 }
 
+.pl_min {
+  @apply pl-6;
+}
+
 .pl_compact {
   @apply pl-leftSidebarCompact;
 }
