@@ -38,7 +38,7 @@
 
 .inner_list_item {
     /*@apply border-l-2 p-0 pb-2 border-text-subsidiary w-9/12 dark:text-darkSkin-main;*/
-    @apply border-l-2 p-0 pb-2 w-9/12 border-theme-main;
+    @apply border-l-2 p-0 pb-2 last:pb-0 w-9/12 border-theme-main;
 }
 
 .inner_list_item_not_opened {
