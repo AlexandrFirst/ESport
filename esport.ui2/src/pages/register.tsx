@@ -5,21 +5,20 @@ import { GetServerSideProps } from "next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import React from "react";
 import { AppNextPage } from "@/shared/types";
+import { useTranslation } from "next-i18next";
 
 type Props = {};
 
 const RegisterPage: AppNextPage<Props> = () => {
-  return <RegisterForm />;
-};
+  const { t } = useTranslation("register");
 
-RegisterPage.getLayout = (page) => {
   return (
     <AnonLayout
       headProps={{ title: "E-Sport | Register" }}
-      title="Adventure starts here 🚀"
-      subtitle="Please sign-in to your account and start the adventure"
+      title={`${t("title")} 🚀`}
+      subtitle={t("subtitle") ?? ""}
     >
-      {page}
+      <RegisterForm />
     </AnonLayout>
   );
 };
@@ -32,7 +31,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 }) => {
   const localization = await serverSideTranslations(
     locale ?? defaultLocale ?? "en",
-    ["common"]
+    ["common", "register"]
   );
   return {
     props: {

@@ -8,23 +8,22 @@ import { AppNextPage } from "@/shared/types";
 import { LoginForm } from "@/features/LoginForm";
 
 import { AnonLayout } from "@/widgets/AnonLayout";
+import { useTranslation } from "next-i18next";
 
 type Props = {
   httpsAgent: any;
 };
 
 const LoginPage: AppNextPage<Props> = () => {
-  return <LoginForm />;
-};
+  const { t } = useTranslation("login");
 
-LoginPage.getLayout = (page) => {
   return (
     <AnonLayout
       headProps={{ title: "E-Sport | Login" }}
-      title="Welcome to E-Sport 👋🏻"
-      subtitle="Please sign-in to your account and start the adventure"
+      title={`${t("title")} 👋🏻`}
+      subtitle={t("subtitle") ?? ""}
     >
-      {page}
+      <LoginForm />
     </AnonLayout>
   );
 };
@@ -37,7 +36,7 @@ export const getServerSideProps: GetServerSideProps = async ({
 }) => {
   const localization = await serverSideTranslations(
     locale ?? defaultLocale ?? "en",
-    ["common"]
+    ["common", "login"]
   );
   return {
     props: {

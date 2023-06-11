@@ -21,12 +21,14 @@ import { AuthService } from "@/entities/user";
 
 import { ILoginForm } from "../../model/types/LoginFormSchema";
 import { useValidation } from "../../lib/hooks/useValidation";
+import { useTranslation } from "next-i18next";
 
 interface LoginFormProps {
   className?: string;
 }
 
 export const LoginForm: FC<LoginFormProps> = (props) => {
+  const { t } = useTranslation(["login", "common"]);
   const { isMobile } = useMedia();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -50,7 +52,7 @@ export const LoginForm: FC<LoginFormProps> = (props) => {
         router.push(returnUrl || routes.Home());
       },
       onError: (err) => {
-        showError(err.message || "Something went wrong");
+        showError(err.message || t("common:error"));
       },
       onFinally: () => {
         setIsLoading(false);
@@ -66,23 +68,23 @@ export const LoginForm: FC<LoginFormProps> = (props) => {
       <Input
         {...methods.register("mail")}
         className={styles.input}
-        label={"E-mail"}
+        label={t("email")}
         fullWidth
       />
       <PasswordInput
         {...methods.register("password")}
         className={styles.input}
-        label="Password"
+        label={t("password")}
         fullWidth
       />
       <UILink className={styles.link} href={routes.Register()}>
-        Forgot password?
+        {t("forgotPassword")}
       </UILink>
       <Button className={styles.btn} onClick={handleSubmit} loading={isLoading}>
-        Login
+        {t("login")}
       </Button>
-      <span className={styles.text}>New on our platform? </span>
-      <UILink href={registerWithReturnUrl}>Create an account</UILink>
+      <span className={styles.text}>{t("register.first")} </span>
+      <UILink href={registerWithReturnUrl}>{t("register.link")}</UILink>
     </FormWrapper>
   );
 };
