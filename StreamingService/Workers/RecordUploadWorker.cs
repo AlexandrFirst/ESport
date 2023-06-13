@@ -20,6 +20,7 @@ namespace StreamingService.Workers
         private readonly IServiceProvider serviceProvider;
         private readonly ILogger<RecordUploadWorker> logger;
         private readonly IRecordService recordService;
+        
         private readonly RecordedFileOptions recordedVideoOptions;
         private List<Task> listenerList = new List<Task>();
         private int listenerCount = 4;
@@ -51,7 +52,7 @@ namespace StreamingService.Workers
                     {
                         var message = await channelReader.ReadAsync(stoppingToken);
 
-                        var fileName = $"D:\\nure\\Diplom\\ESport\\records\\{message.FileId.ToString().ToLowerInvariant()}.WEBM";
+                        var fileName = $"{recordedVideoOptions.Uri}{message.FileId.ToString().ToLowerInvariant()}.WEBM";
                         if (File.Exists(fileName)) 
                         {
                             var videoRecord = await dbContext.EsStreamRecords.FirstOrDefaultAsync(x => x.Id == message.RecordId);
