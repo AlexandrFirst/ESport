@@ -1,11 +1,14 @@
+import React from "react";
+
+import { GetServerSideProps } from "next";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import { useTranslation } from "next-i18next";
+
+import { AppNextPage } from "@/shared/types";
+
 import { RegisterForm } from "@/features/RegisterForm";
 
 import { AnonLayout } from "@/widgets/AnonLayout";
-import { GetServerSideProps } from "next";
-import { serverSideTranslations } from "next-i18next/serverSideTranslations";
-import React from "react";
-import { AppNextPage } from "@/shared/types";
-import { useTranslation } from "next-i18next";
 
 type Props = {};
 

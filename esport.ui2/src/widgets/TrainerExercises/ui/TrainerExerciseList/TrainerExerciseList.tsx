@@ -46,6 +46,13 @@ export const TrainerExerciseList: FC<TrainerExerciseListProps> = ({
 
   return (
     <StickyContentLayout right={<TrainerExerciseFliters />}>
+      {!!data?.exerciseInfos.length && (
+        <div className={styles.link}>
+          <UILink size={"xl"} href={routes.Trainer.CreateExcercise()}>
+            Create exercise
+          </UILink>
+        </div>
+      )}
       <ExerciseInfoList
         isLoading={isLoading}
         list={data?.exerciseInfos ?? []}
@@ -60,13 +67,6 @@ export const TrainerExerciseList: FC<TrainerExerciseListProps> = ({
           </>
         }
       />
-      {!!data?.exerciseInfos.length && (
-        <div className={styles.link}>
-          <UILink size={"xl"} href={routes.Trainer.CreateExcercise()}>
-            Create exercise
-          </UILink>
-        </div>
-      )}
     </StickyContentLayout>
   );
 };

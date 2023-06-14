@@ -3,6 +3,7 @@ import styles from "./RegisterForm.module.css";
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useTranslation } from "next-i18next";
 
 import { ArrowUturnLeftIcon } from "@heroicons/react/24/solid";
 
@@ -22,7 +23,6 @@ import { RegisterSteps } from "../../constants/register-step";
 import { FirstStep } from "../FirstStep/FirstStep";
 import { ThirdStep } from "../ThirdStep/ThirdStep";
 import { SecondStep } from "../SecondStep/SecondStep";
-import { useTranslation } from "next-i18next";
 
 export const RegisterForm: FC = () => {
   const { t } = useTranslation("register");

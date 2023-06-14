@@ -31,6 +31,7 @@ export const CreateUpdateTimetableForm: FC<CreateUpdateTimetableFormProps> = ({
           className={"my-5"}
           name={"trainerRequest"}
           placeholder={"Create trainer request..."}
+          fullWidth
         />
       )}
     </FormWrapper>

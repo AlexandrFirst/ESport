@@ -25,7 +25,7 @@ export const TrainerTimetable: FC<TrainerTimetableProps> = ({
 
   const { data } = useGetTrainerTimetable({
     trainerId,
-    startDateTime: startDateTime ?? new Date().toLocaleDateString(),
+    startDateTime: startDateTime ?? new Date().toDateString(),
     dayRange: 30,
   });
 
