@@ -134,8 +134,10 @@ services:
     user: root
     container_name: esport-web
     build:
-      context: ./esport.ui
+      context: ./esport.ui2
       dockerfile: ../deploy/ESportUi.Dockerfile
+    env_file:
+      - ./esport.ui2/.env.production
     restart: on-failure
     ports:
       - '3000:3000'
