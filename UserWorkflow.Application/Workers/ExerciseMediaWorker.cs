@@ -64,16 +64,9 @@ namespace UserWorkflow.Application.Workers
                         {
                             try
                             {
+                                if (message.ExerciseTutorial.Length < 1) { throw new ApplicationException("Unable to load empty video data"); }
 
-                                long length = message.ExerciseTutorial.Length;
-                                if (length < 0)
-                                    throw new ApplicationException("file is empty");
-
-                                var fileStream = message.ExerciseTutorial.OpenReadStream();
-                                byte[] bytes = new byte[length];
-                                fileStream.Read(bytes, 0, (int)message.ExerciseTutorial.Length);
-
-                                var uploadResult = await mediaService.UploadFile(bucketName, bytes, "video/webm");
+                                var uploadResult = await mediaService.UploadFile(bucketName, message.ExerciseTutorial, "video/webm");
 
                                 var exerciseTutorial = new ExerciseTutorial()
                                 {

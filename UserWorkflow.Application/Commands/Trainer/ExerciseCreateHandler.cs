@@ -128,10 +128,17 @@ namespace UserWorkflow.Application.Commands.Trainer
 
             foreach (var tutorial in tutorialToAdd)
             {
+                long length = tutorial.VideoExerciseExample.Length;
+                if (length < 0)
+                    throw new ApplicationException("file is empty");
+                var fileStream = tutorial.VideoExerciseExample.OpenReadStream();
+                byte[] bytes = new byte[length];
+                fileStream.Read(bytes, 0, (int)tutorial.VideoExerciseExample.Length);
+
                 await mediaWriter.WriteAsync(new ExerciseMediaModel() 
                 {
                     ExerciseId= exerciseId,
-                    ExerciseTutorial = tutorial.VideoExerciseExample,
+                    ExerciseTutorial = bytes,
                     ExerciseTutorialAction = ExerciseTutorialAction.CREATE
                 });
             }
