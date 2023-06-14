@@ -11,7 +11,7 @@ namespace UserWorkflow.Application.Models.Exercise
 
     public class ExerciseMediaModel
     {
-        public IFormFile ExerciseTutorial { get; set; }
+        public byte[] ExerciseTutorial { get; set; }
         public int ExerciseId { get; set; }
         public ExerciseTutorialAction ExerciseTutorialAction { get; set; }
         public int? TutorialId { get; set; }
