@@ -7,5 +7,5 @@
 }
 
 .text_wrapper {
-    @apply flex flex-col min-w-[100px] gap-1.5;
+    @apply flex flex-col w-[100px] gap-1.5;
 }

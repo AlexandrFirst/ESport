@@ -29,7 +29,7 @@ const UserNameRoleHolder: FC<UserNameRoleHolderProps> = ({
       </li>
       <li className={cn(styles.text_wrapper, textClassName)}>
         <BoldText>{boldText}</BoldText>
-        <RegularText>{regularText}</RegularText>
+        <RegularText className={"truncate"}>{regularText}</RegularText>
       </li>
     </ul>
   );

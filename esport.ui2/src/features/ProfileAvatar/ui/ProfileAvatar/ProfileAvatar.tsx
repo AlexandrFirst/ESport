@@ -9,7 +9,7 @@ import {
 } from "@heroicons/react/24/solid";
 
 import { routes } from "@/shared/config";
-import { useSnackbar } from "@/shared/lib";
+import { useMappedRoles, useSnackbar } from "@/shared/lib";
 import {
   Avatar,
   AvatarProps,
@@ -30,11 +30,12 @@ import { useAuth, useLogout, UserNameRoleHolder } from "@/entities/user";
 interface ProfileAvatarProps extends AvatarProps {}
 
 export const ProfileAvatar: FC<ProfileAvatarProps> = ({ ...props }) => {
-  const { user } = useAuth();
+  const { user, roles } = useAuth();
   const { mutate } = useLogout();
 
   const { showError } = useSnackbar();
   const router = useRouter();
+  const translatedRoles = useMappedRoles();
 
   const handleLogout = async () => {
     try {
@@ -58,7 +59,7 @@ export const ProfileAvatar: FC<ProfileAvatarProps> = ({ ...props }) => {
         <UserNameRoleHolder
           {...props}
           boldText={user?.name ?? ""}
-          regularText={""}
+          regularText={roles.map((role) => translatedRoles[role]).join(", ")}
           src={""}
           avatarText={user?.name[0] ?? ""}
           size={AvatarSize.Small}
