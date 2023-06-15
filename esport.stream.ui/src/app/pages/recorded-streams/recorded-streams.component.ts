@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { environment } from 'environments/environment.dev';
 import { IRecordedStream } from 'src/app/models/stream-models';
 import { StreamService } from 'src/app/services/stream.service';
 
@@ -26,6 +27,6 @@ export class RecordedStreamsComponent implements OnInit {
   }
 
   getVideoSrc(publicId: string): string{
-    return `https://localhost:5002/records/${publicId}`;
+    return `${environment.apiHost}/records/${publicId}`;
   }
 }

@@ -43,6 +43,11 @@
     <Content Update="Configuration\Local\streaming.ocelot.Local.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Update="Configuration\Production\admin.ocelot.Production.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
     <Content Update="Configuration\Production\main.ocelot.Production.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

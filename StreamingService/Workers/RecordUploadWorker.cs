@@ -52,7 +52,9 @@ namespace StreamingService.Workers
                     {
                         var message = await channelReader.ReadAsync(stoppingToken);
 
+
                         var fileName = $"{recordedVideoOptions.Uri}{message.FileId.ToString().ToLowerInvariant()}.WEBM";
+                        Console.WriteLine("File name to recortd: " + fileName);
                         if (File.Exists(fileName)) 
                         {
                             var videoRecord = await dbContext.EsStreamRecords.FirstOrDefaultAsync(x => x.Id == message.RecordId);

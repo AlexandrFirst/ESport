@@ -122,6 +122,8 @@ services:
       - api-gateway
       - identity
     restart: on-failure
+    volumes:
+      - ./records:/tmp
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
     ports:

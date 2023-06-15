@@ -1,7 +1,7 @@
 {
   "ReRoutes": [
     {
-      "DownstreamPathTemplate": "/User/info/{userId}",
+      "DownstreamPathTemplate": "/OrgAdmin/create",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -9,14 +9,14 @@
           "Port": 5005
         }
       ],
-      "UpstreamPathTemplate": "/user-get/{userId}",
-      "UpstreamHttpMethod": [ "Get" ],
+      "UpstreamPathTemplate": "/create-organisation",
+      "UpstreamHttpMethod": [ "Post" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "ESport",
         "AllowedScopes": []
       },
       "RouteClaimsRequirement": {
-        "Role": "OrgAdmin,LocalAdmin,Trainer,Trainee"
+        "Role": "OrgAdmin,LocalAdmin,Teacher,Pupil"
       },
       "AddHeadersToRequest": {
         "Role": "Claims[Role] > value > |",
@@ -26,7 +26,7 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/User/Update",
+      "DownstreamPathTemplate": "/OrgAdmin/update",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -34,14 +34,14 @@
           "Port": 5005
         }
       ],
-      "UpstreamPathTemplate": "/user-update",
-      "UpstreamHttpMethod": [ "Post" ],
+      "UpstreamPathTemplate": "/update-organisation",
+      "UpstreamHttpMethod": [ "Put" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "ESport",
         "AllowedScopes": []
       },
       "RouteClaimsRequirement": {
-        "Role": "OrgAdmin,LocalAdmin,Trainer,Trainee"
+        "Role": "OrgAdmin,LocalAdmin,Teacher,Pupil"
       },
       "AddHeadersToRequest": {
         "Role": "Claims[Role] > value > |",
@@ -51,7 +51,7 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/User/Confirm",
+      "DownstreamPathTemplate": "/OrgAdmin/delete/{id}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -59,14 +59,14 @@
           "Port": 5005
         }
       ],
-      "UpstreamPathTemplate": "/user-email-confirm",
-      "UpstreamHttpMethod": [ "Post" ],
+      "UpstreamPathTemplate": "/delete-organisation/{id}",
+      "UpstreamHttpMethod": [ "Delete" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "ESport",
         "AllowedScopes": []
       },
       "RouteClaimsRequirement": {
-        "Role": "OrgAdmin,LocalAdmin,Trainer,Trainee"
+        "Role": "OrgAdmin,LocalAdmin,Teacher,Pupil"
       },
       "AddHeadersToRequest": {
         "Role": "Claims[Role] > value > |",
@@ -76,7 +76,7 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/User/Delete",
+      "DownstreamPathTemplate": "/GymAdmin/{gymId}/retrievetimetable",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -84,14 +84,14 @@
           "Port": 5005
         }
       ],
-      "UpstreamPathTemplate": "/user-delete",
+      "UpstreamPathTemplate": "/gym/{gymId}/timetable/get",
       "UpstreamHttpMethod": [ "Post" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "ESport",
         "AllowedScopes": []
       },
       "RouteClaimsRequirement": {
-        "Role": "OrgAdmin,LocalAdmin,Trainer,Trainee"
+        "Role": "OrgAdmin,LocalAdmin,Teacher,Pupil"
       },
       "AddHeadersToRequest": {
         "Role": "Claims[Role] > value > |",
@@ -101,7 +101,7 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/User/SetProfileAsLogin",
+      "DownstreamPathTemplate": "/GymAdmin/{gymId}/timetable",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -109,14 +109,14 @@
           "Port": 5005
         }
       ],
-      "UpstreamPathTemplate": "/update-user-login",
+      "UpstreamPathTemplate": "/gym/{gymId}/timetable/update",
       "UpstreamHttpMethod": [ "Post" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "ESport",
         "AllowedScopes": []
       },
       "RouteClaimsRequirement": {
-        "Role": "OrgAdmin,LocalAdmin,Trainer,Trainee"
+        "Role": "OrgAdmin,LocalAdmin,Teacher,Pupil"
       },
       "AddHeadersToRequest": {
         "Role": "Claims[Role] > value > |",
@@ -126,7 +126,7 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/User/PendingAdmins",
+      "DownstreamPathTemplate": "/GymAdmin/{gymId}/aproveTrainer",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -134,14 +134,14 @@
           "Port": 5005
         }
       ],
-      "UpstreamPathTemplate": "/pending-admins",
+      "UpstreamPathTemplate": "/gym/{gymId}/trainer/approve",
       "UpstreamHttpMethod": [ "Post" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "ESport",
         "AllowedScopes": []
       },
       "RouteClaimsRequirement": {
-        "Role": "OrgAdmin,LocalAdmin,Trainer,Trainee"
+        "Role": "OrgAdmin,LocalAdmin,Teacher,Pupil"
       },
       "AddHeadersToRequest": {
         "Role": "Claims[Role] > value > |",
@@ -151,7 +151,7 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/User/TrainerRequests",
+      "DownstreamPathTemplate": "/GymAdmin/{gymId}/declineTrainer",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -159,14 +159,14 @@
           "Port": 5005
         }
       ],
-      "UpstreamPathTemplate": "/trainer-requests",
+      "UpstreamPathTemplate": "/gym/{gymId}/trainer/decline",
       "UpstreamHttpMethod": [ "Post" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "ESport",
         "AllowedScopes": []
       },
       "RouteClaimsRequirement": {
-        "Role": "OrgAdmin,LocalAdmin,Trainer,Trainee"
+        "Role": "OrgAdmin,LocalAdmin,Teacher,Pupil"
       },
       "AddHeadersToRequest": {
         "Role": "Claims[Role] > value > |",
@@ -176,7 +176,7 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/Gym/gymListing",
+      "DownstreamPathTemplate": "/GymAdmin/{gymId}/openTrainerRequest",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -184,14 +184,14 @@
           "Port": 5005
         }
       ],
-      "UpstreamPathTemplate": "/gym-listing",
+      "UpstreamPathTemplate": "/gym/{gymId}/request/open",
       "UpstreamHttpMethod": [ "Post" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "ESport",
         "AllowedScopes": []
       },
       "RouteClaimsRequirement": {
-        "Role": "OrgAdmin,LocalAdmin,Trainer,Trainee"
+        "Role": "OrgAdmin,LocalAdmin,Teacher,Pupil"
       },
       "AddHeadersToRequest": {
         "Role": "Claims[Role] > value > |",
@@ -201,7 +201,7 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/Organisation/organisationListing",
+      "DownstreamPathTemplate": "/GymAdmin/{gymId}/updateTrainerRequest",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -209,14 +209,64 @@
           "Port": 5005
         }
       ],
-      "UpstreamPathTemplate": "/organisation-listing",
+      "UpstreamPathTemplate": "/gym/{gymId}/request/update",
       "UpstreamHttpMethod": [ "Post" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "ESport",
         "AllowedScopes": []
       },
       "RouteClaimsRequirement": {
-        "Role": "OrgAdmin,LocalAdmin,Trainer,Trainee"
+        "Role": "OrgAdmin,LocalAdmin,Teacher,Pupil"
+      },
+      "AddHeadersToRequest": {
+        "Role": "Claims[Role] > value > |",
+        "Id": "Claims[Id] > value > |",
+        "Name": "Claims[Name] > value > |",
+        "Email": "Claims[Email] > value > |"
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/GymAdmin/{gymId}/closeTrainerRequest",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "host.docker.internal",
+          "Port": 5005
+        }
+      ],
+      "UpstreamPathTemplate": "/gym/{gymId}/request/close",
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "ESport",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "Role": "OrgAdmin,LocalAdmin,Teacher,Pupil"
+      },
+      "AddHeadersToRequest": {
+        "Role": "Claims[Role] > value > |",
+        "Id": "Claims[Id] > value > |",
+        "Name": "Claims[Name] > value > |",
+        "Email": "Claims[Email] > value > |"
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/GymAdmin/{gymId}/pendingTrainers",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "host.docker.internal",
+          "Port": 5005
+        }
+      ],
+      "UpstreamPathTemplate": "/gym/{gymId}/pending-trainers",
+      "UpstreamHttpMethod": [ "Post" ],
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "ESport",
+        "AllowedScopes": []
+      },
+      "RouteClaimsRequirement": {
+        "Role": "OrgAdmin,LocalAdmin,Teacher,Pupil"
       },
       "AddHeadersToRequest": {
         "Role": "Claims[Role] > value > |",
