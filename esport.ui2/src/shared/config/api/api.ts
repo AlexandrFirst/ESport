@@ -46,5 +46,21 @@ export const Api = (config?: ApiConfig) => {
       return Promise.reject(error.response?.data || error);
     }
   );
+
+  // instance.interceptors.request.use((config) => {
+  //   recaptcha.enterprise.ready(async () => {
+  //     const token = await grecaptcha.enterprise.execute(
+  //       "6LdUdJ4mAAAAAEH11QOssCwO6M9zS7sIkreb2qCZ",
+  //       { action: "LOGIN" }
+  //     );
+  //     // IMPORTANT: The 'token' that results from execute is an encrypted response sent by
+  //     // reCAPTCHA Enterprise to the end user's browser.
+  //     // This token must be validated by creating an assessment.
+  //     // See https://cloud.google.com/recaptcha-enterprise/docs/create-assessment
+  //   });
+  //
+  //   return config;
+  // });
+
   return instance;
 };

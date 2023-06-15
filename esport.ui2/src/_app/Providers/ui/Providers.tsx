@@ -2,6 +2,7 @@ import React, { FC, ReactNode } from "react";
 import { Store } from "@reduxjs/toolkit";
 import { CombinedState } from "redux";
 import { ThemeProvider } from "next-themes";
+import { ReCaptchaProvider } from "next-recaptcha-v3";
 
 import { StateSchema } from "../config/store/StateSchema";
 
@@ -31,7 +32,11 @@ export const Providers: FC<ProvidersProps> = ({
         // themes={["pink", "red", "blue", "light", "dark"]}
       >
         <Snackbar>
-          <QueryProvider pageProps={pageProps}>{children}</QueryProvider>
+          <QueryProvider pageProps={pageProps}>
+            <ReCaptchaProvider reCaptchaKey="6LdUdJ4mAAAAAEH11QOssCwO6M9zS7sIkreb2qCZ">
+              {children}
+            </ReCaptchaProvider>
+          </QueryProvider>
         </Snackbar>
       </ThemeProvider>
     </StoreProvider>
