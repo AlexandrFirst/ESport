@@ -17,6 +17,7 @@ using StreamingService.Models.Options;
 using StreamingService.Services;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -75,6 +76,10 @@ namespace StreamingService
 
             MediaClient.Bootstrapper.RegisterIocContainers(services, Configuration);
 
+
+            Console.WriteLine("Test file check");
+            var filename1 = "/tmp/35c08d1c-88cd-42e3-a246-024a4651005a.WEBM";
+            Console.WriteLine("Filename: " + filename1 + " exists: " + File.Exists(filename1));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

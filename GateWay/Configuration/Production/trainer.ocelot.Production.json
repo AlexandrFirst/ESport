@@ -1,16 +1,16 @@
 {
   "ReRoutes": [
     {
-      "DownstreamPathTemplate": "/Stream/{page}/{size}",
+      "DownstreamPathTemplate": "/Trainer/applyForRequest",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "host.docker.internal",
-          "Port": 5004
+          "Port": 5005
         }
       ],
-      "UpstreamPathTemplate": "/api/streams/{page}/{size}",
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE", "OPTIONS" ],
+      "UpstreamPathTemplate": "/trainer-apply-for-request",
+      "UpstreamHttpMethod": [ "POST" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "ESport",
         "AllowedScopes": []
@@ -26,16 +26,16 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/Stream/create",
+      "DownstreamPathTemplate": "/Trainer/LessonCreate",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "host.docker.internal",
-          "Port": 5004
+          "Port": 5005
         }
       ],
-      "UpstreamPathTemplate": "/api/streams/create",
-      "UpstreamHttpMethod": [ "POST", "OPTIONS" ],
+      "UpstreamPathTemplate": "/trainer-create-lesson",
+      "UpstreamHttpMethod": [ "POST" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "ESport",
         "AllowedScopes": []
@@ -51,16 +51,16 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/Stream/user{everything}",
+      "DownstreamPathTemplate": "/Trainer/timetable",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "host.docker.internal",
-          "Port": 5004
+          "Port": 5005
         }
       ],
-      "UpstreamPathTemplate": "/api/streams/user{everything}",
-      "UpstreamHttpMethod": [ "GET", "OPTIONS" ],
+      "UpstreamPathTemplate": "/trainer-timetable",
+      "UpstreamHttpMethod": [ "POST" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "ESport",
         "AllowedScopes": []
@@ -76,16 +76,16 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/Stream/{streamId}",
+      "DownstreamPathTemplate": "/Trainer/ExerciseCreate",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "host.docker.internal",
-          "Port": 5004
+          "Port": 5005
         }
       ],
-      "UpstreamPathTemplate": "/api/streams/{streamId}",
-      "UpstreamHttpMethod": [ "GET", "OPTIONS" ],
+      "UpstreamPathTemplate": "/trainer-new-exercise",
+      "UpstreamHttpMethod": [ "POST" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "ESport",
         "AllowedScopes": []
@@ -101,16 +101,16 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/Stream/updateStream/{streamId}",
+      "DownstreamPathTemplate": "/Trainer/ExerciseListing",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "host.docker.internal",
-          "Port": 5004
+          "Port": 5005
         }
       ],
-      "UpstreamPathTemplate": "/api/streams/updateStream/{streamId}",
-      "UpstreamHttpMethod": [ "PUT", "OPTIONS" ],
+      "UpstreamPathTemplate": "/trainer-exercise-listing",
+      "UpstreamHttpMethod": [ "POST" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "ESport",
         "AllowedScopes": []
@@ -126,41 +126,16 @@
       }
     },
     {
-      "DownstreamPathTemplate": "/Media/streams",
+      "DownstreamPathTemplate": "/Trainer/pdateTraineeSchedule",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "host.docker.internal",
-          "Port": 5004
+          "Port": 5005
         }
       ],
-      "UpstreamPathTemplate": "/api/streams-records",
-      "UpstreamHttpMethod": [ "PUT", "OPTIONS", "POST" ],
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "ESport",
-        "AllowedScopes": []
-      },
-      "RouteClaimsRequirement": {
-        "Role": "Pupil,LocalAdmin,OrgAdmin"
-      },
-      "AddHeadersToRequest": {
-        "Role": "Claims[Role] > value > |",
-        "Id": "Claims[Id] > value > |",
-        "Name": "Claims[Name] > value > |",
-        "Email": "Claims[Email] > value > |"
-      }
-    },
-    {
-      "DownstreamPathTemplate": "/Media/record/{fileId}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "host.docker.internal",
-          "Port": 5004
-        }
-      ],
-      "UpstreamPathTemplate": "/records/{fileId}",
-      "UpstreamHttpMethod": [ "GET" ],
+      "UpstreamPathTemplate": "/update-trainee-schedule",
+      "UpstreamHttpMethod": [ "POST" ],
       "AuthenticationOptions": {
         "AuthenticationProviderKey": "ESport",
         "AllowedScopes": []

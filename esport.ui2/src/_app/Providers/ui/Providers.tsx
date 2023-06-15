@@ -12,6 +12,7 @@ import { LOCAL_STORAGE_THEME_KEY } from "../lib/ThemeContext";
 
 import { QueryProvider } from "./QueryProvider";
 import { StoreProvider } from "./StoreProvider";
+import { ReCaptchaProvider } from "next-recaptcha-v3";
 
 interface ProvidersProps {
   store: Store<CombinedState<StateSchema>>;
