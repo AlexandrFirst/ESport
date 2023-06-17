@@ -70,8 +70,8 @@ const mocked_bodyParts: IBodyPart[] = [
   },
 ];
 
-export const BodyPartApi = (ctx?: ApiContext) => {
-  const instance = Api({ ctx });
+export const BodyPartApi = async (ctx?: ApiContext) => {
+  const instance = await Api({ ctx });
 
   return {
     async getBodyParts() {

@@ -39,7 +39,8 @@ export const getServerSideProps = getAppServerSideProps(
     );
     const queryClient = new QueryClient();
     const { user } = store.getState();
-    const { data } = await ProfileApi(ctx).getProfileInfo(user.data?.id ?? 0);
+    const api = await ProfileApi(ctx);
+    const { data } = await api.getProfileInfo(user.data?.id ?? 0);
 
     const request: GetTrainerTimetableRequest = {
       trainerId: data?.userTrainerInfo?.id ?? 0,

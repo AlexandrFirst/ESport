@@ -12,7 +12,8 @@ export const getTraineeRecommendations = async (
   ctx?: ApiContext
 ) => {
   try {
-    const { data } = await TraineeApi(ctx).getTraineeRecommendations(request);
+    const api = await TraineeApi(ctx);
+    const { data } = await api.getTraineeRecommendations(request);
     return data;
   } catch (e) {
     throw e;

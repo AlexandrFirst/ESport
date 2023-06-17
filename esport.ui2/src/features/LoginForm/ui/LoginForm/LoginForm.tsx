@@ -46,7 +46,8 @@ export const LoginForm: FC<LoginFormProps> = (props) => {
 
   const handleSubmit = methods.handleSubmit(async (data) => {
     setIsLoading(true);
-    await withErrorAndLoading(AuthService().login, data, {
+    const authService = await AuthService();
+    await withErrorAndLoading(authService.login, data, {
       onSuccess() {
         const returnUrl = router.query.returnUrl as Maybe<string>;
         router.push(returnUrl || routes.Home());

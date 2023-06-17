@@ -14,7 +14,8 @@ export const useUpdateProfileInfo = (
     mutationKey: profileApiKeys.updateProfileInfo(userId),
     mutationFn: async (updateDto: UpdateProfileInfoRequest) => {
       try {
-        const { data } = await ProfileApi().updateProfileInfo(updateDto);
+        const api = await ProfileApi();
+        const { data } = await api.updateProfileInfo(updateDto);
         return data;
       } catch (e) {
         throw e;

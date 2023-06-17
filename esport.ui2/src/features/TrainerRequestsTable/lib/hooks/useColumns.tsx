@@ -28,7 +28,8 @@ export const useColumns = (
   const handleApply = useCallback(
     (requestId: number) => async () => {
       try {
-        await GymApi().applyForTrainerRequest({
+        const api = await GymApi();
+        await api.applyForTrainerRequest({
           trainerRequestId: requestId,
         });
         showSuccess("Successfully applied for trainer request");

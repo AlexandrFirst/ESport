@@ -57,8 +57,10 @@ export const getServerSideProps = getAppServerSideProps(async (ctx, store) => {
   const { user } = store.getState();
   const userId = user?.data?.id ?? 0;
 
+  const gymApi = await GymApi(ctx);
+
   const [{ data: gymsResponse }] = await Promise.all([
-    GymApi(ctx).gymListing({
+    gymApi.gymListing({
       organisationIds: [],
       gymIds: [Number(gymId ?? 0)],
       page: 1,

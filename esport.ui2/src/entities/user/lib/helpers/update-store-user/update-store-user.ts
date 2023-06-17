@@ -12,7 +12,8 @@ export const updateStoreUser = async (
   const { user } = getState();
   if (!user.data) {
     try {
-      const { data } = await AuthService(ctx).getUser();
+      const api = await AuthService(ctx);
+      const { data } = await api.getUser();
       const roles = getRoleArr(data.role);
       // console.log("===data, roles===", data, roles);
       dispatch(userActions.setUser({ ...data, id: Number(data.id), roles }));

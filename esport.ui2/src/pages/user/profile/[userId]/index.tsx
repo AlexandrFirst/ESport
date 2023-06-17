@@ -49,9 +49,8 @@ export const getServerSideProps = getAppServerSideProps(async (ctx) => {
   );
 
   const userId = ctx.query?.userId as string;
-  const { data: profile } = await ProfileApi(ctx).getProfileInfo(
-    Number(userId ?? 0)
-  );
+  const api = await ProfileApi(ctx);
+  const { data: profile } = await api.getProfileInfo(Number(userId ?? 0));
 
   const profileInfo: IProfileInfo = {
     isProfileConfirmed: false,

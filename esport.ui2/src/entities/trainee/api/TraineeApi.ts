@@ -5,8 +5,8 @@ import {
   GetTraineeRecommendationsResponse,
 } from "./types/types";
 
-export const TraineeApi = (ctx?: ApiContext) => {
-  const instance = Api({ ctx });
+export const TraineeApi = async (ctx?: ApiContext) => {
+  const instance = await Api({ ctx });
 
   return {
     async getTraineeRecommendations(request: GetTraineeRecommendationsRequest) {

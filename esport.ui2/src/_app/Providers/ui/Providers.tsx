@@ -33,7 +33,9 @@ export const Providers: FC<ProvidersProps> = ({
       >
         <Snackbar>
           <QueryProvider pageProps={pageProps}>
-            <ReCaptchaProvider reCaptchaKey="6LdUdJ4mAAAAAEH11QOssCwO6M9zS7sIkreb2qCZ">
+            <ReCaptchaProvider
+              reCaptchaKey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? ""}
+            >
               {children}
             </ReCaptchaProvider>
           </QueryProvider>

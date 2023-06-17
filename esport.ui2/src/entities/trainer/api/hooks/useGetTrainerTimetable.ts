@@ -12,7 +12,8 @@ export const getTrainerTimetable = async (
   ctx?: ApiContext
 ) => {
   try {
-    const { data } = await TrainerApi(ctx).getTrainerTimetable(request);
+    const api = await TrainerApi(ctx);
+    const { data } = await api.getTrainerTimetable(request);
     return data;
   } catch (e) {
     throw e;

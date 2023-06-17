@@ -21,7 +21,8 @@ export const useColumns = (
   const handleApprove = (userId: number) => async () => {
     if (adminType === AdminType.OrgAdmin) {
       try {
-        await ProfileApi().confirmOrgAdmin({ userId });
+        const api = await ProfileApi();
+        await api.confirmOrgAdmin({ userId });
         await queryClient.invalidateQueries({
           queryKey: profileApiKeys.getPendingAdminsAll(),
         });
@@ -32,7 +33,8 @@ export const useColumns = (
     } else if (adminType === AdminType.GymAdmin) {
       try {
         if (gymId) {
-          await ProfileApi().confirmGymAdmin(gymId, { userId });
+          const api = await ProfileApi();
+          await api.confirmGymAdmin(gymId, { userId });
           await queryClient.invalidateQueries({
             queryKey: profileApiKeys.getPendingAdminsAll(),
           });

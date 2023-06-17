@@ -13,8 +13,8 @@ import {
   IGymListingResponse,
 } from "./types/types";
 
-export const GymApi = (ctx?: ApiContext) => {
-  const instance = Api({ ctx });
+export const GymApi = async (ctx?: ApiContext) => {
+  const instance = await Api({ ctx });
 
   return {
     async gymListing(request: IGymListingRequest) {

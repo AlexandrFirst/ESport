@@ -11,7 +11,8 @@ export type GetProfileOptions = UseQueryOptions<IProfile, unknown, IProfile>;
 
 export const getProfileInfo = async (userId?: number, ctx?: ApiContext) => {
   try {
-    const { data } = await ProfileApi(ctx).getProfileInfo(userId ?? 0);
+    const api = await ProfileApi(ctx);
+    const { data } = await api.getProfileInfo(userId ?? 0);
     return data;
   } catch (e) {
     throw e;

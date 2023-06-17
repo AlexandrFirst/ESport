@@ -9,7 +9,8 @@ export const useTrainerCreateExercise = () => {
     mutationKey: exerciseApiKeys.createExercise(),
     mutationFn: async (formData: FormData) => {
       try {
-        const { data } = await ExerciseApi().createExercise(formData);
+        const api = await ExerciseApi();
+        const { data } = await api.createExercise(formData);
         return data;
       } catch (e) {
         throw e;

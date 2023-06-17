@@ -39,9 +39,8 @@ export const getServerSideProps = getAppServerSideProps(
     );
 
     const { user } = store.getState();
-    const { data: profile } = await ProfileApi(ctx).getProfileInfo(
-      user.data?.id ?? 0
-    );
+    const api = await ProfileApi(ctx);
+    const { data: profile } = await api.getProfileInfo(user.data?.id ?? 0);
     console.log("===profile===", profile);
 
     store.dispatch(profileInformationActions.setInitialData(profile));

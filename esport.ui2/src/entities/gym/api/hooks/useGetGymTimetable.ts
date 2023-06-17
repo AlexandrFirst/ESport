@@ -14,7 +14,8 @@ export const getGymTimetable = async (
   ctx?: ApiContext
 ) => {
   try {
-    const { data } = await GymApi(ctx).getTimetable(gymId, request);
+    const api = await GymApi(ctx);
+    const { data } = await api.getTimetable(gymId, request);
     return data;
   } catch (e) {
     throw e;

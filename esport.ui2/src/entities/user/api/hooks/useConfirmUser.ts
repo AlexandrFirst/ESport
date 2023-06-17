@@ -11,7 +11,8 @@ export const useConfirmUser = (token: string, options?: UseQueryOptions) => {
     queryKey: authKeys.confirm(token),
     queryFn: async () => {
       try {
-        await AuthService().confirm(token);
+        const api = await AuthService();
+        await api.confirm(token);
         return { message: "User confirmed successfully" };
       } catch (e: any) {
         Logger.Debug(e?.message);

@@ -10,7 +10,8 @@ export const useCreateOrganisation = (
     mutationKey: organisationApiKeys.createOrganisation(),
     mutationFn: async (request: ICreateOrganisation) => {
       try {
-        const { data } = await OrganisationApi().create(request);
+        const api = await OrganisationApi();
+        const { data } = await api.create(request);
         return data;
       } catch (e) {
         throw e;

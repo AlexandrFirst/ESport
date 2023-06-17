@@ -14,9 +14,8 @@ export const useGetOrganisations = (
     queryKey: organisationApiKeys.getOrganizations(request),
     queryFn: async () => {
       try {
-        const { data } = await OrganisationApi().getOrganizationListing(
-          request
-        );
+        const api = await OrganisationApi();
+        const { data } = await api.getOrganizationListing(request);
         return data;
       } catch (e) {
         throw e;

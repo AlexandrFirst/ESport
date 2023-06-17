@@ -54,11 +54,13 @@ export const GymsFilters: FC<GymsFiltersProps> = ({
         label={"Address"}
         onChange={handleChange(debouncedSetAddress)}
         labelActive
+        fullWidth
       />
       <InputBase
         label={"Name"}
         onChange={handleChange(debouncedSetName)}
         labelActive
+        fullWidth
       />
       {withOrganization && (
         <Autocomplete<IOrganizationInfoRead>

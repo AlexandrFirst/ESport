@@ -5,6 +5,7 @@ import { AuthToken, ServerStage } from "@/shared/constants";
 import { ApiContext } from "@/shared/types";
 
 import { storageService } from "../storageService/storageService";
+import { ReCaptcha } from "./recaptcha";
 
 export const $api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -14,7 +15,7 @@ export interface ApiConfig extends CreateAxiosDefaults {
   ctx?: ApiContext;
 }
 
-export const Api = (config?: ApiConfig) => {
+export const Api = async (config?: ApiConfig) => {
   const {
     ctx,
     baseURL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5002",
@@ -23,6 +24,12 @@ export const Api = (config?: ApiConfig) => {
   } = config || {};
 
   const token = storageService(ctx).getToken();
+  const captchaToken = await new ReCaptcha(
+    process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? "",
+    "",
+    ctx
+  ).getToken();
+  // console.log("===captchaToken===", captchaToken);
 
   const instance = axios.create({
     ...axiosDefaults,
@@ -32,8 +39,11 @@ export const Api = (config?: ApiConfig) => {
       ...headers,
       Authorization: token,
       Cookie: ctx ? `${AuthToken} ${token}` : undefined,
+      CaptchaToken: captchaToken,
     },
   });
+  // console.log("===instance===", instance);
+
   const stage = process.env.STAGE;
   if (stage && stage !== ServerStage.Dev) {
     instance.defaults.httpsAgent = new https.Agent({

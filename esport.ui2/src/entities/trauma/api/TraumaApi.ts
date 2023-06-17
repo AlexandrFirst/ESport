@@ -61,8 +61,8 @@ const mocked_traumas: ITrauma[] = [
   },
 ];
 
-export const TraumaApi = (ctx?: ApiContext) => {
-  const instance = Api({ ctx });
+export const TraumaApi = async (ctx?: ApiContext) => {
+  const instance = await Api({ ctx });
 
   return {
     async getTraumas() {

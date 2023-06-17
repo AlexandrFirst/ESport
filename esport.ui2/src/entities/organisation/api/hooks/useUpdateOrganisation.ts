@@ -12,7 +12,8 @@ export const useUpdateOrganisation = (
     mutationKey: organisationApiKeys.updateOrganisation(),
     mutationFn: async (request: UpdateOrganisationRequest) => {
       try {
-        const { data } = await OrganisationApi().update(request);
+        const api = await OrganisationApi();
+        const { data } = await api.update(request);
         return data;
       } catch (e) {
         throw e;
