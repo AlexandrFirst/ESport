@@ -1,20 +1,14 @@
 using ESportAuthClient.ESportAuthClient;
-using FluentValidation.Internal;
 using GateWay.Errors;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using Ocelot.Authorisation;
 using Ocelot.Configuration;
 using Ocelot.DependencyInjection;
-using Ocelot.DownstreamRouteFinder;
 using Ocelot.Errors;
 using Ocelot.Middleware;
 using System;
@@ -22,7 +16,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using System.Threading.Tasks;
+using MediaClient.Middleware;
+using MediaClient.Services;
 
 namespace GateWay
 {
@@ -57,8 +52,8 @@ namespace GateWay
             })
             .AddScheme<ESportClientAuthenticationOptions, ESportClientAuthenticationHandler>("ESport", o => { o.Authority = Configuration.GetSection("Security")["Authority"]; });
 
-
             services.AddOcelot();
+            MediaClient.Bootstrapper.RegisterIocContainers(services, Configuration);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -67,13 +62,28 @@ namespace GateWay
             {
                 AuthorisationMiddleware = async (context, next) =>
                 {
+                    var captchaService = app.ApplicationServices.GetRequiredService<ICaptchaClient>();
+
                     if (this.Authorize(context))
                     {
                         try
                         {
-                            Console.WriteLine("Before: " + context.Request.Path);
-                            await next.Invoke();
-                            Console.WriteLine("After: " + context.Request.Path);
+                            var isAuthorizationPresent = context.Request.Headers.TryGetValue("Authorization", out var authorization);
+
+                            var isCaptchaValid = await captchaService.ValidateHttpContext(context);
+                            var isRequestValid = isCaptchaValid && isAuthorizationPresent;
+
+                            if (isRequestValid)
+                            {
+                                Console.WriteLine("Before: " + context.Request.Path);
+                                await next.Invoke();
+                                Console.WriteLine("After: " + context.Request.Path);
+                            }
+                            else 
+                            {
+                                throw new ApplicationException("Request is send by bot");
+                            }
+                            
                         }
                         catch (Exception ex)
                         {
@@ -100,6 +110,8 @@ namespace GateWay
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseGoogleServices();
 
             app.UseCors("ESportCors");
             app.UseAuthentication();

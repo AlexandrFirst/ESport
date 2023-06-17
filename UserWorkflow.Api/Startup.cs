@@ -48,7 +48,7 @@ namespace UserWorkflow.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCustomMediaClient();
+            app.UseGoogleServices();
 
             app.UseRouting();
 

@@ -90,7 +90,7 @@ namespace StreamingService
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseCustomMediaClient();
+            app.UseGoogleServices();
 
             app.UseCors("ESportCors");
                         

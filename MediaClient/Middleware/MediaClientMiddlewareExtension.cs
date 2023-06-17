@@ -12,7 +12,7 @@ namespace MediaClient.Middleware
 {
     public static class MediaClientMiddlewareExtension
     {
-        public static IApplicationBuilder UseCustomMediaClient(this IApplicationBuilder app)
+        public static IApplicationBuilder UseGoogleServices(this IApplicationBuilder app)
         {
             var options = app.ApplicationServices.GetService<IOptions<GoogleAuthOptions>>();
 

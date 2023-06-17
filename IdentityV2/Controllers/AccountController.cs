@@ -1,4 +1,5 @@
 ﻿using Castle.Core.Logging;
+using IdentityV2.CustomAttrubutes;
 using IdentityV2.Dto.User;
 using IdentityV2.Infrastructure.Core;
 using IdentityV2.Infrastructure.Implementation;
@@ -33,6 +34,7 @@ namespace IdentityV2.Controllers
 
         [HttpPost("ApiLogin")]
         [EnableCors("ESportCors")]
+        [ServiceFilter(typeof(CaptchaAttribute))]
         public async Task<IActionResult> ApiLogin([FromBody] LoginModel loginModel)
         {
             var loginDto = new UserLoginDto()
@@ -64,6 +66,7 @@ namespace IdentityV2.Controllers
         [Authorize]
         [HttpPost("ApiLogout")]
         [EnableCors("ESportCors")]
+        [ServiceFilter(typeof(CaptchaAttribute))]
         public async Task<IActionResult> ApiLogout() 
         {
             var userIdClaim = User.Claims.FirstOrDefault(x => x.Type == UserClaims.Id);
@@ -143,6 +146,7 @@ namespace IdentityV2.Controllers
 
         [HttpPost("Register")]
         [EnableCors("ESportCors")]
+        [ServiceFilter(typeof(CaptchaAttribute))]
         public async Task<IActionResult> Register([FromBody] RegisterModel registerModel)
         {
             var registrationResult = await accountService.Register(registerModel);
