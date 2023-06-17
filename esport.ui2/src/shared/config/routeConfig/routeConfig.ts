@@ -4,6 +4,7 @@ import { userRoutes } from "./user-routes/userRoutes";
 import { competitionRoutes } from "./competition-routes/competitionRoutes";
 import { organisationRoutes } from "./organisation-routes/organisationRoutes";
 import { trainerRoutes } from "./trainer-routes/trainerRoutes";
+import { gymRoutes } from "./gyms-routes/gymRoutes";
 
 const buildPath = createBuildPath("/");
 
@@ -23,4 +24,5 @@ export const routes = {
   Competition: competitionRoutes,
   Organisation: organisationRoutes,
   Trainer: trainerRoutes,
+  Gyms: gymRoutes,
 };

@@ -5,7 +5,7 @@ import {
   UserGroupIcon,
 } from "@heroicons/react/24/solid";
 
-import { LogIn, PersonStanding, QrCode } from "lucide-react";
+import { LogIn, Medal, PersonStanding, QrCode } from "lucide-react";
 
 import { routes } from "@/shared/config";
 
@@ -29,13 +29,20 @@ interface UseMenuResult {
 }
 
 export const useMenu = (): UseMenuResult => {
-  const { user, isAuth, isOrganisationAdmin, isTrainer, isGymAdmin } =
-    useAuth();
+  const {
+    user,
+    isAuth,
+    isOrganisationAdmin,
+    isTrainer,
+    isTrainee,
+    isGymAdmin,
+  } = useAuth();
   const {
     isProfileLoading,
     profileOrganisationId,
     isProfileError,
     isConfirmedOrgAdmin,
+    gyms,
   } = useProfileInfo({
     userId: user?.id || 0,
     forceFetch: isAuth,
@@ -104,11 +111,12 @@ export const useMenu = (): UseMenuResult => {
         }),
       },
       ...menuItems({
-        condition: isOrganisationAdmin || isGymAdmin,
+        condition: isOrganisationAdmin,
         onTrue: [
           {
             title: "Organisation",
             icon: <MenuIcon Svg={UserGroupIcon} />,
+            gap: true,
             items: [
               ...menuItems({
                 condition: isConfirmedOrgAdmin,
@@ -130,6 +138,34 @@ export const useMenu = (): UseMenuResult => {
                 link: routes.Organisation.PendingAdmins([
                   profileOrganisationId,
                 ]),
+              },
+            ],
+          },
+        ],
+      }),
+      // ...menuItems({
+      //   condition: isGymAdmin && !!gyms.length,
+      //   onTrue: [
+      //     {
+      //       title: "My gyms",
+      //       icon: <MenuIcon Svg={DumbbellIcon} />,
+      //       gap: true,
+      //       link: routes.Gyms.GymsByIds([{ gyms: gyms.join(",") }]),
+      //       //TODO: add dynamic gyms in items
+      //     },
+      //   ],
+      // }),
+      ...menuItems({
+        condition: isTrainee,
+        onTrue: [
+          {
+            title: "Trainee",
+            gap: true,
+            icon: <MenuIcon Svg={Medal} fill={false} />,
+            items: [
+              {
+                title: "Find sport for you",
+                link: routes.TraineeRecommendations(),
               },
             ],
           },
