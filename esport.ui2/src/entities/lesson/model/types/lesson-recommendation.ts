@@ -3,8 +3,8 @@ import { ITimeTableFilterUnit } from "./lesson-timetable-filter";
 
 export interface ILessonRecommendation {
   lessonId: number;
-  sportInfo: IReadSportInfo;
+  sportInfo: IReadSportInfo[];
   trainerId: number;
   trainerName: string;
-  lessonTimeTable: ITimeTableFilterUnit;
+  lessonTimeTable: ITimeTableFilterUnit[];
 }

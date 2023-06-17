@@ -17,15 +17,15 @@ export const LessonRecommendationListItem: FC<
     <Card padding={"md"} className={className}>
       <div className={"flex items-center justify-between"}>
         <BoldText size={"xl"}>
-          Sports: {item.sportInfo.sportName ?? "--"}
+          Sports: {item.sportInfo.map((s) => s.sportName).join(", ") || "--"}
         </BoldText>
         <RegularText>Trainer: {item.trainerName}</RegularText>
       </div>
       <RegularText className={"mt-5"}>
-        Days: {translatedDays[item.lessonTimeTable.dayOfTheWeek] ?? "--"}
+        Days: {translatedDays[item.lessonTimeTable?.[0].dayOfTheWeek] ?? "--"}
       </RegularText>
       <RegularText className={"mt-2"}>
-        Time: {getTimeRangeStr(item.lessonTimeTable)}
+        Time: {getTimeRangeStr(item.lessonTimeTable?.[0])}
       </RegularText>
     </Card>
   );
