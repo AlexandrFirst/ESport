@@ -73,13 +73,13 @@ namespace GateWay
                             var isCaptchaValid = await captchaService.ValidateHttpContext(context);
                             var isRequestValid = isCaptchaValid && isAuthorizationPresent;
 
-                            if (isRequestValid)
+                            if (isRequestValid || !isAuthorizationPresent)
                             {
                                 Console.WriteLine("Before: " + context.Request.Path);
                                 await next.Invoke();
                                 Console.WriteLine("After: " + context.Request.Path);
                             }
-                            else 
+                            else
                             {
                                 throw new ApplicationException("Request is send by bot");
                             }
@@ -90,7 +90,7 @@ namespace GateWay
                             context.Response.StatusCode = 500;
                             var messageError = new
                             {
-                                Message = ex.Message
+                                Message = ex.Message + " | " + ex.StackTrace
                             };
 
                             await context.Response.BodyWriter.WriteAsync(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(messageError)));
