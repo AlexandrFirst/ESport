@@ -5,10 +5,12 @@ WORKDIR /app
 # Copy csproj and restore as distinct layers
 COPY ["GateWay/GateWay.csproj", "GateWay/"]
 COPY ["ESportAuthClient/ESportAuthClient.csproj", "ESportAuthClient/"]
+COPY ["./MediaClient/MediaClient.csproj", "MediaClient/"]
 RUN dotnet restore GateWay/GateWay.csproj
 
 COPY GateWay/. ./GateWay
 COPY ESportAuthClient/. ./ESportAuthClient
+COPY ./MediaClient/. ./MediaClient
 RUN dotnet publish GateWay/GateWay.csproj -c Release -o out
 
 # Build runtime image

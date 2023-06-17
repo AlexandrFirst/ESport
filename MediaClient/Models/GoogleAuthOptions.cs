@@ -10,5 +10,6 @@ namespace MediaClient.Models
     {
         public string CredentialPath { get; set; }
         public string GoogleId { get; set; }
+        public string GoogleCaptchaSecret { get; set; }
     }
 }

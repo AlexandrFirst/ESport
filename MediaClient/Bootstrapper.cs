@@ -15,6 +15,7 @@ namespace MediaClient
         public static void RegisterIocContainers(IServiceCollection services, IConfiguration configuration)
         {
             services.AddTransient<IMediaService, MediaService>();
+            services.AddTransient<ICaptchaClient, CaptchaClient>();
             services.AddOptions<GoogleAuthOptions>().Bind(configuration.GetSection("GoogleCloudOptions"));
         }
     }

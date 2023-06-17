@@ -1,31 +1,19 @@
 using IdentityV2.Config;
-using IdentityV2.CustomAttrubutes;
 using IdentityV2.CustomAuth;
 using IdentityV2.Data;
 using IdentityV2.Infrastructure.Core;
 using IdentityV2.Infrastructure.Implementation;
 using IdentityV2.Middleware;
 using IdentityV2.Utils;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Features;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Primitives;
-using Microsoft.IdentityModel.Tokens;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+using MediaClient.Middleware;
+using IdentityV2.CustomAttrubutes;
 
 namespace IdentityV2
 {
@@ -93,7 +81,7 @@ namespace IdentityV2
             services.AddOptions<MailOption>().Bind(Configuration.GetSection("MailOption"));
 
             RMQEsportClient.Bootstrapper.RegisterIocContainers(services, Configuration);
-
+            MediaClient.Bootstrapper.RegisterIocContainers(services, Configuration);
 
             services.AddAutoMapper(typeof(Startup));
 
@@ -102,6 +90,7 @@ namespace IdentityV2
 
             services.AddScoped<IJWTManagerRepository, JWTManagerRepository>();
             services.AddScoped<IAccountService, AccountService>();
+            services.AddScoped<CaptchaAttribute>();
 
             services.AddTransient<IAuthorizationCache, AuthorizationCache>();
         }
@@ -113,7 +102,8 @@ namespace IdentityV2
             {
                 app.UseDeveloperExceptionPage();
             }
-         
+
+            app.UseGoogleServices();
 
             app.UseStaticFiles();
 
