@@ -8,7 +8,8 @@ export const getTrainerExercises = async (
   ctx?: ApiContext
 ) => {
   try {
-    const { data } = await TrainerApi(ctx).exerciseListing(request);
+    const api = await TrainerApi(ctx);
+    const { data } = await api.exerciseListing(request);
     return data;
   } catch (e) {
     throw e;

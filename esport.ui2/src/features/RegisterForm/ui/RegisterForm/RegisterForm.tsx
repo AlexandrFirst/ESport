@@ -66,7 +66,8 @@ export const RegisterForm: FC = () => {
   const handleSubmit = methods.handleSubmit(async (registerForm) => {
     setIsLoading(true);
     try {
-      const { data } = await AuthService().register({
+      const api = await AuthService();
+      const { data } = await api.register({
         ...registerForm,
         name: registerForm.firstName,
         surname: registerForm.lastName,

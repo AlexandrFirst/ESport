@@ -20,7 +20,8 @@ export const useColumns = ({
   const handleApproveTrainer =
     (trainerId: number, requestId: number) => async () => {
       try {
-        await ProfileApi().approvePendingTrainer(gymId, {
+        const api = await ProfileApi();
+        await api.approvePendingTrainer(gymId, {
           trainerId,
           requestId,
         });

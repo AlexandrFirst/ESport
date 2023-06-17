@@ -44,9 +44,14 @@ export const getServerSideProps = getAppServerSideProps<EditOrganisationProps>(
     const { organisationId } = ctx.query;
     const { user } = store.getState();
 
+    const [profileApi, gymApi] = await Promise.all([
+      ProfileApi(ctx),
+      GymApi(ctx),
+    ]);
+
     const [{ data: profile }, { data: gymsResponse }] = await Promise.all([
-      ProfileApi(ctx).getProfileInfo(user.data?.id ?? 0),
-      GymApi(ctx).gymListing({
+      profileApi.getProfileInfo(user.data?.id ?? 0),
+      gymApi.gymListing({
         page: 1,
         pageSize: 1000,
         gymIds: [],

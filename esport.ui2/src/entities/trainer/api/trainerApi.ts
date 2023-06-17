@@ -10,8 +10,8 @@ import {
   GetTrainerTimetableRequest,
 } from "./types/types";
 
-export const TrainerApi = (ctx?: ApiContext) => {
-  const instance = Api({ ctx });
+export const TrainerApi = async (ctx?: ApiContext) => {
+  const instance = await Api({ ctx });
 
   return {
     async getTrainerTimetable(request: GetTrainerTimetableRequest) {

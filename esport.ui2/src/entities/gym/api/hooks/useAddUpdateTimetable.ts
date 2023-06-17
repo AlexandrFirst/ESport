@@ -9,10 +9,8 @@ export const useAddUpdateTimetable = (
     mutationKey: gymApiKeys.addUpdateTimetable(),
     async mutationFn(request: AddUpdateGymTimetableRequest) {
       try {
-        const { data } = await GymApi().addUpdateTimetable(
-          request.gymId,
-          request
-        );
+        const api = await GymApi();
+        const { data } = await api.addUpdateTimetable(request.gymId, request);
         return data;
       } catch (e) {
         throw e;

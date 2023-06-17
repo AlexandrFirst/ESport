@@ -15,7 +15,8 @@ export const useCreateCompetition = (
     mutationKey: ["createCompetition"],
     mutationFn: async (request: ICreateCompetitionForm) => {
       try {
-        const { data } = await CompetitionApi().createCompetition(request);
+        const api = await CompetitionApi();
+        const { data } = await api.createCompetition(request);
         return data;
       } catch (e) {
         throw e;

@@ -6,7 +6,8 @@ import { gymApiKeys } from "./gymApiKeys";
 
 export const getGymListing = async (request: IGymListingRequest) => {
   try {
-    const { data } = await GymApi().gymListing(request);
+    const api = await GymApi();
+    const { data } = await api.gymListing(request);
     return data;
   } catch (e) {
     throw e;

@@ -12,10 +12,8 @@ export const useCreateTrainerRequest = (
     mutationKey: gymApiKeys.createTrainerRequest(),
     async mutationFn(request: CreateTrainerRequestRequest & { gymId: number }) {
       try {
-        const { data } = await GymApi().createTrainerRequest(
-          request.gymId,
-          request
-        );
+        const api = await GymApi();
+        const { data } = await api.createTrainerRequest(request.gymId, request);
         return data;
       } catch (e) {
         throw e;

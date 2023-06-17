@@ -71,7 +71,8 @@ export const getServerSideProps = getAppServerSideProps<GymsProps>(
     );
     const { organisationId } = ctx.query;
 
-    const { data } = await GymApi(ctx).gymListing({
+    const api = await GymApi(ctx);
+    const { data } = await api.gymListing({
       page: 1,
       pageSize: 10,
       gymIds: [],

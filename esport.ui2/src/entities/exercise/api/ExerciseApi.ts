@@ -1,8 +1,8 @@
 import { ApiContext } from "@/shared/types";
 import { Api } from "@/shared/config";
 
-export const ExerciseApi = (ctx?: ApiContext) => {
-  const instance = Api({ ctx });
+export const ExerciseApi = async (ctx?: ApiContext) => {
+  const instance = await Api({ ctx });
 
   return {
     async createExercise(formData: FormData) {

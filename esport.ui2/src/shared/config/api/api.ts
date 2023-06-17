@@ -5,6 +5,7 @@ import { AuthToken, ServerStage } from "@/shared/constants";
 import { ApiContext } from "@/shared/types";
 
 import { storageService } from "../storageService/storageService";
+import { ReCaptcha } from "./recaptcha";
 
 export const $api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -14,7 +15,7 @@ export interface ApiConfig extends CreateAxiosDefaults {
   ctx?: ApiContext;
 }
 
-export const Api = (config?: ApiConfig) => {
+export const Api = async (config?: ApiConfig) => {
   const {
     ctx,
     baseURL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:5002",
@@ -23,6 +24,12 @@ export const Api = (config?: ApiConfig) => {
   } = config || {};
 
   const token = storageService(ctx).getToken();
+  const captchaToken = await new ReCaptcha(
+    process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? "",
+    "",
+    ctx
+  ).getToken();
+  // console.log("===captchaToken===", captchaToken);
 
   const instance = axios.create({
     ...axiosDefaults,
@@ -32,8 +39,11 @@ export const Api = (config?: ApiConfig) => {
       ...headers,
       Authorization: token,
       Cookie: ctx ? `${AuthToken} ${token}` : undefined,
+      CaptchaToken: captchaToken,
     },
   });
+  // console.log("===instance===", instance);
+
   const stage = process.env.STAGE;
   if (stage && stage !== ServerStage.Dev) {
     instance.defaults.httpsAgent = new https.Agent({
@@ -46,5 +56,21 @@ export const Api = (config?: ApiConfig) => {
       return Promise.reject(error.response?.data || error);
     }
   );
+
+  // instance.interceptors.request.use((config) => {
+  //   recaptcha.enterprise.ready(async () => {
+  //     const token = await grecaptcha.enterprise.execute(
+  //       "6LdUdJ4mAAAAAEH11QOssCwO6M9zS7sIkreb2qCZ",
+  //       { action: "LOGIN" }
+  //     );
+  //     // IMPORTANT: The 'token' that results from execute is an encrypted response sent by
+  //     // reCAPTCHA Enterprise to the end user's browser.
+  //     // This token must be validated by creating an assessment.
+  //     // See https://cloud.google.com/recaptcha-enterprise/docs/create-assessment
+  //   });
+  //
+  //   return config;
+  // });
+
   return instance;
 };

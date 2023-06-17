@@ -5,7 +5,8 @@ import { TraumaApi } from "../TraumaApi";
 
 export const getTraumas = async (ctx?: ApiContext) => {
   try {
-    const data = await TraumaApi(ctx).getTraumas();
+    const api = await TraumaApi(ctx);
+    const data = await api.getTraumas();
     return data;
   } catch (e) {
     throw e;

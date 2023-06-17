@@ -13,8 +13,8 @@ import {
   UpdateProfileInfoRequest,
 } from "./types/types";
 
-export const ProfileApi = (ctx?: ApiContext) => {
-  const instance = Api({ ctx });
+export const ProfileApi = async (ctx?: ApiContext) => {
+  const instance = await Api({ ctx });
 
   return {
     getProfileInfo(userId: number) {

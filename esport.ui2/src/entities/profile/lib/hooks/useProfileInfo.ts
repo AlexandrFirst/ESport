@@ -52,6 +52,7 @@ export const useProfileInfo = ({
     // isConfirmedGymAdmin: profile?.userAdminInfo?.isConfirmed ?? false,
     isConfirmedProfiles,
     isAdminForGyms: isAdminForGyms(profile, gymIds),
+    gyms: profile?.userAdminInfo?.userGyms ?? [],
     trainerId: profile?.userTrainerInfo?.id ?? 0,
     trainerSports: profile?.userTrainerInfo?.trainerSportInfos ?? [],
   };

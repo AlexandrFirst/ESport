@@ -8,8 +8,8 @@ import {
 } from "./types/types";
 import { ICreateOrganisation } from "../model/types/create-organisation";
 
-export const OrganisationApi = (ctx?: ApiContext) => {
-  const instance = Api({ ctx });
+export const OrganisationApi = async (ctx?: ApiContext) => {
+  const instance = await Api({ ctx });
 
   return {
     getOrganizationListing(request: GetOrganisationListingRequest) {

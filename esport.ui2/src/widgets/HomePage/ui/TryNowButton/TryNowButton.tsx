@@ -19,7 +19,7 @@ export const TryNowButton: FC<TryNowButtonProps> = ({
 
   return (
     // @ts-ignore
-    <Button as={Link} href={routes.Register()} fullWidth={fullWidth}>
+    <Button as={Link} href={routes.Me()} fullWidth={fullWidth}>
       {t("try")}
     </Button>
   );

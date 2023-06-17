@@ -10,7 +10,8 @@ export default async function handler(
 ) {
   if (req.method === "GET") {
     try {
-      await AuthService().confirm(req.query.token as string);
+      const api = await AuthService();
+      await api.confirm(req.query.token as string);
       res.redirect(`${routes.Home()}?success=Account activated`);
     } catch (e: any) {
       res.redirect(

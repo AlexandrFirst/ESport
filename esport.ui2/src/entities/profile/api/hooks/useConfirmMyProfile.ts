@@ -14,7 +14,8 @@ export const useConfirmMyProfile = (
     queryKey: profileApiKeys.confirmMyProfile(token),
     queryFn: async () => {
       try {
-        const { data } = await ProfileApi().confirmMyProfile(token);
+        const api = await ProfileApi();
+        const { data } = await api.confirmMyProfile(token);
         return data;
       } catch (e: any) {
         Logger.Debug(e?.message);

@@ -9,7 +9,9 @@ export const useCreateLesson = () => {
     mutationKey: trainerApiKeys.createLesson(),
     mutationFn: async (request: CreateLessonRequest) => {
       try {
-        await TrainerApi().createLesson(request);
+        const api = await TrainerApi();
+        const { data } = await api.createLesson(request);
+        return data;
       } catch (e) {
         throw e;
       }

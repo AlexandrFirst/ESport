@@ -5,7 +5,8 @@ import { BodyPartApi } from "../BodyPartApi";
 
 export const getBodyParts = async (ctx?: ApiContext) => {
   try {
-    const data = await BodyPartApi(ctx).getBodyParts();
+    const api = await BodyPartApi(ctx);
+    const data = await api.getBodyParts();
     return data;
   } catch (e) {
     throw e;

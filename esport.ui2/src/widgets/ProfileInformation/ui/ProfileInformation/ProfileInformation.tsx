@@ -72,9 +72,8 @@ export const ProfileInformation: FC<ProfileInformationProps> = ({
           duration: 10000,
         }
       );
-      const { data: profile } = await ProfileApi().getProfileInfo(
-        Number(userId)
-      );
+      const api = await ProfileApi();
+      const { data: profile } = await api.getProfileInfo(Number(userId));
       setInitialData(profile);
       resetIsEmailForProfileChanged();
     },

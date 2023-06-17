@@ -1,13 +1,13 @@
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
-import { Title, UILink } from "@/shared/ui";
-import { routes } from "@/shared/config";
+import { Title } from "@/shared/ui";
 import { AppNextPage } from "@/shared/types";
 import { getAppServerSideProps } from "@/shared/lib";
 
 import { ICompetiton } from "@/entities/competition";
 
 import { getMainLayout } from "@/widgets/MainLayout";
+import { CompetitionsTable } from "@/widgets/CompetitionsTable";
 
 type CompetitionPageProps = {
   competitions?: ICompetiton[];
@@ -18,14 +18,15 @@ const CompetitionPage: AppNextPage<CompetitionPageProps> = ({
 }) => {
   return (
     <>
-      <Title>TEMPORARY PAGE</Title>
-      {competitions?.map((c) => (
-        <div key={c._id}>
-          <UILink href={routes.Competition.CompetitionById([c._id])}>
-            {c.title}
-          </UILink>
-        </div>
-      ))}
+      <Title>Choose competiton</Title>
+      <CompetitionsTable competitions={competitions} className={"mt-20"} />
+      {/*{competitions?.map((c) => (*/}
+      {/*  <div key={c._id}>*/}
+      {/*    <UILink href={routes.Competition.CompetitionById([c._id])}>*/}
+      {/*      {c.title}*/}
+      {/*    </UILink>*/}
+      {/*  </div>*/}
+      {/*))}*/}
     </>
   );
 };
@@ -47,16 +48,18 @@ export const getServerSideProps = getAppServerSideProps(async (ctx) => {
     {
       _id: "64492f90e4f612d8e099d517",
       title: "Міжнародний турнір у Києві",
-      dateStart: "",
+      dateStart: new Date("06-28-2023").toLocaleDateString(),
       organizationId: 1,
       categories: ["1", "2", "3"],
+      dateEnd: new Date("06-28-2023").toLocaleDateString(),
     },
     {
       _id: "64492f90e4f612d8e099d518",
       title: "Обласний турнір у Чернівцях",
-      dateStart: "",
+      dateStart: new Date("01-12-2022").toLocaleDateString(),
       organizationId: 1,
       categories: ["1", "2", "3"],
+      dateEnd: new Date("01-14-2022").toLocaleDateString(),
     },
   ];
 

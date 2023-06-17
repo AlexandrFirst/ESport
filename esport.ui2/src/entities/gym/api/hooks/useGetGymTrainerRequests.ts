@@ -13,7 +13,8 @@ export const getGymTrainerRequests = async (
   ctx?: ApiContext
 ) => {
   try {
-    const { data } = await GymApi(ctx).getTrainerRequests(request);
+    const api = await GymApi(ctx);
+    const { data } = await api.getTrainerRequests(request);
     return data;
   } catch (e) {
     throw e;

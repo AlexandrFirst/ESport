@@ -30,7 +30,8 @@ export const SetAsLoginDataButton: FC<SetAsLoginDataButtonProps> = ({
 
   const handleSetAsLoginData = async () => {
     try {
-      await ProfileApi().setAsLoginData({
+      const api = await ProfileApi();
+      await api.setAsLoginData({
         userTypeProfile: mapProfileKeyToUserTypeEntity(profileKey),
       });
       showSuccess(

@@ -16,7 +16,8 @@ export const useLogout = (options?: UseMutationOptions) => {
     mutationKey: authKeys.logout(),
     mutationFn: async () => {
       try {
-        await AuthService().logout();
+        const api = await AuthService();
+        await api.logout();
         resetUser();
         storageService().removeToken(AuthToken);
       } catch (e) {

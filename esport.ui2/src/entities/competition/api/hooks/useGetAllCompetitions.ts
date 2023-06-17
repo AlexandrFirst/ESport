@@ -9,7 +9,8 @@ export const useGetAllCompetitions = (ctx?: ApiContext) => {
     queryKey: getAllCompetitionsQueryKey,
     queryFn: async () => {
       try {
-        const { data } = await CompetitionApi(ctx).getAllCompetitions();
+        const api = await CompetitionApi(ctx);
+        const { data } = await api.getAllCompetitions();
         return data;
       } catch (e) {
         throw e;

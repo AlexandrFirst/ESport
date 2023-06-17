@@ -11,7 +11,8 @@ export const getPendingAdmins = async (
   ctx?: ApiContext
 ) => {
   try {
-    const { data } = await ProfileApi(ctx).getPendingAdmins(request);
+    const api = await ProfileApi(ctx);
+    const { data } = await api.getPendingAdmins(request);
     return data;
   } catch (e) {
     throw e;

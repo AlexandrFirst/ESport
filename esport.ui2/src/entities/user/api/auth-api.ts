@@ -10,8 +10,11 @@ import { GetUserResponse } from "./types/get-user";
 
 const authApi = axios.create({ baseURL: "/api/auth" });
 
-export const AuthService = (ctx?: ApiContext) => {
-  const instance = Api({ ctx, baseURL: process.env.NEXT_PUBLIC_LOGIN_API_URL });
+export const AuthService = async (ctx?: ApiContext) => {
+  const instance = await Api({
+    ctx,
+    baseURL: process.env.NEXT_PUBLIC_LOGIN_API_URL,
+  });
 
   return {
     register(registerRequest: IRegisterRequest) {
