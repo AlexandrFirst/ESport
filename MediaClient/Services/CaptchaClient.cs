@@ -28,7 +28,7 @@ namespace MediaClient.Services
         {
             var captchaValueExists = httpContext.Request.Headers.TryGetValue("CaptchaToken", out var responseToken);
 
-            if (!captchaValueExists) { return false; }
+            if (!captchaValueExists || string.IsNullOrEmpty(responseToken.ToString())) { return false; }
 
             RecaptchaEnterpriseServiceClient client = await RecaptchaEnterpriseServiceClient.CreateAsync();
             ProjectName projectName = new ProjectName(googleAuthOptions.GoogleId);

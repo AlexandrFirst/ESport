@@ -68,12 +68,14 @@ namespace GateWay
                     {
                         try
                         {
-                            var isAuthorizationPresent = context.Request.Headers.TryGetValue("Authorization", out var authorization);
+                            var isCaptchaCookiePresent = context.Request.Headers.TryGetValue("CaptchaToken", out var captchaCookie);
 
-                            var isCaptchaValid = await captchaService.ValidateHttpContext(context);
-                            var isRequestValid = isCaptchaValid && isAuthorizationPresent;
+                            bool? isCaptchaValid = null;
 
-                            if (isRequestValid || !isAuthorizationPresent)
+                            if(isCaptchaCookiePresent && !string.IsNullOrEmpty(captchaCookie.ToString()))
+                                isCaptchaValid = await captchaService.ValidateHttpContext(context);
+                            
+                            if (isCaptchaValid != false)
                             {
                                 Console.WriteLine("Before: " + context.Request.Path);
                                 await next.Invoke();

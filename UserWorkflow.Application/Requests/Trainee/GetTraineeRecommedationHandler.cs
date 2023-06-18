@@ -172,17 +172,22 @@ namespace UserWorkflow.Application.Requests.Trainee
 
             return new RequestResult<GetTraineeRecommedationResult>(new GetTraineeRecommedationResult()
             {
-                LessonRecomendations = result.Listing.Select(p => new Models.Lesson.LessonRecomendation()
-                {
-                    LessonId = p.Id,
-                    SportInfo = p.TraineeShedules.SelectMany(z => z.TraineeSheduleExercises
-                        .SelectMany(k => k.TraineeExercise.Exercise.ExerciseSports
-                        .Select(k => new ReadSportInfo() { SportId = k.Id, SportName = k.Sport.Name }))).ToList(),
-                    TrainerId = p.TrainerShedule.TrainerId ?? 0,
-                    TrainerName = p.TrainerShedule.Trainer?.Name ?? String.Empty,
-                    LessonTimeTable = p.OverrideTrainerShedule ? ParseDaysToList(p.FromTime.Value, p.ToTime.Value, p.DayOfTheWeek.Value) :
+
+                LessonRecomendations = result.Listing.Select(p => {
+                    var lessonSportInfo = p.TraineeShedules.SelectMany(z => z.TraineeSheduleExercises
+                            .SelectMany(k => k.TraineeExercise.Exercise.ExerciseSports
+                            .Select(k => new ReadSportInfo() { SportId = k.Id, SportName = k.Sport.Name }))).ToList();
+
+                    return new Models.Lesson.LessonRecomendation()
+                    {
+                        LessonId = p.Id,
+                        SportInfo = lessonSportInfo.Any() ? lessonSportInfo : p.TrainerShedule.Trainer.TrainerSports.Select(k => new ReadSportInfo() { SportId = k.Id, SportName = k.Sport.Name }).ToList(),
+                        TrainerId = p.TrainerShedule.TrainerId ?? 0,
+                        TrainerName = p.TrainerShedule.Trainer?.Name ?? String.Empty,
+                        LessonTimeTable = p.OverrideTrainerShedule ? ParseDaysToList(p.FromTime.Value, p.ToTime.Value, p.DayOfTheWeek.Value) :
                         p.TrainerShedule.TimeOverride.SelectMany(b => ParseDaysToList(b.From, b.To, b.DayOfTheWeeks)).ToList().DefaultIfEmpty() ??
                         ParseDaysToList(p.TrainerShedule.GymShift.FromTime, p.TrainerShedule.GymShift.ToTime, p.TrainerShedule.GymShift.DayOfTheWeeks)
+                    };
                 }).ToList()
             });
         }
