@@ -121,3 +121,5 @@ export { useDragAndDrop } from "./DragAndDropFileUpload/useDragAndDrop";
 
 export { AspectRatio } from "./AspectRatio/AspectRatio";
 export { AppVideo } from "./AppVideo/AppVideo";
+
+export { BackLink } from "./BackLink/BackLink";

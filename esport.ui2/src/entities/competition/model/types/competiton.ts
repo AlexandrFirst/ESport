@@ -1,19 +1,17 @@
 import { ICategoryWithRounds } from "./category";
 
-export interface ICompetiton {
-  _id?: string;
+export interface ICompetitonCommon {
+  id?: number;
   title: string;
   dateStart: string;
   dateEnd?: string;
-  organizationId: number;
+  isRegistrationOpen: boolean;
+}
+
+export interface ICompetiton extends ICompetitonCommon {
   categories: string[];
 }
 
-export interface ICompetitonWithCategories {
-  _id?: string;
-  title: string;
-  dateStart: string;
-  dateEnd?: string;
-  organizationId: number;
+export interface ICompetitonWithCategories extends ICompetitonCommon {
   categories: ICategoryWithRounds[];
 }

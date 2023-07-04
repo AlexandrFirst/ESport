@@ -1,11 +1,11 @@
-import React, { FC, memo, ReactNode } from "react";
+import React, { FC, HTMLAttributes, memo, ReactNode } from "react";
 import styles from "./SubTitle.module.css";
 
 import cn from "classnames";
 
 export type SubTitleSize = "small" | "medium" | "large" | "extra-large";
 
-interface SubTitleProps {
+interface SubTitleProps extends HTMLAttributes<HTMLHeadingElement> {
   className?: string;
   children: ReactNode;
   size?: SubTitleSize;

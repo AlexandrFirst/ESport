@@ -1,5 +1,5 @@
+import { Logger, HttpException } from '@nestjs/common';
 import { RMQError } from 'nestjs-rmq';
-import { HttpException, Logger } from '@nestjs/common';
 
 export async function res<TRes>(cb: () => Promise<TRes>) {
   try {

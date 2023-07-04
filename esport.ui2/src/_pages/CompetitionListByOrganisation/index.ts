@@ -1,0 +1,2 @@
+export { CompetitionListByOrganisation } from './ui/CompetitionListByOrganisation/CompetitionListByOrganisation';
+export type { CompetitionListByOrganisationSchema } from './model/types/CompetitionListByOrganisationSchema';
