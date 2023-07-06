@@ -9,7 +9,7 @@ module.exports = {
       },
     ],
     "features-slice-design-shatori/layer-imports": [
-      "warn",
+      "error",
       {
         alias: "@",
         ignoreImportPatterns: [
@@ -21,7 +21,7 @@ module.exports = {
       },
     ],
     "features-slice-design-shatori/public-api-imports": [
-      "warn",
+      "off",
       {
         alias: "@",
         testFilesPatterns: [
