@@ -5,18 +5,21 @@ import { CompetitionApi } from "../../api/competitionApi";
 
 import { competitionQueryKeys } from "./competitionQueryKeys";
 import { CompetitionError } from "../../model/types/competition-error";
-
-interface UseGetCompetitionsByOrganisationIdProps {
-  orgId?: number;
-}
+import { GetCompetitionsByOrganisationIdRequest } from "../types/get-competitions-by-organisation-id";
 
 export const getCompetitionsByOrganisationId = async (
-  { orgId }: UseGetCompetitionsByOrganisationIdProps,
+  {
+    orgId = 0,
+    includeClosedRegistration = false,
+  }: GetCompetitionsByOrganisationIdRequest,
   ctx?: ApiContext
 ) => {
   try {
     const api = await CompetitionApi(ctx);
-    const { data } = await api.getCompetitionsByOrganisationId(orgId ?? 0);
+    const { data } = await api.getCompetitionsByOrganisationId({
+      orgId,
+      includeClosedRegistration,
+    });
     return data;
   } catch (e: any) {
     if (e?.statusCode !== 500) {
@@ -27,14 +30,14 @@ export const getCompetitionsByOrganisationId = async (
 };
 
 export const useCompetitionsByOrganisationId = (
-  request: UseGetCompetitionsByOrganisationIdProps,
+  request: GetCompetitionsByOrganisationIdRequest,
   ctx?: ApiContext
 ) => {
   return useQuery<
     Awaited<ReturnType<typeof getCompetitionsByOrganisationId>>,
     CompetitionError
   >({
-    queryKey: competitionQueryKeys.byOrgId(request.orgId),
+    queryKey: competitionQueryKeys.byOrgId(request),
     queryFn: async () => getCompetitionsByOrganisationId(request, ctx),
   });
 };

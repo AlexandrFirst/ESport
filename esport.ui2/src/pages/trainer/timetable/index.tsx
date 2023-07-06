@@ -13,7 +13,7 @@ import {
 import { ProfileApi } from "@/entities/profile";
 import { useCurrentUserProfileInfo } from "@/entities/user";
 
-import { TrainerTimetable } from "@/features/TrainerTimetable";
+import { TrainerTimetable } from "../../../features/(trainer)/TrainerTimetable";
 
 import { getMainLayout } from "@/widgets/MainLayout";
 

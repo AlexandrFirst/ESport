@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 
 import { PrismaModule } from '../database/prisma.module';
 import { OrganisationService } from './organisation.service';
-import { OrganisationRepository } from './competition.repository';
+import { OrganisationRepository } from './organisation.repository';
 import { OrganisationQueries } from './organisation.queries';
 
 @Module({

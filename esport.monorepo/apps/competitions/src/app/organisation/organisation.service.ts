@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { OrganisationRepository } from './competition.repository';
+import { OrganisationRepository } from './organisation.repository';
 
 @Injectable()
 export class OrganisationService {
@@ -10,18 +10,33 @@ export class OrganisationService {
     params?: {
       includeCompetitions?: boolean;
       includeCompetitionCreator?: boolean;
+      includeClosedRegistration?: boolean;
     }
   ) {
-    const { includeCompetitions = false, includeCompetitionCreator = false } =
-      params || {};
+    const {
+      includeCompetitions = false,
+      includeCompetitionCreator = false,
+      includeClosedRegistration = false,
+    } = params || {};
     return this.repo.findById(id, {
-      competitions: includeCompetitions
-        ? {
-            include: {
-              creator: includeCompetitionCreator,
-            },
-          }
-        : false,
+      include: {
+        competitions: includeCompetitions
+          ? {
+              include: {
+                creator: includeCompetitionCreator,
+                organisation: true,
+              },
+              orderBy: {
+                dateStart: 'desc',
+              },
+              where: {
+                registrationCloseDate: {
+                  gte: !includeClosedRegistration ? new Date() : undefined,
+                },
+              },
+            }
+          : false,
+      },
     });
   }
 }

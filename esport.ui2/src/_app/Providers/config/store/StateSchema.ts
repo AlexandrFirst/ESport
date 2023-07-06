@@ -16,9 +16,9 @@ import {
   ProfileInformationState,
   RoleProfileInformationState,
 } from "@/widgets/ProfileInformation";
-import { GymsFiltersSchema } from "@/features/GymsFilters";
-import { TrainerExerciseFlitersSchema } from "@/features/TrainerExerciseFliters";
-import { TraineeRecommendationFiltersSchema } from "@/features/TraineeRecommendationFilters";
+import { GymsFiltersSchema } from "../../../../features/(gym)/GymsFilters";
+import { TrainerExerciseFlitersSchema } from "../../../../features/(trainer)/TrainerExerciseFliters";
+import { TraineeRecommendationFiltersSchema } from "../../../../features/(trainee)/TraineeRecommendationFilters";
 
 export interface StateSchema {
   leftSidebar: LeftSidebarSliceState;

@@ -15,7 +15,7 @@ import {
 import {
   TraineeRecommendationFilters,
   useSelectTraineeRecommendationFilters,
-} from "@/features/TraineeRecommendationFilters";
+} from "../../../../features/(trainee)/TraineeRecommendationFilters";
 
 interface TraineeRecommendationsProps {
   className?: string;

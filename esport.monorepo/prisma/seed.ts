@@ -7,7 +7,9 @@ import {
   Round,
   User,
   Request,
+  Competitor,
 } from '@prisma/client';
+import addDays from 'date-fns/addDays';
 
 const prisma = new PrismaClient();
 
@@ -20,13 +22,26 @@ const users: User[] = [
   },
 ];
 
-const userRequests: Request[] = [
+const competitors: Competitor[] = [
   {
     id: 1,
     userId: 1,
-    isAccepted: false,
+    competitorType: 'Male',
+    level: 0,
+    name: 'Alex',
     createdAt: new Date(),
     updatedAt: new Date(),
+    fightId: null,
+  },
+  {
+    id: 2,
+    userId: null,
+    competitorType: 'Team',
+    level: 0,
+    name: 'Team 1',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    fightId: null,
   },
 ];
 
@@ -49,24 +64,57 @@ const comptetitions: Competition[] = [
   {
     id: 1,
     title: 'Competition 1',
-    dateStart: new Date(),
-    dateEnd: new Date(),
+    dateStart: new Date('2021-06-01'),
+    dateEnd: new Date('2021-06-02'),
     organisationId: 1,
     createdAt: new Date(),
     updatedAt: new Date(),
     createdBy: 1,
-    isRegistrationOpen: true,
+    registrationCloseDate: new Date('2021-05-30'),
+    address: 'Kiyv, Ukraine, Shevchenko street 1',
   },
   {
     id: 2,
     title: 'Competition 2',
+    dateStart: new Date('2022-03-10'),
+    organisationId: 1,
+    dateEnd: null,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    createdBy: 1,
+    registrationCloseDate: new Date('2022-03-06'),
+    address: 'Kharkiv, Ukraine, Zhukovskogo street 1',
+  },
+  {
+    id: 3,
+    title: 'Competition 3',
     dateStart: new Date(),
     organisationId: 1,
     dateEnd: null,
     createdAt: new Date(),
     updatedAt: new Date(),
     createdBy: 1,
-    isRegistrationOpen: false,
+    registrationCloseDate: addDays(new Date(), 120),
+    address: 'Paris village, Ukraine, Karas street 12',
+  },
+];
+
+const userRequests: Request[] = [
+  {
+    id: 1,
+    competitorId: 1,
+    isAccepted: false,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    competitionId: 1,
+  },
+  {
+    id: 2,
+    competitorId: 2,
+    isAccepted: false,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    competitionId: 2,
   },
 ];
 
@@ -180,11 +228,11 @@ async function main() {
     });
     console.log(`Created user with id: ${usr.id}`);
   }
-  for (const userRequest of userRequests) {
-    const usrReq = await prisma.request.create({
-      data: userRequest,
+  for (const competitor of competitors) {
+    const comp = await prisma.competitor.create({
+      data: competitor,
     });
-    console.log(`Created user request with id: ${usrReq.id}`);
+    console.log(`Created competitor with id: ${comp.id}`);
   }
   for (const organisation of organisations) {
     const org = await prisma.organisation.create({
@@ -197,6 +245,12 @@ async function main() {
       data: competition,
     });
     console.log(`Created competition with id: ${comp.id}`);
+  }
+  for (const userRequest of userRequests) {
+    const usrReq = await prisma.request.create({
+      data: userRequest,
+    });
+    console.log(`Created user request with id: ${usrReq.id}`);
   }
   for (const category of categories) {
     const cat = await prisma.category.create({

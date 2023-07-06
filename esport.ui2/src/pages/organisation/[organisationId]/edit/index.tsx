@@ -7,7 +7,7 @@ import { GymApi, IGymReadInfo } from "@/entities/gym";
 import { IOrganisation } from "@/entities/organisation";
 import { getOrganisationAdminInfo, ProfileApi } from "@/entities/profile";
 
-import { EditOrganisationForm } from "@/features/EditOrganisation";
+import { EditOrganisationForm } from "../../../../features/(organisation)/EditOrganisation";
 
 import { getMainLayout } from "@/widgets/MainLayout";
 

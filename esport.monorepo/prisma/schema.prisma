@@ -11,18 +11,20 @@ datasource db {
 }
 
 model Competition {
-  id                 Int          @id @default(autoincrement())
-  title              String
-  dateStart          DateTime
-  dateEnd            DateTime?
-  organisation       Organisation @relation(fields: [organisationId], references: [id])
-  categories         Category[]
-  organisationId     Int
-  isRegistrationOpen Boolean      @default(true)
-  createdBy          Int
-  creator            User         @relation(fields: [createdBy], references: [id])
-  createdAt          DateTime     @default(now())
-  updatedAt          DateTime     @updatedAt
+  id                    Int          @id @default(autoincrement())
+  title                 String
+  dateStart             DateTime
+  dateEnd               DateTime?
+  organisation          Organisation @relation(fields: [organisationId], references: [id])
+  categories            Category[]
+  organisationId        Int
+  registrationCloseDate DateTime
+  createdBy             Int
+  creator               User         @relation(fields: [createdBy], references: [id])
+  createdAt             DateTime     @default(now())
+  updatedAt             DateTime     @updatedAt
+  address               String
+  Request               Request[]
 }
 
 model Category {
@@ -58,16 +60,17 @@ model Fight {
 }
 
 model Competitor {
-  id             Int      @id @default(autoincrement())
+  id             Int       @id @default(autoincrement())
   name           String
-  user           User     @relation(fields: [userId], references: [id])
-  userId         Int
-  fight          Fight?   @relation(fields: [fightId], references: [id])
+  user           User?     @relation(fields: [userId], references: [id])
+  userId         Int?
+  fight          Fight?    @relation(fields: [fightId], references: [id])
   fightId        Int?
   competitorType String
   level          Int
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+  requests       Request[]
 }
 
 model User {
@@ -77,16 +80,17 @@ model User {
   competitions Competition[]
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
-  requests     Request[]
 }
 
 model Request {
-  id         Int      @id @default(autoincrement())
-  user       User     @relation(fields: [userId], references: [id])
-  userId     Int
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  isAccepted Boolean  @default(false)
+  id            Int         @id @default(autoincrement())
+  competitor    Competitor  @relation(fields: [competitorId], references: [id])
+  competitorId  Int
+  competition   Competition @relation(fields: [competitionId], references: [id])
+  competitionId Int
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+  isAccepted    Boolean     @default(false)
 }
 
 // enum CompetitorType {

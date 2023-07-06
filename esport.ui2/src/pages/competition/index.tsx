@@ -20,8 +20,8 @@ const CompetitionPage: AppNextPage<CompetitionPageProps> = ({
     <>
       <Title>TEMPORARY PAGE</Title>
       {competitions?.map((c) => (
-        <div key={c._id}>
-          <UILink href={routes.Competition.CompetitionById([c._id])}>
+        <div key={c.id}>
+          <UILink href={routes.Competition.CompetitionById([c.id])}>
             {c.title}
           </UILink>
         </div>
@@ -45,18 +45,22 @@ export const getServerSideProps = getAppServerSideProps(async (ctx) => {
 
   const data: ICompetiton[] = [
     {
-      _id: "64492f90e4f612d8e099d517",
+      id: 1,
       title: "Міжнародний турнір у Києві",
       dateStart: "",
-      organizationId: 1,
       categories: ["1", "2", "3"],
+      registrationCloseDate: new Date().toLocaleDateString(),
+      dateEnd: new Date().toLocaleDateString(),
+      isRegistrationOpen: true,
     },
     {
-      _id: "64492f90e4f612d8e099d518",
+      id: 2,
       title: "Обласний турнір у Чернівцях",
       dateStart: "",
-      organizationId: 1,
       categories: ["1", "2", "3"],
+      registrationCloseDate: new Date().toLocaleDateString(),
+      dateEnd: new Date().toLocaleDateString(),
+      isRegistrationOpen: true,
     },
   ];
 

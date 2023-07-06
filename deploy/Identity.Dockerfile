@@ -16,7 +16,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:3.1
 
 EXPOSE 80
 EXPOSE 443
-EXPOSE 5000
+EXPOSE 5002
 EXPOSE 5001
 
 WORKDIR /app

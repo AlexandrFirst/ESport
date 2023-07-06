@@ -9,10 +9,10 @@ import { TabList, Tabs } from "@/shared/ui";
 import { useAuth } from "@/entities/user";
 import { AdminType, useProfileInfo } from "@/entities/profile";
 import { IGymReadInfo } from "@/entities/gym";
-import { EditableCalendarTimetable } from "@/features/GymCalendars";
-import { TrainerRequestsTable } from "@/features/TrainerRequestsTable";
+import { EditableCalendarTimetable } from "../../../../features/(gym)/GymCalendars";
+import { TrainerRequestsTable } from "../../../../features/(trainer)/TrainerRequestsTable";
 import { PendingAdminsTable } from "@/features/PendingAdminsTable";
-import { PendingTrainersTable } from "@/features/PendingTrainersTable";
+import { PendingTrainersTable } from "../../../../features/(trainer)/PendingTrainersTable";
 
 interface GymInfoTabsProps {
   className?: string;

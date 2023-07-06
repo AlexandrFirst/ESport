@@ -5,7 +5,10 @@ import { ICreateCompetitionForm } from "../model/types/create-competitiom-form";
 import { ICompetiton } from "../model/types/competiton";
 
 import { GetCompetitionResponse } from "./types/get-competition";
-import { ICompetitionWithOrganisationAndCreator } from "./types/get-competitions-by-organisation-id";
+import {
+  GetCompetitionsByOrganisationIdRequest,
+  ICompetitionWithOrganisationAndCreator,
+} from "./types/get-competitions-by-organisation-id";
 import { IOrganisation } from "@/entities/organisation";
 
 export const CompetitionApi = (ctx?: ApiContext) => {
@@ -26,11 +29,16 @@ export const CompetitionApi = (ctx?: ApiContext) => {
       );
     },
 
-    async getCompetitionsByOrganisationId(id: number) {
+    async getCompetitionsByOrganisationId({
+      includeClosedRegistration,
+      orgId,
+    }: GetCompetitionsByOrganisationIdRequest) {
       return instance.get<{
         competitions: ICompetitionWithOrganisationAndCreator[];
         organisation: { id: number; name: string };
-      }>(`/competitions/organisation/${id}`);
+      }>(`/competitions/organisation/${orgId}`, {
+        params: { includeClosedRegistration },
+      });
     },
   };
 };

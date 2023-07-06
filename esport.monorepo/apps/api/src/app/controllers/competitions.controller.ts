@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Logger, Param, Query } from '@nestjs/common';
 import { RMQService } from 'nestjs-rmq';
 
 import { res } from '../utils/res';
@@ -22,13 +22,17 @@ export class CompetitionsController {
   }
 
   @Get('organisation/:organisationId')
-  async getByOrganisationId(@Param('organisationId') organisationId: number) {
+  async getByOrganisationId(
+    @Param('organisationId') organisationId: number,
+    @Query('includeClosedRegistration') includeClosedRegistration: string
+  ) {
     return res(() =>
       this.rmqService.send<
         CompetitionsGetByOrganisationId.Request,
         CompetitionsGetByOrganisationId.Response
       >(CompetitionsGetByOrganisationId.topic, {
         organisationId: Number(organisationId),
+        includeClosedRegistration: includeClosedRegistration === 'true',
       })
     );
   }

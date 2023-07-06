@@ -55,10 +55,16 @@ export class CompetitionRepository {
     const categoryEntities = categories.map(
       (category) => new CategoryEntity(category)
     );
+    const withCategories = !!categoryEntities.length;
 
     return this.prismaService.competition.create({
       data: {
         ...competition,
+        categories: withCategories
+          ? {
+              create: categoryEntities.map((ce) => ce.transformToCreate()),
+            }
+          : undefined,
       },
     });
   }

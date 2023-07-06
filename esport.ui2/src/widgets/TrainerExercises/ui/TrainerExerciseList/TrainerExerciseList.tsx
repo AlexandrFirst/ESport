@@ -11,7 +11,7 @@ import { useCurrentUserProfileInfo } from "@/entities/user";
 import {
   TrainerExerciseFliters,
   useSelectTrainerExerciseFilters,
-} from "@/features/TrainerExerciseFliters";
+} from "../../../../features/(trainer)/TrainerExerciseFliters";
 
 interface TrainerExerciseListProps {
   className?: string;

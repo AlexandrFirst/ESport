@@ -1,8 +1,8 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Logger } from '@nestjs/common';
 import { OrganisationService } from './organisation.service';
 import { RMQRoute, RMQValidate } from 'nestjs-rmq';
 import {
-  AppError,
+  BadRequestError,
   CompetitionsGetByOrganisationId,
 } from '@esport.monorepo/contracts';
 
@@ -14,15 +14,19 @@ export class OrganisationQueries {
   @RMQRoute(CompetitionsGetByOrganisationId.topic)
   async findAll({
     organisationId,
+    includeClosedRegistration,
   }: CompetitionsGetByOrganisationId.Request): Promise<CompetitionsGetByOrganisationId.Response> {
     const organisation = await this.organisationService.findById(
       organisationId,
-      { includeCompetitions: true, includeCompetitionCreator: true }
+      {
+        includeCompetitions: true,
+        includeCompetitionCreator: true,
+        includeClosedRegistration,
+      }
     );
     if (!organisation) {
-      throw new AppError(
-        `Organisation with id ${organisationId} not found`,
-        400
+      throw new BadRequestError(
+        `Organisation with id ${organisationId} not found`
       );
     }
     const { competitions, ...org } = organisation;

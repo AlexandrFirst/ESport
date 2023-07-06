@@ -54,3 +54,4 @@ export { getTimeFromTimeSpan } from "./dates/getTimeFromTimeSpan";
 export { getCurrentMonth } from "./dates/getCurrentMonth";
 export { isSameDayOfTheWeek } from "./dates/isSameDayOfTheWeek";
 export { getDayOfTheWeekByDayIndex } from "./dates/getDayOfTheWeekByDayIndex";
+export { formatDate } from "./dates/formatDate";

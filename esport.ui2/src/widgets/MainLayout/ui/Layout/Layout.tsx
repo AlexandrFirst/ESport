@@ -60,7 +60,7 @@ export const Layout: FC<LayoutProps> = ({
     <>
       <Head {...headProps} />
       <Header withLogoAndMenu={!withLeftSidebar} />
-      <main>
+      <main className={styles.wrapper}>
         {withLeftSidebar && (
           <Sidebar
             isSidebarOpened={isSidebarOpened}

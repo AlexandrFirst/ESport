@@ -1,5 +1,5 @@
 import type { Competition, Organisation } from '@prisma/client';
-import { IsNumber } from 'class-validator';
+import { IsBoolean, IsNumber, IsOptional } from 'class-validator';
 
 export namespace CompetitionsGetByOrganisationId {
   export const topic = 'competitions.get-by-organisation-id.query';
@@ -7,6 +7,10 @@ export namespace CompetitionsGetByOrganisationId {
   export class Request {
     @IsNumber()
     organisationId: number;
+
+    @IsOptional()
+    @IsBoolean()
+    includeClosedRegistration?: boolean;
   }
 
   export class Response {

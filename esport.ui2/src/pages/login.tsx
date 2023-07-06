@@ -5,7 +5,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 
 import { AppNextPage } from "@/shared/types";
 
-import { LoginForm } from "@/features/LoginForm";
+import { LoginForm } from "@/features/(auth)";
 
 import { AnonLayout } from "@/widgets/AnonLayout";
 import { useTranslation } from "next-i18next";

@@ -3,7 +3,7 @@ import { useAppSelector } from "@/shared/lib";
 
 import { selectUser } from "@/entities/user";
 
-import { ProfileAvatar } from "@/features/ProfileAvatar";
+import { ProfileAvatar } from "../../../../features/(profile)/ProfileAvatar";
 
 import { ListItem } from "../ListItem/ListItem";
 

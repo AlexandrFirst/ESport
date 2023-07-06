@@ -22,4 +22,11 @@ export class CategoryEntity implements Category {
     this.createdAt = setDate(data.createdAt);
     this.updatedAt = setDate(data.updatedAt);
   }
+
+  public transformToCreate() {
+    return {
+      title: this.title,
+      competitionId: this.competitionId,
+    };
+  }
 }

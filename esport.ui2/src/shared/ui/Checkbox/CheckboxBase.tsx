@@ -1,4 +1,4 @@
-import { ElementRef, forwardRef } from "react";
+import { ElementRef, forwardRef, useId } from "react";
 import styles from "./Checkbox.module.css";
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
 import { CheckboxProps } from "@radix-ui/react-checkbox";
@@ -17,12 +17,13 @@ export const CheckboxBase = forwardRef<
   ElementRef<typeof CheckboxPrimitive.Root>,
   CheckboxBaseProps
 >(({ className, label, name, error, ...props }, ref) => {
+  const id = useId();
   return (
     <div className={className}>
       <div className={styles.wrapper}>
         <CheckboxPrimitive.Root
           ref={ref}
-          id={name}
+          id={id}
           name={name}
           className={cn(
             styles.checkbox,
@@ -41,7 +42,7 @@ export const CheckboxBase = forwardRef<
         </CheckboxPrimitive.Root>
         {label && (
           <label
-            htmlFor={name}
+            htmlFor={id}
             className={cn(styles.label, { [styles.error]: !!error })}
           >
             {label}

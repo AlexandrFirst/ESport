@@ -9,7 +9,10 @@ import { routes } from "@/shared/config";
 
 import { GymApi, GymList, IGymReadInfo, useGetGyms } from "@/entities/gym";
 
-import { GymsFilters, useSelectGymFilters } from "@/features/GymsFilters";
+import {
+  GymsFilters,
+  useSelectGymFilters,
+} from "../../../../features/(gym)/GymsFilters";
 
 import { getMainLayout } from "@/widgets/MainLayout";
 

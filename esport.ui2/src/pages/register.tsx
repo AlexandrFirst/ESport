@@ -6,7 +6,7 @@ import { useTranslation } from "next-i18next";
 
 import { AppNextPage } from "@/shared/types";
 
-import { RegisterForm } from "@/features/RegisterForm";
+import { RegisterForm } from "../features/(auth)/RegisterForm";
 
 import { AnonLayout } from "@/widgets/AnonLayout";
 

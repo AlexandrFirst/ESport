@@ -7,15 +7,15 @@ import { userReducer } from "@/entities/user";
 import { profileReducer } from "@/entities/profile";
 
 import { snackbarReducer } from "@/features/Snackbar";
-import { GymsFiltersReducer } from "@/features/GymsFilters";
-import { TrainerExerciseFlitersReducer } from "@/features/TrainerExerciseFliters";
+import { GymsFiltersReducer } from "../../../../features/(gym)/GymsFilters";
+import { TrainerExerciseFlitersReducer } from "../../../../features/(trainer)/TrainerExerciseFliters";
 
 import { leftSidebarReducer } from "@/widgets/LeftSidebar";
 import {
   profileInformationReducer,
   roleProfileInformationReducer,
 } from "@/widgets/ProfileInformation";
-import { TraineeRecommendationFiltersReducer } from "@/features/TraineeRecommendationFilters";
+import { TraineeRecommendationFiltersReducer } from "../../../../features/(trainee)/TraineeRecommendationFilters";
 
 export const reducer = combineReducers<StateSchema>({
   leftSidebar: leftSidebarReducer,

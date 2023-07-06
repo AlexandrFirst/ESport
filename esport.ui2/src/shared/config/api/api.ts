@@ -6,10 +6,6 @@ import { ApiContext } from "@/shared/types";
 
 import { storageService } from "../storageService/storageService";
 
-export const $api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
-});
-
 export interface ApiConfig extends CreateAxiosDefaults {
   ctx?: ApiContext;
 }

@@ -8,8 +8,9 @@ import {
   ProfileDataFormProps,
   ReadonlyProfileInfo,
 } from "@/entities/profile";
+
 import { NoData } from "../NoData/NoData";
-import { SetAsLoginDataButton } from "@/features/SetAsLoginDataButton";
+import { SetAsLoginDataButton } from "../../../../features/(profile)/SetAsLoginDataButton";
 
 export interface ProfileInfoWithCardProps extends ProfileDataFormProps {
   profileInfo?: IProfileInfo;

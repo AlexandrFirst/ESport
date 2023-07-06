@@ -5,6 +5,7 @@ export interface ICompetitonCommon {
   title: string;
   dateStart: string;
   dateEnd?: string;
+  registrationCloseDate: string;
   isRegistrationOpen: boolean;
 }
 

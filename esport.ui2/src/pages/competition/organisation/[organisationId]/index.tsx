@@ -36,8 +36,9 @@ export const getServerSideProps = getAppServerSideProps(async (ctx) => {
 
   const orgId = Number(organisationId);
 
-  await queryClient.prefetchQuery(competitionQueryKeys.byOrgId(orgId), () =>
-    getCompetitionsByOrganisationId({ orgId }, ctx)
+  await queryClient.prefetchQuery(
+    competitionQueryKeys.byOrgId({ orgId, includeClosedRegistration: true }),
+    () => getCompetitionsByOrganisationId({ orgId }, ctx)
   );
 
   return {

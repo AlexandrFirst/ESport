@@ -1,14 +1,23 @@
-import { FC, Suspense } from "react";
+import { FC, Suspense, useEffect, useState } from "react";
 import styles from "./CompetitionListByOrganisation.module.css";
 
 import { useRouter } from "next/router";
+import { useQueryState } from "next-usequerystate";
 
-import { Skeleton, Title, BackLink, SubTitle, ErrorText } from "@/shared/ui";
+import {
+  Skeleton,
+  Title,
+  BackLink,
+  SubTitle,
+  ErrorText,
+  CheckboxBase,
+} from "@/shared/ui";
 import { routes } from "@/shared/config";
 
 import { useCompetitionsByOrganisationId } from "@/entities/competition";
 
-import { CompetitionList } from "@/features/CompetitionListOfOrganisation";
+import { CompetitionList } from "../../../../features/(competition)/CompetitionListOfOrganisation";
+import { useCurrentUserProfileInfo } from "@/entities/user";
 
 interface CompetitionListByOrganisationProps {
   className?: string;
@@ -20,7 +29,16 @@ export const CompetitionListByOrganisation: FC<
   const router = useRouter();
   const orgId = Number(router.query.organisationId);
 
-  const { data, isLoading, error } = useCompetitionsByOrganisationId({ orgId });
+  const [includeClosedRegistration, setIncludeClosedRegistration] =
+    useQueryState("showClosed", {
+      parse: (value) => value === "true",
+    });
+
+  const { data, isLoading, error } = useCompetitionsByOrganisationId({
+    orgId,
+    includeClosedRegistration: !!includeClosedRegistration,
+  });
+  const { isOrgAdminForOrganisations } = useCurrentUserProfileInfo();
 
   if (isLoading) {
     return (
@@ -39,12 +57,24 @@ export const CompetitionListByOrganisation: FC<
       <div className={styles.wrapper}>
         <BackLink href={routes.Competition.Home()} />
         <Title className={"my-10"}>
-          Competitions for {data?.organisation?.name}
+          Competitions of {data?.organisation?.name}
         </Title>
         {!data?.competitions.length ? (
           <SubTitle>No competitions yet</SubTitle>
         ) : (
-          <CompetitionList list={data?.competitions ?? []} orgId={orgId} />
+          <>
+            {isOrgAdminForOrganisations([orgId]) && (
+              <CheckboxBase
+                className={"my-5"}
+                label={"Show competitions with closed registration"}
+                checked={!!includeClosedRegistration}
+                onCheckedChange={(checked) =>
+                  setIncludeClosedRegistration(!!checked)
+                }
+              />
+            )}
+            <CompetitionList list={data?.competitions ?? []} orgId={orgId} />
+          </>
         )}
       </div>
     </Suspense>
