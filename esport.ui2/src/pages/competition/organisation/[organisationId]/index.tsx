@@ -10,7 +10,7 @@ import {
   getCompetitionsByOrganisationId,
 } from "@/entities/competition";
 
-import { CompetitionListByOrganisation } from "@/_pages/CompetitionListByOrganisation";
+import { CompetitionListByOrganisation } from "../../../../_pages/(organisation)/CompetitionListByOrganisation";
 
 import { getMainLayout } from "@/widgets/MainLayout";
 
@@ -37,8 +37,15 @@ export const getServerSideProps = getAppServerSideProps(async (ctx) => {
   const orgId = Number(organisationId);
 
   await queryClient.prefetchQuery(
-    competitionQueryKeys.byOrgId({ orgId, includeClosedRegistration: true }),
-    () => getCompetitionsByOrganisationId({ orgId }, ctx)
+    competitionQueryKeys.byOrgId({
+      orgId,
+      includeClosedRegistration: ctx.query.showClosed === "true",
+    }),
+    () =>
+      getCompetitionsByOrganisationId(
+        { orgId, includeClosedRegistration: ctx.query.showClosed === "true" },
+        ctx
+      )
   );
 
   return {

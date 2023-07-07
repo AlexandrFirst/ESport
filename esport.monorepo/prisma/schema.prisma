@@ -16,8 +16,8 @@ model Competition {
   dateStart             DateTime
   dateEnd               DateTime?
   organisation          Organisation @relation(fields: [organisationId], references: [id])
-  categories            Category[]
   organisationId        Int
+  categories            Category[]
   registrationCloseDate DateTime
   createdBy             Int
   creator               User         @relation(fields: [createdBy], references: [id])
@@ -71,15 +71,17 @@ model Competitor {
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
   requests       Request[]
+  height         Int?
+  weight         Int?
 }
 
 model User {
-  id           Int           @id @default(autoincrement())
-  name         String
-  competitors  Competitor[]
-  competitions Competition[]
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
+  id                  Int           @id @default(autoincrement())
+  name                String
+  competitors         Competitor[]
+  createdCompetitions Competition[]
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
 }
 
 model Request {

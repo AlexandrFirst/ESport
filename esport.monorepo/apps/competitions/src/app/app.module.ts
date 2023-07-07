@@ -7,6 +7,7 @@ import { getRmqConfig } from '../config/rmq.config';
 import { PrismaModule } from './database/prisma.module';
 import { CompetitionModule } from './competition/competition.module';
 import { OrganisationModule } from './organisation/organisation.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { OrganisationModule } from './organisation/organisation.module';
     PrismaModule,
     CompetitionModule,
     OrganisationModule,
+    UserModule,
   ],
   controllers: [],
   providers: [],

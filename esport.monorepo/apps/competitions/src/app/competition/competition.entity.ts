@@ -24,6 +24,11 @@ export class CompetitionEntity implements Competition {
 
   isRegistrationOpen: boolean;
 
+  static createInstance(partial: Partial<CompetitionEntity>) {
+    if (partial instanceof CompetitionEntity) return partial;
+    return new CompetitionEntity(partial);
+  }
+
   constructor(partial: Partial<CompetitionEntity>) {
     this.id = partial.id;
     this.title = partial.title;

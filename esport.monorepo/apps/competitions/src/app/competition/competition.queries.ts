@@ -1,9 +1,6 @@
 import { Controller } from '@nestjs/common';
 import { RMQRoute, RMQValidate } from 'nestjs-rmq';
-import {
-  CompetitionsGetAll,
-  CompetitionsGetByOrganisationId,
-} from '@esport.monorepo/contracts';
+import { CompetitionsGetById } from '@esport.monorepo/contracts';
 
 import { CompetitionService } from './competition.service';
 import { OrganisationService } from '../organisation/organisation.service';
@@ -15,9 +12,10 @@ export class CompetitionQuery {
     private readonly organisationService: OrganisationService
   ) {}
 
-  @RMQRoute(CompetitionsGetAll.topic)
-  async findAll() {
-    return this.competitionService.findAll();
+  @RMQValidate()
+  @RMQRoute(CompetitionsGetById.topic)
+  async findById({ competitionId }: CompetitionsGetById.Request) {
+    return this.competitionService.findById(competitionId);
   }
 
   // @RMQValidate()

@@ -1,13 +1,13 @@
 import {
   Category,
   Competition,
+  Competitor,
   Fight,
   Organisation,
   PrismaClient,
+  Request,
   Round,
   User,
-  Request,
-  Competitor,
 } from '@prisma/client';
 import addDays from 'date-fns/addDays';
 
@@ -32,6 +32,8 @@ const competitors: Competitor[] = [
     createdAt: new Date(),
     updatedAt: new Date(),
     fightId: null,
+    height: 180,
+    weight: 80,
   },
   {
     id: 2,
@@ -42,6 +44,8 @@ const competitors: Competitor[] = [
     createdAt: new Date(),
     updatedAt: new Date(),
     fightId: null,
+    height: null,
+    weight: null,
   },
 ];
 

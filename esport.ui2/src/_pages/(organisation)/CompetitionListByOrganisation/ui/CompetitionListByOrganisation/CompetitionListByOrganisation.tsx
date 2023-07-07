@@ -1,4 +1,4 @@
-import { FC, Suspense, useEffect, useState } from "react";
+import { FC, Suspense } from "react";
 import styles from "./CompetitionListByOrganisation.module.css";
 
 import { useRouter } from "next/router";
@@ -16,8 +16,9 @@ import { routes } from "@/shared/config";
 
 import { useCompetitionsByOrganisationId } from "@/entities/competition";
 
-import { CompetitionList } from "../../../../features/(competition)/CompetitionListOfOrganisation";
 import { useCurrentUserProfileInfo } from "@/entities/user";
+
+import { CompetitionList } from "@/features/(competition)/CompetitionListOfOrganisation";
 
 interface CompetitionListByOrganisationProps {
   className?: string;

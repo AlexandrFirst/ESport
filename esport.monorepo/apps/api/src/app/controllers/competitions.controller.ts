@@ -1,25 +1,26 @@
-import { Controller, Get, Logger, Param, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  HttpCode,
+  Param,
+  Post,
+  Query,
+  UsePipes,
+  ValidationPipe,
+} from '@nestjs/common';
 import { RMQService } from 'nestjs-rmq';
 
 import { res } from '../utils/res';
 import {
-  CompetitionsGetAll,
   CompetitionsGetByOrganisationId,
+  FindCompetitorRecordsByUserIdQuery,
 } from '@esport.monorepo/contracts';
+import { GetCompetitorRecordsDto } from '../dto/competition/getCompetitorRecords';
 
 @Controller('competitions')
 export class CompetitionsController {
   constructor(private readonly rmqService: RMQService) {}
-
-  @Get('all')
-  async getAll() {
-    return res(() =>
-      this.rmqService.send<
-        CompetitionsGetAll.Request,
-        CompetitionsGetAll.Response
-      >(CompetitionsGetAll.topic, {})
-    );
-  }
 
   @Get('organisation/:organisationId')
   async getByOrganisationId(
@@ -36,6 +37,21 @@ export class CompetitionsController {
       })
     );
   }
+
+  @UsePipes(ValidationPipe)
+  @HttpCode(200)
+  @Post('getCompetitorRecords')
+  async getCompetitorRecords(@Body() { userId }: GetCompetitorRecordsDto) {
+    return res(() =>
+      this.rmqService.send<
+        FindCompetitorRecordsByUserIdQuery.Request,
+        FindCompetitorRecordsByUserIdQuery.Response
+      >(FindCompetitorRecordsByUserIdQuery.topic, {
+        userId,
+      })
+    );
+  }
+
   // @Get(':id')
   // async getById(@Param('id') _id: string) {
   //   return res(() =>
