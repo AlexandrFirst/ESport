@@ -12,7 +12,7 @@ const badgeVariants = cva(
         default: styles.default,
         secondary: styles.secondary,
         destructive:
-          "bg-destructive hover:bg-destructive/80 border-transparent text-destructive-foreground",
+          "bg-theme-error hover:opacity-90 border-transparent text-theme-light shadow transition-opacity",
         outlined: styles.outlined,
       },
     },

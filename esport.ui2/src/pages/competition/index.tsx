@@ -5,12 +5,12 @@ import { routes } from "@/shared/config";
 import { AppNextPage } from "@/shared/types";
 import { getAppServerSideProps } from "@/shared/lib";
 
-import { ICompetiton } from "@/entities/competition";
+import { ICompetitonOld } from "@/entities/competition";
 
 import { getMainLayout } from "@/widgets/MainLayout";
 
 type CompetitionPageProps = {
-  competitions?: ICompetiton[];
+  competitions?: ICompetitonOld[];
 };
 
 const CompetitionPage: AppNextPage<CompetitionPageProps> = ({
@@ -43,7 +43,7 @@ export const getServerSideProps = getAppServerSideProps(async (ctx) => {
   );
   // const { data } = await CompetitionApi(ctx).getAllCompetitions();
 
-  const data: ICompetiton[] = [
+  const data: ICompetitonOld[] = [
     {
       id: 1,
       title: "Міжнародний турнір у Києві",

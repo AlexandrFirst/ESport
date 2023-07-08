@@ -1,11 +1,11 @@
 import { ColumnDef } from "@tanstack/table-core";
 
 import { formatDate } from "@/shared/lib";
-import { Badge, Button, UILink } from "@/shared/ui";
-
-import { ICompetitionWithOrganisationAndCreator } from "@/entities/competition";
-import { useAuth, useCurrentUserProfileInfo } from "@/entities/user";
+import { Badge, UILink } from "@/shared/ui";
 import { routes } from "@/shared/config";
+
+import { useAuth, useCurrentUserProfileInfo } from "@/entities/user";
+import { CompetitionOrganisation, ICompetition } from "@/entities/competition";
 
 interface UseCompetitionListColumnsProps {
   orgId: number;
@@ -17,7 +17,7 @@ export const useCompetitionListColumns = ({
   const { userId } = useAuth();
   const { profileOrganisationId } = useCurrentUserProfileInfo();
 
-  const columns: ColumnDef<ICompetitionWithOrganisationAndCreator>[] = [
+  const columns: ColumnDef<ICompetition & CompetitionOrganisation>[] = [
     {
       header: "Name",
       cell({ row: { original } }) {

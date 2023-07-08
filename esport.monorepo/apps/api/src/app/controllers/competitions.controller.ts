@@ -13,6 +13,7 @@ import { RMQService } from 'nestjs-rmq';
 
 import { res } from '../utils/res';
 import {
+  CompetitionsGetById,
   CompetitionsGetByOrganisationId,
   FindCompetitorRecordsByUserIdQuery,
 } from '@esport.monorepo/contracts';
@@ -52,15 +53,15 @@ export class CompetitionsController {
     );
   }
 
-  // @Get(':id')
-  // async getById(@Param('id') _id: string) {
-  //   return res(() =>
-  //     this.rmqService.send<
-  //       CompetitionsGetById.Request,
-  //       CompetitionsGetById.Response
-  //     >(CompetitionsGetById.topic, { _id })
-  //   );
-  // }
+  @Get('competition/:id')
+  async getById(@Param('id') id: string) {
+    return res(() =>
+      this.rmqService.send<
+        CompetitionsGetById.Request,
+        CompetitionsGetById.Response
+      >(CompetitionsGetById.topic, { competitionId: Number(id) })
+    );
+  }
 
   // @Get('populated/:id')
   // async getPopulatedById(@Param('id') _id: string) {

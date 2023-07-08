@@ -5,7 +5,7 @@ import styles from "./Card.module.css";
 interface CardProps {
   className?: string;
   children?: ReactNode;
-  padding?: "sm" | "md" | "lg" | "none";
+  padding?: "sm" | "md" | "lg" | "none" | "xl";
 }
 
 export const Card: FC<CardProps> = ({

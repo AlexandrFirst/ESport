@@ -7,6 +7,7 @@ import { useModal } from "../../lib";
 import Overlay from "../Overlay/Overlay";
 
 import cn from "classnames";
+import { Nunito } from "next/font/google";
 
 interface ModalProps {
   className?: string;
@@ -21,6 +22,11 @@ interface ModalProps {
 }
 
 const ANIMATION_DELAY = 50;
+
+const font = Nunito({
+  subsets: ["latin", "cyrillic-ext", "cyrillic"],
+  weight: ["300", "600", "700", "900"],
+});
 
 export const Modal = (props: ModalProps) => {
   const {
@@ -50,7 +56,7 @@ export const Modal = (props: ModalProps) => {
   return (
     <Portal>
       <div
-        className={cn(styles.modal, className, "app_modal", {
+        className={cn(styles.modal, className, font.className, {
           [styles.opened]: isOpen,
           [styles.isClosing]: isClosing,
         })}

@@ -12,16 +12,30 @@ export {
   useCompetitionsByOrganisationId,
   getCompetitionsByOrganisationId,
 } from "./api/hooks/useGetCompetitionsByOrganisationId";
+export {
+  useCompetitionWithOrganisation,
+  getCompetitionWithOrganisation,
+} from "./api/hooks/useGetCompetitionWithCategories";
+export {
+  getCompetitorRecords,
+  useGetCompetitorRecords,
+} from "./api/hooks/useGetCompetitorRecords";
+export { useCreateCompetitionRequest } from "./api/hooks/useCreateCompetitionRequest";
 
-//api types
-export type { ICompetitionWithOrganisationAndCreator } from "./api/types/get-competitions-by-organisation-id";
-
+// types
 export type {
-  ICompetiton,
+  ICompetitonOld,
   ICompetitonWithCategories,
+  ICompetition,
 } from "./model/types/competiton";
-export type { ICategoryWithRounds, ICategory } from "./model/types/category";
-export type { IRoundWithFights, IRound } from "./model/types/round";
-export type { IFight } from "./model/types/fight";
+export type {
+  ICategoryWithRoundsOld,
+  ICategoryOld,
+} from "./model/types/category";
+export type { IRoundWithFightsOld, IRoundOld } from "./model/types/round";
+export type { IFightOld } from "./model/types/fight";
+export type { CompetitionOrganisation } from "./model/types/competition-organisation";
+export type { ICompetitor } from "./model/types/competitor";
+export type { CompetitionRequest } from "./model/types/competition-request";
 
-export { CompatitorType } from "./consts/competitor-type";
+export { CompetitorType } from "./consts/competitor-type";

@@ -4,6 +4,7 @@ import { RMQModule } from 'nestjs-rmq';
 
 import { getRmqConfig } from './config/rmq.config';
 import { CompetitionsController } from './controllers/competitions.controller';
+import { RequestController } from './controllers/request.controller';
 
 @Module({
   imports: [
@@ -12,7 +13,7 @@ import { CompetitionsController } from './controllers/competitions.controller';
     }),
     RMQModule.forRootAsync(getRmqConfig()),
   ],
-  controllers: [CompetitionsController],
+  controllers: [CompetitionsController, RequestController],
   providers: [],
 })
 export class AppModule {}

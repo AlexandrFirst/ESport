@@ -2,6 +2,7 @@ import { FC, ReactNode } from "react";
 import UILink from "../UILink/UILink";
 import { useRouter } from "next/router";
 import { SubTitle } from "..";
+import cn from "classnames";
 
 interface ClickableBackLinkProps {
   onClick: () => void;
@@ -13,28 +14,26 @@ interface UILinkBackLinkProps {
 
 type BackLinkProps = (ClickableBackLinkProps | UILinkBackLinkProps) & {
   children?: ReactNode;
+  className?: string;
 };
 
 export const BackLink: FC<BackLinkProps> = ({
   children = "Back",
+  className,
   ...props
 }) => {
-  const router = useRouter();
-
   if ("href" in props)
     return (
-      <UILink {...props} color={"inverted"}>
+      <UILink {...props} className={className} color={"inverted"}>
         {"<"} {children}
       </UILink>
     );
 
-  const handleClick = () => props.onClick ?? router.back();
-
   return (
     <SubTitle
-      onClick={handleClick}
+      onClick={props.onClick}
       size={"small"}
-      className={"cursor-pointer py-1 active:opacity-50 w-fit"}
+      className={cn("cursor-pointer py-1 active:opacity-50 w-fit", className)}
     >
       {"< "}
       {children}

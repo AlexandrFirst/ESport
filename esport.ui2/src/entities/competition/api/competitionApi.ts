@@ -2,14 +2,19 @@ import { Api } from "@/shared/config";
 import { ApiContext } from "@/shared/types";
 
 import { ICreateCompetitionForm } from "../model/types/create-competitiom-form";
-import { ICompetiton } from "../model/types/competiton";
+import { ICompetitonOld } from "../model/types/competiton";
 
-import { GetCompetitionResponse } from "./types/get-competition";
+import { GetCompetitionWithOrganisationResponse } from "./types/get-competition";
 import {
   GetCompetitionsByOrganisationIdRequest,
-  ICompetitionWithOrganisationAndCreator,
+  GetCompetitionsByOrganisationIdResponse,
 } from "./types/get-competitions-by-organisation-id";
 import { IOrganisation } from "@/entities/organisation";
+import {
+  CreateCompetitionRequest,
+  GetCompetitorRecordsRequest,
+  GetCompetitorRecordsResponse,
+} from "./types/types";
 
 export const CompetitionApi = (ctx?: ApiContext) => {
   const instance = Api({ ctx, baseURL: "http://localhost:3002/api/v1" });
@@ -20,12 +25,12 @@ export const CompetitionApi = (ctx?: ApiContext) => {
     },
 
     async getAllCompetitions() {
-      return instance.get<ICompetiton[]>("/competitions/all");
+      return instance.get<ICompetitonOld[]>("/competitions/all");
     },
 
-    async getCompetition(id: string) {
-      return instance.get<GetCompetitionResponse>(
-        `/competitions/populated/${id}`
+    async getCompetitionWithOrganisation(id: number) {
+      return instance.get<GetCompetitionWithOrganisationResponse>(
+        `/competitions/competition/${id}`
       );
     },
 
@@ -33,12 +38,26 @@ export const CompetitionApi = (ctx?: ApiContext) => {
       includeClosedRegistration,
       orgId,
     }: GetCompetitionsByOrganisationIdRequest) {
-      return instance.get<{
-        competitions: ICompetitionWithOrganisationAndCreator[];
-        organisation: { id: number; name: string };
-      }>(`/competitions/organisation/${orgId}`, {
-        params: { includeClosedRegistration },
-      });
+      return instance.get<GetCompetitionsByOrganisationIdResponse>(
+        `/competitions/organisation/${orgId}`,
+        {
+          params: { includeClosedRegistration },
+        }
+      );
+    },
+
+    getCompetitorRecords(request: GetCompetitorRecordsRequest) {
+      return instance.post<GetCompetitorRecordsResponse>(
+        "/competitions/getCompetitorRecords",
+        request
+      );
+    },
+
+    createCompetitionRequest(data: CreateCompetitionRequest) {
+      return instance.post(
+        "/competitions/request/createRequestWithExistingCompetitor",
+        data
+      );
     },
   };
 };

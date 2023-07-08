@@ -8,7 +8,7 @@ module.exports = {
       padding: "2rem",
       screens: {
         "2xl": "1400px",
-      }, 
+      },
     },
     extend: {
       colors: {
@@ -25,6 +25,7 @@ module.exports = {
           sub: "var(--color-bg-sub)",
           accent: "var(--color-bg-accent)",
           light: "var(--color-bg-light)",
+          error: "var(--color-error-main)",
           card: {
             main: "var(--color-card-bg-main)",
           },

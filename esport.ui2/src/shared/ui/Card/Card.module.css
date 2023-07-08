@@ -17,3 +17,7 @@
 .lg {
   @apply p-8;
 }
+
+.xl {
+  @apply p-16;
+}

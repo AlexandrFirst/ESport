@@ -10,6 +10,6 @@ export namespace CompetitionsGetById {
   }
 
   export class Response {
-    competitions: Competition[] = [];
+    competition: Competition;
   }
 }

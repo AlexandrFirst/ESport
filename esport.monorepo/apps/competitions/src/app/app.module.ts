@@ -8,6 +8,8 @@ import { PrismaModule } from './database/prisma.module';
 import { CompetitionModule } from './competition/competition.module';
 import { OrganisationModule } from './organisation/organisation.module';
 import { UserModule } from './user/user.module';
+import { RequestModule } from './request/request.module';
+import { CompetitorModule } from './competitor/competitor.module';
 
 @Module({
   imports: [
@@ -19,6 +21,8 @@ import { UserModule } from './user/user.module';
     CompetitionModule,
     OrganisationModule,
     UserModule,
+    RequestModule,
+    CompetitorModule,
   ],
   controllers: [],
   providers: [],

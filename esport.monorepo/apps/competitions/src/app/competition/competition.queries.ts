@@ -1,6 +1,6 @@
 import { Controller } from '@nestjs/common';
 import { RMQRoute, RMQValidate } from 'nestjs-rmq';
-import { CompetitionsGetById } from '@esport.monorepo/contracts';
+import { CompetitionsGetById, NotFoundError } from '@esport.monorepo/contracts';
 
 import { CompetitionService } from './competition.service';
 import { OrganisationService } from '../organisation/organisation.service';
@@ -14,8 +14,14 @@ export class CompetitionQuery {
 
   @RMQValidate()
   @RMQRoute(CompetitionsGetById.topic)
-  async findById({ competitionId }: CompetitionsGetById.Request) {
-    return this.competitionService.findById(competitionId);
+  async findById({
+    competitionId,
+  }: CompetitionsGetById.Request): Promise<CompetitionsGetById.Response> {
+    const competition = await this.competitionService.findById(competitionId);
+    if (!competition) {
+      throw new NotFoundError(`Competition with id ${competitionId} not found`);
+    }
+    return { competition };
   }
 
   // @RMQValidate()

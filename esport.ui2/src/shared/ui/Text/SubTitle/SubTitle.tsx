@@ -17,9 +17,11 @@ const SubTitle: FC<SubTitleProps> = ({
   size = "medium",
   children,
   center = false,
+  ...props
 }) => {
   return (
     <h2
+      {...props}
       className={cn(styles.text, styles[size], className, {
         [styles.center]: center,
       })}

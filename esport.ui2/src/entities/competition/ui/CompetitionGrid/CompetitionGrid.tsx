@@ -1,7 +1,7 @@
 import React, { FC, Fragment } from "react";
 
-import { ICategoryWithRounds } from "../../model/types/category";
-import { IFight } from "../../model/types/fight";
+import { ICategoryWithRoundsOld } from "../../model/types/category";
+import { IFightOld } from "../../model/types/fight";
 
 import { Round } from "../Round/Round";
 import { RoundTitle } from "../Round/RoundTitle";
@@ -13,14 +13,14 @@ import { SeedsList } from "../SeedsList/SeedsList";
 import { Bracket } from "../Bracket/Bracket";
 
 interface CompetitionGridProps {
-  category?: ICategoryWithRounds;
+  category?: ICategoryWithRoundsOld;
   className?: string;
 }
 
 export const CompetitionGrid: FC<CompetitionGridProps> = ({ category }) => {
   if (!category) return null;
 
-  const renderFights = ({ competitors, fightNumber }: IFight) => {
+  const renderFights = ({ competitors, fightNumber }: IFightOld) => {
     return (
       <Seed>
         <SeedItem>

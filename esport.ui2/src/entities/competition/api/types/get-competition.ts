@@ -1,5 +1,12 @@
-import { ICompetitonWithCategories } from "../../model/types/competiton";
+import { ICompetition } from "../../model/types/competiton";
+import { CompetitionOrganisation } from "../../model/types/competition-organisation";
 
-export interface GetCompetitionResponse {
-  competition: ICompetitonWithCategories;
+type CompetitionWithOrganisation = ICompetition & CompetitionOrganisation;
+
+export interface GetCompetitionWithOrganisationRequest {
+  competitionId: number;
+}
+
+export interface GetCompetitionWithOrganisationResponse {
+  competition: CompetitionWithOrganisation;
 }

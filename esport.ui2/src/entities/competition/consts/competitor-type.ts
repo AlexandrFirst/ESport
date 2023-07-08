@@ -1,4 +1,4 @@
-export enum CompatitorType {
+export enum CompetitorType {
   NotDefined = "NotDefined",
   Male = "Male",
   Female = "Female",

@@ -24,7 +24,7 @@ model Competition {
   createdAt             DateTime     @default(now())
   updatedAt             DateTime     @updatedAt
   address               String
-  Request               Request[]
+  requests               Request[]
 }
 
 model Category {

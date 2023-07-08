@@ -20,6 +20,18 @@ const users: User[] = [
     createdAt: new Date(),
     updatedAt: new Date(),
   },
+  {
+    id: 2,
+    name: 'Test user 2',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: 3,
+    name: 'Test user 3',
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
 ];
 
 const competitors: Competitor[] = [

@@ -1,14 +1,17 @@
-import { ICompetitonCommon } from "../../model/types/competiton";
+import { CompetitionOrganisation } from "../../model/types/competition-organisation";
+import { ICompetition } from "../../model/types/competiton";
+import { CompetitionUser } from "../../model/types/competition-creator";
+
+type CompetitionWithOrganisationAndCreator = ICompetition &
+  CompetitionOrganisation &
+  CompetitionUser;
 
 export interface GetCompetitionsByOrganisationIdRequest {
-  orgId?: number;
+  orgId: number;
   includeClosedRegistration?: boolean;
 }
 
-export interface ICompetitionWithOrganisationAndCreator
-  extends ICompetitonCommon {
-  creator: {
-    id: number;
-    name: string;
-  };
+export interface GetCompetitionsByOrganisationIdResponse {
+  competitions: CompetitionWithOrganisationAndCreator[];
+  organisation: CompetitionOrganisation;
 }

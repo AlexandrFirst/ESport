@@ -2,12 +2,12 @@ import { Injectable } from '@nestjs/common';
 
 import { CompetitionEntity } from './competition.entity';
 import { CompetitionEventEmitter } from './competition.event-emitter';
+
 import { PrismaService } from '../database/prisma.service';
 
 @Injectable()
 export class CompetitionService {
   constructor(
-    // private readonly repo: CompetitionRepository,
     private readonly prismaService: PrismaService,
     private readonly eventEmitter: CompetitionEventEmitter
   ) {}
@@ -19,7 +19,10 @@ export class CompetitionService {
   }
 
   async findById(id: number) {
-    return this.prismaService.competition.findUnique({ where: { id } });
+    return this.prismaService.competition.findUnique({
+      where: { id },
+      include: { organisation: true },
+    });
   }
 
   async create(data: CompetitionEntity) {
