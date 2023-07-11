@@ -3,6 +3,7 @@ import exp from "constants";
 export { Competition } from "./ui/Competition/Competition";
 export { CreateCompetitionCard } from "./ui/CreateCompetitionCard/CreateCompetitionCard";
 export { CompetitionGrid } from "./ui/CompetitionGrid/CompetitionGrid";
+export { RequestList } from "./ui/RequestList/RequestList";
 
 export { CompetitionApi } from "./api/competitionApi";
 export { competitionQueryKeys } from "./api/hooks/competitionQueryKeys";
@@ -15,12 +16,13 @@ export {
 export {
   useCompetitionWithOrganisation,
   getCompetitionWithOrganisation,
-} from "./api/hooks/useGetCompetitionWithCategories";
+} from "./api/hooks/useGetCompetitionWithOrganisation";
 export {
   getCompetitorRecords,
   useGetCompetitorRecords,
 } from "./api/hooks/useGetCompetitorRecords";
 export { useCreateCompetitionRequest } from "./api/hooks/useCreateCompetitionRequest";
+export { useDeleteRequestById } from "./api/hooks/useDeleteRequestById";
 
 // types
 export type {

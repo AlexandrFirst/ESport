@@ -8,12 +8,12 @@ import { CompetitionError } from "../../model/types/competition-error";
 import { GetCompetitionWithOrganisationRequest } from "../types/get-competition";
 
 export const getCompetitionWithOrganisation = async (
-  { competitionId = 0 }: GetCompetitionWithOrganisationRequest,
+  request: GetCompetitionWithOrganisationRequest,
   ctx?: ApiContext
 ) => {
   try {
     const api = await CompetitionApi(ctx);
-    const { data } = await api.getCompetitionWithOrganisation(competitionId);
+    const { data } = await api.getCompetitionWithOrganisation(request);
     return data;
   } catch (e: any) {
     if (e?.statusCode !== 500) {
@@ -31,7 +31,7 @@ export const useCompetitionWithOrganisation = (
     Awaited<ReturnType<typeof getCompetitionWithOrganisation>>,
     CompetitionError
   >({
-    queryKey: competitionQueryKeys.byIdWithOrganisation(request.competitionId),
+    queryKey: competitionQueryKeys.byIdWithOrganisation(request),
     queryFn: async () => getCompetitionWithOrganisation(request, ctx),
   });
 };

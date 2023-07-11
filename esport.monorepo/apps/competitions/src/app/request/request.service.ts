@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from '../database/prisma.service';
+import { BadRequestError } from '@esport.monorepo/contracts';
 
 @Injectable()
 export class RequestService {
@@ -31,5 +32,15 @@ export class RequestService {
         competitionId: data.competitionId,
       },
     });
+  }
+
+  async deleteRequestById(id: number) {
+    const request = await this.primaryService.request.findUnique({
+      where: { id },
+    });
+    if (!request) {
+      throw new BadRequestError(`Request with id: ${id} not found`);
+    }
+    return this.primaryService.request.delete({ where: { id } });
   }
 }

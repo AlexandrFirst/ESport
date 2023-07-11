@@ -1,15 +1,42 @@
 import { FC, useState } from "react";
 import { Button, Modal, RegularText, SubTitle } from "@/shared/ui";
 import { TrashIcon } from "lucide-react";
+import {
+  competitionQueryKeys,
+  useDeleteRequestById,
+} from "@/entities/competition";
+import { useSnackbar } from "@/shared/lib";
+import { useQueryClient } from "@tanstack/react-query";
 
-export const DeleteRequest: FC = () => {
-  const [showModal, setShowModal] = useState(false);
+interface DeleteRequestProps {
+  requestId: number;
+}
 
-  const handleShowHideModal = (b: boolean) => () => setShowModal(b);
+export const DeleteRequest: FC<DeleteRequestProps> = ({ requestId }) => {
+  const [isModalOpened, setIsModalOpened] = useState(false);
+  const { mutate } = useDeleteRequestById();
+  const queryClient = useQueryClient();
+
+  const { showSuccess, showApiError } = useSnackbar();
+
+  const handleShowHideModal = (b: boolean) => () => setIsModalOpened(b);
 
   const handleDeleteRequest = async () => {
-    // "TODO: implement me";
-    setShowModal(false);
+    await mutate(
+      { id: requestId },
+      {
+        async onSuccess() {
+          showSuccess("Request deleted successfully");
+          await queryClient.invalidateQueries({
+            queryKey: competitionQueryKeys.getCompetitorRecordsAll(),
+          });
+        },
+        onError(error) {
+          showApiError(error);
+        },
+      }
+    );
+    setIsModalOpened(false);
   };
 
   return (
@@ -23,7 +50,7 @@ export const DeleteRequest: FC = () => {
           Delete request <TrashIcon className={"ml-4"} />
         </Button>
       </div>
-      <Modal lazy isOpen={showModal} onClose={handleShowHideModal(false)}>
+      <Modal lazy isOpen={isModalOpened} onClose={handleShowHideModal(false)}>
         <SubTitle size={"extra-large"} center>
           Are you sure?
         </SubTitle>

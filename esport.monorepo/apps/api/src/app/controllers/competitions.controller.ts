@@ -54,12 +54,18 @@ export class CompetitionsController {
   }
 
   @Get('competition/:id')
-  async getById(@Param('id') id: string) {
+  async getById(
+    @Param('id') id: string,
+    @Query('includeRequests') includeRequests?: string
+  ) {
     return res(() =>
       this.rmqService.send<
         CompetitionsGetById.Request,
         CompetitionsGetById.Response
-      >(CompetitionsGetById.topic, { competitionId: Number(id) })
+      >(CompetitionsGetById.topic, {
+        competitionId: Number(id),
+        includeRequests: includeRequests === 'true',
+      })
     );
   }
 

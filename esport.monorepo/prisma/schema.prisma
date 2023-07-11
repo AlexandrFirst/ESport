@@ -24,7 +24,7 @@ model Competition {
   createdAt             DateTime     @default(now())
   updatedAt             DateTime     @updatedAt
   address               String
-  requests               Request[]
+  requests              Request[]
 }
 
 model Category {
@@ -73,6 +73,7 @@ model Competitor {
   requests       Request[]
   height         Int?
   weight         Int?
+  age            Int?
 }
 
 model User {

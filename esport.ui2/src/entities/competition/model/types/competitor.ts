@@ -23,4 +23,5 @@ export interface ICompetitor {
   height?: number;
   weight?: number;
   requests?: CompetitionRequest[];
+  age?: number;
 }

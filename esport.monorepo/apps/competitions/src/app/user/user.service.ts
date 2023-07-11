@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
 
 import { UserRepository } from './user.repository';
-import { UserEntity } from './user.entity';
 
 @Injectable()
 export class UserService {
@@ -28,7 +27,7 @@ export class UserService {
     return a;
   }
 
-  async create(data: UserEntity) {
-    return this.repo.create(data);
-  }
+  // async create(data: UserEntity) {
+  //   return this.repo.create(data);
+  // }
 }

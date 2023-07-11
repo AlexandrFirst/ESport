@@ -1,15 +1,13 @@
 import { GetCompetitionsByOrganisationIdRequest } from "../types/get-competitions-by-organisation-id";
-import {
-  CreateCompetitionRequest,
-  GetCompetitorRecordsRequest,
-} from "../types/types";
+import { GetCompetitorRecordsRequest } from "../types/types";
+import { GetCompetitionWithOrganisationRequest } from "../types/get-competition";
 
 export const competitionQueryKeys = {
   all: ["competitions"],
-  byIdWithOrganisation: (id: number) => [
+  byIdWithOrganisation: (request?: GetCompetitionWithOrganisationRequest) => [
     ...competitionQueryKeys.all,
     "by-id",
-    id,
+    request,
   ],
   byOrgId: (request: GetCompetitionsByOrganisationIdRequest) => [
     ...competitionQueryKeys.all,
@@ -28,5 +26,9 @@ export const competitionQueryKeys = {
   createCompetitionRequest: () => [
     ...competitionQueryKeys.all,
     "create-competition-request",
+  ],
+  deleteRequestById: () => [
+    ...competitionQueryKeys.all,
+    "delete-request-by-id",
   ],
 };

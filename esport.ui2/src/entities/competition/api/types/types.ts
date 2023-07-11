@@ -18,3 +18,7 @@ export interface CreateCompetitionRequest {
   height: number;
   competitorType: CompetitorType;
 }
+
+export interface DeleteRequestByIdRequest {
+  id: number;
+}

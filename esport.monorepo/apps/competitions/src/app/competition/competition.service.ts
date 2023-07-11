@@ -18,10 +18,17 @@ export class CompetitionService {
     });
   }
 
-  async findById(id: number) {
+  async findById(id: number, params?: { includeRequests?: boolean }) {
+    const { includeRequests = false } = params || {};
+
     return this.prismaService.competition.findUnique({
       where: { id },
-      include: { organisation: true },
+      include: {
+        organisation: true,
+        requests: includeRequests && {
+          include: { competitor: true },
+        },
+      },
     });
   }
 

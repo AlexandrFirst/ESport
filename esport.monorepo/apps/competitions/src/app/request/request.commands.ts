@@ -2,11 +2,14 @@ import { Controller } from '@nestjs/common';
 import { RMQRoute, RMQValidate } from 'nestjs-rmq';
 import {
   CreateRequestByExistingUserCommand,
+  DeleteRequestByIdCommand,
   NotFoundError,
 } from '@esport.monorepo/contracts';
-import { CompetitorService } from '../competitor/competitor.service';
-import { RequestService } from './request.service';
+
 import { UserService } from '../user/user.service';
+import { CompetitorService } from '../competitor/competitor.service';
+
+import { RequestService } from './request.service';
 
 @Controller()
 export class RequestCommands {
@@ -43,5 +46,11 @@ export class RequestCommands {
       competitorId: id,
       competitionId,
     });
+  }
+
+  @RMQValidate()
+  @RMQRoute(DeleteRequestByIdCommand.topic)
+  async deleteRequest({ id }: DeleteRequestByIdCommand.Request) {
+    return this.requestService.deleteRequestById(id);
   }
 }

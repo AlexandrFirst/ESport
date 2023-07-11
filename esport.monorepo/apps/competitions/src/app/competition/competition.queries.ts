@@ -16,8 +16,11 @@ export class CompetitionQuery {
   @RMQRoute(CompetitionsGetById.topic)
   async findById({
     competitionId,
+    includeRequests,
   }: CompetitionsGetById.Request): Promise<CompetitionsGetById.Response> {
-    const competition = await this.competitionService.findById(competitionId);
+    const competition = await this.competitionService.findById(competitionId, {
+      includeRequests,
+    });
     if (!competition) {
       throw new NotFoundError(`Competition with id ${competitionId} not found`);
     }

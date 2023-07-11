@@ -46,6 +46,7 @@ const competitors: Competitor[] = [
     fightId: null,
     height: 180,
     weight: 80,
+    age: 25,
   },
   {
     id: 2,
@@ -58,6 +59,7 @@ const competitors: Competitor[] = [
     fightId: null,
     height: null,
     weight: null,
+    age: null,
   },
 ];
 

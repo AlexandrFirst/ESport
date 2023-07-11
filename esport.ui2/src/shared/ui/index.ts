@@ -123,3 +123,4 @@ export { AspectRatio } from "./AspectRatio/AspectRatio";
 export { AppVideo } from "./AppVideo/AppVideo";
 
 export { BackLink } from "./BackLink/BackLink";
+export { Dock } from "./Dock/Dock";

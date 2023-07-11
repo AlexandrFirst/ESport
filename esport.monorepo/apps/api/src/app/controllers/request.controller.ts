@@ -1,13 +1,18 @@
 import {
   Body,
   Controller,
+  Delete,
+  Param,
   Post,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
 import { RMQService } from 'nestjs-rmq';
 
-import { CreateRequestByExistingUserCommand } from '@esport.monorepo/contracts';
+import {
+  CreateRequestByExistingUserCommand,
+  DeleteRequestByIdCommand,
+} from '@esport.monorepo/contracts';
 
 import { res } from '../utils/res';
 
@@ -25,6 +30,17 @@ export class RequestController {
         CreateRequestByExistingUserCommand.Request,
         CreateRequestByExistingUserCommand.Response
       >(CreateRequestByExistingUserCommand.topic, data)
+    );
+  }
+
+  @UsePipes(ValidationPipe)
+  @Delete('delete-request/:id')
+  async deleteRequest(@Param('id') id: string) {
+    return res(() =>
+      this.rmqService.send<{ id: number }, DeleteRequestByIdCommand.Response>(
+        DeleteRequestByIdCommand.topic,
+        { id: Number(id) }
+      )
     );
   }
 }

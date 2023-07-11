@@ -21,7 +21,7 @@ interface ApplyToCompetitionFormProps {
   className?: string;
   lastRecord?: Pick<
     ICompetitor,
-    "level" | "weight" | "height" | "competitorType"
+    "level" | "weight" | "height" | "competitorType" | "age"
   >;
   competitionId: number;
   userId: number;
@@ -61,6 +61,7 @@ export const ApplyToCompetitionForm: FC<ApplyToCompetitionFormProps> = ({
     methods.setValue("weight", lastRecord?.weight ?? 0);
     methods.setValue("height", lastRecord?.height ?? 0);
     methods.setValue("competitorType", competitorTypeLastRecord);
+    methods.setValue("age", lastRecord?.age ?? 1);
   };
 
   const handleSave = methods.handleSubmit(async (data) => {
@@ -116,6 +117,15 @@ export const ApplyToCompetitionForm: FC<ApplyToCompetitionFormProps> = ({
           min={10}
           fullWidth
           defaultValue={lastRecord?.height}
+        />
+        <Input
+          name={"age"}
+          label={"Age"}
+          type={"number"}
+          max={200}
+          min={1}
+          fullWidth
+          defaultValue={lastRecord?.age}
         />
       </div>
       <Dropdown

@@ -2,7 +2,7 @@ import React, { ElementType, Fragment, ReactNode } from "react";
 import styles from "./Tabs.module.css";
 
 import cn from "classnames";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { Tab } from "@headlessui/react";
 
 export interface TabItem<T extends string> {
@@ -82,7 +82,15 @@ export function Tabs<T extends string>({
       <Tab.Panels>
         {tabs.map(({ value, content }) => (
           <Tab.Panel as={Fragment} key={value}>
-            {content}
+            <AnimatePresence>
+              <motion.section
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+              >
+                {content}
+              </motion.section>
+            </AnimatePresence>
           </Tab.Panel>
         ))}
       </Tab.Panels>

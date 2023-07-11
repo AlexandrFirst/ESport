@@ -4,7 +4,10 @@ import { ApiContext } from "@/shared/types";
 import { ICreateCompetitionForm } from "../model/types/create-competitiom-form";
 import { ICompetitonOld } from "../model/types/competiton";
 
-import { GetCompetitionWithOrganisationResponse } from "./types/get-competition";
+import {
+  GetCompetitionWithOrganisationRequest,
+  GetCompetitionWithOrganisationResponse,
+} from "./types/get-competition";
 import {
   GetCompetitionsByOrganisationIdRequest,
   GetCompetitionsByOrganisationIdResponse,
@@ -12,6 +15,7 @@ import {
 import { IOrganisation } from "@/entities/organisation";
 import {
   CreateCompetitionRequest,
+  DeleteRequestByIdRequest,
   GetCompetitorRecordsRequest,
   GetCompetitorRecordsResponse,
 } from "./types/types";
@@ -28,9 +32,17 @@ export const CompetitionApi = (ctx?: ApiContext) => {
       return instance.get<ICompetitonOld[]>("/competitions/all");
     },
 
-    async getCompetitionWithOrganisation(id: number) {
+    async getCompetitionWithOrganisation(
+      request: GetCompetitionWithOrganisationRequest
+    ) {
+      const { competitionId, includeRequests } = request || {};
       return instance.get<GetCompetitionWithOrganisationResponse>(
-        `/competitions/competition/${id}`
+        `/competitions/competition/${competitionId}`,
+        {
+          params: {
+            includeRequests,
+          },
+        }
       );
     },
 
@@ -58,6 +70,10 @@ export const CompetitionApi = (ctx?: ApiContext) => {
         "/competitions/request/createRequestWithExistingCompetitor",
         data
       );
+    },
+
+    async deleteCompetitionRequestById({ id }: DeleteRequestByIdRequest) {
+      return instance.delete(`/competitions/request/delete-request/${id}`);
     },
   };
 };
