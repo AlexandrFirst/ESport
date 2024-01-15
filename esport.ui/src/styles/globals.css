@@ -1,0 +1,30 @@
+@import "./theme/light.css";
+@import "./theme/dark.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* layout */
+  --left-sidebar-full: 300px;
+  --left-sidebar-compact: 100px;
+  --left-sidebar-mobile: 30px;
+
+  --overlay-color: rgba(0 0 0 / 60%);
+
+  /* z-index */
+  --modal-z-index: 100;
+  --overlay-z-index: 10;
+  --popover-z-index: 10000;
+
+  /* transform() -> needed for snackbar */
+  --elm-translate: translateX(-100%);
+
+  /* shadcn */
+  --radius: 0.5rem;
+}
+
+body {
+  margin: 0;
+}

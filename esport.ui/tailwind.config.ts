@@ -1,7 +1,11 @@
-/** @type {import('tailwindcss').Config} */
-module.exports = {
-  darkMode: ["class", '[data-mode="dark"]'], // or 'media' or 'class' or false
-  content: ["./src/**/*.{js,ts,jsx,tsx}"],
+import type { Config } from 'tailwindcss'
+
+const config: Config = {
+  content: [
+    './src/pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/components/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/app/**/*.{js,ts,jsx,tsx,mdx}',
+  ],
   theme: {
     container: {
       center: true,
@@ -73,26 +77,26 @@ module.exports = {
         toastIn: {
           "0%": {
             transform: "var(--elm-translate) scale(0.7)",
-            opacity: 0.7,
+            opacity: '0.7',
           },
-          "80%": { transform: "translate(0px) scale(0.7)", opacity: 0.7 },
-          "100%": { transform: "scale(1)", opacity: 1 },
+          "80%": { transform: "translate(0px) scale(0.7)", opacity: '0.7'},
+          "100%": { transform: "scale(1)", opacity: '1 '},
         },
         toastOut: {
-          "0%": { transform: "scale(1)", opacity: 1 },
-          "20%": { transform: "translate(0px) scale(0.7)", opacity: 0.7 },
+          "0%": { transform: "scale(1)", opacity: '1'},
+          "20%": { transform: "translate(0px) scale(0.7)", opacity: '0.7'},
           "100%": {
             transform: "var(--elm-translate) scale(0.7)",
-            opacity: 0.7,
+            opacity: '0.7',
           },
         },
         "accordion-down": {
-          from: { height: 0 },
+          from: { height: '0' },
           to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
           from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: 0 },
+          to: { height: '0' },
         },
       },
       zIndex: {
@@ -108,8 +112,9 @@ module.exports = {
     },
   },
   plugins: [
-    // // Or with a custom prefix:
-    // require("@headlessui/tailwindcss")({ prefix: "headless" }),
-    // require("tailwindcss-animate"),
+    // Or with a custom prefix:
+    require("@headlessui/tailwindcss")({ prefix: "headless" }),
+    require("tailwindcss-animate"),
   ],
-};
+}
+export default config

@@ -1,0 +1,32 @@
+[data-theme='dark'] {
+  --color-text-main: rgb(211, 207, 234);
+  --color-text-accent: rgb(142, 92, 246);
+  --color-text-light: rgb(253, 252, 252);
+
+  --color-error-main: rgb(255, 51, 51);
+  --color-success-main: rgb(16, 175, 5);
+
+  /*background*/
+  --color-bg-main: rgb(40, 36, 61);
+  --color-bg-sub: rgb(64, 59, 95);
+  --color-bg-accent: rgb(142, 92, 246);
+  --color-bg-light: rgb(49,45,75);
+  --color-bg-scroll: rgb(117, 124, 169);
+
+  /* card background*/
+  --color-card-bg-main: rgb(64, 59, 95);
+
+  /*gradient*/
+  --color-gradient-main-from: #6366f1;
+  --color-gradient-main-to: #a855f7;
+
+  --color-gradient-bg-from: #28243d;
+  --color-gradient-bg-to: #221f34;
+
+  /* shadcn */
+  --background: 224 71% 4%;
+  --foreground: 248 23% 30%;
+
+  --muted: 223 47% 11%;
+  --muted-foreground: 215.4 16.3% 56.9%;
+}

@@ -1,7 +1,0 @@
-.icon_btn {
-    @apply text-skin-main hover:bg-skin-subsidiary transition-all dark:text-darkSkin-subsidiary dark:hover:bg-darkSkin-subsidiary dark:hover:text-darkSkin-main rounded-full;
-}
-
-.disabled {
-    @apply cursor-default opacity-40
-}
