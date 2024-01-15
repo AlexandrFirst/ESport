@@ -1,9 +1,10 @@
 import exp from "constants";
 
 export { Competition } from "./ui/Competition/Competition";
-export { CreateCompetitionCard } from "./ui/CreateCompetitionCard/CreateCompetitionCard";
+export { CreateCompetitionFormBasic } from "./ui/CreateCompetitionFormBasic/CreateCompetitionFormBasic";
 export { CompetitionGrid } from "./ui/CompetitionGrid/CompetitionGrid";
 export { RequestList } from "./ui/RequestList/RequestList";
+export { CreateCompetitionAdditionalInfo } from "./ui/CreateCompetitionAdditionalInfo/CreateCompetitionAdditionalInfo";
 
 export { CompetitionApi } from "./api/competitionApi";
 export { competitionQueryKeys } from "./api/hooks/competitionQueryKeys";
@@ -33,11 +34,13 @@ export type {
 export type {
   ICategoryWithRoundsOld,
   ICategoryOld,
+  ICategory,
 } from "./model/types/category";
 export type { IRoundWithFightsOld, IRoundOld } from "./model/types/round";
 export type { IFightOld } from "./model/types/fight";
 export type { CompetitionOrganisation } from "./model/types/competition-organisation";
 export type { ICompetitor } from "./model/types/competitor";
 export type { CompetitionRequest } from "./model/types/competition-request";
+export type { ICreateCompetitionBasicForm } from "./model/types/create-competitiom-form";
 
 export { CompetitorType } from "./consts/competitor-type";

@@ -21,4 +21,10 @@ export interface ICategory {
   createdAt: string;
   updatedAt: string;
   rounds?: IRound[];
+  minAge?: number;
+  maxAge?: number;
+  minWeight?: number;
+  maxWeight?: number;
+  minHeight?: number;
+  maxHeight?: number;
 }

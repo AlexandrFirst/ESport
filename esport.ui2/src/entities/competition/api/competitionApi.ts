@@ -1,7 +1,7 @@
 import { Api } from "@/shared/config";
 import { ApiContext } from "@/shared/types";
 
-import { ICreateCompetitionForm } from "../model/types/create-competitiom-form";
+import { ICreateCompetitionBasicForm } from "../model/types/create-competitiom-form";
 import { ICompetitonOld } from "../model/types/competiton";
 
 import {
@@ -24,7 +24,7 @@ export const CompetitionApi = (ctx?: ApiContext) => {
   const instance = Api({ ctx, baseURL: "http://localhost:3002/api/v1" });
 
   return {
-    async createCompetition(request: ICreateCompetitionForm) {
+    async createCompetition(request: ICreateCompetitionBasicForm) {
       return instance.post("/competitions/create", request);
     },
 

@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import styles from "./BottomNav.module.css";
 
 import { Footer } from "../Footer/Footer";
-import { Button } from "..";
+import { Button, ButtonColor } from "..";
 import cn from "classnames";
 
 interface BottomNavProps {
@@ -11,6 +11,11 @@ interface BottomNavProps {
   onCancel?: () => void;
   onSave?: () => void;
   loading?: boolean;
+  saveText?: string;
+  cancelText?: string;
+  cancelDisabled?: boolean;
+  saveDisabled?: boolean;
+  cancelColor?: ButtonColor;
 }
 
 export const BottomNav: FC<BottomNavProps> = ({
@@ -19,6 +24,11 @@ export const BottomNav: FC<BottomNavProps> = ({
   onCancel,
   withCancel,
   loading,
+  saveText = "Save",
+  cancelText = "Cancel",
+  saveDisabled,
+  cancelDisabled,
+  cancelColor = "error",
 }) => {
   return (
     <Footer
@@ -31,14 +41,20 @@ export const BottomNav: FC<BottomNavProps> = ({
         <Button
           fullWidth={false}
           variant={"outlined"}
-          color={"error"}
+          color={cancelColor}
           onClick={onCancel}
+          disabled={cancelDisabled}
         >
-          Cancel
+          {cancelText}
         </Button>
       )}
-      <Button fullWidth={false} onClick={onSave} loading={loading}>
-        Save
+      <Button
+        fullWidth={false}
+        onClick={onSave}
+        loading={loading}
+        disabled={saveDisabled}
+      >
+        {saveText}
       </Button>
     </Footer>
   );

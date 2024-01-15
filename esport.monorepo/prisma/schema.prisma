@@ -32,6 +32,14 @@ model Category {
   title         String
   competition   Competition @relation(fields: [competitionId], references: [id])
   competitionId Int
+  weightMin     Int?
+  weightMax     Int?
+  heightMin     Int?
+  heightMax     Int?
+  ageMin        Int?
+  ageMax        Int?
+  levelMin      Int?        @default(0)
+  levelMax      Int?        @default(9999999999)
   rounds        Round[]
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt

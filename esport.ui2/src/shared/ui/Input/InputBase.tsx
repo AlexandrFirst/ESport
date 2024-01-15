@@ -53,6 +53,7 @@ export const InputBase = forwardRef<HTMLInputElement, InputBaseProps>(
       endIconClassName,
       disabled,
       withMarginBottom = true,
+      required,
       ...props
     },
     ref
@@ -71,7 +72,7 @@ export const InputBase = forwardRef<HTMLInputElement, InputBaseProps>(
         <div className={cn(styles.wrapper)}>
           {label && (
             <AnimatedLabel
-              label={label}
+              label={required ? `${label} *` : label}
               labelActive={labelActive}
               focused={focused}
               disabled={disabled}

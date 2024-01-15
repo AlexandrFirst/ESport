@@ -12,7 +12,7 @@ import cn from "classnames";
 import { Loader2 } from "lucide-react";
 
 export type ButtonVariant = "contained" | "text" | "outlined";
-type ButtonColor = "normal" | "success" | "error" | "theme-main";
+export type ButtonColor = "normal" | "success" | "error" | "theme-main";
 
 export interface ButtonProps
   extends Omit<

@@ -3,21 +3,31 @@ import {
   Controller,
   Get,
   HttpCode,
+  HttpStatus,
+  Logger,
   Param,
   Post,
   Query,
+  UploadedFiles,
+  UseInterceptors,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
+import { FilesInterceptor } from '@nestjs/platform-express';
+import { Multer } from 'multer';
+
 import { RMQService } from 'nestjs-rmq';
 
 import { res } from '../utils/res';
 import {
+  CompetitionCreateCommand,
   CompetitionsGetById,
   CompetitionsGetByOrganisationId,
+  CompetitionsUploadDocumentsCommand,
   FindCompetitorRecordsByUserIdQuery,
 } from '@esport.monorepo/contracts';
 import { GetCompetitorRecordsDto } from '../dto/competition/getCompetitorRecords';
+import { Competition } from '@prisma/client';
 
 @Controller('competitions')
 export class CompetitionsController {
@@ -69,6 +79,23 @@ export class CompetitionsController {
     );
   }
 
+  //TODO: we cannot use FilesInterceptor and RMQ
+  @Post('competition/upload-documents')
+  @HttpCode(200)
+  @UseInterceptors(FilesInterceptor('files'))
+  async test(@UploadedFiles() documents: Express.Multer.File[]) {
+    Logger.log(documents);
+    Logger.log(CompetitionsUploadDocumentsCommand.topic);
+    return res(() =>
+      this.rmqService.send<
+        CompetitionsUploadDocumentsCommand.Request,
+        CompetitionsUploadDocumentsCommand.Response
+      >(CompetitionsUploadDocumentsCommand.topic, {
+        documents: [],
+      })
+    );
+  }
+
   // @Get('populated/:id')
   // async getPopulatedById(@Param('id') _id: string) {
   //   return res(() =>
@@ -79,19 +106,21 @@ export class CompetitionsController {
   //   );
   // }
 
-  // @HttpCode(HttpStatus.CREATED)
-  // @Post('create')
-  // async createCompetition(
-  //   @Body()
-  //   body: CreateCompetitionDto
-  // ) {
-  //   return res(() =>
-  //     this.rmqService.send<
-  //       CompetitionCreate.Request,
-  //       CompetitionCreate.Response
-  //     >(CompetitionCreate.topic, body)
-  //   );
-  // }
+  @HttpCode(HttpStatus.CREATED)
+  @Post('create')
+  async createCompetition(
+    @Body()
+    body: {
+      competition: Competition;
+    }
+  ) {
+    return res(() =>
+      this.rmqService.send<
+        CompetitionCreateCommand.Request,
+        CompetitionCreateCommand.Response
+      >(CompetitionCreateCommand.topic, body)
+    );
+  }
 
   // @HttpCode(HttpStatus.CREATED)
   // @Post('create-with-categories')

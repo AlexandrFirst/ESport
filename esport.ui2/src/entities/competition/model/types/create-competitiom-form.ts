@@ -1,7 +1,6 @@
-export interface ICreateCompetitionForm {
+export interface ICreateCompetitionBasicForm {
   title: string;
   dateStart: string;
   dateEnd?: string;
-  // organizationId
-  categories?: string[];
+  registrationCloseDate: string;
 }

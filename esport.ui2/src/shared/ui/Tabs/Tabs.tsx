@@ -82,7 +82,7 @@ export function Tabs<T extends string>({
       <Tab.Panels>
         {tabs.map(({ value, content }) => (
           <Tab.Panel as={Fragment} key={value}>
-            <AnimatePresence>
+            <AnimatePresence mode="wait">
               <motion.section
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}

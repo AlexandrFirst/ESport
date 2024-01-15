@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 
-import { CompetitionEntity } from './competition.entity';
 import { CompetitionEventEmitter } from './competition.event-emitter';
 
 import { PrismaService } from '../database/prisma.service';
+import { Competition } from '@prisma/client';
 
 @Injectable()
 export class CompetitionService {
@@ -32,28 +32,28 @@ export class CompetitionService {
     });
   }
 
-  async create(data: CompetitionEntity) {
-    const newCompetition = new CompetitionEntity(data);
-    const { categories, ...competition } = newCompetition;
-    const comp = await this.prismaService.competition.create({
-      data: competition,
-    });
-    newCompetition.addEvent({
-      topic: 'competitions.competition-created.event',
-      data: {
-        id: comp.id,
-        name: comp.title,
-        organisationId: comp.organisationId,
-      },
-    });
-    await this.updateCompetition(newCompetition);
-    return comp;
+  async create(data: Competition) {
+    Logger.debug(data);
+    // const comp = await this.prismaService.competition.create({ data });
+
+    // newCompetition.addEvent({
+    //   topic: 'competitions.competition-created.event',
+    //   data: {
+    //     id: comp.id,
+    //     name: comp.title,
+    //     organisationId: comp.organisationId,
+    //   },
+    // });
+    // await this.updateCompetition(newCompetition);
+
+    // return comp;
+    return 'Nice';
   }
 
-  private async updateCompetition(comp: CompetitionEntity) {
-    return Promise.all([
-      this.eventEmitter.handle(comp),
-      // this.repo.update(comp),
-    ]);
-  }
+  // private async updateCompetition(comp: CompetitionEntity) {
+  //   return Promise.all([
+  //     this.eventEmitter.handle(comp),
+  //     // this.repo.update(comp),
+  //   ]);
+  // }
 }

@@ -12,11 +12,12 @@ import {
   Input,
   Prompt,
 } from "@/shared/ui";
+import { ICreateCompetitionBasicForm } from "../..";
 
 interface CreateCompetitionFormBasicProps {
   withPrompt?: boolean;
   promptCondition?: boolean;
-  methods: UseFormReturn;
+  methods: UseFormReturn<any>;
 }
 
 export const CreateCompetitionFormBasic: FC<

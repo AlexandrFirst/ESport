@@ -12,6 +12,7 @@ export interface AnimatedLabelProps {
   disabled?: boolean;
   htmlFor?: string;
   error?: boolean;
+  additionalHeight?: number;
 }
 
 export const AnimatedLabel: FC<AnimatedLabelProps> = ({
@@ -22,13 +23,14 @@ export const AnimatedLabel: FC<AnimatedLabelProps> = ({
   disabled,
   focused,
   error,
+  additionalHeight = 0,
 }) => {
   return (
     <motion.label
       initial={{ opacity: 0 }}
       animate={{
         opacity: 1,
-        y: (labelActive || focused) && !disabled ? -35 : 0,
+        y: (labelActive || focused) && !disabled ? -35 + additionalHeight : 0,
         x: (labelActive || focused) && !disabled ? -10 : 0,
       }}
       htmlFor={htmlFor}

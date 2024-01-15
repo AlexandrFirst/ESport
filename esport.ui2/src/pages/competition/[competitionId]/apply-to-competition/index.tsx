@@ -40,8 +40,8 @@ export const getServerSideProps = getAppServerSideProps(async (ctx, store) => {
   const queryClient = new QueryClient();
   await Promise.all([
     queryClient.prefetchQuery({
-      queryKey: competitionQueryKeys.byIdWithOrganisation(competitionId),
-      queryFn: () => getCompetitionWithOrganisation({ competitionId }),
+      queryKey: competitionQueryKeys.byIdWithOrganisation({ competitionId }),
+      queryFn: () => getCompetitionWithOrganisation({ competitionId }, ctx),
     }),
     queryClient.prefetchQuery({
       queryKey: competitionQueryKeys.getCompetitorRecords({

@@ -38,6 +38,8 @@ export type { DropdownProps } from "./Popups/Dropdown/Dropdown";
 export type { DropdownBaseProps } from "./Popups/Dropdown/DropdownBase";
 
 export { Button } from "./Button/Button";
+export type { ButtonColor, ButtonVariant } from "./Button/Button";
+
 export { DatePicker } from "./DatePicker/DatePicker";
 export { DatePickerBase } from "./DatePicker/DatePickerBase";
 export { FileUpload } from "./FileUpload/FileUpload";
@@ -124,3 +126,7 @@ export { AppVideo } from "./AppVideo/AppVideo";
 
 export { BackLink } from "./BackLink/BackLink";
 export { Dock } from "./Dock/Dock";
+
+export { Stepper } from "./Stepper/Stepper";
+export type { StepperList } from "./Stepper/Stepper";
+export type { IStep } from "./Stepper/stepper.props";
